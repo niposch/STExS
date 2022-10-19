@@ -1,31 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>Document</title>
+</head>
+<body class="mat-typography app-frame mat-app-background">
+
+<mat-form-field appearance="fill">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 
 <button mat-button>Button</button>
-<button mat-button color="primary">Primary</button>
-<button mat-button color="accent">Accent</button>
-<button mat-button color="warn">Warn</button>
-<button mat-button disabled>Disabled</button>
-<button mat-button color="primary" disabled>Disabled</button>
+<button color="primary" mat-button>Primary</button>
+<button color="accent" mat-button>Accent</button>
+<button color="warn" mat-button>Warn</button>
+<button disabled mat-button>Disabled</button>
 
-<br>
+<br/>
 <button mat-raised-button>Button</button>
-<button mat-raised-button color="primary">Primary</button>
-<button mat-raised-button color="accent">Accent</button>
-<button mat-raised-button color="warn">Warn</button>
-<button mat-raised-button disabled>Disabled</button>
-<button mat-raised-button color="primary" disabled>Disabled</button>
+<button color="primary" mat-raised-button>Primary</button>
+<button color="accent" mat-raised-button>Accent</button>
+<button color="warn" mat-raised-button>Warn</button>
+<button disabled mat-raised-button>Disabled</button>
 
-<br>
+<br/>
 <button mat-stroked-button>Button</button>
-<button mat-stroked-button color="primary">Primary</button>
-<button mat-stroked-button color="accent">Accent</button>
-<button mat-stroked-button color="warn">Warn</button>
-<button mat-stroked-button disabled>Disabled</button>
-<button mat-stroked-button color="primary" disabled>Disabled</button>
-
-<br>
-<button mat-flat-button>Button</button>
-<button mat-flat-button color="primary">Primary</button>
-<button mat-flat-button color="accent">Accent</button>
-<button mat-flat-button color="warn">Warn</button>
-<button mat-flat-button disabled>Disabled</button>
-<button mat-flat-button color="primary" disabled>Disabled</button>
+<button color="primary" mat-stroked-button>Primary</button>
+<button color="accent" mat-stroked-button>Accent</button>
+<button color="warn" mat-stroked-button>Warn</button>
+<button disabled mat-stroked-button>Disabled</button>
+</body>
+</html>
