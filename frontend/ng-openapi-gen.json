@@ -1,0 +1,5 @@
+{
+  "input": "swagger.json",
+  "output": "src/services/generated",
+  "ignoreUnusedModels": false
+}

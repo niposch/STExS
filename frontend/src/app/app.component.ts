@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {WeatherForecastService} from "../services/generated/services/weather-forecast.service";
 
 @Component({
   selector: 'app-root',
@@ -11,20 +12,15 @@ export class AppComponent implements OnInit{
   title = 'STExS';
 
   public temperatures:Array<number> = [];
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient,
+              private weatherForecastService: WeatherForecastService
+              ) {
   }
 
   ngOnInit(): void {
-    this.http.get<Array<TemperatureResponse>>('api/weatherforecast').subscribe((response) => {
-      this.temperatures = response.map((temperatureResponse) => temperatureResponse.temperatureC);
+    this.weatherForecastService.getWeatherForecast$Plain().subscribe( response => {
+      this.temperatures = response.map(r => r.temperatureC ?? 0);
       console.table(response);
     });
   }
-}
-
-interface TemperatureResponse {
-  date:Date,
-  temperatureC:number,
-  temperatureF:number,
-  summary:string
 }
