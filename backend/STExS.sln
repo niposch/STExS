@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STExS", "STExS\STExS.csproj", "{92E80CF4-DEA0-444F-BF74-9A36BA09895E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STExS.Web", "STExS.Web\STExS.Web.csproj", "{92E80CF4-DEA0-444F-BF74-9A36BA09895E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
