@@ -1,3 +1,5 @@
+using Application.Services.Interfaces;
+using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace STExS.Controllers;
@@ -6,27 +8,25 @@ namespace STExS.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
+    private static readonly string[] Summaries =
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    
+    private readonly IWeatherService weatherService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
     {
         _logger = logger;
+        this.weatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<WeatherForecast>))]
+    public async Task<IActionResult> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        return this.Ok(await this.weatherService.GetAllActive());
     }
 }
