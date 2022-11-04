@@ -14,3 +14,6 @@ TODO
 - `set ASPNETCORE_ENVIRONMENT=Development`
     - https://stackoverflow.com/a/60959348
 - `dotnet ef --project Repositories --startup-project STExS.Web`
+
+- update identity database (might be removed later)
+- `dotnet ef --project Repositories --startup-project STExS.Web database update --context AppIdentityDbContext`

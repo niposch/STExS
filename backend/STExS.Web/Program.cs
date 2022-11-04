@@ -2,6 +2,11 @@ using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using STExS.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +18,16 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
     b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"), builder.Environment.IsDevelopment()));
 });
 
+var sqliteConnectionBuilder = new SqliteConnectionStringBuilder();
+sqliteConnectionBuilder.DataSource = "./IdentityDb.db";
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseSqlite(sqliteConnectionBuilder.ToString()));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,6 +43,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();;
+app.UseStaticFiles();
+app.MapRazorPages();
 
 app.UseAuthorization();
 
