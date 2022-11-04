@@ -7,9 +7,9 @@ namespace Repositories.Repositories;
 public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGenericCrudRepository<T>
     where T : class, IBaseEntity, IDeletable
 {
-    private readonly DbContext context;
+    private readonly ApplicationDbContext context;
 
-    public GenericCrudRepository(DbContext context) : base(context)
+    public GenericCrudRepository(ApplicationDbContext context) : base(context)
     {
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }

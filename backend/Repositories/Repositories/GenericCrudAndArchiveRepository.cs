@@ -9,9 +9,9 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
     IArchiveableEntityRepository<TModel>
     where TModel : class, IBaseEntity, IArchiveable
 {
-    private readonly DbContext context;
+    private readonly ApplicationDbContext context;
 
-    public GenericCrudAndArchiveRepository(DbContext context) : base(context)
+    public GenericCrudAndArchiveRepository(ApplicationDbContext context) : base(context)
     {
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }

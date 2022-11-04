@@ -8,9 +8,9 @@ namespace Repositories.Repositories;
 public class GenericDeletableEntityRepository<TModel> : IDeletableEntityRepository<TModel>
     where TModel : class, IBaseEntity, IDeletable
 {
-    private readonly DbContext context;
+    private readonly ApplicationDbContext context;
 
-    public GenericDeletableEntityRepository(DbContext context)
+    public GenericDeletableEntityRepository(ApplicationDbContext context)
     {
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
