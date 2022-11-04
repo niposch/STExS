@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using STExS.Areas.Identity.Data;
 
-namespace STExS.Areas.Identity.Data;
+namespace Identity;
 
 public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
 {

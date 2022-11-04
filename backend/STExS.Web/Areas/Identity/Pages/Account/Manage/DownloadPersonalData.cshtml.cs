@@ -8,11 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Common.Models;
+using Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using STExS.Areas.Identity.Data;
 
 namespace STExS.Areas.Identity.Pages.Account.Manage
 {

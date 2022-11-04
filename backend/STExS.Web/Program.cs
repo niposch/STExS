@@ -1,12 +1,13 @@
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Common.Models;
+using Identity;
 using Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using STExS.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"), builder.Environment.IsDevelopment()));
+    b.RegisterModule<IdentityModule>();
 });
 
 var sqliteConnectionBuilder = new SqliteConnectionStringBuilder();

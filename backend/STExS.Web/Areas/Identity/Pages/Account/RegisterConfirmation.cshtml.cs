@@ -5,13 +5,14 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Models;
+using Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using STExS.Areas.Identity.Data;
 
 namespace STExS.Areas.Identity.Pages.Account
 {

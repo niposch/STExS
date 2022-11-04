@@ -1,4 +1,6 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
+﻿@using Identity
+@using Common.Models
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
