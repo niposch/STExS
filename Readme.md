@@ -35,7 +35,6 @@ Dokumentation Links:
 -   after the backend started successfully run:
 
 ```powershell
-yarn;
 yarn install;
 yarn quickstart;
 ```
