@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+
+\newenvironment{myreq}[1]{%
+\setlist[description]{font=\normalfont\color{darkgray}}%
+\begin{tcolorbox}[colframe=black,colback=white, sharp corners, boxrule=1pt]%
+\bfseries\color{blue}%
+\begin{description}#1}%
+{\end{description}\end{tcolorbox}}
+
+\newcommand{\threeinline}[3]{\begin{multicols}{3}#1 #2 #3\end{multicols}}
+\newcommand{\twoinline}[2]{\begin{multicols}{2}#1 #2\end{multicols}}
+
+\newcommand{\reqno}{\item[Requirement \#:]}
+\newcommand{\reqtype}{\item[Requirement Type:]}
+\newcommand{\reqevent}{\item[Event/BUC/PUC \#:]}
+\newcommand{\reqdesc}{\item[Description:]}
+\newcommand{\reqrat}{\item[Rationale:]}
+\newcommand{\reqorig}{\item[Originator:]}
+\newcommand{\reqfit}{\item[Fit Criterion:]}
+\newcommand{\reqsatis}{\item[Customer Satisfaction:]}
+\newcommand{\reqdissat}{\item[Customer Dissatisfaction:]}
+\newcommand{\reqprio}{\item[Priority:]}
+\newcommand{\reqconf}{\item[Conflicts:]}
+\newcommand{\reqmater}{\item[Materials:]}
+\newcommand{\reqhist}{\item[History:]}
+
+\begin{document}
+%Feedback von User
+\begin{myreq}
+  \threeinline
+    {\reqno 75}
+    {\reqtype 9}
+    {\reqevent 7.9}
+  \reqdesc Feedback-Funktion für den Nutzer
+  \reqrat Besseres Einblick zu dem Lernprozess des Nutzers erhalten. Schwächen sollen effizienter erkannt und behoben werden
+  \reqorig Bruno Standke
+  \reqfit longer text that needs more than one line longer text that needs more than one line  %!!!!!
+  \twoinline
+    {\reqsatis 2}
+    {\reqdissat 1}
+  \twoinline
+  {\reqprio 1}
+  {\reqconf N.A.}
+  \reqmater https://www.barclays.co.uk/content/dam/documents/ \newline
+business/business-insight/feedback-economy.pdf
+  \reqhist 06.11.2022: Bruno Standke
+\end{myreq}
+
+%Feedback Admin
+\begin{myreq}
+  \threeinline
+    {\reqno 75}
+    {\reqtype 9}
+    {\reqevent 7.9}
+  \reqdesc Kommentarfunktion von Moderator für Nutzer
+  \reqrat Nach beenden einer Aufgabe kann der Nutzer von einen Moderator individuelles Feedback erhalten. Diese sollen den Nutzer auf Schwächen hinweisen und Lösungsansätze anbieten
+  \reqorig Bruno Standke
+  \reqfit Nutzer kann angeben, ob Feedback hilfreich war
+  \twoinline
+    {\reqsatis 3}
+    {\reqdissat 1}
+  \twoinline
+  {\reqprio 4}
+  {\reqconf N.A.}
+  \reqmater https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bosu2015useful.pdf
+  \reqhist 07.11.2022: Bruno Standke
+\end{myreq}
+%automatisiertes Auswerten von Ergebnissen (Kompilierung+Korrektheit)
+\begin{myreq}
+  \threeinline
+    {\reqno 75}
+    {\reqtype 9}
+    {\reqevent 7.9}
+  \reqdesc Automatisierte Bewertung von Lösungen
+  \reqrat Lösungen des Nutzers sollen vom System selbständig kompiliert und ausgewertet werden
+  \reqorig Dominik Gorgosch
+  \reqfit Code soll in unter 5 Sekunden kompiliert und ausgeführt werden. Ausgabe wird mit einer Musterlösung verglichen
+  \twoinline
+    {\reqsatis 5}
+    {\reqdissat 5}
+  \twoinline
+  {\reqprio +inf}
+  {\reqconf N.A.}
+  \reqmater N.A.
+  \reqhist 07.11.2022: Bruno Standke
+\end{myreq}
+\end{document}
