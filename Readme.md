@@ -14,6 +14,7 @@ Dokumentation Links:
     -   (download lts) https://nodejs.org/en/
     -   (run in an elevated shell) `npm install -g yarn`
     -   (run in an elevated shell) `npm install -g @angular/cli`
+    -   (run in an elevated shell) `npm install -g ng-openapi-gen`
 -   open the project in visual studio or rider and run the backend through the launch options (the reccomended way of starting the project)
 -   you can inspect the backend routes on https://localhost:44345/swagger
 
@@ -34,7 +35,7 @@ Dokumentation Links:
 -   after the backend started successfully run:
 
 ```powershell
-yarn;
+yarn install;
 yarn quickstart;
 ```
 
