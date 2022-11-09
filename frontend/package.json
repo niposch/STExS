@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "quickstart": "yarn swagger && yarn start",
+    "quickstart": "yarn && yarn swagger && yarn start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development --proxy-config proxy.conf.json",
     "test": "ng test",
