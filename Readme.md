@@ -46,7 +46,7 @@ yarn quickstart;
 
 ## Entity Framework
 
--   the main commands one might use are: `database update` and `migration add {new migration name}`
+-   the main commands one might use are: `database update` and `migrations add {new migration name}`
 -   do not run them directly (insert them into the placeholder for the identity database or the application database)
 -   be sure that you are in the backend subfolder of this repo when running these commands
 -   Run before running any command: `set ASPNETCORE_ENVIRONMENT=Development`
