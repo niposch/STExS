@@ -2,7 +2,6 @@ using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models;
-using Identity;
 using Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
@@ -17,16 +16,12 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"), builder.Environment.IsDevelopment()));
-    b.RegisterModule<IdentityModule>();
 });
 
 var sqliteConnectionBuilder = new SqliteConnectionStringBuilder();
 sqliteConnectionBuilder.DataSource = "./IdentityDb.db";
-builder.Services.AddDbContext<AppIdentityDbContext>(options =>
-    options.UseSqlite(sqliteConnectionBuilder.ToString()));
-
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AppIdentityDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();

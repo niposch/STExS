@@ -55,3 +55,6 @@ yarn quickstart;
 -   for Identity database(might be removed later):
     -   `dotnet ef --project Identity --startup-project STExS.Web {command} --context AppIdentityDbContext`
 -   For reference: https://stackoverflow.com/a/60959348
+
+## Asp.Net Identity
+- provisional login page is on /Identity/Account/Login
