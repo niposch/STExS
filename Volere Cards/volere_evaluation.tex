@@ -4,6 +4,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{enumitem}
 \usepackage{tcolorbox}
+\usepackage{hyperref}
 
 \newcounter{requirementCounter} % create a new counter, called 'mycounter'
 % default def'n of '\themycounter' is '\arabic{mycounter}'
@@ -22,7 +23,7 @@
 
 \newcommand{\reqno}{\item[Requirement \#: ]\insertRequirementCount{}}
 \newcommand{\reqtype}{\item[Requirement Type:]}
-\newcommand{\reqevent}{\item[Event/BUC/PUC \#:]}
+\newcommand{\reqevent}{\item[Sprint \#:]}
 \newcommand{\reqdesc}{\item[Description:]}
 \newcommand{\reqrat}{\item[Rationale:]}
 \newcommand{\reqorig}{\item[Originator:]}
@@ -35,7 +36,6 @@
 \newcommand{\reqhist}{\item[History:]}
 
 \begin{document}
-\showmycounter{}
 %Feedback von User
 \begin{myreq}
   \threeinline
@@ -52,8 +52,7 @@
   \twoinline
   {\reqprio 1}
   {\reqconf N.A.}
-  \reqmater https://www.barclays.co.uk/content/dam/documents/ \newline
-  business/business-insight/feedback-economy.pdf
+  \reqmater \url{https://www.barclays.co.uk/content/dam/documents/business/business-insight/feedback-economy.pdf}
   \reqhist 06.11.2022: Bruno Standke
 \end{myreq}
 
@@ -73,14 +72,14 @@
   \twoinline
   {\reqprio 4}
   {\reqconf N.A.}
-  \reqmater https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bosu2015useful.pdf
+  \reqmater \url{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bosu2015useful.pdf}
   \reqhist 07.11.2022: Bruno Standke
 \end{myreq}
 %automatisiertes Auswerten von Ergebnissen (Kompilierung+Korrektheit)
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype 9}
+  {\reqtype Technical Requirement}
   {\reqevent 7.9}
   \reqdesc Automatisierte Bewertung von Lösungen
   \reqrat Lösungen des Nutzers sollen vom System selbständig kompiliert und ausgewertet werden
@@ -95,4 +94,43 @@
   \reqmater N.A.
   \reqhist 07.11.2022: Bruno Standke
 \end{myreq}
+
+
+\begin{myreq}
+  \threeinline
+  {\reqno}
+  {\reqtype Technical Requirement}
+  {\reqevent KW45}
+  \reqdesc Nutzerkonten werden durch das System eindeutig identifiziert
+  \reqrat es muss für bestimmte Funktionen ein Nutzerkonto eindeutig identifiziert werden können
+  \reqorig Nick Pörschmann
+  \reqfit jeder Nutzer muss bei der Accounterstellung mit einer eindeutigen und unveränderlichen Id versehen werden. Diese muss vom System gespeichert werden.
+  \twoinline
+  {\reqsatis 0}
+  {\reqdissat 0}
+  \twoinline
+  {\reqprio +inf}
+  {\reqconf N.A.}
+  \reqmater UUIDv4 kann hierfür verwendet werden \url{https://en.wikipedia.org/wiki/Universally_unique_identifier}
+  \reqhist 11.11.2022: erstellt von Nick
+\end{myreq}
+\begin{myreq}
+  \threeinline
+  {\reqno}
+  {\reqtype 9}
+  {\reqevent KW45}
+  \reqdesc Kritische Systemfehler(z.B. Abgabe konnte nicht gespeichert werden) werden dem Nutzer mitgeteilt
+  \reqrat Nutzer müssen auf Fehlerzustände hingewiesen werden
+  \reqorig Nick Pörschmann
+  \reqfit Wenn Fehler Auftreten, muss dies durch die Anwendung erkannt und dem Nutzer mitgeteilt werden
+  \twoinline
+  {\reqsatis 2}
+  {\reqdissat 6}
+  \twoinline
+  {\reqprio 8}
+  {\reqconf N.A.}
+  \reqmater \url{https://uxplanet.org/how-to-write-good-error-messages-858e4551cd4}
+  \reqhist 11.11.2022: erstellt von Nick
+\end{myreq}
+
 \end{document}
