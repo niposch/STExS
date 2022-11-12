@@ -21,12 +21,14 @@ public enum LoginFailureType
     NotAllowedToSignIn = 3
 }
 
-public class IdentityController : ControllerBase
+[ApiController]
+[Route("Identity/[controller]")]
+public class AuthenticationController : ControllerBase
 {
     private readonly ILogger logger;
     private readonly SignInManager<ApplicationUser> signInManager;
 
-    public IdentityController(SignInManager<ApplicationUser> signInManager,
+    public AuthenticationController(SignInManager<ApplicationUser> signInManager,
         ILogger logger)
     {
         this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));

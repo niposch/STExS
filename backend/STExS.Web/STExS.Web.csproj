@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="TestHelper" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="..\..\Readme.md">
       <Link>Readme.md</Link>
     </Content>
@@ -34,7 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data" />
-    <Folder Include="Controllers\Identity" />
   </ItemGroup>
 
 </Project>
