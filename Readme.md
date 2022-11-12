@@ -25,6 +25,10 @@ Dokumentation Links:
 -   run `dotnet ef --project Repositories --startup-project STExS.Web {command} --context ApplicationDbContext` to update the main database
 -   run `dotnet ef --project Identity --startup-project STExS.Web {command} --context AppIdentityDbContext` to update the account database
 
+## in visual studio code
+
+-   install the c# extension
+
 ## From Cli
 
 ### Backend
