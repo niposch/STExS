@@ -9,21 +9,30 @@ Dokumentation Links:
 
 # How to run the project
 
--   dependencies
-    -   (download and install the sdk) https://dotnet.microsoft.com/en-us/download/dotnet/6.0
-    -   (download lts) https://nodejs.org/en/
-    -   (run in an elevated shell) `npm install -g yarn`
-    -   (run in an elevated shell) `npm install -g @angular/cli`
-    -   (run in an elevated shell) `npm install -g ng-openapi-gen`
-    -   `dotnet tool install --global dotnet-ef`
--   open the project in visual studio or rider and run the backend through the launch options (the reccomended way of starting the project)
--   you can inspect the backend routes on https://localhost:44345/swagger
+## Recommended Dev Setup
+- install Visual Studio 2022 or Jetbrains Rider
+- install the .NET 6 SDK => https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+-  https://nodejs.org/en/ (download the lts version)
+- run in an elevated shell
+```
+npm install -g yarn @angular/cli ng-openapi-gen;
+dotnet tool install --global dotnet-ef
+```
+- open the STExS.sln file in Visual Studio or Rider
+- press start to start the backend
+    - it might ask whether to install the dev certificate, press yes
+- open a new terminal in the frontend folder
+- run `yarn quickstart`
+-   you can inspect the backend api routes on https://localhost:44345/swagger
+-  the frontend will be started on http://localhost:4200
 
-## First Start
+## Helpful commands
 
--   run `dotnet dev-certs https` to enable the development https certificate (this only works on windows and mac)
--   run `dotnet ef --project Repositories --startup-project STExS.Web {command} --context ApplicationDbContext` to update the main database
--   run `dotnet ef --project Identity --startup-project STExS.Web {command} --context AppIdentityDbContext` to update the account database
+-   https errors: run `dotnet dev-certs https` to enable the development https certificate (this only works on windows and mac)
+
+## in visual studio code
+
+-   install the c# extension
 
 ## From Cli
 
@@ -35,10 +44,9 @@ Dokumentation Links:
 ### Frontend
 
 -   start the backend
--   after the backend started successfully run:
+-   after the backend started successfully run (from the frontend directory):
 
 ```powershell
-yarn install;
 yarn quickstart;
 ```
 
@@ -47,14 +55,13 @@ yarn quickstart;
 ## Entity Framework
 
 -   the main commands one might use are: `database update` and `migrations add {new migration name}`
--   do not run them directly (insert them into the placeholder for the identity database or the application database)
+-   do not run them directly (insert them into the placeholder below)
 -   be sure that you are in the backend subfolder of this repo when running these commands
 -   Run before running any command: `set ASPNETCORE_ENVIRONMENT=Development`
 -   for Application database:
     -   `dotnet ef --project Repositories --startup-project STExS.Web {command} --context ApplicationDbContext`
--   for Identity database(might be removed later):
-    -   `dotnet ef --project Identity --startup-project STExS.Web {command} --context AppIdentityDbContext`
 -   For reference: https://stackoverflow.com/a/60959348
 
 ## Asp.Net Identity
-- provisional login page is on /Identity/Account/Login
+
+-   provisional login page is on /Identity/Account/Login
