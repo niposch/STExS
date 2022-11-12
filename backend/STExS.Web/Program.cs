@@ -2,11 +2,8 @@ using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models;
-using Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
+using Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +12,10 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
     b.RegisterModule<ApplicationModule>();
-    b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"), builder.Environment.IsDevelopment()));
+    b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"),
+        builder.Environment.IsDevelopment()));
 });
 
-var sqliteConnectionBuilder = new SqliteConnectionStringBuilder();
-sqliteConnectionBuilder.DataSource = "./IdentityDb.db";
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -47,7 +43,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();;
+app.UseAuthentication();
 app.UseStaticFiles();
 app.MapRazorPages();
 
