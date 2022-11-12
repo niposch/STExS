@@ -1,9 +1,7 @@
-﻿using AutoFixture;
-using AutoFixture.AutoMoq;
-using TestHelper;
+﻿using TestHelper;
 
-namespace STExS.Web.IntegrationTests;
+namespace STExS.Web.IntegrationTests.Controllers.IdentityController.Tests;
 
-public abstract class Infrastructure: BaseIntegrationTest
+public abstract class Infrastructure : BaseIntegrationTest
 {
 }

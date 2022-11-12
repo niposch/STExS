@@ -27,12 +27,15 @@ public class AuthenticationController : ControllerBase
 {
     private readonly ILogger logger;
     private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public AuthenticationController(SignInManager<ApplicationUser> signInManager,
-        ILogger logger)
+        ILogger<AuthenticationController> logger,
+        UserManager<ApplicationUser> userManager)
     {
         this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
     }
 
     [HttpPost]
@@ -41,30 +44,39 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> Login([FromBody] [Required] LoginModel loginModel,
         string? returnUrl)
     {
-        var result = await signInManager.PasswordSignInAsync(loginModel.Email, 
+        var user = await this.userManager.FindByEmailAsync(loginModel.Email);
+        if (user == null)
+        {
+            this.logger.LogWarning("User {Email} tried to log in, but the user does not exist.", loginModel.Email);
+            return this.Unauthorized(LoginFailureType.WrongCredentials);
+        }
+        var result = await signInManager.PasswordSignInAsync(user.UserName, 
             loginModel.Password,
             loginModel.StayLoggedIn,
             false);
         if(result.Succeeded){
-            logger.LogInformation("User logged in.");
+            this.logger.LogInformation("User {Email} logged in successfully.", loginModel.Email);
             return this.Ok();
         }
 
         if (result.IsLockedOut)
         {
+            this.logger.LogWarning("User {Email} tried to log in, but the user is locked out.", loginModel.Email);
             return this.Unauthorized(LoginFailureType.Requires2FA);
         }
 
         if (result.IsLockedOut)
         {
+            this.logger.LogWarning("User {Email} tried to log in, but the user is locked out.", loginModel.Email);
             return this.Unauthorized(LoginFailureType.LockedOut);
         }
 
         if (result.IsNotAllowed)
         {
+            this.logger.LogWarning("User {Email} tried to log in, but the user is not allowed to sign in.", loginModel.Email);
             return this.Unauthorized(LoginFailureType.NotAllowedToSignIn);
         }
-
+        this.logger.LogWarning("User {Email} tried to log in, but the user entered the wrong credentials.", loginModel.Email);
         return this.Unauthorized(LoginFailureType.WrongCredentials);
     }
 }
