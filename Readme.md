@@ -16,6 +16,7 @@ Dokumentation Links:
     -   (run in an elevated shell) `npm install -g @angular/cli`
     -   (run in an elevated shell) `npm install -g ng-openapi-gen`
     -   `dotnet tool install --global dotnet-ef`
+    -   from the backend subdirectory: `dotnet ef --project Repositories --startup-project STExS.Web database update --context ApplicationDbContext`
 -   open the project in visual studio or rider and run the backend through the launch options (the reccomended way of starting the project)
 -   you can inspect the backend routes on https://localhost:44345/swagger
 
@@ -39,7 +40,7 @@ Dokumentation Links:
 ### Frontend
 
 -   start the backend
--   after the backend started successfully run:
+-   after the backend started successfully run (from the frontend directory):
 
 ```powershell
 yarn install;
@@ -56,9 +57,8 @@ yarn quickstart;
 -   Run before running any command: `set ASPNETCORE_ENVIRONMENT=Development`
 -   for Application database:
     -   `dotnet ef --project Repositories --startup-project STExS.Web {command} --context ApplicationDbContext`
--   for Identity database(might be removed later):
-    -   `dotnet ef --project Identity --startup-project STExS.Web {command} --context AppIdentityDbContext`
 -   For reference: https://stackoverflow.com/a/60959348
 
 ## Asp.Net Identity
-- provisional login page is on /Identity/Account/Login
+
+-   provisional login page is on /Identity/Account/Login
