@@ -22,7 +22,7 @@
 \newcommand{\twoinline}[2]{\begin{multicols}{2}#1 #2\end{multicols}}
 
 \newcommand{\reqno}{\item[Requirement \#: ]\insertRequirementCount{}}
-\newcommand{\reqtype}{\item[Requirement Type:]}
+\newcommand{\reqtype}{\item[Req. Type:]}
 \newcommand{\reqevent}{\item[Sprint \#:]}
 \newcommand{\reqdesc}{\item[Description:]}
 \newcommand{\reqrat}{\item[Rationale:]}
@@ -36,6 +36,7 @@
 \newcommand{\reqhist}{\item[History:]}
 
 \begin{document}
+Requirements types: Functional (F), Non-Functional (NF)
 %Feedback von User
 \begin{myreq}
   \threeinline
@@ -99,15 +100,15 @@
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype Technical Requirement}
+  {\reqtype F}
   {\reqevent KW45}
   \reqdesc Nutzerkonten werden durch das System eindeutig identifiziert
   \reqrat es muss für bestimmte Funktionen ein Nutzerkonto eindeutig identifiziert werden können
-  \reqorig Nick Pörschmann
+  \reqorig Entwickler
   \reqfit jeder Nutzer muss bei der Accounterstellung mit einer eindeutigen und unveränderlichen Id versehen werden. Diese muss vom System gespeichert werden.
   \twoinline
-  {\reqsatis 0}
-  {\reqdissat 0}
+  {\reqsatis 1}
+  {\reqdissat 1}
   \twoinline
   {\reqprio +inf}
   {\reqconf N.A.}
@@ -117,11 +118,11 @@
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype 9}
+  {\reqtype NF}
   {\reqevent KW45}
   \reqdesc Kritische Systemfehler(z.B. Abgabe konnte nicht gespeichert werden) werden dem Nutzer mitgeteilt
   \reqrat Nutzer müssen auf Fehlerzustände hingewiesen werden
-  \reqorig Nick Pörschmann
+  \reqorig Endnutzer
   \reqfit Wenn Fehler Auftreten, muss dies durch die Anwendung erkannt und dem Nutzer mitgeteilt werden
   \twoinline
   {\reqsatis 2}
@@ -137,35 +138,35 @@
 %Jonathans Volere Snow Cards
 \begin{myreq}
   \threeinline
-    {\reqno 01}
-    {\reqtype 2}
-    {\reqevent 3 (6)}
+  {\reqno 01}
+  {\reqtype 2}
+  {\reqevent 3 (6)}
   \reqdesc Code Editor mit Syntax Highlighting von Java, Python
   \reqrat Syntax / Programmieraufgaben mit Code Editor mit Syntax Highlighting realistisch umsetzbar
   \reqorig Nutzer, die Syntax / Programmieraufgaben lösen müssen
   \reqfit gehighlighteten Code mit Code in IDEs vergleichen
   \twoinline
-    {\reqsatis 5}
-    {\reqdissat 9}
+  {\reqsatis 5}
+  {\reqdissat 9}
   \twoinline
   {\reqprio 8}
   {\reqconf N.A.}
   \reqmater -
-  \reqhist 11.11.2022 Anforderung erstellt 
+  \reqhist 11.11.2022 Anforderung erstellt
 \end{myreq}
 
 \begin{myreq}
   \threeinline
-    {\reqno 02}
-    {\reqtype 2}
-    {\reqevent 9.9}
+  {\reqno 02}
+  {\reqtype 2}
+  {\reqevent 9.9}
   \reqdesc Code Editor muss in unter 0.125 einen Tastendruck registrieren
   \reqrat längere Reaktionszeiten sind nicht Nutzerfreundlich und sorgen für Unzufriedenheit
   \reqorig Nutzer
   \reqfit Zeitmessung im Code
   \twoinline
-    {\reqsatis 5}
-    {\reqdissat 9}
+  {\reqsatis 5}
+  {\reqdissat 9}
   \twoinline
   {\reqprio 8}
   {\reqconf N.A.}
