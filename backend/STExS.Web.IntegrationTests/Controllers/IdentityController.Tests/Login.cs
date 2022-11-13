@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
@@ -10,7 +11,7 @@ namespace STExS.Web.IntegrationTests.Controllers.IdentityController.Tests;
 public sealed class Login : Infrastructure
 {
     [Fact]
-    public async Task Test1()
+    public async Task UnauthorizedResponseForNonexistentUser()
     {
         // Arrange
 
@@ -44,6 +45,15 @@ public sealed class Login : Infrastructure
 
         // Assert
         var respContents = res.Content.ReadAsStringAsync().Result;
+        // decode the jwt in respContents
+        var handler = new JwtSecurityTokenHandler();
+        var jwt = handler.ReadJwtToken(respContents);
+        jwt.Claims
+            .Where(c => c.Type == "sub")
+            .First()
+            .Value
+            .Should()
+            .Be(this.DefaultUser.Id);
         res.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }
