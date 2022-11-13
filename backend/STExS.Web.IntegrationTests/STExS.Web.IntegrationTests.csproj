@@ -23,15 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="AutoFixture">
-      <HintPath>..\..\..\..\..\.nuget\packages\autofixture\4.17.0\lib\netstandard2.0\AutoFixture.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\..\..\..\..\.nuget\packages\fluentassertions\6.8.0\lib\net6.0\FluentAssertions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\STExS.Web\STExS.Web.csproj" />
     <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
   </ItemGroup>
