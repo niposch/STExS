@@ -60,6 +60,13 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -78,13 +85,6 @@ if (app.Environment.IsDevelopment())
     userManager.CreateAsync(user, "Test333!").Wait();
     var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
     userManager.ConfirmEmailAsync(user, token).Wait();
-}
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
