@@ -7,13 +7,14 @@
             <mat-card-content>
                 <form>
                     <mat-form-field>
-                        <mat-label>Email</mat-label>
-                        <input type="email" matInput>
+                        <mat-label>E-Mail</mat-label>
+                        <input type="email" matInput required>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Password</mat-label>
-                        <input type="password" matInput>
+                        <input type="password" matInput required>
                     </mat-form-field>
+                    <mat-checkbox [checked]="this.stayLoggedIn" (change)="this.stayLoggedIn = $event.checked">Stay logged in</mat-checkbox>
                     <button type="button" (click)="login()" mat-button mat-raised-button color="accent">Login</button>
                     <a mat-button mat-stroked-button color="secondary" href="/auth/register">Register</a>
                 </form>

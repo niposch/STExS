@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   public showLoading:boolean = false;
+  public stayLoggedIn:boolean = false;
 
   constructor(
     private route: ActivatedRoute

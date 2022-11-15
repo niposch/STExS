@@ -12,14 +12,17 @@ import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
-
+import {MatSelectModule} from '@angular/material/select'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ApiModule} from "../services/generated/api.module";
 import { LoginComponent } from './components/authentication/login/login.component';
+import { RegisterComponent } from './components/authentication/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,8 @@ import { LoginComponent } from './components/authentication/login/login.componen
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
+    MatSelectModule,
+    MatCheckboxModule,
     ApiModule.forRoot({rootUrl: '/api'})
   ],
   providers: [],
