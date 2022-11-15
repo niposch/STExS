@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
@@ -25,6 +26,7 @@ import { LoginComponent } from './components/authentication/login/login.componen
     BrowserAnimationsModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatCardModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
