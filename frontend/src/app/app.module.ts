@@ -11,10 +11,12 @@ import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {ApiModule} from "../services/generated/api.module";
+import { LoginComponent } from './components/authentication/login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

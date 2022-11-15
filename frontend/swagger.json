@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/Authentication": {
+    "/Identity/Authentication": {
       "post": {
         "tags": [
           "Authentication"
@@ -227,6 +227,14 @@
           }
         },
         "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme. Insert the token you get from the login route",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
