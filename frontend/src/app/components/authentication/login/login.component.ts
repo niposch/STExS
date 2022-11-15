@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  public showLoading:boolean = false;
+
   constructor(
     private route: ActivatedRoute
   ) { }
@@ -22,4 +24,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  login(){
+    this.showLoading = true;
+    setTimeout(() =>{
+      this.showLoading = false;
+    }, 2000)
+  }
 }

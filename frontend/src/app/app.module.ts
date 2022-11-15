@@ -11,6 +11,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatProgressBarModule} from '@angular/material/progress-bar'; 
+
 import {ApiModule} from "../services/generated/api.module";
 import { LoginComponent } from './components/authentication/login/login.component';
 
@@ -30,6 +32,7 @@ import { LoginComponent } from './components/authentication/login/login.componen
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressBarModule,
     ApiModule.forRoot({rootUrl: '/api'})
   ],
   providers: [],

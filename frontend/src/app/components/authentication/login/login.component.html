@@ -1,6 +1,7 @@
 <div class="container">
     <div class="flex-item">
-        <mat-card>
+        <mat-progress-bar *ngIf="this.showLoading" mode="indeterminate" color="accent"></mat-progress-bar>
+        <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''"> 
             <mat-card-subtitle>Login</mat-card-subtitle>
             <mat-card-title>STeX</mat-card-title>
             <mat-card-content>
@@ -13,8 +14,8 @@
                         <mat-label>Password</mat-label>
                         <input type="password" matInput>
                     </mat-form-field>
-                    <button mat-button mat-raised-button color="accent">Login</button>
-                    <a mat-button mat-stroked-button color="secondary" routerLink="">Register</a>
+                    <button type="button" (click)="login()" mat-button mat-raised-button color="accent">Login</button>
+                    <a mat-button mat-stroked-button color="secondary" href="/auth/register">Register</a>
                 </form>
             </mat-card-content>
         </mat-card>
