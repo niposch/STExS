@@ -6,20 +6,35 @@
             <mat-card-title>STExS</mat-card-title>
             <mat-card-content>
                 <form>
+                    <!-- E-MAIL -->
                     <mat-form-field>
                         <mat-label>E-Mail</mat-label>
-                        <input type="email" matInput required>
+                        <input type="email" (keyup)="validateEmail($event)" matInput required>
                     </mat-form-field>
+                    <mat-label class="validation-error" *ngIf="showEmailError">Please enter a valid email address!</mat-label>
+
+                    <!-- PASSWORD -->
                     <mat-form-field>
                         <mat-label>Password</mat-label>
-                        <input type="password" matInput required>
-                    </mat-form-field>
+                        <input type="password" (keyup)="validatePassword($event)" matInput required>
+                    </mat-form-field>                   
+                    <mat-label class="validation-error" *ngIf="showPasswordError">Please enter a password!</mat-label>
+                    
                     <mat-checkbox [checked]="this.stayLoggedIn" (change)="this.stayLoggedIn = $event.checked">Stay logged in</mat-checkbox>
-                    <button type="button" (click)="login()" mat-button mat-raised-button color="accent">Login</button>
+
+                    <!-- LOGIN BUTTON -->
+                    <div *ngIf="this.loginButtonEnabled then showLogin else disableLogin"></div>
+                    <ng-template #showLogin>
+                        <button type="button" (click)="login()" mat-button mat-raised-button color="accent">Login</button>
+                    </ng-template>
+                    <ng-template #disableLogin>
+                    <button type="button" disabled mat-button mat-raised-button color="accent">Login</button>
+                    </ng-template>
+
+
                     <a mat-button mat-stroked-button color="secondary" href="/auth/register">Register</a>
                 </form>
             </mat-card-content>
         </mat-card>
     </div>
-
 </div>

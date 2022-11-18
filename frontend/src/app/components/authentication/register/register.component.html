@@ -6,6 +6,7 @@
             <mat-card-title>STExS</mat-card-title>
             <mat-card-content>
                 <form>
+                    <!-- NAME -->
                     <div class="row">
                         <mat-form-field class="name-input">
                             <mat-label>First Name</mat-label>
@@ -16,30 +17,53 @@
                             <input type="text" matInput>
                         </mat-form-field>
                     </div>
+
+                    <!-- EMAIL -->
                     <mat-form-field>
                         <mat-label>E-Mail</mat-label>
-                        <input type="email" matInput required>
+                        <input type="email" (keyup)="validateEmail($event)" matInput required>
                     </mat-form-field>
+                    <mat-label class="validation-error" *ngIf="showEmailError">Please enter a valid email address!</mat-label>
+
+                    <!-- PASSWORD -->
                     <mat-form-field>
                         <mat-label>Password</mat-label>
-                        <input type="password" matInput required>
+                        <input type="password" (keyup)="validatePassword($event)" matInput required>
                     </mat-form-field>
+                    <mat-label class="validation-error" *ngIf="showPasswordError">
+                        This password must consist of:
+                        <ul>
+                            <li *ngIf="!PW8CharsLong">min 8 characters long</li>
+                            <li *ngIf="!PW1Uppercase">min 1 uppercase letter</li>
+                            <li *ngIf="!PW1Lowercase">min 1 lowercase letter</li>
+                            <li *ngIf="!PW1Number">min 1 number</li>
+                            <li *ngIf="!PW1SpecialChar">min 1 special character</li>
+                        </ul>
+                    </mat-label>
+
+                    <!-- GENDER -->
                     <mat-form-field appearance="fill">
                         <mat-label>Gender</mat-label>
-                        <mat-select required>
+                        <mat-select>
                           <mat-option value="male">male</mat-option>
                           <mat-option value="female">female</mat-option>
                           <mat-option value="other">other</mat-option>
                         </mat-select>
-                    </mat-form-field>                     
-                    <mat-checkbox [checked]="this.agreedToTOS" (change)="this.agreedToTOS = $event.checked">Agree to <a href="https://google.com/">Terms of Service</a> *</mat-checkbox>
-                    <div *ngIf="this.agreedToTOS then showRegister else disableRegister"></div>
+                    </mat-form-field>
+                    
+                    <!-- TOS -->
+                    <mat-checkbox [checked]="this.agreedToTOS" (change)="this.agreedToTOS = $event.checked; this.allRequiredInputsValid();">Agree to <a href="https://google.com/">Terms of Service</a> *</mat-checkbox>
+
+                    <!-- REGISTER BUTTON -->
+                    <div *ngIf="this.registerButtonEnabled then showRegister else disableRegister"></div>
                     <ng-template #showRegister>
                         <button type="button" (click)="register()" mat-button mat-raised-button color="accent">Register</button>
                     </ng-template>
                     <ng-template #disableRegister>
                     <button type="button" disabled mat-button mat-raised-button color="accent">Register</button>
                     </ng-template>
+
+                    <!-- LOGIN BUTTON -->
                     <a mat-button mat-stroked-button color="secondary" href="/auth/login">Login</a>
                 </form>
             </mat-card-content>
