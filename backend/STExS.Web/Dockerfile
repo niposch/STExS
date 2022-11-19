@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["STExS.Web/STExS.Web.csproj", "STExS.Web/"]
-COPY ["Application/Application.csproj", "Application/"]
+COPY ["../Application/Application.csproj", "Application/"]
 COPY ["Common/Common.csproj", "Common/"]
 COPY ["Repositories/Repositories.csproj", "Repositories/"]
 RUN dotnet restore "STExS.Web/STExS.Web.csproj"
