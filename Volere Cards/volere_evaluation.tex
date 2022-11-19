@@ -137,19 +137,19 @@ Requirements types: Functional (F), Non-Functional (NF)
 % Lei's Volere Cards
 \begin{myreq}
   \threeinline
-    {\reqno 75}
-    {\reqtype F}
-    {\reqevent 7.9}
+  {\reqno}
+  {\reqtype F}
+  {\reqevent 7.9}
   \reqdesc programming task timer
   \reqrat coding task with restricted time limit should be assigned with its own timer
-  \reqorig Lei Ding  
+  \reqorig Lei Ding
   \reqfit show remaining time, resume after reconnect, Precise to the second
   \twoinline
-    {\reqsatis 5}
-    {\reqdissat 3}
+  {\reqsatis 5}
+  {\reqdissat 3}
   \twoinline
 
-   {\reqprio 1}
+  {\reqprio 1}
   {\reqconf 0}
   \reqmater -
   \reqhist 07.11.2022
@@ -158,21 +158,21 @@ Requirements types: Functional (F), Non-Functional (NF)
 
 \begin{myreq}
   \threeinline
-    {\reqno 75}
-    {\reqtype F}
-    {\reqevent 7.9}
+  {\reqno}
+  {\reqtype F}
+  {\reqevent 7.9}
   \reqdesc personal infor management
   \reqrat users should be able to control the information of their own account
-  \reqorig Lei Ding  
+  \reqorig Lei Ding
   \reqfit change name|password|Email address, request to delete all their information in conformity with GDPR
   \twoinline
-    {\reqsatis 5}
-    {\reqdissat 3}
+  {\reqsatis 5}
+  {\reqdissat 3}
   \twoinline
   {\reqprio 1}
   {\reqconf N.A.}
   \reqmater  -
-  \reqhist 07.11.2022 
+  \reqhist 07.11.2022
 
 
 \end{myreq}
@@ -180,7 +180,7 @@ Requirements types: Functional (F), Non-Functional (NF)
 %Jonathans Volere Snow Cards
 \begin{myreq}
   \threeinline
-  {\reqno 01}
+  {\reqno }
   {\reqtype 2}
   {\reqevent 3 (6)}
   \reqdesc Code Editor mit Syntax Highlighting von Java, Python
@@ -199,7 +199,7 @@ Requirements types: Functional (F), Non-Functional (NF)
 
 \begin{myreq}
   \threeinline
-  {\reqno 02}
+  {\reqno }
   {\reqtype 2}
   {\reqevent 9.9}
   \reqdesc Code Editor muss in unter 0.125 einen Tastendruck registrieren
@@ -260,10 +260,10 @@ Requirements types: Functional (F), Non-Functional (NF)
   {\reqtype NF}
   {\reqevent KW45}
   \reqdesc Daten sollen verschlüsselt übertragen werden
-  \reqrat Grundlegende Datensicherheit muss gewährleistet sein. 
+  \reqrat Grundlegende Datensicherheit muss gewährleistet sein.
   \reqorig ST-Praktikum
   \reqfit Logging und dessen Überprüfung vor der Datenübertragung
-  \twoinline 
+  \twoinline
   {\reqsatis 2}
   {\reqdissat 5}
   \twoinline
@@ -298,7 +298,7 @@ Requirements types: Functional (F), Non-Functional (NF)
   {\reqtype NF}
   {\reqevent KW45}
   \reqdesc Ein durchschnittlicher, unerfahrener Nutzer soll in unter 10 Minuten in der Lage sein, eine Frage, auf welchem ihm die Antwort bekannt ist, richtig zu beantworten
-  \reqrat Die Usability/User-Freundlichkeit der Anwendung muss gewährleistet sein und einem Mindeststandard entsprechen 
+  \reqrat Die Usability/User-Freundlichkeit der Anwendung muss gewährleistet sein und einem Mindeststandard entsprechen
   \reqorig Nutzer (Student)
   \reqfit Testdurchlauf von Aufgaben durch einen externen Tester (zB einen Nutzer der "Admin" Gruppe)
   \twoinline
@@ -350,6 +350,45 @@ Requirements types: Functional (F), Non-Functional (NF)
   \reqmater -
   \reqhist 10.11.2022 Max Meyer
 \end{myreq}
+% Login-Vorgang
+\begin{myreq}
+  \threeinline
+  {\reqno}
+  {\reqtype NF}
+  {\reqevent KW46}
+  \reqdesc effizienter Login-Vorgang für den Nutzer
+  \reqrat längere Log-In Zeit führt zur Reklamation sowie Unzufriedenheit.
+  \reqorig Nutzer
+  \reqfit Alle Login-Vorgänge müssen erfolgreich geschehen, ohne dabei ein Zeitfenster von maximal 2 Minuten zu überschreiten.
+  \twoinline
+  {\reqsatis 5}
+  {\reqdissat 9}
+  \twoinline
+  {\reqprio 3}
+  {\reqconf N.A.}
+  \reqmater -
+  \reqhist 14.11.2022 Mahmoud
+\end{myreq}
 
+
+%Kurse CRUD
+\begin{myreq}
+  \threeinline
+  {\reqno }
+  {\reqtype F}
+  {\reqevent KW46}
+  \reqdesc Kurse CRUD
+  \reqrat Bearbeitung der Kurse ist notwendig.
+  \reqorig Admin
+  \reqfit Dem Admin ist möglich, Kurse zu erstellen, lesen, aktualisieren und zu löschen.
+  \twoinline
+  {\reqsatis 5}
+  {\reqdissat 9}
+  \twoinline
+  {\reqprio 4}
+  {\reqconf N.A.}
+  \reqmater -
+  \reqhist 14.11.2022 Mahmoud
+\end{myreq}
 
 \end{document}
