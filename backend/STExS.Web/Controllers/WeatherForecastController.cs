@@ -21,7 +21,6 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet(Name = "GetWeatherForecast")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<WeatherForecast>))]
-    [Authorize]
     public async Task<IActionResult> Get()
     {
         return this.Ok(await this.weatherService.GetAllActive());

@@ -1,9 +1,12 @@
+using System.Net;
 using System.Text;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders; });
 
 // Configure AutoFac
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -19,6 +23,17 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"),
         builder.Environment.IsDevelopment()));
+});
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                               ForwardedHeaders.XForwardedProto;
+    // Only loopback proxies are allowed by default.
+    // Clear that restriction because forwarders are enabled by explicit 
+    // configuration.
+    options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("172.0.0.0"), 8));
+    // options.KnownProxies.Add(IPAddress.Parse(""));
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -59,7 +74,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+app.UseForwardedHeaders();
+app.UseHttpLogging();
 
+app.Use(async (context,
+    next) =>
+{
+    // Connection: RemoteIp
+    app.Logger.LogInformation("Request RemoteIp: {RemoteIpAddress}",
+        context.Connection.RemoteIpAddress);
+
+    await next(context);
+});
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
