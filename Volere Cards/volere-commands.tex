@@ -1,0 +1,31 @@
+
+
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{qrcode}
+\usepackage{currfile}
+\newenvironment{myreq}[1]{%
+    \setlist[description]{font=\normalfont\color{darkgray}}%
+    \begin{tcolorbox}[colframe=black,colback=white, sharp corners, boxrule=1pt]%
+        \bfseries\color{blue}%
+        \begin{description}#1}%
+            {\end{description}\end{tcolorbox}}
+\newcommand{\threeinline}[3]{\begin{multicols}{3}#1 #2 #3\end{multicols}}
+\newcommand{\twoinline}[2]{\begin{multicols}{2}#1 #2\end{multicols}}
+
+\newcommand{\reqno}{\item[Requirement \#: ]\currfilebase}
+\newcommand{\reqtype}{\item[Req. Type:]}
+\newcommand{\reqevent}{\item[Meilenstein \#:]}
+\newcommand{\reqdesc}{\item[Description:]}
+\newcommand{\reqrat}{\item[Rationale:]}
+\newcommand{\reqorig}{\item[Originator:]}
+\newcommand{\reqfit}{\item[Fit Criterion:]}
+\newcommand{\reqsatis}{\item[Customer Satisfaction:]}
+\newcommand{\reqdissat}{\item[Customer Dissatisfaction:]}
+\newcommand{\reqprio}{\item[Priority:]}
+\newcommand{\reqconf}{\item[Conflicts:]}
+\newcommand{\reqmater}{\item[Materials:]}
+\newcommand{\reqhist}{\item[History:]}
