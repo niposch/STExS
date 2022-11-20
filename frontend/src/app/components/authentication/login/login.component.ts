@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {AuthenticateService} from "../../../../services/generated/services/authenticate.service";
 
 @Component({
   selector: 'app-login',
@@ -8,20 +9,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  public showLoading:boolean = false;
-  public stayLoggedIn:boolean = false;
+  public showLoading: boolean = false;
+  public stayLoggedIn: boolean = false;
 
-  public showEmailError:boolean = false;
-  public showPasswordError:boolean = false;
+  public showEmailError: boolean = false;
+  public showPasswordError: boolean = false;
 
-  public emailIsCorrect:boolean = false;
-  public passwordIsCorrect:boolean = false;
+  public emailIsCorrect: boolean = false;
+  public passwordIsCorrect: boolean = false;
 
-  public loginButtonEnabled:boolean = false;
-  
+  public loginButtonEnabled: boolean = false;
+  public password: string = "";
+  public email: string = "";
+
   constructor(
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private authService: AuthenticateService
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -33,12 +38,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(){
+  login() {
     this.showLoading = true;
-
-    setTimeout(() =>{
+    this.authService.apiAuthenticateLoginPost({
+      body: {
+        email: this.email,
+        password: this.password,
+      }
+    }).subscribe(value => {
+      console.log(value);
       this.showLoading = false;
-    }, 2000)
+    })
   }
 
   validateEmail(event: any) {
