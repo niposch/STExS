@@ -1,5 +1,8 @@
 <div class="header">
   <div class="header-left">
+    <button (click)="this.toggleDrawer()" mat-button>
+      <mat-icon>menu</mat-icon>
+    </button>
     <a class="logo" mat-button routerLink="/">STExS</a>
     <a *ngIf="loggedIn" mat-stroked-button routerLink="/dashboard">Dashboard</a>
     <a *ngIf="loggedIn" mat-stroked-button routerLink="/users">Users</a>

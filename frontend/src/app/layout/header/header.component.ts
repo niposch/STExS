@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 
@@ -10,6 +10,15 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
+
+  @Input()
+  public hasDrawer: boolean = true;
+
+  @Input()
+  public showDrawer: boolean = false;
+  @Output()
+  public showDrawerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 
   constructor(private readonly userService: UserService,
               private readonly router: Router) {
@@ -30,5 +39,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.userService.logout();
     this.router.navigate(["/"])
+  }
+
+  toggleDrawer() {
+    this.showDrawer = !this.showDrawer;
+    this.showDrawerChange.emit(this.showDrawer);
   }
 }
