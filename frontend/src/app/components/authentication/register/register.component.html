@@ -1,7 +1,7 @@
 <div class="container">
     <div class="flex-item">
         <mat-progress-bar *ngIf="this.showLoading" mode="indeterminate" color="accent"></mat-progress-bar>
-        <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''"> 
+        <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
             <mat-card-subtitle>Register</mat-card-subtitle>
             <mat-card-title>STExS</mat-card-title>
             <mat-card-content>
@@ -50,7 +50,7 @@
                           <mat-option value="other">other</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    
+
                     <!-- TOS -->
                     <mat-checkbox [checked]="this.agreedToTOS" (change)="this.agreedToTOS = $event.checked; this.allRequiredInputsValid();">Agree to <a href="https://google.com/">Terms of Service</a> *</mat-checkbox>
 
@@ -64,7 +64,7 @@
                     </ng-template>
 
                     <!-- LOGIN BUTTON -->
-                    <a mat-button mat-stroked-button color="secondary" href="/auth/login">Login</a>
+                    <a mat-button mat-stroked-button color="secondary" href="/login">Login</a>
                 </form>
             </mat-card-content>
         </mat-card>
