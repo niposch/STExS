@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AuthenticateService} from "../../../../services/generated/services/authenticate.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -21,34 +21,32 @@ export class LoginComponent implements OnInit {
   public loginButtonEnabled: boolean = false;
   public password: string = "";
   public email: string = "";
+  private callbackUrl = "/dashboard";
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthenticateService
+    private userService: UserService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       let callbackUrl = params['callbackUrl'];
-      if (callbackUrl == null) {
-        callbackUrl = '/';
+      if (callbackUrl != null) {
+        this.callbackUrl = callbackUrl;
       }
-      console.log(callbackUrl);
     });
   }
 
   login() {
     this.showLoading = true;
-    this.authService.apiAuthenticateLoginPost({
-      body: {
-        email: this.email,
-        password: this.password,
-      }
-    }).subscribe(value => {
-      console.log(value);
-      this.showLoading = false;
-    })
+    this.userService.login(this.email, this.password).subscribe(
+      (user) => {
+        this.showLoading = false;
+        console.log(user);
+        this.router.navigate([this.callbackUrl],).then();
+      })
   }
 
   validateEmail(event: any) {
@@ -80,14 +78,20 @@ export class LoginComponent implements OnInit {
       this.passwordIsCorrect = true;
     }
 
-    this.allRequiredInputsValid()
+    let allValid = this.allRequiredInputsValid()
+    if (event.keyCode == 13 && allValid) {
+      this.login();
+      return;
+    }
   }
 
   allRequiredInputsValid() {
     if (this.passwordIsCorrect && this.emailIsCorrect) {
       this.loginButtonEnabled = true;
+      return true;
     } else {
       this.loginButtonEnabled = false;
     }
+    return false;
   }
 }

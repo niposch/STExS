@@ -10,10 +10,14 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { RegisterComponent } from './components/authentication/register/register.component';
 
 import {ApiModule} from "../services/generated/api.module";
+import { DashboardComponent } from './components/students/dashboard/dashboard.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent,
+    LandingPageComponent
     //LoginComponent,
     //RegisterComponent
   ],

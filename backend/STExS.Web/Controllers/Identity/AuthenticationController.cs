@@ -29,6 +29,7 @@ public class AuthenticateController : ControllerBase
 
     [HttpPost]
     [Route("login")]
+    [ProducesResponseType(typeof(TokenModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> Login([FromBody] AppLoginModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
@@ -39,7 +40,12 @@ public class AuthenticateController : ControllerBase
             var authClaims = new List<Claim>
             {
                 new(ClaimTypes.Name, user.UserName),
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new("userName", user.UserName),
+                new("firstName", user.FirstName),
+                new("lastName", user.LastName),
+                new("email", user.Email),
+                new("matrikelNumber", user.MatrikelNumber)
             };
 
             foreach (var userRole in userRoles) authClaims.Add(new Claim(ClaimTypes.Role, userRole));
@@ -54,7 +60,7 @@ public class AuthenticateController : ControllerBase
 
             await _userManager.UpdateAsync(user);
 
-            return Ok(new
+            return Ok(new TokenResponseModel
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,

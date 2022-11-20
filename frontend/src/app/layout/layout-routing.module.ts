@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { HeaderOnlyLayoutComponent } from './header-only-layout/header-only-layout.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {MainLayoutComponent} from './main-layout/main-layout.component';
+import {HeaderOnlyLayoutComponent} from './header-only-layout/header-only-layout.component';
+import {DashboardComponent} from "../components/students/dashboard/dashboard.component";
+import {LandingPageComponent} from "../components/landing-page/landing-page.component";
+import {AuthGuard} from "../guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -22,14 +25,41 @@ const routes: Routes = [
     path: '',
     component: HeaderOnlyLayoutComponent,
     children: [
-      { path: 'login', loadChildren: () => import('../components/authentication/login/login.module').then(x => x.LoginModule) },
-      { path: 'register', loadChildren: () => import('../components/authentication/register/register.module').then(x => x.RegisterModule)}
+      {
+        path: 'login',
+        loadChildren: () => import('../components/authentication/login/login.module').then(x => x.LoginModule)
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('../components/authentication/register/register.module').then(x => x.RegisterModule)
+      }
     ]
   },
-];
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: MainLayoutComponent,
+        children: [
+          {path: "dashboard", component: DashboardComponent}
+        ]
+      },
+    ]
+  },
+  {
+    path: "",
+    component: MainLayoutComponent,
+    children: [
+      {path: "", component: LandingPageComponent}
+    ]
+  }
+]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class LayoutRoutingModule { }
+export class LayoutRoutingModule {
+}
