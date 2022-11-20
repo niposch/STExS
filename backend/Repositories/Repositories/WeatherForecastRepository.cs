@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories;
-using Application.Interfaces.Repositories.Tables;
+﻿using Application.Interfaces.Repositories.Tables;
 using Common.Models;
+using Repositories.Repositories.GenericImplementations;
 
 namespace Repositories.Repositories;
 

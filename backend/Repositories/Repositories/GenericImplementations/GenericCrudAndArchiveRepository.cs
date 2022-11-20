@@ -3,7 +3,7 @@ using Common.Exceptions;
 using Common.Models.HelperInterfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repositories.Repositories;
+namespace Repositories.Repositories.GenericImplementations;
 
 public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TModel>,
     IArchiveableEntityRepository<TModel>
@@ -21,7 +21,8 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
         return context.Set<TModel>().Where(e => e.ArchivedDate != null).ToListAsync(cancellationToken);
     }
 
-    public async Task Archive(Guid id, CancellationToken cancellationToken = default)
+    public async Task Archive(Guid id,
+        CancellationToken cancellationToken = default)
     {
         var entityToArchive =
             await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
@@ -30,7 +31,8 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Unarchive(Guid id, CancellationToken cancellationToken = default)
+    public async Task Unarchive(Guid id,
+        CancellationToken cancellationToken = default)
     {
         var entityToUnarchive =
             await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
@@ -42,6 +44,7 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
 
     public new Task<List<TModel>> GetAllActive(CancellationToken cancellationToken = default)
     {
-        return context.Set<TModel>().Where(e => e.ArchivedDate == null && e.DeletedDate == null).ToListAsync(cancellationToken);
+        return context.Set<TModel>().Where(e => e.ArchivedDate == null && e.DeletedDate == null)
+            .ToListAsync(cancellationToken);
     }
 }

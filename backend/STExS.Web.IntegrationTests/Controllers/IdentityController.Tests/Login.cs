@@ -2,9 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using STExS.Controllers;
-using TestHelper;
 
 namespace STExS.Web.IntegrationTests.Controllers.IdentityController.Tests;
 
@@ -16,7 +14,7 @@ public sealed class Login : Infrastructure
         // Arrange
 
         // Act
-        var res = await Client.PostAsJsonAsync("/Identity/Authentication", 
+        var res = await Client.PostAsJsonAsync("/Identity/Authentication",
             new LoginModel
             {
                 Email = "superuser@test.com",
@@ -29,16 +27,17 @@ public sealed class Login : Infrastructure
         respContents.Should().Be("2"); // 2 means "wrong credentials" in LoginFailureType
         res.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
+
     [Fact]
     public async Task SucessfullyLogsInWithDefaultUser()
     {
         // Arrange
 
         // Act
-        var res = await Client.PostAsJsonAsync("/Identity/Authentication", 
+        var res = await Client.PostAsJsonAsync("/Identity/Authentication",
             new LoginModel
             {
-                Email = this.DefaultUser.Email,
+                Email = DefaultUser.Email,
                 Password = "Test333!",
                 StayLoggedIn = false
             });
@@ -53,7 +52,7 @@ public sealed class Login : Infrastructure
             .First()
             .Value
             .Should()
-            .Be(this.DefaultUser.Id);
+            .Be(DefaultUser.Id.ToString());
         res.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }
