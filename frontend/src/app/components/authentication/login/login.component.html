@@ -21,9 +21,6 @@
           </mat-form-field>
           <mat-label *ngIf="showPasswordError" class="validation-error">Please enter a password!</mat-label>
 
-          <mat-checkbox (change)="this.stayLoggedIn = $event.checked" [checked]="this.stayLoggedIn">Stay logged in
-          </mat-checkbox>
-
           <!-- LOGIN BUTTON -->
           <div *ngIf="this.loginButtonEnabled then showLogin else disableLogin"></div>
           <ng-template #showLogin>

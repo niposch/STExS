@@ -10,7 +10,6 @@ import {UserService} from "../../../services/user.service";
 export class LoginComponent implements OnInit {
 
   public showLoading: boolean = false;
-  public stayLoggedIn: boolean = false;
 
   public showEmailError: boolean = false;
   public showPasswordError: boolean = false;

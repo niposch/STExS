@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
 
   @Input()
-  public hasDrawer: boolean = true;
+  public hasDrawer: boolean = false;
 
   @Input()
   public showDrawer: boolean = false;
