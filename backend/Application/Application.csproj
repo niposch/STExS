@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
 
 </Project>

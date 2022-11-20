@@ -3,7 +3,7 @@ using Common.Exceptions;
 using Common.Models.HelperInterfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repositories.Repositories;
+namespace Repositories.Repositories.GenericImplementations;
 
 public class GenericDeletableEntityRepository<TModel> : IDeletableEntityRepository<TModel>
     where TModel : class, IBaseEntity, IDeletable
@@ -25,7 +25,8 @@ public class GenericDeletableEntityRepository<TModel> : IDeletableEntityReposito
         return context.Set<TModel>().Where(e => e.DeletedDate != null).ToListAsync(cancellationToken);
     }
 
-    public async Task Delete(Guid id, CancellationToken cancellationToken = default)
+    public async Task Delete(Guid id,
+        CancellationToken cancellationToken = default)
     {
         var entityToDelete = await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entityToDelete == null) throw new EntityNotFoundException(id, typeof(TModel));
@@ -33,7 +34,8 @@ public class GenericDeletableEntityRepository<TModel> : IDeletableEntityReposito
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Undelete(Guid id, CancellationToken cancellationToken = default)
+    public async Task Undelete(Guid id,
+        CancellationToken cancellationToken = default)
     {
         var entityToUndelete =
             await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
