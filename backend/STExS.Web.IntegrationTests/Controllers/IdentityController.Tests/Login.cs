@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using STExS.Controllers;
+using JWTRefreshToken.NET6._0.Controllers;
 
 namespace STExS.Web.IntegrationTests.Controllers.IdentityController.Tests;
 
@@ -15,11 +15,10 @@ public sealed class Login : Infrastructure
 
         // Act
         var res = await Client.PostAsJsonAsync("/Identity/Authentication",
-            new LoginModel
+            new AppLoginModel
             {
                 Email = "superuser@test.com",
-                Password = "SuperUser123!",
-                StayLoggedIn = false
+                Password = "SuperUser123!"
             });
 
         // Assert
@@ -35,11 +34,10 @@ public sealed class Login : Infrastructure
 
         // Act
         var res = await Client.PostAsJsonAsync("/Identity/Authentication",
-            new LoginModel
+            new AppLoginModel
             {
                 Email = DefaultUser.Email,
-                Password = "Test333!",
-                StayLoggedIn = false
+                Password = "Test333!"
             });
 
         // Assert
@@ -48,8 +46,7 @@ public sealed class Login : Infrastructure
         var handler = new JwtSecurityTokenHandler();
         var jwt = handler.ReadJwtToken(respContents);
         jwt.Claims
-            .Where(c => c.Type == "sub")
-            .First()
+            .First(c => c.Type == "sub")
             .Value
             .Should()
             .Be(DefaultUser.Id.ToString());

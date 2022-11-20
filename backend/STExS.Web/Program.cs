@@ -3,7 +3,8 @@ using System.Text;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Common.Models;
+using Common.Models.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -35,7 +36,13 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     // options.KnownProxies.Add(IPAddress.Parse(""));
 });
 
-builder.Services.AddAuthentication("Bearer")
+builder.Services.AddAuthorization(options =>
+{
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+builder.Services.AddAuthentication()
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -102,15 +109,21 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     var userManager = app.Services.GetRequiredService<UserManager<ApplicationUser>>();
     var user = userManager.FindByNameAsync("dev").Result;
-    if (user != null) userManager.DeleteAsync(user).Wait();
-    user = new ApplicationUser
+    if (user == null)
     {
-        UserName = "dev",
-        Email = "dev@test.com"
-    };
-    userManager.CreateAsync(user, "Test333!").Wait();
-    var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
-    userManager.ConfirmEmailAsync(user, token).Wait();
+        user = new ApplicationUser
+        {
+            UserName = "dev",
+            Email = "dev@test.com",
+            FirstName = "John",
+            LastName = "Doe",
+            MatrikelNumber = "J1234567"
+        };
+        userManager.CreateAsync(user, "Test333!").Wait();
+        user = userManager.FindByNameAsync("dev").Result;
+        var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+        userManager.ConfirmEmailAsync(user, token).Wait();
+    }
 }
 
 app.UseHttpsRedirection();

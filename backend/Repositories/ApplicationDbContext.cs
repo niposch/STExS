@@ -1,4 +1,5 @@
 using Common.Models;
+using Common.Models.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

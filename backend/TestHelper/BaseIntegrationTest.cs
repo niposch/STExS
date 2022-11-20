@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
-using Common.Models;
+using Common.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
