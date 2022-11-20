@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticateService} from "../../../../services/generated/services/authenticate.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -7,27 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  public showLoading:boolean = false;
-  
+  public showLoading: boolean = false;
+
   //show errors
-  public showEmailError:boolean = false;
-  public showPasswordError:boolean = false;
+  public showEmailError: boolean = false;
+  public showPasswordError: boolean = false;
 
   //enable / disable register button
   public agreedToTOS: boolean = false;
-  private emailIsCorrect:boolean = false;
-  private passwordIsCorrect:boolean = false;
-
-  public registerButtonEnabled:boolean = false;
-
+  public registerButtonEnabled: boolean = false;
   //seperated RegEx tests to give user password feedback
-  public PW1Uppercase:boolean = false;
-  public PW1Lowercase:boolean = false;
-  public PW1SpecialChar:boolean = false;
-  public PW1Number:boolean = false;
-  public PW8CharsLong:boolean = false;
+  public PW1Uppercase: boolean = false;
+  public PW1Lowercase: boolean = false;
+  public PW1SpecialChar: boolean = false;
+  public PW1Number: boolean = false;
+  public PW8CharsLong: boolean = false;
+  public email: string = "";
+  public firstName: string = "";
+  public lastName: string = "";
+  public userName: string = "";
+  public password: string = "";
+  public matrikelNumber: string = "";
+  private emailIsCorrect: boolean = false;
+  private passwordIsCorrect: boolean = false;
 
-  constructor() { }
+  constructor(private readonly authService: AuthenticateService,
+              private readonly router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -35,9 +43,20 @@ export class RegisterComponent implements OnInit {
   register() {
     this.showLoading = true;
 
-    setTimeout(() =>{
+    this.authService.apiAuthenticateRegisterPost({
+      body: {
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        userName: this.userName,
+        password: this.password,
+        matrikelNumber: this.matrikelNumber
+      }
+    }).subscribe(res => {
       this.showLoading = false;
-    }, 2000)
+      console.log(res);
+      this.router.navigate(['/login']);
+    });
   }
 
   validateEmail(event: any) {
@@ -76,7 +95,7 @@ export class RegisterComponent implements OnInit {
     this.PW8CharsLong = Reg8CharsLong.test(inputValue);
 
     //all conditions satisfied?
-    let PWIsValid = this.PW1Uppercase && this.PW1Lowercase && this.PW1Number && this. PW1SpecialChar && this.PW8CharsLong;
+    let PWIsValid = this.PW1Uppercase && this.PW1Lowercase && this.PW1Number && this.PW1SpecialChar && this.PW8CharsLong;
 
     if (inputValue == "" || !PWIsValid) {
       this.showPasswordError = true;

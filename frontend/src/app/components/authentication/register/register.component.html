@@ -1,72 +1,86 @@
 <div class="container">
-    <div class="flex-item">
-        <mat-progress-bar *ngIf="this.showLoading" mode="indeterminate" color="accent"></mat-progress-bar>
-        <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
-            <mat-card-subtitle>Register</mat-card-subtitle>
-            <mat-card-title>STExS</mat-card-title>
-            <mat-card-content>
-                <form>
-                    <!-- NAME -->
-                    <div class="row">
-                        <mat-form-field class="name-input">
-                            <mat-label>First Name</mat-label>
-                            <input type="text" matInput>
-                        </mat-form-field>
-                        <mat-form-field class="name-input">
-                            <mat-label>Last Name</mat-label>
-                            <input type="text" matInput>
-                        </mat-form-field>
-                    </div>
+  <div class="flex-item">
+    <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
+      <mat-card-subtitle>Register</mat-card-subtitle>
+      <mat-card-title>STExS</mat-card-title>
+      <mat-card-content>
+        <form>
+          <!-- NAME -->
+          <div class="row">
+            <mat-form-field class="name-input">
+              <mat-label>First Name</mat-label>
+              <input [(ngModel)]="this.firstName" matInput name="firstName" required type="text">
+            </mat-form-field>
+            <mat-form-field class="name-input">
+              <mat-label>Last Name</mat-label>
+              <input [(ngModel)]="this.lastName" matInput name="lastName" required type="text">
+            </mat-form-field>
+          </div>
+          <!-- User Name -->
+          <mat-form-field class="name-input">
+            <mat-label>Username</mat-label>
+            <input [(ngModel)]="this.userName" matInput name="userName" required type="text">
+          </mat-form-field>
+          <!-- Matrikelnumber -->
+          <mat-form-field class="name-input">
+            <mat-label>Matrikel Number</mat-label>
+            <input [(ngModel)]="this.matrikelNumber" matInput name="matrikelNumber" required type="text">
+          </mat-form-field>
 
-                    <!-- EMAIL -->
-                    <mat-form-field>
-                        <mat-label>E-Mail</mat-label>
-                        <input type="email" (keyup)="validateEmail($event)" matInput required>
-                    </mat-form-field>
-                    <mat-label class="validation-error" *ngIf="showEmailError">Please enter a valid email address!</mat-label>
+          <!-- EMAIL -->
+          <mat-form-field>
+            <mat-label>E-Mail</mat-label>
+            <input (keyup)="validateEmail($event)" [(ngModel)]="this.email" matInput name="email" required type="email">
+          </mat-form-field>
+          <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
 
-                    <!-- PASSWORD -->
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input type="password" (keyup)="validatePassword($event)" matInput required>
-                    </mat-form-field>
-                    <mat-label class="validation-error" *ngIf="showPasswordError">This password must consist of:</mat-label>
-                    <mat-label class="validation-error" *ngIf="showPasswordError">
-                        <ul>
-                            <li *ngIf="!PW8CharsLong">min 8 characters in total</li>
-                            <li *ngIf="!PW1Uppercase">min 1 uppercase letter</li>
-                            <li *ngIf="!PW1Lowercase">min 1 lowercase letter</li>
-                            <li *ngIf="!PW1Number">min 1 number</li>
-                            <li *ngIf="!PW1SpecialChar">min 1 special character</li>
-                        </ul>
-                    </mat-label>
+          <!-- PASSWORD -->
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input (keyup)="validatePassword($event)" [(ngModel)]="this.password" matInput name="password"
+                   required type="password">
+          </mat-form-field>
+          <mat-label *ngIf="showPasswordError" class="validation-error">This password must consist of:</mat-label>
+          <mat-label *ngIf="showPasswordError" class="validation-error">
+            <ul>
+              <li *ngIf="!PW8CharsLong">min 8 characters in total</li>
+              <li *ngIf="!PW1Uppercase">min 1 uppercase letter</li>
+              <li *ngIf="!PW1Lowercase">min 1 lowercase letter</li>
+              <li *ngIf="!PW1Number">min 1 number</li>
+              <li *ngIf="!PW1SpecialChar">min 1 special character</li>
+            </ul>
+          </mat-label>
 
-                    <!-- GENDER -->
-                    <mat-form-field appearance="fill">
-                        <mat-label>Gender</mat-label>
-                        <mat-select>
-                          <mat-option value="male">male</mat-option>
-                          <mat-option value="female">female</mat-option>
-                          <mat-option value="other">other</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+          <!-- GENDER -->
+          <mat-form-field appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select>
+              <mat-option value="male">male</mat-option>
+              <mat-option value="female">female</mat-option>
+              <mat-option value="other">other</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-                    <!-- TOS -->
-                    <mat-checkbox [checked]="this.agreedToTOS" (change)="this.agreedToTOS = $event.checked; this.allRequiredInputsValid();">Agree to <a href="https://google.com/">Terms of Service</a> *</mat-checkbox>
+          <!-- TOS -->
+          <mat-checkbox (change)="this.agreedToTOS = $event.checked; this.allRequiredInputsValid();"
+                        [checked]="this.agreedToTOS">Agree to <a
+            href="https://google.com/">Terms of Service</a> *
+          </mat-checkbox>
 
-                    <!-- REGISTER BUTTON -->
-                    <div *ngIf="this.registerButtonEnabled then showRegister else disableRegister"></div>
-                    <ng-template #showRegister>
-                        <button type="button" (click)="register()" mat-button mat-raised-button color="accent">Register</button>
-                    </ng-template>
-                    <ng-template #disableRegister>
-                    <button type="button" disabled mat-button mat-raised-button color="accent">Register</button>
-                    </ng-template>
+          <!-- REGISTER BUTTON -->
+          <div *ngIf="this.registerButtonEnabled then showRegister else disableRegister"></div>
+          <ng-template #showRegister>
+            <button (click)="register()" color="accent" mat-button mat-raised-button type="button">Register</button>
+          </ng-template>
+          <ng-template #disableRegister>
+            <button color="accent" disabled mat-button mat-raised-button type="button">Register</button>
+          </ng-template>
 
-                    <!-- LOGIN BUTTON -->
-                    <a mat-button mat-stroked-button color="secondary" href="/login">Login</a>
-                </form>
-            </mat-card-content>
-        </mat-card>
-    </div>
+          <!-- LOGIN BUTTON -->
+          <a color="secondary" href="/login" mat-button mat-stroked-button>Login</a>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
