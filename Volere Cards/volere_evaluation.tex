@@ -5,6 +5,8 @@
 \usepackage{enumitem}
 \usepackage{tcolorbox}
 \usepackage{hyperref}
+\usepackage{qrcode}
+\usepackage[ngerman]{babel}
 
 \newcounter{requirementCounter} % create a new counter, called 'mycounter'
 % default def'n of '\themycounter' is '\arabic{mycounter}'
@@ -23,7 +25,7 @@
 
 \newcommand{\reqno}{\item[Requirement \#: ]\insertRequirementCount{}}
 \newcommand{\reqtype}{\item[Req. Type:]}
-\newcommand{\reqevent}{\item[Sprint \#:]}
+\newcommand{\reqevent}{\item[Meilenstein \#:]}
 \newcommand{\reqdesc}{\item[Description:]}
 \newcommand{\reqrat}{\item[Rationale:]}
 \newcommand{\reqorig}{\item[Originator:]}
@@ -41,19 +43,19 @@ Requirements types: Functional (F), Non-Functional (NF)
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype 9}
-  {\reqevent 7.9}
+  {\reqtype NF}
+  {\reqevent 3}
   \reqdesc Feedback-Funktion für den Nutzer
   \reqrat Besseres Einblick zu dem Lernprozess des Nutzers erhalten. Schwächen sollen effizienter erkannt und behoben werden
-  \reqorig Bruno Standke
-  \reqfit longer Kommentarbox am Ende jeder Aufgabe  %!!!!!
+  \reqorig Studenten
+  \reqfit Kommentarbox am Ende jeder Aufgabe  %!!!!!
   \twoinline
   {\reqsatis 2}
   {\reqdissat 1}
   \twoinline
   {\reqprio 1}
   {\reqconf N.A.}
-  \reqmater \url{https://www.barclays.co.uk/content/dam/documents/business/business-insight/feedback-economy.pdf}
+  \reqmater \qrcode{https://www.barclays.co.uk/content/dam/documents/business/business-insight/feedback-economy.pdf}
   \reqhist 06.11.2022: Bruno Standke
 \end{myreq}
 
@@ -61,36 +63,36 @@ Requirements types: Functional (F), Non-Functional (NF)
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype 9}
-  {\reqevent 7.9}
-  \reqdesc Kommentarfunktion von Moderator für Nutzer
-  \reqrat Nach beenden einer Aufgabe kann der Nutzer von einen Moderator individuelles Feedback erhalten. Diese sollen den Nutzer auf Schwächen hinweisen und Lösungsansätze anbieten
-  \reqorig Bruno Standke
-  \reqfit Nutzer kann angeben, ob Feedback hilfreich war
+  {\reqtype NF}
+  {\reqevent 3}
+  \reqdesc Kursleiter können Nutzern Feedback auf ihren Abgaben hinterlassen
+  \reqrat Kursleiter können Nutzern, welche Probleme mit einer Aufgabe hatten, Hilfestellungen bieten. Diese soll den Nutzer auf Schwächen hinweisen und Lösungsansätze aufzeigen.
+  \reqorig Kursleiter
+  \reqfit Kursleiter kann Feedback hinterlassen. Nutzer kann auf Feedback reagieren und weitere Fragen stellen und angeben ob Feedback hilfreich war
   \twoinline
   {\reqsatis 3}
-  {\reqdissat 1}
+  {\reqdissat 4}
   \twoinline
   {\reqprio 4}
   {\reqconf N.A.}
-  \reqmater \url{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bosu2015useful.pdf}
+  \reqmater \qrcode{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bosu2015useful.pdf}
   \reqhist 07.11.2022: Bruno Standke
 \end{myreq}
 %automatisiertes Auswerten von Ergebnissen (Kompilierung+Korrektheit)
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype Technical Requirement}
-  {\reqevent 7.9}
-  \reqdesc Automatisierte Bewertung von Lösungen
-  \reqrat Lösungen des Nutzers sollen vom System selbständig kompiliert und ausgewertet werden
-  \reqorig Dominik Gorgosch
-  \reqfit Code soll in unter 5 Sekunden kompiliert und ausgeführt werden. Ausgabe wird mit einer Musterlösung verglichen
+  {\reqtype NF}
+  {\reqevent 3}
+  \reqdesc automatisierte Bewertung von im System abgegebenen Lösungen
+  \reqrat Schnelles Feedback auf Abgaben erhöht die Wahrscheinlichkeit, dass Nutzer aus ihren Fehlern lernen.
+  \reqorig Studenten
+  \reqfit Das System soll in der Lage sein, bestimmte Aufgabentypen automatisiert zu bewerten. Dazu gehören z.B. Kompilierung und Testausführung bei bestimmten Aufgabentypen. Bei anderen Aufgabentypen reicht eine Überprüfung der Antworten auf im Vorhinein gegebene bekannt richtige Lösungen.
   \twoinline
   {\reqsatis 5}
   {\reqdissat 5}
   \twoinline
-  {\reqprio +inf}
+  {\reqprio 5}
   {\reqconf N.A.}
   \reqmater N.A.
   \reqhist 07.11.2022: Bruno Standke
@@ -101,36 +103,36 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno}
   {\reqtype F}
-  {\reqevent KW45}
-  \reqdesc Nutzerkonten werden durch das System eindeutig identifiziert
-  \reqrat es muss für bestimmte Funktionen ein Nutzerkonto eindeutig identifiziert werden können
-  \reqorig Entwickler
-  \reqfit jeder Nutzer muss bei der Accounterstellung mit einer eindeutigen und unveränderlichen Id versehen werden. Diese muss vom System gespeichert werden.
+  {\reqevent 1}
+  \reqdesc Nutzern werden Mittels Nutzerkonten vom System eindeutig identifiziert
+  \reqrat Nutzerkonten müssen bei der Anmeldung eindeutig identifiziert werden, damit anhand der Nutzerkonten die Abgaben und die dazugehörigen Ergebnisse zugeordnet werden können.
+  \reqorig Kursleiter
+  \reqfit jeder Nutzer muss bei der Accounterstellung mit einer eindeutigen und unveränderlichen Id versehen werden. Diese muss vom System gespeichert werden und muss für die Zuordnung von Abgaben und Ergebnissen verwendet werden.
   \twoinline
   {\reqsatis 1}
-  {\reqdissat 1}
+  {\reqdissat 5}
   \twoinline
-  {\reqprio +inf}
+  {\reqprio 5}
   {\reqconf N.A.}
-  \reqmater UUIDv4 kann hierfür verwendet werden \url{https://en.wikipedia.org/wiki/Universally_unique_identifier}
+  \reqmater UUIDv4 und JWT basierte Authentifizierung und Authorisierung kann hierfür verwendet werden \qrcode{https://en.wikipedia.org/wiki/Universally_unique_identifier} \qrcode{https://jwt.io/}
   \reqhist 11.11.2022: erstellt von Nick
 \end{myreq}
 \begin{myreq}
   \threeinline
   {\reqno}
   {\reqtype NF}
-  {\reqevent KW45}
-  \reqdesc Kritische Systemfehler(z.B. Abgabe konnte nicht gespeichert werden) werden dem Nutzer mitgeteilt
-  \reqrat Nutzer müssen auf Fehlerzustände hingewiesen werden
-  \reqorig Endnutzer
-  \reqfit Wenn Fehler Auftreten, muss dies durch die Anwendung erkannt und dem Nutzer mitgeteilt werden
+  {\reqevent 2}
+  \reqdesc kritische Systemfehler (z.B. Abgabe konnte nicht gespeichert werden) werden dem Nutzer mitgeteilt
+  \reqrat Nutzer müssen auf Fehlerzustände hingewiesen werden um es ihnen zu ermöglichen, auf diese zu reagieren.
+  \reqorig Nutzer des Systems
+  \reqfit Wenn Fehler Auftreten, muss dies durch die Anwendung erkannt und dem Nutzer mitgeteilt werden. Dies sollte durch eine Fehlermeldung in der Webanwendung erfolgen.
   \twoinline
   {\reqsatis 2}
-  {\reqdissat 6}
+  {\reqdissat 4}
   \twoinline
-  {\reqprio 8}
+  {\reqprio 3}
   {\reqconf N.A.}
-  \reqmater \url{https://uxplanet.org/how-to-write-good-error-messages-858e4551cd4}
+  \reqmater \qrcode{https://uxplanet.org/how-to-write-good-error-messages-858e4551cd4}
   \reqhist 11.11.2022: erstellt von Nick
 \end{myreq}
 
@@ -140,19 +142,20 @@ Requirements types: Functional (F), Non-Functional (NF)
   {\reqno}
   {\reqtype F}
   {\reqevent 7.9}
-  \reqdesc programming task timer
-  \reqrat coding task with restricted time limit should be assigned with its own timer
-  \reqorig Lei Ding
-  \reqfit show remaining time, resume after reconnect, Precise to the second
+  \reqdesc timer that displays the time spent on a programming task
+  \reqrat coding task with time limits should track and display the time users spent on the assignment to the user.
+  The time spent on an assignment should also be recorded in the database.
+  \reqorig Students, Instructors
+  \reqfit The time spent on an assignment is tracked and displayed to the user. It resumes the time tracking after a user experiences a network interruption.
   \twoinline
-  {\reqsatis 5}
+  {\reqsatis 3}
   {\reqdissat 3}
   \twoinline
 
-  {\reqprio 1}
+  {\reqprio 2}
   {\reqconf 0}
   \reqmater -
-  \reqhist 07.11.2022
+  \reqhist 07.11.2022: Lei Ding
 
 \end{myreq}
 
@@ -160,19 +163,19 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno}
   {\reqtype F}
-  {\reqevent 7.9}
-  \reqdesc personal infor management
-  \reqrat users should be able to control the information of their own account
-  \reqorig Lei Ding
+  {\reqevent 3}
+  \reqdesc The Application should allow users to request the download and the deletion of all their personal Information.
+  \reqrat The application has to have this feature to comply with the GDPR.
+  \reqorig Regulators
   \reqfit change name|password|Email address, request to delete all their information in conformity with GDPR
   \twoinline
   {\reqsatis 5}
   {\reqdissat 3}
   \twoinline
-  {\reqprio 1}
+  {\reqprio 4}
   {\reqconf N.A.}
-  \reqmater  -
-  \reqhist 07.11.2022
+  \reqmater  \qrcode{https://www.wired.co.uk/article/what-is-gdpr-uk-eu-legislation-compliance-summary-fines-2018}
+  \reqhist 07.11.2022: Lei Ding
 
 
 \end{myreq}
@@ -181,39 +184,39 @@ Requirements types: Functional (F), Non-Functional (NF)
 \begin{myreq}
   \threeinline
   {\reqno }
-  {\reqtype 2}
-  {\reqevent 3 (6)}
-  \reqdesc Code Editor mit Syntax Highlighting von Java, Python
-  \reqrat Syntax / Programmieraufgaben mit Code Editor mit Syntax Highlighting realistisch umsetzbar
-  \reqorig Nutzer, die Syntax / Programmieraufgaben lösen müssen
-  \reqfit gehighlighteten Code mit Code in IDEs vergleichen
+  {\reqtype F}
+  {\reqevent 3 }
+  \reqdesc Code Editor soll Syntax Highlighting von C/C++, Java und Python unterstützen
+  \reqrat Syntaxhighlighting hilft Nutzern Code von Aufgaben einfacher zu verstehen
+  \reqorig Nutzer
+  \reqfit die Anwendung soll Code ähnlich highlighten, wie es in einer IDE der Fall ist
   \twoinline
   {\reqsatis 5}
-  {\reqdissat 9}
+  {\reqdissat 3}
   \twoinline
-  {\reqprio 8}
+  {\reqprio 4}
   {\reqconf N.A.}
   \reqmater -
-  \reqhist 11.11.2022 Anforderung erstellt
+  \reqhist 11.11.2022 Anforderung erstellt von Jonathan
 \end{myreq}
 
 \begin{myreq}
   \threeinline
   {\reqno }
-  {\reqtype 2}
-  {\reqevent 9.9}
+  {\reqtype NF}
+  {\reqevent 3}
   \reqdesc Code Editor muss in unter 0.125 einen Tastendruck registrieren
   \reqrat längere Reaktionszeiten sind nicht Nutzerfreundlich und sorgen für Unzufriedenheit
   \reqorig Nutzer
-  \reqfit Zeitmessung im Code
+  \reqfit der Codeeditor muss auf einem modernen Computer in unter 0.125 Sekunden auf einen Tastendruck reagieren und das Zeichen in den Editor einfügen
   \twoinline
-  {\reqsatis 5}
-  {\reqdissat 9}
+  {\reqsatis 1}
+  {\reqdissat 5}
   \twoinline
-  {\reqprio 8}
+  {\reqprio 3}
   {\reqconf N.A.}
   \reqmater -
-  \reqhist 11.11.2022 Anforderung erstellt
+  \reqhist 11.11.2022 Anforderung erstellt von Jonathan
 \end{myreq}
 
 \begin{myreq}
@@ -221,27 +224,29 @@ Requirements types: Functional (F), Non-Functional (NF)
   {\reqno }
   {\reqtype F}
   {\reqevent 9.9}
-  \reqdesc Der Admin kann Studenten zu Kursen hinzufügen.
-  \reqrat Der Student erhält Zugang zu Kursen durch den Admin. Er muss nicht selbständig nach einem Kurs suchen und sich möglicherweise in einen falschen Kurs eintragen.
-  \reqorig Admin
-  \reqfit Der Student wird nur den durch den Admin festgelegten Kursen zugewiesen.
+  \reqdesc Kursleiter können Studenten zu Kursen hinzufügen.
+  \reqrat Der Student erhält Zugang zu Kursen durch einen Kursleiter. Er muss nicht selbständig nach einem Kurs suchen. Es besteht dadurch nicht die Möglichkeit, sich in einen falschen Kurs einzutragen.
+  Zusätzlich können so die Informationen, welche in einem Kurs gelehrt werden privat gehalten werden.
+  \reqorig Kursleiter
+  \reqfit Kursleiter können Studenten zu einem Kurs hinzufügen.
   \twoinline
   {\reqsatis 5}
   {\reqdissat 5}
   \twoinline
-  {\reqprio 5}
+  {\reqprio 4}
   {\reqconf N.A.}
   \reqmater -
-  \reqhist 11.11.2022 Anforderung erstellt
+  \reqhist 11.11.2022 Anforderung erstellt durch Steve
 \end{myreq}
 
 \begin{myreq}
   \threeinline
   {\reqno }
   {\reqtype F}
-  {\reqevent 9.9}
-  \reqdesc Der Admin kann Kurse manuell oder zu einem bestimmten Zeitpunkt sperren.
-  \reqrat Die Bearbeitung eines falschen Kurses durch den Studenten wird ausgeschlossen. Ein nicht fertiger Kurs kann erst in seiner finalen Form durch einen Studenten eingesehen werden. Der Admin kann sich zur Bearbeitung des Kurses die Zeit nehmen, die er benötigt und den Kurs im Anschluss wieder entsperren.
+  {\reqevent 2}
+  \reqdesc Der Admin kann Kurse manuell oder zu einem bestimmten Zeitpunkt automatisch sperren.
+  \reqrat Die Bearbeitung eines falschen Kurses durch den Studenten wird ausgeschlossen. Ein noch nicht vollständig erstellter Kurs kann durch einen Studenten erst in seiner finalen Form eingesehen werden.
+  Der Kursleiter kann sich zur Anlegung des Kurses die Zeit nehmen, die er benötigt und den Kurs im Anschluss freigeben.
   \reqorig Admin
   \reqfit Gesperrte Kurse können nicht von Studenten eingesehen bzw. bearbeitet werden.
   \twoinline
@@ -251,21 +256,40 @@ Requirements types: Functional (F), Non-Functional (NF)
   {\reqprio 4}
   {\reqconf N.A.}
   \reqmater -
-  \reqhist 11.11.2022 Anforderung erstellt
+  \reqhist 11.11.2022 Anforderung erstellt von Steve
 \end{myreq}
 
 \begin{myreq}
   \threeinline
   {\reqno}
   {\reqtype NF}
-  {\reqevent KW45}
+  {\reqevent 1-3}
   \reqdesc Daten sollen verschlüsselt übertragen werden
-  \reqrat Grundlegende Datensicherheit muss gewährleistet sein.
-  \reqorig ST-Praktikum
+  \reqrat Daten sind während der Übertragung besonders vulnerable. Grundlegende Datensicherheit muss gewährleistet sein, indem die Daten verschlüsselt übertragen werden.
+  \reqorig Best Practices
   \reqfit Logging und dessen Überprüfung vor der Datenübertragung
   \twoinline
   {\reqsatis 2}
   {\reqdissat 5}
+  \twoinline
+  {\reqprio 2}
+  {\reqconf N.A.}
+  \reqmater \qrcode{https://cloud.google.com/docs/security/encryption-in-transit}
+  \reqhist 12.11.2022: erstellt von Mikhail Bereznev
+\end{myreq}
+
+\begin{myreq}
+  \threeinline
+  {\reqno}
+  {\reqtype F}
+  {\reqevent 3}
+  \reqdesc Exportieren der Daten in CSV Dateien
+  \reqrat Bewertungsdaten müssen für bürokratische Zwecke außerhalb der Anwendung verwendbar gemacht werden.
+  \reqorig Kursleiter
+  \reqfit Test-Export durchführen und mit Stakeholder abstimmen, ob Format verwendbar ist.
+  \twoinline
+  {\reqsatis 4}
+  {\reqdissat 4}
   \twoinline
   {\reqprio 2}
   {\reqconf N.A.}
@@ -276,33 +300,14 @@ Requirements types: Functional (F), Non-Functional (NF)
 \begin{myreq}
   \threeinline
   {\reqno}
-  {\reqtype F}
-  {\reqevent KW45}
-  \reqdesc Exportieren der Daten in CSV Dateien
-  \reqrat Bewertungsdaten für bürokratische Zwecke ausserhalb der Andwendung vorhanden sein können.
-  \reqorig Admin (Kursleiter)
-  \reqfit Test-Export durchführen, mit Stakeholder abgleichen.
-  \twoinline
-  {\reqsatis 4}
-  {\reqdissat 4}
-  \twoinline
-  {\reqprio 3}
-  {\reqconf N.A.}
-  \reqmater
-  \reqhist 12.11.2022: erstellt von Mikhail Bereznev
-\end{myreq}
-
-\begin{myreq}
-  \threeinline
-  {\reqno}
   {\reqtype NF}
-  {\reqevent KW45}
-  \reqdesc Ein durchschnittlicher, unerfahrener Nutzer soll in unter 10 Minuten in der Lage sein, eine Frage, auf welchem ihm die Antwort bekannt ist, richtig zu beantworten
+  {\reqevent 3}
+  \reqdesc Ein durchschnittlicher, unerfahrener Nutzer soll in unter 5 Minuten in der Lage sein, eine Frage, auf welchem ihm die Antwort bekannt ist, richtig zu beantworten
   \reqrat Die Usability/User-Freundlichkeit der Anwendung muss gewährleistet sein und einem Mindeststandard entsprechen
   \reqorig Nutzer (Student)
-  \reqfit Testdurchlauf von Aufgaben durch einen externen Tester (zB einen Nutzer der "Admin" Gruppe)
+  \reqfit Testdurchlauf der Aufgabenbearbeitung durch einen externen Tester (z.B. Student) und Aufzeichnung der benötigten Zeit
   \twoinline
-  {\reqsatis 3}
+  {\reqsatis 2}
   {\reqdissat 3}
   \twoinline
   {\reqprio 2}
@@ -316,11 +321,11 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno }
   {\reqtype F}
-  {\reqevent }
-  \reqdesc Eine neue Aufgabe von den bestehenden Aufgabentypen erstellen.
-  \reqrat Kursverantwortliche/Admins können Aufgaben spezifisch zum Kursthema erstellen und durch eine Vielfalt von Aufgaben kann der Benutzer das Thema noch mehr vertiefen.
-  \reqorig Admin
-  \reqfit Aufgaben sind nach dem Anlegen in der Datenbank vorhanden.
+  {\reqevent 3}
+  \reqdesc Aufgaben müssen von einem Kurs in einen anderen kopiert werden können.
+  \reqrat Kursleitern wird so das Erstellen von Kursen erleichtert, da aus Vorjahreskursen Aufgaben kopiert werden können.
+  \reqorig Kursleiter
+  \reqfit Aufgaben sind nach dem Anlegen in der Datenbank vorhanden und können von einem zu einem anderen Kurs kopiert werden.
   \twoinline
   {\reqsatis 4}
   {\reqdissat 5}
@@ -336,11 +341,11 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno }
   {\reqtype NF}
-  {\reqevent }
-  \reqdesc Die Auswahl mehrerer Aufgaben für einen Kurs soll über eine Tabellenansicht möglich sein.
-  \reqrat Die Tabellenansicht ist übersichtlich und der Kursverantwortliche kann schnell für ihn passende Aufgaben auswählen und zum Kurs hinzufügen.
-  \reqorig Admin
-  \reqfit Tabelle bei Aufgabenzuweisung zu sehen
+  {\reqevent 3}
+  \reqdesc Beim Kopieren von Aufgaben in einen Kurs sollen bereits existierende Aufgaben dem Kursleiter in einer nutzerfreundlichen Ansicht angezeigt werden.
+  \reqrat Das "Kopieren von" Feature muss nutzerfreundlich sein, da es ansonsten nicht verwendet wird.
+  \reqorig Kursleiter
+  \reqfit Der Kursleiter muss in der Lage sein, eine bestimmte Aufgabe auszuwählen und diese in einen anderen Kurs kopieren. Dabei muss er nicht die Aufgabennummer kennen, sondern kann mittels einer Suche in unter einer Minute die gewünschte Aufgabe finden.
   \twoinline
   {\reqsatis 4}
   {\reqdissat 2}
@@ -355,14 +360,15 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno}
   {\reqtype NF}
-  {\reqevent KW46}
-  \reqdesc effizienter Login-Vorgang für den Nutzer
-  \reqrat längere Log-In Zeit führt zur Reklamation sowie Unzufriedenheit.
+  {\reqevent 1}
+  \reqdesc schneller und nutzerfreundlicher Login-Vorgang für den Nutzer
+  \reqrat längere Log-In Zeit führt zur Reklamation sowie Unzufriedenheit der Nutzer.
   \reqorig Nutzer
-  \reqfit Alle Login-Vorgänge müssen erfolgreich geschehen, ohne dabei ein Zeitfenster von maximal 2 Minuten zu überschreiten.
+  \reqfit einem unerfahrenen Nutzer muss es möglich sein einen Login-Vorgang durchzuführen, ohne dabei ein Zeitfenster von maximal 2 Minuten(inklusive Eingabe der Nutzerinformation) zu überschreiten.
+  Diese Zeitspanne kann für kompliziertere Verfahren wie 2-Faktor-Authentifizierung oder mit der Verwendung von TOTP überschritten werden.
   \twoinline
-  {\reqsatis 5}
-  {\reqdissat 9}
+  {\reqsatis 2}
+  {\reqdissat 5}
   \twoinline
   {\reqprio 3}
   {\reqconf N.A.}
@@ -376,14 +382,14 @@ Requirements types: Functional (F), Non-Functional (NF)
   \threeinline
   {\reqno }
   {\reqtype F}
-  {\reqevent KW46}
-  \reqdesc Kurse CRUD
-  \reqrat Bearbeitung der Kurse ist notwendig.
-  \reqorig Admin
-  \reqfit Dem Admin ist möglich, Kurse zu erstellen, lesen, aktualisieren und zu löschen.
+  {\reqevent 2}
+  \reqdesc Kursinformationen müssen bearbeitet werden können.
+  \reqrat Bearbeitung der Kurse ist notwendig um Fehler zu korrigieren oder neue Informationen hinzuzufügen.
+  \reqorig Kursleiter
+  \reqfit Dem Kursleiter ist möglich, Kurse zu bearbeiten. Die Änderrungen werden vom System gespeichert und sind für berechtigte Nutzer sichtbar.
   \twoinline
-  {\reqsatis 5}
-  {\reqdissat 9}
+  {\reqsatis 3}
+  {\reqdissat 5}
   \twoinline
   {\reqprio 4}
   {\reqconf N.A.}
