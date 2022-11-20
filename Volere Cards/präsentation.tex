@@ -1,6 +1,7 @@
  \documentclass{beamer}
 \input{volere-commands.tex}
 \usetheme{CambridgeUS}
+\usepackage{graphicx}
 
 
 
@@ -152,6 +153,12 @@
     \end{description}
 \end{frame}
 \begin{frame}
+    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{Abhängigkeiten.png}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{CleanArchitecture.png}
+\end{frame}
+\begin{frame}
     \begin{description}[font=$\bullet$]
         \item Lösungen für die Probleme
               \begin{description}[font=$\bullet$]
@@ -167,7 +174,12 @@
 \end{frame}
 \subsection{Deployment}
 \begin{frame}
-
+    \begin{description}[font=$\bullet$]
+        \item Anwendung verwendet keine Microservice Architektur, da dies zusätzlicher Aufwand wäre
+        \item Anwendung wird in Docker Containern deployed
+        \item Zur Zeit sind 3 Container geplant. Datenbank (MS SQL Server), Backend (Asp.Net), Frontend(Nginx)
+        \item Container werden mittels Docker Compose gestartet
+    \end{description}
 \end{frame}
 \section{Tech Demo}
 \begin{frame}
