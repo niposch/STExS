@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{qrcode}
 \usepackage[ngerman]{babel}
+\usepackage{currfile}
 
 \newcounter{requirementCounter} % create a new counter, called 'mycounter'
 % default def'n of '\themycounter' is '\arabic{mycounter}'
@@ -23,7 +24,7 @@
 \newcommand{\threeinline}[3]{\begin{multicols}{3}#1 #2 #3\end{multicols}}
 \newcommand{\twoinline}[2]{\begin{multicols}{2}#1 #2\end{multicols}}
 
-\newcommand{\reqno}{\item[Requirement \#: ]\insertRequirementCount{}}
+\newcommand{\reqno}{\item[Requirement \#: ]}
 \newcommand{\reqtype}{\item[Req. Type:]}
 \newcommand{\reqevent}{\item[Meilenstein \#:]}
 \newcommand{\reqdesc}{\item[Description:]}
@@ -40,24 +41,8 @@
 \begin{document}
 Requirements types: Functional (F), Non-Functional (NF)
 %Feedback von User
-\begin{myreq}
-  \threeinline
-  {\reqno}
-  {\reqtype NF}
-  {\reqevent 3}
-  \reqdesc Feedback-Funktion für den Nutzer
-  \reqrat Besseres Einblick zu dem Lernprozess des Nutzers erhalten. Schwächen sollen effizienter erkannt und behoben werden
-  \reqorig Studenten
-  \reqfit Kommentarbox am Ende jeder Aufgabe  %!!!!!
-  \twoinline
-  {\reqsatis 2}
-  {\reqdissat 1}
-  \twoinline
-  {\reqprio 1}
-  {\reqconf N.A.}
-  \reqmater \qrcode{https://www.barclays.co.uk/content/dam/documents/business/business-insight/feedback-economy.pdf}
-  \reqhist 06.11.2022: Bruno Standke
-\end{myreq}
+
+\input{cards/1.tex}
 
 %Feedback Admin
 \begin{myreq}
