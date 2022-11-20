@@ -6,6 +6,10 @@ import { HeaderOnlyLayoutComponent } from './header-only-layout/header-only-layo
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LayoutRoutingModule } from './layout-routing.module';
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -17,6 +21,10 @@ import { LayoutRoutingModule } from './layout-routing.module';
   imports: [
     CommonModule,
     LayoutRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatAutocompleteModule,
+    MatInputModule,
   ]
 })
 export class LayoutModule { }
