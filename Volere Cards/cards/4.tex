@@ -1,0 +1,18 @@
+\begin{myreq}
+    \threeinline
+    {\reqno}
+    {\reqtype F}
+    {\reqevent 1}
+    \reqdesc Nutzern werden Mittels Nutzerkonten vom System eindeutig identifiziert
+    \reqrat Nutzerkonten müssen bei der Anmeldung eindeutig identifiziert werden, damit anhand der Nutzerkonten die Abgaben und die dazugehörigen Ergebnisse zugeordnet werden können.
+    \reqorig Kursleiter
+    \reqfit jeder Nutzer muss bei der Accounterstellung mit einer eindeutigen und unveränderlichen Id versehen werden. Diese muss vom System gespeichert werden und muss für die Zuordnung von Abgaben und Ergebnissen verwendet werden.
+    \twoinline
+    {\reqsatis 1}
+    {\reqdissat 5}
+    \twoinline
+    {\reqprio 5}
+    {\reqconf N.A.}
+    \reqmater UUIDv4 und JWT basierte Authentifizierung und Authorisierung kann hierfür verwendet werden \qrcode{https://en.wikipedia.org/wiki/Universally_unique_identifier} \qrcode{https://jwt.io/}
+    \reqhist 11.11.2022: erstellt von Nick
+\end{myreq}

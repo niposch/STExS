@@ -1,0 +1,148 @@
+\documentclass{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{qrcode}
+\usepackage{currfile}
+
+\input{volere-commands.tex}
+
+\begin{document}
+Requirements types: Functional (F), Non-Functional (NF)
+%Feedback von User
+\section{Volere Cards}
+\input{cards/1.tex}
+\input{cards/2.tex}
+\input{cards/3.tex}
+\input{cards/4.tex}
+\input{cards/5.tex}
+\input{cards/6.tex}
+\input{cards/7.tex}
+\input{cards/8.tex}
+\input{cards/9.tex}
+\input{cards/10.tex}
+\input{cards/11.tex}
+\input{cards/12.tex}
+\input{cards/13.tex}
+\input{cards/14.tex}
+\input{cards/15.tex}
+\input{cards/16.tex}
+\input{cards/17.tex}
+\input{cards/18.tex}
+
+\section{Zusammenfassung Meilenstein 1}
+
+\subsection{Volere Cards}
+\begin{description}[font=$\bullet$]
+  \item Wie wurde das Problem angegangen?
+        \begin{description}[font=$\bullet$]
+          \item gemeinsame Erfassung von Anforderungen in einem der Weekly Meetings
+          \item gleichmäßige Verteilung von Anforderungen \& deren Erfassung als Volere Cards
+          \item gemeinsame Einsicht \& Korrektur im späteren Meeting
+        \end{description}
+
+
+  \item Welche Probleme gab es?
+
+        \begin{description}[font=$\bullet$]
+          \item Unsicherheit bzgl. der Kategorisierung nach Funktional/Nicht-Funktional/Nicht-Funktional
+          \item Wer gilt als Stakeholder bei standardisierten technischen Anforderungen (zB Datenverschlüsselung)?
+          \item Prioritäten/Satisfaction/Dissatisfaction schwer in Zahlen einzuschätzen
+        \end{description}
+
+  \item Wer hat an der Bearbeitung Teilgenommen:
+        \begin{description}[font=$\bullet$]
+          \item Alle
+        \end{description}
+\end{description}
+
+
+\subsection{Datenmodell}
+\begin{description}[font=$\bullet$]
+  \item Wie wurde das Problem angegangen?
+        \begin{description}[font=$\bullet$]
+          \item Besprechung mit Zuhilfenahme grafischer Darstellung
+        \end{description}
+
+  \item Welche Probleme gab es?
+
+        \begin{description}[font=$\bullet$]
+          \item Unklarheit bei einigen Datensätzen, was genau gespeichert werden muss
+          \item rasch anschwellende Komplexität, der entgegengewirkt werden musste (z. B. Vermeidung unnötiger Datenkopplung)
+          \item Uneinigkeit, wie einige Datenstrukturen aussehen sollen (z. B. Verbindung zw. Aufgaben und deren Bewertung)
+        \end{description}
+
+  \item Wer hat an der Bearbeitung teilgenommen?
+
+        \begin{description}[font=$\bullet$]
+          \item Nick
+          \item Mikhail
+          \item Lei
+        \end{description}
+\end{description}
+
+
+\subsection{Backend und Deployment}
+
+\begin{description}[font=$\bullet$]
+  \item Aktivitäten diesen Meilenstein
+        \begin{description}[font=$\bullet$]
+          \item Grundlegende Architektur der Anwendung in C\# entwickelt
+          \item Arbeit begonnen mit Login + Integration Tests für Login System
+          \item Anbindung Datenbank
+          \item Entwurf und Erstellung der Architektur
+          \item Doku erstellt, wie die Anwendung zum Laufen gebracht werden kann
+        \end{description}
+
+
+
+  \item Welche Probleme gab es?
+        \begin{description}[font=$\bullet$]
+          \item Umgebungseinrichtung bei allen Teilnehmern
+          \item Dockerisierung der Anwendung
+          \item BE + Datenbank zusammenführen
+          \item Reverse Proxy in Nginx einrichten und mit Asp.Net einrichten
+          \item Datenbank in Docker hat bei Neustart Daten verloren
+          \item BaseIntegration Tests mit Dependency Injection zum laufen bekommen
+        \end{description}
+
+  \item Lösungen für die Probleme
+        \begin{description}[font=$\bullet$]
+          \item Zeit + viele Google Suchen
+        \end{description}
+  \item Wer hat an der Bearbeitung teilgenommen?
+        \begin{description}[font=$\bullet$]
+          \item Nick
+          \item Jonathan
+          \item Bruno
+        \end{description}
+\end{description}
+
+\subsection{Frontend}
+\begin{description}[font=$\bullet$]
+\item Aktivitäten im Meilenstein
+\begin{description}[font=$\bullet$]
+  \item Entwurf / Einigung auf einheitliches Design fürs Frontend
+  \item Erstellung verschiedener Prototypen (Papierprototyp / FIGMA )
+  \item FE Angular Anwendung mit ng material zum laufen gebracht
+  \item erste Komponenten gebaut (Login, Register)
+\end{description}
+
+\item Welche Probleme gab es?
+\begin{description}[font=$\bullet$]
+  \item verschiedene Vorstellung für das Aussehen des Frontends
+  \item Einarbeitung in Angular + Typescript
+\end{description}
+
+\item Wer hat an der Bearbeitung teilgenommen?
+\begin{description}[font=$\bullet$]
+  \item Max \item Steve\item Lei\item Mahmoud\item Jonathan\item Nick
+\end{description}
+
+\end {description}
+
+\end{document}
