@@ -1,0 +1,15 @@
+<div style="height: 100%; display: flex; flex-direction: column">
+  <app-header [(showDrawer)]="this.showDrawer" [hasDrawer]="true" fxLayout="column"></app-header>
+
+  <mat-drawer-container [hasBackdrop]="false" style="flex-grow: 1">
+    <mat-drawer [opened]="showDrawer" mode="push" style="width: 200px">
+      <app-sidebar></app-sidebar>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+</div>

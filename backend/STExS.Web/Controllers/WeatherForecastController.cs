@@ -1,5 +1,6 @@
 using Application.Services.Interfaces;
 using Common.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace STExS.Controllers;
@@ -9,10 +10,11 @@ namespace STExS.Controllers;
 public class WeatherForecastController : ControllerBase
 {
     private readonly ILogger<WeatherForecastController> _logger;
-    
+
     private readonly IWeatherService weatherService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger,
+        IWeatherService weatherService)
     {
         _logger = logger;
         this.weatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
@@ -20,8 +22,9 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet(Name = "GetWeatherForecast")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<WeatherForecast>))]
+    [Authorize]
     public async Task<IActionResult> Get()
     {
-        return this.Ok(await this.weatherService.GetAllActive());
+        return Ok(await weatherService.GetAllActive());
     }
 }

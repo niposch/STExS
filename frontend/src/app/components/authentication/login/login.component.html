@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="flex-item">
+    <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
+      <mat-card-subtitle>Login</mat-card-subtitle>
+      <mat-card-title>STExS</mat-card-title>
+      <mat-card-content>
+        <form (ngSubmit)="login()">
+          <!-- E-MAIL -->
+          <mat-form-field>
+            <mat-label>E-Mail</mat-label>
+            <input (keyup)="validateEmail($event)" [(ngModel)]="this.email" matInput name="email" required type="email">
+          </mat-form-field>
+          <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
+
+          <!-- PASSWORD -->
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input (keyup)="validatePassword($event)" [(ngModel)]="this.password" matInput name="password"
+                   required type="password">
+          </mat-form-field>
+          <mat-label *ngIf="showPasswordError" class="validation-error">Please enter a password!</mat-label>
+
+          <!-- LOGIN BUTTON -->
+          <div *ngIf="this.loginButtonEnabled then showLogin else disableLogin"></div>
+          <ng-template #showLogin>
+            <button (click)="login()" color="accent" mat-button mat-raised-button type="button">Login</button>
+          </ng-template>
+          <ng-template #disableLogin>
+            <button color="accent" disabled mat-button mat-raised-button type="button">Login</button>
+          </ng-template>
+
+
+          <a color="secondary" href="/register" mat-button mat-stroked-button>Register</a>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

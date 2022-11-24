@@ -1,0 +1,23 @@
+<div class="header">
+  <div class="header-left">
+    <button (click)="this.toggleDrawer()" *ngIf="hasDrawer" mat-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a class="logo" mat-button routerLink="/">STExS</a>
+    <a *ngIf="loggedIn" mat-stroked-button routerLink="/dashboard">Dashboard</a>
+    <a *ngIf="loggedIn" mat-stroked-button routerLink="/users">Users</a>
+  </div>
+  <div class="header-right">
+    <div *ngIf="this.loggedIn">
+
+      <a class="right-aligned" mat-button routerLink="/account-settings">
+        {{userName}}
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle"></mat-icon>
+      </a>
+      <button (click)="logout()" mat-button>Logout</button>
+    </div>
+    <div *ngIf="!this.loggedIn">
+      <a mat-button routerLink="/login">Login</a>
+      <a mat-button routerLink="/register">Register</a>
+    </div>
+  </div>
