@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/authentication/register/register
 import {ApiModule} from "../services/generated/api.module";
 import { DashboardComponent } from './components/students/dashboard/dashboard.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ModulesAdminComponent } from './components/admin/modules-admin/modules-admin.component';
 import { ModulesUserComponent } from './components/students/modules-user/modules-user.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ModulesUserComponent } from './components/students/modules-user/modules
     AppComponent,
     DashboardComponent,
     LandingPageComponent,
+    ModulesAdminComponent,
     ModulesUserComponent
     //LoginComponent,
     //RegisterComponent

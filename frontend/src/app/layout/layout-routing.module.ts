@@ -6,6 +6,7 @@ import {DashboardComponent} from "../components/students/dashboard/dashboard.com
 import {LandingPageComponent} from "../components/landing-page/landing-page.component";
 import {AuthGuard} from "../guards/auth.guard";
 import {ModulesUserComponent} from "../components/students/modules-user/modules-user.component";
+import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
 
 const routes: Routes = [
   {
@@ -46,6 +47,13 @@ const routes: Routes = [
         children: [
           {path: "dashboard", component: DashboardComponent},
           {path: "modules-user", component: ModulesUserComponent}
+        ]
+      },
+	  {
+        path: "",
+        component: MainLayoutComponent,
+        children: [
+          {path: "modules-admin", component: ModulesAdminComponent}
         ]
       },
     ]
