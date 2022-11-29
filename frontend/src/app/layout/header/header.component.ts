@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
+  isAdmin: boolean = true;
 
   @Input()
   public hasDrawer: boolean = false;

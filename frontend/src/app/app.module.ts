@@ -12,12 +12,14 @@ import { RegisterComponent } from './components/authentication/register/register
 import {ApiModule} from "../services/generated/api.module";
 import { DashboardComponent } from './components/students/dashboard/dashboard.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ModulesAdminComponent } from './components/admin/modules-admin/modules-admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ModulesAdminComponent
     //LoginComponent,
     //RegisterComponent
   ],

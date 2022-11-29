@@ -5,6 +5,8 @@ import {HeaderOnlyLayoutComponent} from './header-only-layout/header-only-layout
 import {DashboardComponent} from "../components/students/dashboard/dashboard.component";
 import {LandingPageComponent} from "../components/landing-page/landing-page.component";
 import {AuthGuard} from "../guards/auth.guard";
+import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
+
 
 const routes: Routes = [
   {
@@ -44,6 +46,13 @@ const routes: Routes = [
         component: MainLayoutComponent,
         children: [
           {path: "dashboard", component: DashboardComponent}
+        ]
+      },
+	  {
+        path: "",
+        component: MainLayoutComponent,
+        children: [
+          {path: "modules-admin", component: ModulesAdminComponent}
         ]
       },
     ]
