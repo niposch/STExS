@@ -14,6 +14,12 @@ import { DashboardComponent } from './components/students/dashboard/dashboard.co
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ModulesAdminComponent } from './components/admin/modules-admin/modules-admin.component';
 import { ModulesUserComponent } from './components/students/modules-user/modules-user.component';
+import { ModuleComponent } from './components/module/module.component';
+
+import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+
+
 
 @NgModule({
   declarations: [
@@ -21,7 +27,8 @@ import { ModulesUserComponent } from './components/students/modules-user/modules
     DashboardComponent,
     LandingPageComponent,
     ModulesAdminComponent,
-    ModulesUserComponent
+    ModulesUserComponent,
+    ModuleComponent
     //LoginComponent,
     //RegisterComponent
   ],
@@ -33,7 +40,9 @@ import { ModulesUserComponent } from './components/students/modules-user/modules
     // RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     LayoutModule,
     BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: '/api'})
+    ApiModule.forRoot({rootUrl: '/api'}),
+	MatButtonModule,
+	MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

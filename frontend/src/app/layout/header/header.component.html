@@ -5,7 +5,7 @@
     </button>
     <a class="logo" mat-button routerLink="/">STExS</a>
     <a *ngIf="loggedIn" mat-stroked-button routerLink="/dashboard">Dashboard</a>
-    <a *ngIf="loggedIn" mat-stroked-button routerLink="/users">Users</a>
+    <a *ngIf="loggedIn && isAdmin" mat-stroked-button routerLink="/users">Users</a>
 	<a *ngIf="loggedIn" mat-stroked-button [routerLink]="isAdmin ? ['/modules-admin'] : ['/modules-user']">Modules</a>
   </div>
   <div class="header-right">
