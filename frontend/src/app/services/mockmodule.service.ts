@@ -6,8 +6,8 @@ import {Injectable} from '@angular/core';
 
 export class ModuleService {
     MockModule1 = this.createModule("MockModule1", 1, [], [], "This is just a mock");
-    ModuleList: Module[] = [];
-    
+    //ModuleList: Module[] = [];
+    public MockModuleList: string[] = ["MockModule1", "MockModule2", "MockModule3", "MockModule4"];
     
 
     constructor () {

@@ -11,7 +11,7 @@ import jwtDecode from "jwt-decode";
 export class UserService {
   public currentUser: Observable<User | null>;
   public currentUserSubject: BehaviorSubject<User | null>;
-
+  public currentUserModules: number[] = [0, 1, 3];
   constructor(private readonly authService: AuthenticateService) {
     let user = JSON.parse(localStorage.getItem('currentUser') ?? "null");
     if (user == null) {

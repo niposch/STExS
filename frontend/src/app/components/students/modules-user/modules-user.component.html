@@ -1,6 +1,4 @@
 <p>modules-user works!</p>
-<div class="modules-list">
-	<app-module [name]="module_1"></app-module>
-	<app-module [name]="module_2"></app-module>
-	<app-module [name]="module_3"></app-module>
+<div class="modules-list" *ngFor="let i of userModules">
+	<app-module name= "{{ moduleList[i] }}"></app-module>
 </div>
