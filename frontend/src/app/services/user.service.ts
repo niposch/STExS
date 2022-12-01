@@ -45,7 +45,8 @@ export class UserService {
             firstName: decodedToken.firstName,
             lastName: decodedToken.lastName,
             id: decodedToken.sub,
-            userName: decodedToken.userName
+            userName: decodedToken.userName,
+			isAdmin: true,
           };
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -69,6 +70,7 @@ interface User {
   lastName: string;
   accessToken: string;
   refreshToken: string;
+  isAdmin: boolean;
 }
 
 interface AccessToken {

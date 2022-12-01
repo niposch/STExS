@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
-  isAdmin: boolean = true;
+  isAdmin: boolean = false;
 
   @Input()
   public hasDrawer: boolean = false;
@@ -28,8 +28,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userService.currentUser.subscribe(user => {
       if (user != null) {
+	    console.log(user);
         this.userName = user.userName;
         this.loggedIn = true;
+		this.isAdmin = user.isAdmin;
+		console.log(this);
       } else {
         this.userName = "";
         this.loggedIn = false;

@@ -1,4 +1,7 @@
-<p>modules-admin works!</p>
-<div class="modules-list" *ngFor="let i of userModules">
+<!--<p>modules-admin works!</p>-->
+<div class="modules-list">
+    <div *ngFor="let i of userModules">
 	<app-module name= "{{ moduleList[i] }}"></app-module>
+	</div>
+	<app-module *ngIf="isAdmin" isAdmin="isAdmin" name="Modul erstellen"></app-module>
 </div>

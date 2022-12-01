@@ -18,6 +18,7 @@ import { ModuleComponent } from './components/module/module.component';
 
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MatIconModule } from '@angular/material/icon'
 
 
 
@@ -28,7 +29,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     LandingPageComponent,
     ModulesAdminComponent,
     ModulesUserComponent,
-    ModuleComponent
+    ModuleComponent,
     //LoginComponent,
     //RegisterComponent
   ],
@@ -42,7 +43,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     BrowserAnimationsModule,
     ApiModule.forRoot({rootUrl: '/api'}),
 	MatButtonModule,
-	MatCheckboxModule
+	MatCheckboxModule,
+	MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
