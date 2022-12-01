@@ -5,14 +5,14 @@ import {Injectable} from '@angular/core';
 })
 
 export class ModuleService {
-    MockModule1 = new Module;
+    MockModule1 = this.createModule("MockModule1", 1, [], [], "This is just a mock");
     ModuleList: Module[] = [];
     
     
 
     constructor () {
     };
-    createModule(mName: string, id: number, users: number[], cpts: [Chapter], desc: string){
+    createModule(mName: string, id: number, users: number[], cpts: Chapter[], desc: string){
         let cName = new Module;
         cName.Init(mName, id, users, cpts, desc);
         return cName
@@ -26,7 +26,7 @@ export class ModuleService {
 }
       //datastructure for modules
 class Module {
-    Init(name: string, id: number, users: number[], cpts: [Chapter], desc: string) {
+    Init(name: string, id: number, users: number[], cpts: Chapter[], desc: string) {
         this.moduleName=name;
         this.moduleID=id;
         this.responsibleUsers=users;
@@ -45,6 +45,9 @@ class Module {
 }
   
 class Chapter {
+    Init(){
+
+    }
     addExercise(ex: Exercise){
         this.exercises.push(ex);
     };
@@ -54,8 +57,8 @@ class Chapter {
     exercises: Exercise[]=[];
 }
   
-class Exercise {
-    exerciseID: number=0;
+class Exercise {    
+    exerciseID: number=0;           //IDs start with 1 so 0 shows this exercise is not active
     exerciseName: string="";
     exerciseType: exerciseTypes=exerciseTypes["Syntax"];
 }
