@@ -12,5 +12,9 @@ public class ApplicationModule : Module
         builder.RegisterType<WeatherService>()
             .As<IWeatherService>()
             .InstancePerLifetimeScope();
+
+        builder.RegisterType<ParsonPuzzleService>()
+            .As<IParsonPuzzleService>()
+            .InstancePerLifetimeScope();
     }
 }

@@ -34,5 +34,8 @@ public class RepositoryModule : Module
         builder.RegisterType<WeatherForecastRepository>()
             .As<IWeatherForecastRepository>()
             .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonExerciseRepository>()
+            .As<IParsonExerciseRepository>()
+            .InstancePerLifetimeScope();
     }
 }
