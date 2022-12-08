@@ -17,7 +17,7 @@ public class WeatherService: IWeatherService
 
     public async Task CreateWeatherReport(WeatherForecast newWeatherForecast, CancellationToken cancellationToken = default)
     {
-        await weatherForecastRepository.Add(newWeatherForecast, cancellationToken);
+        await weatherForecastRepository.AddAsync(newWeatherForecast, cancellationToken);
     }
 
     public async Task<List<WeatherForecast>> GetWeatherForecast(CancellationToken cancellationToken = default)
@@ -38,12 +38,12 @@ public class WeatherService: IWeatherService
     public async Task UpdateWeatherReport(Guid id, WeatherForecast updatedWeatherForecast,
         CancellationToken cancellationToken = default)
     {
-        await  weatherForecastRepository.Update(updatedWeatherForecast, cancellationToken);
+        await  weatherForecastRepository.UpdateAsync(updatedWeatherForecast, cancellationToken);
     }
 
     public async Task<WeatherForecast> GetWeatherReport(Guid id, CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.TryGetById(id, cancellationToken) ?? throw new EntityNotFoundException(id, typeof(WeatherForecast));
+        return await weatherForecastRepository.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException(id, typeof(WeatherForecast));
     }
 
     public async Task<List<WeatherForecast>> GetAllActive(CancellationToken cancellationToken = default)

@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelper", "TestHelper\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STExS.Web.IntegrationTests", "STExS.Web.IntegrationTests\STExS.Web.IntegrationTests.csproj", "{87DAA90E-CCC0-4878-A8A8-6E5985DC445B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories.Tests", "Repositories.Tests\Repositories.Tests.csproj", "{D2808C15-ADC6-4353-8670-E672D9BD04C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{87DAA90E-CCC0-4878-A8A8-6E5985DC445B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87DAA90E-CCC0-4878-A8A8-6E5985DC445B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87DAA90E-CCC0-4878-A8A8-6E5985DC445B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2808C15-ADC6-4353-8670-E672D9BD04C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2808C15-ADC6-4353-8670-E672D9BD04C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2808C15-ADC6-4353-8670-E672D9BD04C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2808C15-ADC6-4353-8670-E672D9BD04C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

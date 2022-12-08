@@ -15,6 +15,6 @@ public class ParsonPuzzleService:IParsonPuzzleService
 
     public async Task<List<ParsonExercise>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await this.parsonRepository.GetAll();
+        return await this.parsonRepository.GetAllAsync();
     }
 }

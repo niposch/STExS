@@ -1,7 +1,9 @@
 using Common.Models;
 using Common.Models.Authentication;
+using Common.Models.ExerciseSystem.Parson;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Repositories;
 
 namespace Repositories;
 
@@ -12,4 +14,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     }
 
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }
+    
+    public DbSet<ParsonExercise> ParsonExercises { get; set; }
 }
