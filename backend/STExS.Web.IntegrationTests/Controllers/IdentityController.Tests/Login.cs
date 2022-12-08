@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
+using Common.Models.Authentication;
 using FluentAssertions;
 using JWTRefreshToken.NET6._0.Controllers;
 
@@ -14,16 +15,15 @@ public sealed class Login : Infrastructure
         // Arrange
 
         // Act
-        var res = await Client.PostAsJsonAsync("/Identity/Authentication",
+        var res = await Client.PostAsJsonAsync("api/Authenticate/login",
             new AppLoginModel
             {
-                Email = "superuser@test.com",
-                Password = "SuperUser123!"
+                Email = "irgendwas_anderes@test.com",
+                Password = "SuperUser333!"
             });
 
         // Assert
         var respContents = res.Content.ReadAsStringAsync().Result;
-        respContents.Should().Be("2"); // 2 means "wrong credentials" in LoginFailureType
         res.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
@@ -33,23 +33,25 @@ public sealed class Login : Infrastructure
         // Arrange
 
         // Act
-        var res = await Client.PostAsJsonAsync("/Identity/Authentication",
+        var res = await Client.PostAsJsonAsync("api/Authenticate/login",
             new AppLoginModel
             {
-                Email = DefaultUser.Email,
+                Email = "dev@test.com",
                 Password = "Test333!"
             });
 
         // Assert
-        var respContents = res.Content.ReadAsStringAsync().Result;
+        var respContents = res.Content.ReadFromJsonAsync<TokenModel>().Result;
         // decode the jwt in respContents
         var handler = new JwtSecurityTokenHandler();
-        var jwt = handler.ReadJwtToken(respContents);
+        
+        var jwt = handler.ReadJwtToken(respContents!.AccessToken);
+        var defaultUser = this.Context.Users.FirstOrDefault();
         jwt.Claims
-            .First(c => c.Type == "sub")
+            .First(c => c.Type == "userId")
             .Value
             .Should()
-            .Be(DefaultUser.Id.ToString());
+            .Be(defaultUser!.Id.ToString());
         res.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

@@ -19,8 +19,6 @@ public abstract class BaseIntegrationTest
 
     protected readonly IFixture Fixture;
 
-    protected ApplicationUser DefaultUser;
-
     protected IServiceProvider Services;
 
     protected BaseIntegrationTest()
@@ -55,24 +53,6 @@ public abstract class BaseIntegrationTest
         Services = builder.Services;
         Context.Database.EnsureCreated();
 
-        CreateDefaultUser();
         Client = builder.CreateClient();
-    }
-
-
-    protected void CreateDefaultUser()
-    {
-        var userManager = Services.GetRequiredService<UserManager<ApplicationUser>>();
-        DefaultUser = new ApplicationUser
-        {
-            UserName = "test",
-            Email = "test@test.com",
-            LockoutEnabled = false
-        };
-        // disable lockout for the user
-        userManager.CreateAsync(DefaultUser, "Test333!").Wait();
-        DefaultUser = userManager.FindByNameAsync("test").Result;
-        var token = userManager.GenerateEmailConfirmationTokenAsync(DefaultUser).Result;
-        userManager.ConfirmEmailAsync(DefaultUser, token).Wait();
     }
 }
