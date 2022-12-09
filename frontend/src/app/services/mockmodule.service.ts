@@ -5,13 +5,13 @@ import {Injectable} from '@angular/core';
 })
 
 export class ModuleService {
-    MockModule1 = this.createModule("MockModule1", 1, [], [], "This is just a mock");
+    //MockModule1 = this.createModule("MockModule1", 1, [], [], "This is just a mock");
     //ModuleList: Module[] = [];
     public MockModuleList: string[] = ["MockModule1", "MockModule2", "MockModule3", "MockModule4"];
     
 
     constructor () {
-    };
+    };/*
     createModule(mName: string, id: number, users: number[], cpts: Chapter[], desc: string){
         let cName = new Module;
         cName.Init(mName, id, users, cpts, desc);
@@ -22,8 +22,9 @@ export class ModuleService {
     }
     searchModulebyID() {
 
-    }
+    }*/
 }
+/*
       //datastructure for modules
 class Module {
     Init(name: string, id: number, users: number[], cpts: Chapter[], desc: string) {
@@ -69,5 +70,5 @@ enum exerciseTypes {
     "TextAnswer",
     "Coding",
     "FindBug"
-}
+}*/
   
