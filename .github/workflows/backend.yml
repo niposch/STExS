@@ -16,13 +16,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Move to Directory
-      run: cd backend
-    - name: debug
-      run: ls -la
     - name: Restore dependencies
+      working-directory: backend
       run: dotnet restore STExS.sln
     - name: Build
+      working-directory: backend
       run: dotnet build --no-restore STExS.sln
     - name: Test
+      working-directory: backend
       run: dotnet test --no-build --verbosity normal STExS.sln
