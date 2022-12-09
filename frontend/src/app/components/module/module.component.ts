@@ -14,5 +14,9 @@ export class ModuleComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
+  checkValue(event: any){
+   console.log(event);
+  }
 
 }
