@@ -1,7 +1,7 @@
-<button mat-raised-button color="primary" [class]="isAdmin ? 'button button_admin' : 'button'">
+<button mat-raised-button color="primary" [class]="add_module ? 'button button_admin' : 'button'">
 {{name}}
-<mat-checkbox *ngIf="!isAdmin" class="checkbox"></mat-checkbox>
-<div  *ngIf="isAdmin" class="div-mat-icon">
+<mat-checkbox *ngIf="!add_module" class="checkbox" [checked]="checked"></mat-checkbox>
+<div  *ngIf="add_module" class="div-mat-icon">
 	<mat-icon class="mat-icon">add</mat-icon>
 </div>
 </button>

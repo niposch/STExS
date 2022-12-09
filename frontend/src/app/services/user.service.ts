@@ -11,7 +11,6 @@ import jwtDecode from "jwt-decode";
 export class UserService {
   public currentUser: Observable<User | null>;
   public currentUserSubject: BehaviorSubject<User | null>;
-  public currentUserModules: number[] = [0, 1, 3];
   constructor(private readonly authService: AuthenticateService) {
     let user = JSON.parse(localStorage.getItem('currentUser') ?? "null");
     if (user == null) {
@@ -47,6 +46,8 @@ export class UserService {
             id: decodedToken.sub,
             userName: decodedToken.userName,
 			isAdmin: true,
+			currentUserModules: [0, 1, 3],
+			favourite_modules: [false,false,true],
           };
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -71,7 +72,9 @@ interface User {
   accessToken: string;
   refreshToken: string;
   isAdmin: boolean;
-}
+  currentUserModules: number[];
+  favourite_modules: boolean[];
+ }
 
 interface AccessToken {
   userName: string;

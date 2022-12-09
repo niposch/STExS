@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
         this.userName = user.userName;
         this.loggedIn = true;
 		this.isAdmin = user.isAdmin;
-		console.log(this);
       } else {
         this.userName = "";
         this.loggedIn = false;

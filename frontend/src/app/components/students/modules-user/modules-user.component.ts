@@ -8,11 +8,26 @@ import {ModuleService} from "../../../services/mockmodule.service";
   styleUrls: ['./modules-user.component.scss']
 })
 export class ModulesUserComponent implements OnInit {
+  userName: string = "";
+  loggedIn: boolean = false;
+  isAdmin: boolean = false;
+  userModules: number[]=[];
+  userFavouriteModules: boolean[]=[];
+  
   constructor(private readonly userService: UserService, private readonly moduleService: ModuleService) { }
-  userModules = this.userService.currentUserModules;
   moduleList = this.moduleService.MockModuleList;
 
   ngOnInit(): void {
+    this.userService.currentUser.subscribe(user => {
+      if (user != null) {
+	    console.log(user);
+        this.userName = user.userName;
+        this.loggedIn = true;
+		this.isAdmin = user.isAdmin;
+		this.userModules = user.currentUserModules;
+		this.userFavouriteModules = user.favourite_modules;
+		}
+    })
   }
 
 }

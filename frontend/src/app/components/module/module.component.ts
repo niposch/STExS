@@ -7,7 +7,8 @@ import { Component, OnInit, NgModule, Input } from '@angular/core';
 })
 export class ModuleComponent implements OnInit {
   @Input() name = ''; // decorate the property with @Input()
-  @Input() isAdmin = ''; // decorate the property with @Input()
+  @Input() add_module = ''; // decorate the property with @Input()
+  @Input() checked = ''; // decorate the property with @Input()
   
   constructor() { }
 

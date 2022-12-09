@@ -1,7 +1,7 @@
 <!--<p>modules-admin works!</p>-->
 <div class="modules-list">
-    <div *ngFor="let i of userModules">
-	<app-module name= "{{ moduleList[i] }}"></app-module>
+    <div *ngFor="let i of userModules; let index = index">
+	<app-module name= "{{ moduleList[i] }}" checked="{{ userFavouriteModules[index] }}"></app-module>
 	</div>
-	<app-module *ngIf="isAdmin" isAdmin="isAdmin" name="Modul erstellen"></app-module>
+	<app-module add_module="true" name="Create Module"></app-module>
 </div>
