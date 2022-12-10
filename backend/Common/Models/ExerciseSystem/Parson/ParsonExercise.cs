@@ -6,6 +6,5 @@ public sealed class ParsonExercise: BaseExercise, IDeletable
     public DateTime? DeletedDate { get; set; }
     
     // Relationships
-    public ParsonSolution ExpectedSolution { get; set; } = null!;
-    public Guid ExpectedSolutionId { get; set; }
+    public ParsonSolution ExpectedSolution { get; set; }
 }

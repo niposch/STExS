@@ -4,7 +4,7 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem.Parson;
 
-public sealed class ParsonSolution: IDeletable, IBaseEntity, ICreationTimeTracked, IModificationTimeTracked
+public sealed class ParsonSolution: IBaseEntity, IDeletable, ICreationTimeTracked, IModificationTimeTracked
 {
     [Key]
     public Guid Id { get; set; }
@@ -15,7 +15,11 @@ public sealed class ParsonSolution: IDeletable, IBaseEntity, ICreationTimeTracke
     public DateTime? ModificationTime { get; set; }
     
     // Relationships
-    public List<ParsonElement> CodeElements { get; set; }
-    public ApplicationUser Owner { get; set; }
+    public List<ParsonElement> CodeElements { get; set; } = null!;
+    
+    public ParsonExercise RelatedExercise { get; set; } = null!;
+    public Guid RelatedExerciseId { get; set; }
+    
+    public ApplicationUser Owner { get; set; } = null!;
     public Guid OwnerId { get; set; }
 }

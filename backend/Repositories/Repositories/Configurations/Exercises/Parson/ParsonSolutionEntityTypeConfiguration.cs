@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem.Parson;
+﻿using Common.Models.Authentication;
+using Common.Models.ExerciseSystem.Parson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,5 +10,9 @@ public class ParsonSolutionEntityTypeConfiguration: IEntityTypeConfiguration<Par
     public void Configure(EntityTypeBuilder<ParsonSolution> builder)
     {
         builder.Property(p => p.Id).ValueGeneratedOnAdd();
+        builder.HasOne<ApplicationUser>(x => x.Owner)
+            .WithMany()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

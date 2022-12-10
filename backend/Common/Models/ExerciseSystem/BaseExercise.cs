@@ -12,17 +12,17 @@ public abstract class BaseExercise : IBaseEntity,
     public Guid Id { get; set; }
 
     public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; }
+    public ApplicationUser Owner { get; set; } = null!;
 
     public DateTime? ModificationTime { get; set; }
 
     public DateTime CreationTime { get; set; }
-    
-    public Chapter Chapter { get; set; }
+
+    public Chapter Chapter { get; set; } = null!;
     public Guid ChapterId { get; set; }
 
 
-    public string Title { get; set; }
+    public string Title { get; set; } = null!;
     
     public string? Description { get; set; }
 

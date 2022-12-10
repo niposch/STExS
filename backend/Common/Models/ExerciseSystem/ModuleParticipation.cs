@@ -6,10 +6,10 @@ namespace Common.Models.ExerciseSystem;
 public sealed class ModuleParticipation: ICreationTimeTracked
 {
     public Guid UserId { get; set; }
-    public ApplicationUser User { get; set; }
+    public ApplicationUser User { get; set; } = null!;
     
     public Guid ModuleId { get; set; }
-    public Module Module { get; set; }
+    public Module Module { get; set; } = null!;
 
     public bool ParticipationConfirmed { get; set; } // a user needs to confirm his participation in a module before he can see it
     

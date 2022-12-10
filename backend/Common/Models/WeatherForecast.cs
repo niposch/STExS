@@ -22,7 +22,7 @@ public class WeatherForecast : IBaseEntity,
     // Interface Implementations
     public Guid Id { get; set; }
     public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; }
+    public ApplicationUser Owner { get; set; } = null!;
     public DateTime CreationTime { get; set; }
     public DateTime? ModificationTime { get; set; }
 }

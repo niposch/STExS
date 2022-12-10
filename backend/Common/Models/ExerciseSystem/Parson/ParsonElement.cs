@@ -4,13 +4,13 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem.Parson;
 
-public sealed class ParsonElement: IDeletable, IBaseEntity, ICreationTimeTracked, IModificationTimeTracked
+public sealed class ParsonElement: IBaseEntity, IDeletable, ICreationTimeTracked, IModificationTimeTracked
 {
     [Key]
     public Guid Id { get; set; }
     
     public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; }
+    public ApplicationUser Owner { get; set; } = null!;
     
     public DateTime? DeletedDate { get; set; }
     

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.Models.HelperInterfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Common.Models.Authentication;
 
