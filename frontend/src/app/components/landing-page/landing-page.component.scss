@@ -1,0 +1,46 @@
+
+.centered-content {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+
+    background-image: linear-gradient(to bottom right, #303030, #202020);
+}
+
+.centered-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+
+    padding: 20px;
+    min-width: 220px;
+    width: 400px;
+    max-width: 600px;
+}
+
+.main-heading {
+    font-size: 3em;
+    overflow: hidden;
+    border-right: .15em solid #016051;
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .2em; /* Adjust as needed */
+    animation: 
+      typing 1s steps(10, end),
+      blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 40% }
+  }
+  
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #016051; }
+  }
