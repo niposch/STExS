@@ -1,7 +1,7 @@
-﻿using Application.Interfaces.Repositories.Tables;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models;
+using Common.RepositoryInterfaces.Tables;
 
 namespace Application.Services;
 

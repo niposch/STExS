@@ -1,6 +1,7 @@
 ﻿using Common.Models;
+using Common.Repositories.Generic;
 
-namespace Application.Interfaces.Repositories.Tables;
+namespace Common.RepositoryInterfaces.Tables;
 
 public interface IWeatherForecastRepository : IGenericCrudRepository<WeatherForecast>
 {

@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories.Tables;
+﻿using Common.RepositoryInterfaces.Tables;
 
-namespace Application.Interfaces.Repositories;
+namespace Common.Repositories.Generic;
 
 public interface IApplicationRepository
 {

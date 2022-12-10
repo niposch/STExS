@@ -3,7 +3,6 @@ using Common.Models.Authentication;
 using Common.Models.ExerciseSystem.Parson;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Repositories.Repositories;
 
 namespace Repositories;
 
@@ -11,6 +10,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        base.OnModelCreating(builder);
     }
 
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }

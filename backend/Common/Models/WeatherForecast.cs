@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Common.Models.Authentication;
 using Common.Models.HelperInterfaces;
 
 namespace Common.Models;
@@ -6,7 +7,6 @@ namespace Common.Models;
 public class WeatherForecast : IBaseEntity,
     ICreationTimeTracked,
     IArchiveable,
-    IDeletable,
     IModificationTimeTracked
 {
     public DateTime Date { get; set; }
@@ -22,6 +22,7 @@ public class WeatherForecast : IBaseEntity,
     // Interface Implementations
     public Guid Id { get; set; }
     public Guid OwnerId { get; set; }
+    public ApplicationUser Owner { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime? ModificationTime { get; set; }
 }

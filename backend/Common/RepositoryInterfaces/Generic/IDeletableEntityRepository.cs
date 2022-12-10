@@ -1,6 +1,6 @@
 ﻿using Common.Models.HelperInterfaces;
 
-namespace Application.Interfaces.Repositories;
+namespace Common.Repositories.Generic;
 
 public interface IDeletableEntityRepository<TModel>
     where TModel : class, IDeletable

@@ -1,5 +1,5 @@
-﻿using Application.Interfaces.Repositories.Tables;
-using Application.Services;
+﻿using Application.Services;
+using Application.Services.Exercise;
 using Application.Services.Interfaces;
 using Autofac;
 
@@ -13,8 +13,14 @@ public class ApplicationModule : Module
             .As<IWeatherService>()
             .InstancePerLifetimeScope();
 
-        builder.RegisterType<ParsonPuzzleService>()
+        builder.RegisterType<ParsonExerciseService>()
             .As<IParsonPuzzleService>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ChapterService>()
+            .As<IChapterService>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ModuleService>()
+            .As<IModuleService>()
             .InstancePerLifetimeScope();
     }
 }

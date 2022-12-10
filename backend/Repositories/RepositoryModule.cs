@@ -1,8 +1,6 @@
-﻿using Application.Interfaces.Repositories;
-using Application.Interfaces.Repositories.Tables;
-using Autofac;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Autofac;
+using Common.Repositories.Generic;
+using Common.RepositoryInterfaces.Tables;
 using Repositories.Repositories;
 
 namespace Repositories;
@@ -15,6 +13,17 @@ public class RepositoryModule : Module
             .InstancePerLifetimeScope();
         builder.RegisterType<ApplicationRepository>()
             .As<IApplicationRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonElementRepository>()
+            .As<IParsonElementRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonExerciseRepository>()
+            .As<IParsonExerciseRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonSolutionRepository>()
+            .As<IParsonSolutionRepository>();
+        builder.RegisterType<ModuleRepository>()
+            .As<IModuleRepository>()
             .InstancePerLifetimeScope();
         RegisterRepositories(builder);
         

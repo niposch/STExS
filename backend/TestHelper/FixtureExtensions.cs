@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace TestHelper;
 

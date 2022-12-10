@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories;
-using Common.Exceptions;
+﻿using Common.Exceptions;
 using Common.Models.HelperInterfaces;
+using Common.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.GenericImplementations;

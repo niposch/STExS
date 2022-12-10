@@ -1,6 +1,6 @@
 ﻿using Common.Models.HelperInterfaces;
 
-namespace Application.Interfaces.Repositories;
+namespace Common.Repositories.Generic;
 
 public interface IArchiveableEntityRepository<TModel> : IDeletableEntityRepository<TModel>
     where TModel : class, IArchiveable, IDeletable

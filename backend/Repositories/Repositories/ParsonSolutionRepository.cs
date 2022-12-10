@@ -4,9 +4,9 @@ using Repositories.Repositories.GenericImplementations;
 
 namespace Repositories.Repositories;
 
-public class ParsonExerciseRepository: GenericCrudRepository<ParsonExercise>, IParsonExerciseRepository
+public class ParsonSolutionRepository: GenericCrudRepository<ParsonSolution>, IParsonSolutionRepository
 {
-    public ParsonExerciseRepository(ApplicationDbContext context) : base(context)
+    public ParsonSolutionRepository(ApplicationDbContext context) : base(context)
     {
     }
 }

@@ -1,14 +1,14 @@
-﻿using Application.Interfaces.Repositories.Tables;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem.Parson;
+using Common.RepositoryInterfaces.Tables;
 
-namespace Application.Services;
+namespace Application.Services.Exercise;
 
-public class ParsonPuzzleService:IParsonPuzzleService
+public class ParsonExerciseService:IParsonPuzzleService
 {
     private readonly IParsonExerciseRepository parsonRepository;
 
-    public ParsonPuzzleService(IParsonExerciseRepository parsonRepository)
+    public ParsonExerciseService(IParsonExerciseRepository parsonRepository)
     {
         this.parsonRepository = parsonRepository ?? throw new ArgumentNullException(nameof(parsonRepository));
     }
