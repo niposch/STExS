@@ -12,12 +12,24 @@ import { RegisterComponent } from './components/authentication/register/register
 import {ApiModule} from "../services/generated/api.module";
 import { DashboardComponent } from './components/students/dashboard/dashboard.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ModulesAdminComponent } from './components/admin/modules-admin/modules-admin.component';
+import { ModulesUserComponent } from './components/students/modules-user/modules-user.component';
+import { ModuleComponent } from './components/module/module.component';
+
+import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MatIconModule } from '@angular/material/icon'
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ModulesAdminComponent,
+    ModulesUserComponent,
+    ModuleComponent,
     //LoginComponent,
     //RegisterComponent
   ],
@@ -29,7 +41,10 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     // RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     LayoutModule,
     BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: '/api'})
+    ApiModule.forRoot({rootUrl: '/api'}),
+	MatButtonModule,
+	MatCheckboxModule,
+	MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

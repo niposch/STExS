@@ -1,0 +1,7 @@
+<button mat-raised-button color="primary" [class]="add_module ? 'button button_admin' : 'button'">
+{{name}}
+<mat-checkbox *ngIf="!add_module" class="checkbox" [checked]="checked"  (change)="checkValue($event)"></mat-checkbox>
+<div  *ngIf="add_module" class="div-mat-icon">
+	<mat-icon class="mat-icon">add</mat-icon>
+</div>
+</button>

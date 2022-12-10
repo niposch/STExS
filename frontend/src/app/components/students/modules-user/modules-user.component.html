@@ -1,0 +1,4 @@
+<!--<p>modules-user works!</p>-->
+<div class="modules-list" *ngFor="let i of userModules; let index = index">
+	<app-module name= "{{ moduleList[i] }}" checked="{{ userFavouriteModules[index] }}"></app-module>
+</div>
