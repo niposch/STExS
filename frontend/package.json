@@ -7,8 +7,8 @@
     "quickstart": "yarn && yarn swagger && yarn start",
     "build": "ng-openapi-gen && ng build",
     "watch": "ng build --watch --configuration development --proxy-config proxy.conf.json",
-    "test": "ng-openapi-gen && ng test",
-    "test-headless": "ng-openapi-gen && ng test --watch=false --browsers=ChromeHeadless",
+    "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "swagger": "curl http://localhost:9547/swagger/v1/swagger.json --output swagger.json && ng-openapi-gen"
   },
   "private": true,

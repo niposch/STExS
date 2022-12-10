@@ -20,6 +20,11 @@ jobs:
           dir: 'frontend'
         # env:
           # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # if needed
+      - name: Generate Swagger services
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: ng-openapi-gen
+          dir: 'frontend'
       - name: Build production bundle
         uses: borales/actions-yarn@v4
         with:
