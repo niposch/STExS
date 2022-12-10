@@ -28,11 +28,5 @@ jobs:
       - name: Test the app
         uses: borales/actions-yarn@v4
         with:
-          cmd: test # will run `yarn test` command
+          cmd: test-headless # will run `yarn test` command
           dir: 'frontend'
-
-      - name: Run test in sub-folder
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test
-          dir: 'frontend' # will run `yarn test` in `frontend` sub folder
