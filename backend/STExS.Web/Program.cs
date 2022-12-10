@@ -18,11 +18,18 @@ builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLogging
 
 // Configure AutoFac
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+var isTest = builder.Configuration.GetValue("IsTest", false);
+var isDevelopment = builder.Environment.IsDevelopment();
 builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
+    var connectionString = builder.Configuration.GetConnectionString("ApplicationDb");
+    if (!isTest) // test environment should provide it's own db options before this point
+    {
+        b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
+            new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
+    }
     b.RegisterModule<ApplicationModule>();
-    b.RegisterModule(new RepositoryModule(builder.Configuration.GetConnectionString("ApplicationDb"),
-        builder.Environment.IsDevelopment()));
+    b.RegisterModule(new RepositoryModule());
 });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -93,12 +100,15 @@ app.Use(async (context,
 
     await next(context);
 });
-using (var scope = app.Services.CreateScope())
+
+if (!isTest)
 {
+    using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 }
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Repositories;
 
@@ -27,26 +29,12 @@ public abstract class BaseIntegrationTest
         Fixture.Customize<DateOnly>(composer => composer.FromFactory<DateTime>(DateOnly.FromDateTime));
         Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-        var builder = new WebApplicationFactory<Program>();
+        var builder = new CustomWebApplicationFactory<Program>();
 
         // configure context to use in-memory database
         builder.WithWebHostBuilder(builder =>
         {
-            builder.ConfigureServices(services =>
-            {
-                var descriptor =
-                    services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
-                services.Remove(descriptor);
 
-                var connection = new SqliteConnection("DataSource=:memory:");
-                connection.Open();
-
-                services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    options.UseSqlite(connection);
-                    options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()));
-                });
-            });
         });
 
         Context = builder.Services.GetRequiredService<ApplicationDbContext>();
@@ -54,5 +42,29 @@ public abstract class BaseIntegrationTest
         Context.Database.EnsureCreated();
 
         Client = builder.CreateClient();
+    }
+}
+
+internal class CustomWebApplicationFactory<T> : WebApplicationFactory<T> where T : class
+{
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        // override DbContextOptions registered in autofac
+
+        builder.ConfigureHostConfiguration(c =>
+        {
+            c.SetBasePath(Directory.GetCurrentDirectory());
+            c.AddJsonFile("appsettings.test.json", optional: false);
+            c.AddEnvironmentVariables();
+        });
+        
+        builder.ConfigureServices(services =>
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            services.AddSingleton(optionsBuilder.Options);
+        });
+        
+        return base.CreateHost(builder);
     }
 }
