@@ -21,4 +21,5 @@ public class Module : IBaseEntity, IArchiveable
 
     public string ModuleName { get; set; } = null!;
     public string ModuleDescription { get; set; } = null!;
+    public List<ModuleParticipation> ModuleParticipations { get; set; } = new();
 }
