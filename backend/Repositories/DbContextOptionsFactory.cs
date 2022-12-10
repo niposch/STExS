@@ -8,6 +8,7 @@ public class DbContextOptionsFactory<T>
     private readonly string connectionString;
 
     private readonly bool isDevelopment;
+    
     private readonly DbContextOptionsBuilder<T> optionsBuilder;
 
     public DbContextOptionsFactory(string connectionString,
