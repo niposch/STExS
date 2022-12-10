@@ -1,5 +1,5 @@
 ﻿using Common.Models.ExerciseSystem.Parson;
-using Common.Repositories.Generic;
+using Common.RepositoryInterfaces.Generic;
 
 namespace Common.RepositoryInterfaces.Tables;
 

@@ -1,9 +1,9 @@
 ﻿using Common.Models.ExerciseSystem;
-using Common.Repositories.Generic;
+using Common.RepositoryInterfaces.Generic;
 
 namespace Common.RepositoryInterfaces.Tables;
 
-public interface IModuleRepository: IGenericCrudRepository<Module>
+public interface IModuleRepository: IGenericCrudAndArchiveableEntityRepository<Module>
 {
     
 }

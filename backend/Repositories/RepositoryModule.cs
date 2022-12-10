@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Common.Repositories.Generic;
+using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 using Repositories.Repositories;
 

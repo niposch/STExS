@@ -22,17 +22,17 @@ public class WeatherService: IWeatherService
 
     public async Task<List<WeatherForecast>> GetWeatherForecast(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllActive(cancellationToken);
+        return await weatherForecastRepository.GetAllActiveAsync(cancellationToken);
     }
 
     public async Task<List<WeatherForecast>> GetAllDeleted(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllDeleted(cancellationToken);
+        return await weatherForecastRepository.GetAllDeletedAsync(cancellationToken);
     }
 
     public async Task DeleteWeatherReport(Guid id, CancellationToken cancellationToken = default)
     {
-        await weatherForecastRepository.Delete(id, cancellationToken);
+        await weatherForecastRepository.DeleteAsync(id, cancellationToken);
     }
 
     public async Task UpdateWeatherReport(Guid id, WeatherForecast updatedWeatherForecast,
@@ -43,11 +43,11 @@ public class WeatherService: IWeatherService
 
     public async Task<WeatherForecast> GetWeatherReport(Guid id, CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException(id, typeof(WeatherForecast));
+        return await weatherForecastRepository.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<WeatherForecast>(id);
     }
 
     public async Task<List<WeatherForecast>> GetAllActive(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllActive(cancellationToken);
+        return await weatherForecastRepository.GetAllActiveAsync(cancellationToken);
     }
 }

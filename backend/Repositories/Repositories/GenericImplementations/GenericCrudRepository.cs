@@ -1,5 +1,5 @@
 ﻿using Common.Models.HelperInterfaces;
-using Common.Repositories.Generic;
+using Common.RepositoryInterfaces.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.GenericImplementations;

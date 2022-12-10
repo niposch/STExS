@@ -1,4 +1,5 @@
-﻿using Common.Repositories.Generic;
+﻿using Common.Models.ExerciseSystem;
+using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 
 namespace Repositories;
@@ -11,7 +12,8 @@ public class ApplicationRepository : IApplicationRepository
         IParsonElementRepository parsonElements,
         IParsonExerciseRepository parsonExercises,
         IParsonSolutionRepository parsonSolutions,
-        ICommonExerciseRepository commonExercises)
+        ICommonExerciseRepository commonExercises,
+        IModuleParticipationRepository moduleParticipations)
     {
         WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
         this.Modules = modules ?? throw new ArgumentNullException(nameof(modules));
@@ -20,6 +22,7 @@ public class ApplicationRepository : IApplicationRepository
         this.ParsonExercises = parsonExercises ?? throw new ArgumentNullException(nameof(parsonExercises));
         this.ParsonSolutions = parsonSolutions ?? throw new ArgumentNullException(nameof(parsonSolutions));
         this.CommonExercises = commonExercises ?? throw new ArgumentNullException(nameof(commonExercises));
+        this.ModuleParticipations = moduleParticipations ?? throw new ArgumentNullException(nameof(moduleParticipations));
     }
 
     public IWeatherForecastRepository WeatherForecasts { get; set; } // just for demonstration, will be removed
@@ -33,4 +36,5 @@ public class ApplicationRepository : IApplicationRepository
     public IParsonElementRepository ParsonElements { get; set; }
     public IParsonExerciseRepository ParsonExercises { get; set; }
     public IParsonSolutionRepository ParsonSolutions { get; set; }
+    public IModuleParticipationRepository ModuleParticipations { get; set; }
 }

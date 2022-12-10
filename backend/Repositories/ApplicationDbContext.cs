@@ -30,4 +30,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Module> Modules { get; set; }
     
     public DbSet<Chapter> Chapters { get; set; }
+    
+    public DbSet<ModuleParticipation> ModuleParticipations { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿using Common.Models.HelperInterfaces;
 
-namespace Common.Repositories.Generic;
+namespace Common.RepositoryInterfaces.Generic;
 
 public interface IGenericCrudRepository<TModel> : IDeletableEntityRepository<TModel>
     where TModel : class, IBaseEntity, IDeletable
