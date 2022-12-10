@@ -1,0 +1,305 @@
+\documentclass[11pt]{article}
+\usepackage{threeparttable}             % tables with footnotes, capions all the same width
+\usepackage{dcolumn}                    % decimal-aligned tabular math columns
+\usepackage{multirow}                   % Allow table cells to span multiple rows
+\usepackage{booktabs}                   % Formatting options for publication-quality tables
+\usepackage{ltxtable}                   % long tabularx
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+\usepackage{tabularx}
+
+
+
+\begin{document}
+
+
+
+
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ParsonTask}\\ \hline
+Disassembles Code& ParsonElement  \\  \hline
+Memorizes Orginal Code Order & ParsonExersiseGrader\\ \hline
+Shuffles Parson Elements & \\ \hline
+\end{tabularx}
+
+\end{table}
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ParsonElement}\\ \hline
+Contains code fragment& \\  \hline
+\end{tabularx}
+
+\end{table}
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{SyntaxTaskGrader}\\ \hline
+Compares output with a predefined solution& CodeRunner \\  \hline
+ &  SourceCode\\ \hline
+ & SyntaxTaskSolution\\ \hline
+\end{tabularx}
+
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{SyntaxTaskSolution}\\ \hline
+speichert Lösungsinformationen bzgl. SyntaxTasks& \\  \hline
+\end{tabularx}
+
+\end{table}
+
+
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{CodeResultPredictionTaskGrader}\\ \hline
+Compares output prediction with the actual solution& GradingResult  \\  \hline
+Creates GradingResult &  \\ \hline
+\end{tabularx}
+
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{AdminService}\\ \hline
+Auflistung aller Kurse & Module  \\  \hline
+Verwaltung aller Kurse (Adminrecht) & ApplicationUser \\ \hline
+Nutzerverwaltung & \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{Module}\\ \hline
+Auflistung aller Kapitel & Chapter  \\  \hline
+Verwaltung aller Kapitel (Adminrecht) & \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{Chapter}\\ \hline
+Verwaltung der Aufgaben eines Kapitels & Exercise   \\  \hline
+\end{tabularx}
+
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{Exercise}\\ \hline
+Enthält eine Aufgabe von einem bestimmten Aufgabentyp & ExerciseType   \\  \hline
+\end{tabularx}
+
+\end{table}
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ChapterGrader}\\ \hline
+Berechnet automatisiert mittels der ExerciseGrader die im Chapter erreichte Punktzahl und speichert diese als ChapterGradingResult & ChapterGradingResult \\  \hline
+& ExerciseGrader (ParsonExerciseGrader, SyntaxExerciseGrader etc.)\\ \hline
+ & Chapter\\ \hline
+ & Exercise  \\
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ChapterGradingResult}\\ \hline
+Speichert Bewertungsinformationen für ApplicationUser und Chapter& ApplicationUser, Chapter \\  \hline
+Kann im Nachgang von Kursleitern bearbeitet werden& \\ \hline
+& \\
+\end{tabularx}
+\end{table}
+
+%
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ExerciseGrader}\\ \hline
+Ein Interface, welches die Aufgabenbewertung vereinheitlicht & ParsonExerciseGrader  \\  \hline
+Erstellt GradingResult, wenn möglich mit Bewertungsergebnissen &SyntaxExerciseGrader \\ \hline
+Hält Notwendigkeit von manueller Bewertung im GradingResult fest, falls autom. Korrektur nicht ausreichend für AufgabenTyp ist & GradingResult\\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ParsonSolution}\\ \hline
+enthält Daten über die richtige Antwort auf ein ParsonTask & ParsonTask \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ParsonExerciseGrader}\\ \hline
+Erstellt GradingResult anhand von Nutzerabgabe und ParsonSolution &ParsonSolution   \\ \hline
+&GradingResult \\ \hline
+\end{tabularx}
+\end{table}
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{UnitTest}\\ \hline
+Testet richtige Funktionalität von abgegebenen Coding-Aufgaben mithilfe von Testdaten&SourceCode\\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{CodeRunner}\\ \hline
+Übernimmt Kommunikation mit Code-Ausführungs-Tool für das Testen abgegebener Coding-Aufgaben&UnitTest  \\  \hline
+&SourceCode \\ \hline
+\end{tabularx}
+\end{table}
+
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{SourceCode}\\ \hline
+Persistenz von Usercode& \\  \hline
+\end{tabularx}
+\end{table}
+
+%Jonathan
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ApplicationUser}\\ \hline
+Manages user data& LoginInformation  \\  \hline
+&RegistrationInformation \\ \hline
+ &ChapterGrading \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{LoginInformation}\\ \hline
+Contains login data& \\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{RegistrationInformation}\\ \hline
+Contains registration data& \\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{UserService}\\ \hline
+Führt Login, Registrierung etc. & User, LoginInformation, RegistrationInformation\\  \hline
+\end{tabularx}
+\end{table}    
+
+%Bruno
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{Finde den Bug}\\ \hline
+Locate and fix faulty Code&Code Runner \\  \hline
+&Exercise Grader \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{NaturalLanguageDescriptionTask}\\ \hline
+speichert und verwalted Daten bzgl. der nat. sprachl. Aufgaben& \\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ProgrammingTask}\\ \hline
+speichert und verwalted Daten bzgl. der ProgrammingTask & \\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ProgrammingTaskGrader}\\ \hline
+Bewertet automatisch Programmieraufgaben & ProgrammingTask\\  \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{GradingResult}\\ \hline
+Speichert Bewertungsinformationen für ApplicationUser und Exercise& ApplicationUser, Exercise \\  \hline
+Kann im Nachgang von Kursleitern bearbeitet werden& \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ApplicationDbContext} \\ \hline
+ Abstrahiert Anwendung von verwendeter Datenbanktechnologie.&z.B. Modul, Chapter, SyntaxTaskSolution etc. \\   \hline
+Übernimmt Kommunikation mit der Datenbank & (jede Klasse die in der Datenbank zu einer Tabelle wird)\\  \hline
+Automatisierte Erstellung der Migrationen & \\ \hline
+\end{tabularx}
+\end{table}
+
+\end{document}
+\end{document}
