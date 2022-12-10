@@ -36,8 +36,6 @@ Shuffles Parson Elements & \\ \hline
 \hline
 \multicolumn{2}{|c|}{ParsonElement}\\ \hline
 Contains code fragment& \\  \hline
- & \\ \hline
- & \\ \hline
 \end{tabularx}
 
 \end{table}
@@ -61,8 +59,6 @@ Compares output with a predefined solution& CodeRunner \\  \hline
 \hline
 \multicolumn{2}{|c|}{SyntaxTaskSolution}\\ \hline
 speichert Lösungsinformationen bzgl. SyntaxTasks& \\  \hline
- &  \\ \hline
- & \\ \hline
 \end{tabularx}
 
 \end{table}
@@ -77,7 +73,6 @@ speichert Lösungsinformationen bzgl. SyntaxTasks& \\  \hline
 \multicolumn{2}{|c|}{CodeResultPredictionTaskGrader}\\ \hline
 Compares output prediction with the actual solution& GradingResult  \\  \hline
 Creates GradingResult &  \\ \hline
- & \\ \hline
 \end{tabularx}
 
 \end{table}
@@ -100,7 +95,6 @@ Nutzerverwaltung & \\ \hline
 \multicolumn{2}{|c|}{Module}\\ \hline
 Auflistung aller Kapitel & Chapter  \\  \hline
 Verwaltung aller Kapitel (Adminrecht) & \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -166,8 +160,6 @@ Hält Notwendigkeit von manueller Bewertung im GradingResult fest, falls autom. 
 \hline
 \multicolumn{2}{|c|}{ParsonSolution}\\ \hline
 enthält Daten über die richtige Antwort auf ein ParsonTask & ParsonTask \\ \hline
-& \\ \hline
-& \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -178,7 +170,6 @@ enthält Daten über die richtige Antwort auf ein ParsonTask & ParsonTask \\ \hl
 \multicolumn{2}{|c|}{ParsonExerciseGrader}\\ \hline
 Erstellt GradingResult anhand von Nutzerabgabe und ParsonSolution &ParsonSolution   \\ \hline
 &GradingResult \\ \hline
-& \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -189,8 +180,6 @@ Erstellt GradingResult anhand von Nutzerabgabe und ParsonSolution &ParsonSolutio
 \hline
 \multicolumn{2}{|c|}{UnitTest}\\ \hline
 Testet richtige Funktionalität von abgegebenen Coding-Aufgaben mithilfe von Testdaten&SourceCode\\  \hline
-& \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -201,7 +190,6 @@ Testet richtige Funktionalität von abgegebenen Coding-Aufgaben mithilfe von Tes
 \multicolumn{2}{|c|}{CodeRunner}\\ \hline
 Übernimmt Kommunikation mit Code-Ausführungs-Tool für das Testen abgegebener Coding-Aufgaben&UnitTest  \\  \hline
 &SourceCode \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -212,8 +200,6 @@ Testet richtige Funktionalität von abgegebenen Coding-Aufgaben mithilfe von Tes
 \hline
 \multicolumn{2}{|c|}{SourceCode}\\ \hline
 Persistenz von Usercode& \\  \hline
-& \\ \hline
-    & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -235,8 +221,6 @@ Manages user data& LoginInformation  \\  \hline
 \hline
 \multicolumn{2}{|c|}{LoginInformation}\\ \hline
 Contains login data& \\  \hline
-& \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -246,8 +230,6 @@ Contains login data& \\  \hline
 \hline
 \multicolumn{2}{|c|}{RegistrationInformation}\\ \hline
 Contains registration data& \\  \hline
-& \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -268,7 +250,6 @@ Führt Login, Registrierung etc. & User, LoginInformation, RegistrationInformati
 \multicolumn{2}{|c|}{Finde den Bug}\\ \hline
 Locate and fix faulty Code&Code Runner \\  \hline
 &Exercise Grader \\ \hline
- & \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -277,9 +258,7 @@ Locate and fix faulty Code&Code Runner \\  \hline
 \begin{tabularx}{\textwidth}{|X|X|}
 \hline
 \multicolumn{2}{|c|}{NaturalLanguageDescriptionTask}\\ \hline
-& \\  \hline
-& \\ \hline
- & \\ \hline
+speichert und verwalted Daten bzgl. der nat. sprachl. Aufgaben& \\  \hline
 \end{tabularx}
 \end{table}
 
@@ -288,19 +267,7 @@ Locate and fix faulty Code&Code Runner \\  \hline
 \begin{tabularx}{\textwidth}{|X|X|}
 \hline
 \multicolumn{2}{|c|}{ProgrammingTask}\\ \hline
-& \\  \hline
-& \\ \hline
- & \\ \hline
-\end{tabularx}
-\end{table}
-\begin{table}[h]
-\rowcolors{1}{gray}{white}
-\begin{tabularx}{\textwidth}{|X|X|}
-\hline
-\multicolumn{2}{|c|}{NaturalLanguageDescriptionGrader}\\ \hline
-& NaturalLanguageDescriptionTask\\  \hline
-& \\ \hline
- & \\ \hline
+speichert und verwalted Daten bzgl. der ProgrammingTask & \\  \hline
 \end{tabularx}
 \end{table}
 
@@ -309,9 +276,7 @@ Locate and fix faulty Code&Code Runner \\  \hline
 \begin{tabularx}{\textwidth}{|X|X|}
 \hline
 \multicolumn{2}{|c|}{ProgrammingTaskGrader}\\ \hline
-& ProgrammingTask\\  \hline
-& \\ \hline
- & \\ \hline
+Bewertet automatisch Programmieraufgaben & ProgrammingTask\\  \hline
 \end{tabularx}
 \end{table}
 
@@ -322,7 +287,17 @@ Locate and fix faulty Code&Code Runner \\  \hline
 \multicolumn{2}{|c|}{GradingResult}\\ \hline
 Speichert Bewertungsinformationen für ApplicationUser und Exercise& ApplicationUser, Exercise \\  \hline
 Kann im Nachgang von Kursleitern bearbeitet werden& \\ \hline
- & \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\rowcolors{1}{gray}{white}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\multicolumn{2}{|c|}{ApplicationDbContext} \\ \hline
+ Abstrahiert Anwendung von verwendeter Datenbanktechnologie.&z.B. Modul, Chapter, SyntaxTaskSolution etc. \\   \hline
+Übernimmt Kommunikation mit der Datenbank & (jede Klasse die in der Datenbank zu einer Tabelle wird)\\  \hline
+Automatisierte Erstellung der Migrationen & \\ \hline
 \end{tabularx}
 \end{table}
 
