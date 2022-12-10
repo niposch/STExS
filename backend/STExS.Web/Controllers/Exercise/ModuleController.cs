@@ -7,7 +7,7 @@ using STExS.Helper;
 namespace STExS.Controllers.Exercise;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ModuleController: ControllerBase
 {
     private readonly IModuleService moduleService;
@@ -27,10 +27,10 @@ public class ModuleController: ControllerBase
         return this.Ok();
     }
 
-    [HttpPut]
+    [HttpPut("{moduleId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [Authorize]
-    public async Task<IActionResult> UpdateModuleAsync([FromBody]Guid moduleId, [FromBody]ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateModuleAsync([FromRoute]Guid moduleId, [FromBody]ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
         var existingModule = await this.moduleService.GetModuleByIdAsync(moduleId, cancellationToken);
         if (existingModule == null)
@@ -71,7 +71,7 @@ public class ModuleController: ControllerBase
         return this.Ok();
     }
 
-    [HttpGet(Name = "getById")]
+    [HttpGet("getById")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleDetailItem))]
     [Authorize]
     public async Task<IActionResult> GetModuleByIdAsync([FromQuery]Guid id, CancellationToken cancellationToken = default)
@@ -80,7 +80,7 @@ public class ModuleController: ControllerBase
         return this.Ok(res);
     }
 
-    [HttpGet(Name = "all")]
+    [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
     public async Task<IActionResult> GetModulesAsync(CancellationToken cancellationToken = default)
@@ -89,7 +89,7 @@ public class ModuleController: ControllerBase
         return this.Ok(res);
     }
 
-    [HttpGet(Name = "getModulesForUser")]
+    [HttpGet("getModulesForUser")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
     public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
@@ -98,7 +98,7 @@ public class ModuleController: ControllerBase
         return this.Ok(res);
     }
 
-    [HttpGet(Name = "getArchived")]
+    [HttpGet("getArchived")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
     public async Task<IActionResult> GetArchivedModulesAsync(CancellationToken cancellationToken = default)
@@ -108,7 +108,7 @@ public class ModuleController: ControllerBase
         return this.Ok(res);
     }
 
-    [HttpGet(Name = "getUsersForModule")]
+    [HttpGet("getUsersForModule")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
