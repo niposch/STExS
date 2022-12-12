@@ -95,7 +95,7 @@ public class ModuleController: ControllerBase
     public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAcceptedInto(userId, cancellationToken);
-        return this.Ok(res);
+        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
     }
 
     [HttpGet("getArchived")]
@@ -113,7 +113,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
     {
-        var res = this.moduleService.GetUsersInvitedToModule(moduleId, cancellationToken);
+        var res = await this.moduleService.GetUsersInvitedToModule(moduleId, cancellationToken);
 
         return this.Ok(res);
     }
@@ -121,7 +121,7 @@ public class ModuleController: ControllerBase
 
 public static class ModuleMapper
 {
-    public static ModuleDetailItem ToDetailItem(Module module)
+    public static ModuleDetailItem ToDetailItem(Module module, Guid? userId = default)
     {
         return new ModuleDetailItem
         {
@@ -133,7 +133,8 @@ public static class ModuleMapper
             ModuleDescription = module.ModuleDescription,
             ArchivedDate = module.ArchivedDate,
             DeletedDate = module.DeletedDate,
-            ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>()
+            ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
+            IsFavorited =  module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false))
         };
     }
     
@@ -175,6 +176,8 @@ public sealed class ModuleDetailItem {
     public bool IsDeleted => this.DeletedDate.HasValue;
 
     public List<Guid> ChapterIds { get; set; } = new List<Guid>();
+    
+    public bool IsFavorited { get; set; }
 }
 
 public sealed class ModuleCreateItem {

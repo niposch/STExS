@@ -1,4 +1,5 @@
-import { Component, OnInit, NgModule, Input } from '@angular/core';
+import {Component, OnInit, NgModule, Input, Output, EventEmitter} from '@angular/core';
+import {Module} from "../../../services/generated/models/module";
 
 @Component({
   selector: 'app-module',
@@ -6,17 +7,13 @@ import { Component, OnInit, NgModule, Input } from '@angular/core';
   styleUrls: ['./module.component.scss']
 })
 export class ModuleComponent implements OnInit {
-  @Input() name = ''; // decorate the property with @Input()
-  @Input() add_module = ''; // decorate the property with @Input()
-  @Input() checked = ''; // decorate the property with @Input()
-  
+
+  @Input() isFavorited = false;
+  @Output() isFavoritedEventEmitter = new EventEmitter<boolean>();
+  @Input() module:Module | undefined;
+
   constructor() { }
 
   ngOnInit(): void {
   }
-  
-  checkValue(event: any){
-   console.log(event);
-  }
-
 }

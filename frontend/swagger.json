@@ -640,15 +640,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "refreshToken": {
-            "type": "string",
-            "nullable": true
-          },
-          "refreshTokenExpiryTime": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "firstName": {
             "type": "string",
             "nullable": true
@@ -826,6 +817,9 @@
               "format": "uuid"
             },
             "nullable": true
+          },
+          "isFavorited": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -853,6 +847,9 @@
           "creationTime": {
             "type": "string",
             "format": "date-time"
+          },
+          "isFavorite": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

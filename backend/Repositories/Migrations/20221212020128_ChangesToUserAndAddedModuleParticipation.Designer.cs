@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,10 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221212020128_ChangesToUserAndAddedModuleParticipation")]
+    partial class ChangesToUserAndAddedModuleParticipation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,9 +197,6 @@ namespace Repositories.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("ParticipationConfirmed")
                         .HasColumnType("bit");

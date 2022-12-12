@@ -13,6 +13,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
+import {AppModule} from "../app.module";
+import {ModulesUserComponent} from "../components/students/modules-user/modules-user.component";
 
 
 @NgModule({

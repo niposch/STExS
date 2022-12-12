@@ -1,4 +1,9 @@
 <!--<p>modules-user works!</p>-->
-<div class="modules-list" *ngFor="let i of userModules; let index = index">
-	<app-module name= "{{ moduleList[i] }}" checked="{{ userFavouriteModules[index] }}"></app-module>
+<div *ngIf="moduleList else loading" class="modules-list">
+  <div  *ngFor="let module of moduleList">
+    <app-module [module]= "module.module" [isFavorited]="false"></app-module>
+  </div>
 </div>
+<ng-template #loading>
+  <mat-spinner style="margin: auto" mode="indeterminate"></mat-spinner>
+</ng-template>

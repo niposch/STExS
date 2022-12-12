@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../../services/user.service";
-import {ModuleService} from "../../../services/mockmodule.service";
+import {Module} from "../../../../services/generated/models/module";
+import * as module from "module";
+import {ModuleService} from "../../../../services/generated/services/module.service";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 
 
 @Component({
@@ -12,14 +15,18 @@ export class ModulesAdminComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
   isAdmin: boolean = false;
-  userModules: number[]=[];
-  userFavouriteModules: boolean[]=[];
 
-  constructor(private readonly userService: UserService, private readonly moduleService: ModuleService) { }
-  moduleList = this.moduleService.MockModuleList;
+  moduleList:Array<Module> = []
+
+  constructor(private readonly moduleService:ModuleService, private readonly userService:UserService) { }
 
   ngOnInit(): void {
-
+    void this.moduleService.apiModuleGetModulesForUserGet$Json({
+      userId:this.userService.currentUserSubject.getValue()?.id ?? ""
+    }).toPromise()
+      .then(modules =>{
+        this.moduleList = modules ?? []
+      })
   }
 
 }

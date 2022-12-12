@@ -20,6 +20,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { MatIconModule } from '@angular/material/icon'
 import {MatDividerModule} from "@angular/material/divider";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -34,20 +36,22 @@ import {MatDividerModule} from "@angular/material/divider";
     //LoginComponent,
     //RegisterComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        RouterModule.forRoot([]),
-        // RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
-        LayoutModule,
-        BrowserAnimationsModule,
-        ApiModule.forRoot({rootUrl:""}),
-        MatButtonModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatDividerModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule.forRoot([]),
+    // RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
+    BrowserAnimationsModule,
+    ApiModule.forRoot({rootUrl: ""}),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    LayoutModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

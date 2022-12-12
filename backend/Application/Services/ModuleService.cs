@@ -58,7 +58,10 @@ public sealed class ModuleService: IModuleService
     public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedInto(Guid userId, CancellationToken cancellationToken = default)
     {
         var participationsForUser =  await this.repository.ModuleParticipations.GetParticipationsForUser(userId);
-        return participationsForUser.Select(p => p.Module);
+        var ownerOfModules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId);
+        return ownerOfModules.Concat(participationsForUser
+                .Select(p => p.Module))
+            .DistinctBy(m => m.Id);
     }
     
     public async Task<IEnumerable<Module>> GetUsersInvitedToModule(Guid moduleId, CancellationToken cancellationToken = default)
