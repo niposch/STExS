@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
   isAdmin: boolean = false;
+  isTeacher = false;
 
   @Input()
   public hasDrawer: boolean = false;
@@ -26,22 +27,35 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.currentUser.subscribe(user => {
+    this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
-	    console.log(user);
-        this.userName = user.userName;
+	      console.log(user);
+        this.userName = user.userName ?? "";
         this.loggedIn = true;
-		this.isAdmin = user.isAdmin;
-      } else {
-        this.userName = "";
-        this.loggedIn = false;
+      }
+    });
+
+    this.userService.currentRoles.subscribe(roles => {
+      if(roles?.includes("admin")){
+        this.isAdmin = true;
+        this.isTeacher = true;
+      }
+      else if (roles?.includes("teacher")){
+        this.isAdmin = false;
+        this.isTeacher = true;
+      }
+      else{
+        this.isAdmin = false;
+        this.isTeacher = false;
       }
     })
+
   }
 
   logout() {
-    this.userService.logout();
-    this.router.navigate(["/"])
+    this.userService.logout().then(r =>{
+        return this.router.navigate(["/"]);
+    });
   }
 
   toggleDrawer() {

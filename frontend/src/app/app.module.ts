@@ -42,7 +42,7 @@ import {MatDividerModule} from "@angular/material/divider";
         // RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
         LayoutModule,
         BrowserAnimationsModule,
-        ApiModule.forRoot({rootUrl: '/api'}),
+        ApiModule.forRoot({rootUrl:""}),
         MatButtonModule,
         MatCheckboxModule,
         MatIconModule,

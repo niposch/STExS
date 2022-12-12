@@ -5,6 +5,47 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Authenticate/logout": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Authenticate/userDetails": {
+      "get": {
+        "tags": [
+          "Authenticate"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Authenticate/login": {
       "post": {
         "tags": [
@@ -31,24 +72,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenModel"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenModel"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenModel"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -84,26 +108,88 @@
         }
       }
     },
-    "/api/Authenticate/refresh-token": {
+    "/api/Module": {
       "post": {
         "tags": [
-          "Authenticate"
+          "Module"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenModel"
+                "$ref": "#/components/schemas/ModuleCreateItem"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenModel"
+                "$ref": "#/components/schemas/ModuleCreateItem"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenModel"
+                "$ref": "#/components/schemas/ModuleCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Module/{moduleId}": {
+      "put": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModuleUpdateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModuleUpdateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModuleUpdateItem"
               }
             }
           }
@@ -115,18 +201,18 @@
         }
       }
     },
-    "/api/Authenticate/revoke/{username}": {
+    "/api/Module/archive": {
       "post": {
         "tags": [
-          "Authenticate"
+          "Module"
         ],
         "parameters": [
           {
-            "name": "username",
-            "in": "path",
-            "required": true,
+            "name": "moduleId",
+            "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -137,10 +223,20 @@
         }
       }
     },
-    "/api/Authenticate/revoke-all": {
+    "/api/Module/unarchive": {
       "post": {
         "tags": [
-          "Authenticate"
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -149,7 +245,256 @@
         }
       }
     },
-    "/WeatherForecast": {
+    "/api/Module/getById": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/all": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getModulesForUser": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getArchived": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getUsersForModule": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzle/getAll": {
+      "get": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParsonExercise"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParsonExercise"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParsonExercise"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WeatherForecast": {
       "get": {
         "tags": [
           "WeatherForecast"
@@ -235,15 +580,452 @@
         },
         "additionalProperties": false
       },
-      "TokenModel": {
+      "ApplicationUser": {
         "type": "object",
         "properties": {
-          "accessToken": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
             "type": "string",
             "nullable": true
           },
+          "normalizedUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "normalizedEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumberConfirmed": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "lockoutEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lockoutEnabled": {
+            "type": "boolean"
+          },
+          "accessFailedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "refreshToken": {
             "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "matrikelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleParticipations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModuleParticipation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Chapter": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "module": {
+            "$ref": "#/components/schemas/Module"
+          },
+          "parsonExercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExercise"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Module": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "archivedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "chapters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Chapter"
+            },
+            "nullable": true
+          },
+          "moduleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleParticipations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModuleParticipation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModuleCreateItem": {
+        "type": "object",
+        "properties": {
+          "moduleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModuleDetailItem": {
+        "type": "object",
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ownerLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "archivedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "chapterIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModuleParticipation": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "module": {
+            "$ref": "#/components/schemas/Module"
+          },
+          "participationConfirmed": {
+            "type": "boolean"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModuleUpdateItem": {
+        "type": "object",
+        "properties": {
+          "moduleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonElement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "relatedSolution": {
+            "$ref": "#/components/schemas/ParsonSolution"
+          },
+          "relatedSolutionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExercise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "modificationTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "chapter": {
+            "$ref": "#/components/schemas/Chapter"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "expectedSolution": {
+            "$ref": "#/components/schemas/ParsonSolution"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonSolution": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "codeElements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonElement"
+            },
+            "nullable": true
+          },
+          "relatedExercise": {
+            "$ref": "#/components/schemas/ParsonExercise"
+          },
+          "relatedExerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDetailsModel": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
@@ -287,6 +1069,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
           "creationTime": {
             "type": "string",
             "format": "date-time"
@@ -298,14 +1083,6 @@
           }
         },
         "additionalProperties": false
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "description": "JWT Authorization header using the Bearer scheme. Insert the token you get from the login route",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
     }
   }

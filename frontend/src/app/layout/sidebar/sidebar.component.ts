@@ -16,13 +16,6 @@ export class SidebarComponent implements OnInit {
   moduleList = this.moduleService.MockModuleList;
 
   ngOnInit(): void {
-    this.userService.currentUser.subscribe(user => {
-      if (user != null) {
-	    console.log(user);
-      this.userModules = user.currentUserModules;
-      this.userFavouriteModules = user.favourite_modules;
-      }
-    })
   }
 
 }

@@ -36,16 +36,18 @@ export class LoginComponent implements OnInit {
         this.callbackUrl = callbackUrl;
       }
     });
+    this.userService.currentUserSubject.subscribe(r =>{
+      if(r != null){
+        void this.router.navigate([this.callbackUrl]);
+      }
+    })
   }
 
-  login() {
+  async login():Promise<void> {
     this.showLoading = true;
-    this.userService.login(this.email, this.password).subscribe(
-      (user) => {
-        this.showLoading = false;
-        console.log(user);
-        this.router.navigate([this.callbackUrl],).then();
-      })
+    await this.userService.login(this.email, this.password)
+    this.showLoading = false;
+    await this.router.navigate([this.callbackUrl]);
   }
 
   validateEmail(event: any) {

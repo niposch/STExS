@@ -34,12 +34,12 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor |
-                               ForwardedHeaders.XForwardedProto;
+    options.ForwardedHeaders = ForwardedHeaders.All;
     // Only loopback proxies are allowed by default.
     // Clear that restriction because forwarders are enabled by explicit 
     // configuration.
     options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("172.0.0.0"), 8));
+    options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("127.0.0.1"), 0));
     // options.KnownProxies.Add(IPAddress.Parse(""));
 });
 
@@ -49,43 +49,24 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser()
         .Build();
 });
-builder.Services.AddAuthentication()
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.ConfigureApplicationCookie(o =>
+{
+    o.Cookie.SameSite = SameSiteMode.None;
+    o.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+});
 
 builder.Services.AddControllers();
-builder.Services.AddRazorPages();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    // add bearer token authentication
-    var securityScheme = new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "JWT Authorization header using the Bearer scheme. Insert the token you get from the login route"
-    };
-    options.AddSecurityDefinition("Bearer", securityScheme);
-});
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseForwardedHeaders();
@@ -112,8 +93,15 @@ if (!isTest)
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "api/swagger/{documentName}/swagger.json";
+    });
+    app.UseSwaggerUI(c =>
+    {
+        c.RoutePrefix = "api/swagger";
+        c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Application");
+    });
     app.UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
     app.UseDeveloperExceptionPage();
     var userManager = app.Services.GetRequiredService<UserManager<ApplicationUser>>();

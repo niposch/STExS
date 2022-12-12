@@ -1,7 +1,9 @@
 ﻿using Autofac;
+using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 using Repositories.Repositories;
+using Module = Autofac.Module;
 
 namespace Repositories;
 
@@ -26,6 +28,16 @@ public class RepositoryModule : Module
             .As<IModuleRepository>()
             .InstancePerLifetimeScope();
         RegisterRepositories(builder);
+        builder.RegisterType<ChapterRepository>()
+            .As<IChapterRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<CommonExerciseRepository>()
+            .As<ICommonExerciseRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ModuleParticipationRepository>()
+            .As<IModuleParticipationRepository>()
+            .InstancePerLifetimeScope();
+
         
     }
 

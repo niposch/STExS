@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Common.Models.Authentication;
 using FluentAssertions;
-using JWTRefreshToken.NET6._0.Controllers;
+using STExS.Controllers.Identity;
 
 namespace STExS.Web.IntegrationTests.Controllers.IdentityController.Tests;
 
