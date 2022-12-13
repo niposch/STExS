@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModulesAdminComponent } from './modules-admin.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ModulesAdminComponent', () => {
   let component: ModulesAdminComponent;
@@ -8,7 +10,8 @@ describe('ModulesAdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModulesAdminComponent ]
+      declarations: [ ModulesAdminComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
 
