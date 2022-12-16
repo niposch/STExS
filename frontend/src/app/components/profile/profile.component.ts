@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  isEditing: boolean = false;
+  isEditingName: boolean = false;
   userName: string = "";
   isAdmin: boolean = false;
   isTeacher = false;

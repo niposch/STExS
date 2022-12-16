@@ -6,9 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./edit-button.component.scss']
 })
 export class EditButtonComponent implements OnInit {
-  //@Input() isEditing: boolean = true;
-
-  isEditing: boolean = false;
+  @Input() isEditing: boolean = false;
 
   constructor() { }
 

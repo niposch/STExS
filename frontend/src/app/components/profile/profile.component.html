@@ -8,7 +8,7 @@
       </div>
       <p class="name-heading">{{userName}}</p>
     </div>
-    <app-edit-button></app-edit-button>
+    <app-edit-button (click)="isEditingName = !isEditingName" [isEditing]="isEditingName"></app-edit-button>
 
   </div>
 

@@ -23,6 +23,8 @@ import { MatCardModule } from "@angular/material/card";
 import {ProfileComponent} from "./components/profile/profile.component";
 import { EditButtonComponent } from './components/profile/edit-button/edit-button.component';
 import { UserInfoLabelComponent } from './components/profile/user-info-label/user-info-label.component';
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { UserInfoLabelComponent } from './components/profile/user-info-label/use
     MatDividerModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    LayoutModule
+    LayoutModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
