@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserInfoLabelComponent } from './user-info-label.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('UserInfoLabelComponent', () => {
   let component: UserInfoLabelComponent;
@@ -8,7 +10,8 @@ describe('UserInfoLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserInfoLabelComponent ]
+      declarations: [ UserInfoLabelComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
 
