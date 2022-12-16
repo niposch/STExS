@@ -22,6 +22,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCardModule } from "@angular/material/card";
 import {ProfileComponent} from "./components/profile/profile.component";
 import { EditButtonComponent } from './components/profile/edit-button/edit-button.component';
+import { UserInfoLabelComponent } from './components/profile/user-info-label/user-info-label.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EditButtonComponent } from './components/profile/edit-button/edit-butto
     ModulesUserComponent,
     ModuleComponent,
     ProfileComponent,
-    EditButtonComponent
+    EditButtonComponent,
+    UserInfoLabelComponent
   ],
   imports: [
     BrowserModule,

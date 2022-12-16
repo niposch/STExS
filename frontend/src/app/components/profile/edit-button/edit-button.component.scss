@@ -12,11 +12,17 @@
 
 .edit-text {
   font-variant: small-caps;
-  margin-left: 3px;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
 }
 
 .edit-button {
   padding: 0;
+}
+
+.edit {
+  color: #A0A0A0;
+}
+
+.done {
+  color: #050505;
 }

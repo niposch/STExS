@@ -8,9 +8,15 @@ import {Router} from "@angular/router";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  isEditing: boolean = false;
   userName: string = "";
   isAdmin: boolean = false;
   isTeacher = false;
+  email: string = "";
+  firstName: string = "";
+  lastName: string = "";
+  matrikelNummer: string = "";
+  phoneNumber: string = "";
 
   constructor(private readonly userService: UserService,
               private readonly router: Router) {
@@ -21,6 +27,11 @@ export class ProfileComponent implements OnInit {
       if (user != null) {
         console.log(user);
         this.userName = user.userName ?? "";
+        this.email = user.email ?? "";
+        this.firstName = user.firstName ?? "";
+        this.lastName = user.lastName ?? "";
+        this.matrikelNummer = user.matrikelNumber ?? "";
+        this.phoneNumber = user.phoneNumber ?? "";
       }
     });
 
@@ -38,7 +49,6 @@ export class ProfileComponent implements OnInit {
         this.isTeacher = false;
       }
     })
-
   }
 
 }

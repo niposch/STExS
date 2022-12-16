@@ -7,17 +7,25 @@
 .horizontal-flex {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  align-items: center;
+  margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.space-items {
+  justify-content: space-between;
 }
 
 .name-heading {
   font-style: normal;
-  font-weight: bolder;
+  font-weight: bold;
   font-size: 30px;
   font-family: Arial, sans-serif;
   letter-spacing: 3px; /* Adjust as needed */
   color: #02C0A2;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
 }
 
 .vertical-center-container {
@@ -27,12 +35,13 @@
 }
 
 .user-icon-container {
-  aspect-ratio: 1 / 1;
-  height: inherit;
-  margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  aspect-ratio: 1 / 1;
+  height: inherit;
+  scale: 150%;
+  margin-right: 15px;
 }
 
 .user-icon {
@@ -40,7 +49,8 @@
   flex-direction: row;
   justify-content: center;
   margin: auto;
-  scale: 150%;
 }
 
-
+.margin10 {
+  margin: 10px;
+}
