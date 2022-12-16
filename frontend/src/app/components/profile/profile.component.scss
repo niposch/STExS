@@ -1,0 +1,46 @@
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.name-heading {
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 3px; /* Adjust as needed */
+  color: #02C0A2;
+}
+
+.vertical-center-container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.user-icon-container {
+  aspect-ratio: 1 / 1;
+  height: inherit;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+  scale: 150%;
+}
+
+
