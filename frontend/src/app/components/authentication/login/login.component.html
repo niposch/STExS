@@ -9,14 +9,14 @@
           <!-- E-MAIL -->
           <mat-form-field>
             <mat-label>E-Mail</mat-label>
-            <input (keyup)="validateEmail($event)" [(ngModel)]="this.email" matInput name="email" required type="email">
+            <input (change)="validateEmail($event)" [(ngModel)]="this.email" matInput name="email" required type="email">
           </mat-form-field>
           <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
 
           <!-- PASSWORD -->
           <mat-form-field>
             <mat-label>Password</mat-label>
-            <input (keyup)="validatePassword($event)" [(ngModel)]="this.password" matInput name="password"
+            <input (change)="validatePassword($event)" [(ngModel)]="this.password" matInput name="password"
                    required type="password">
           </mat-form-field>
           <mat-label *ngIf="showPasswordError" class="validation-error">Please enter a password!</mat-label>
@@ -31,7 +31,7 @@
           </ng-template>
 
           <!-- REGISTER BUTTON -->
-          <a color="secondary" href="/register" mat-button mat-stroked-button>Register</a>
+          <a color="secondary" routerLink="/register" mat-button mat-stroked-button>Register</a>
         </form>
       </mat-card-content>
     </mat-card>
