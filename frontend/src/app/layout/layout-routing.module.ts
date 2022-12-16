@@ -7,6 +7,7 @@ import {LandingPageComponent} from "../components/landing-page/landing-page.comp
 import {AuthGuard} from "../guards/auth.guard";
 import {ModulesUserComponent} from "../components/students/modules-user/modules-user.component";
 import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
+import {ProfileComponent} from "../components/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -39,6 +40,13 @@ const routes: Routes = [
   },
   {
     path: '',
+    component: MainLayoutComponent,
+    children: [
+      {path: "", component: LandingPageComponent}
+    ]
+  },
+  {
+    path: '',
     canActivate: [AuthGuard],
     children: [
       {
@@ -46,23 +54,17 @@ const routes: Routes = [
         component: MainLayoutComponent,
         children: [
           {path: "dashboard", component: DashboardComponent},
-          {path: "modules-user", component: ModulesUserComponent}
+          {path: "modules-user", component: ModulesUserComponent},
+          {path: "profile", component: ProfileComponent}
         ]
       },
-	  {
+	    {
         path: "",
         component: MainLayoutComponent,
         children: [
           {path: "modules-admin", component: ModulesAdminComponent}
         ]
       },
-    ]
-  },
-  {
-    path: "",
-    component: MainLayoutComponent,
-    children: [
-      {path: "", component: LandingPageComponent}
     ]
   }
 ]
