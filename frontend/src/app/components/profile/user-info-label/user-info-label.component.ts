@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-user-info-label',
@@ -8,11 +8,9 @@ import {Component, Input} from '@angular/core';
 export class UserInfoLabelComponent {
   @Input() attributeName: string = "null";
   @Input() attributeInfo: string = "null";
-
-  isEditing : boolean = false;
-
   newValue : string = "";
-
+  @Output() valueChanged : EventEmitter<string> = new EventEmitter<string>();
+  isEditing : boolean = false;
   showEmailError = true;
   emailIsCorrect = false;
 
@@ -21,10 +19,11 @@ export class UserInfoLabelComponent {
 
   editButtonClick() {
     this.isEditing = !this.isEditing;
-    this.attributeInfo = this.newValue;
-
-    console.log(this.newValue);
-    //set new value for user attribute
+    //for passing value to parent object
+    if (this.newValue == "") {
+      this.newValue = this.attributeInfo;
+    }
+    this.valueChanged.emit(this.newValue);
   }
 
   validateEmail(event: any) {

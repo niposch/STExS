@@ -1,18 +1,21 @@
-<div class="row-container" *ngIf="!isEditing">
+<!-- NOT EDITING -->
+<div class="row-container" *ngIf="!isEditing" (dblclick)="isEditing = !isEditing">
   <div class="container">
     <div class="attribute-heading">{{attributeName == "" ? "null" : attributeName}}</div>
-    <div class="attribute-info">{{attributeInfo == "" ? "null" : attributeInfo}}</div>
+    <div class="attribute-info">{{newValue == "" ? attributeInfo : newValue}}</div>
   </div>
   <app-edit-button (click)="isEditing = !isEditing" [isEditing]="isEditing"></app-edit-button>
 </div>
 
+<!-- EDITING -->
 <div class="row-container" *ngIf="isEditing">
   <div class="container">
-  <mat-form-field class="input-field">
-    <mat-label>{{attributeName}}</mat-label>
-    <input matInput (keyup)="validateEmail($event)" name="text" required placeholder="{{attributeInfo}}" [(ngModel)]="newValue" type="text">
-  </mat-form-field>
-  <mat-label *ngIf="showEmailError && attributeName=='E-Mail'" class="validation-error">Please enter a valid email address!</mat-label>
+    <mat-form-field class="input-field">
+      <mat-label>{{attributeName}}</mat-label>
+      <input matInput (keyup)="validateEmail($event)" (keyup.enter)="editButtonClick()" name="text" required placeholder="{{attributeInfo}}" [(ngModel)]="newValue" type="text">
+    </mat-form-field>
+    <!-- E-Mail validation Error -->
+    <mat-label *ngIf="showEmailError && attributeName=='E-Mail'" class="validation-error">Please enter a valid email address!</mat-label>
   </div>
   <app-edit-button (click)="editButtonClick()" [isEditing]="isEditing"></app-edit-button>
 </div>

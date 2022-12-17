@@ -1,4 +1,3 @@
-
 <div class="vertical-flex">
 
   <div class="horizontal-flex space-items margin10">
@@ -6,20 +5,32 @@
       <div class="user-icon-container">
         <mat-icon class="user-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle"></mat-icon>
       </div>
-      <p class="name-heading">{{userName}}</p>
-    </div>
-    <app-edit-button (click)="isEditingName = !isEditingName" [isEditing]="isEditingName"></app-edit-button>
+      <p class="name-heading" *ngIf="!isEditingName">{{userName}}</p>
 
+      <!-- editing user name -->
+      <mat-form-field class="input-field" *ngIf="isEditingName">
+        <mat-label>user name</mat-label>
+        <input matInput name="text" required placeholder="{{userName}}" [(ngModel)]="newUserName" type="text">
+      </mat-form-field>
+    </div>
+
+    <div class="horizontal-flex">
+      <app-edit-button (click)="editButtonClick()" [isEditing]="isEditingName"></app-edit-button>
+
+      <!-- SAVE BUTTON -->
+      <a *ngIf="hasSaved" mat-raised-button color="accent" class="save-button" (click)="saveUserSettings()">saved</a>
+      <a *ngIf="!hasSaved" mat-raised-button color="primary" class="save-button" (click)="saveUserSettings()">save</a>
+    </div>
   </div>
 
-  <mat-divider style="min-width: 200px"></mat-divider>
+  <mat-divider style="min-width:200px"></mat-divider>
 
   <div class="margin10">
-    <app-user-info-label [attributeName]="'first name'" [attributeInfo]="firstName"></app-user-info-label>
-    <app-user-info-label [attributeName]="'last name'" [attributeInfo]="lastName"></app-user-info-label>
-    <app-user-info-label [attributeName]="'E-Mail'" [attributeInfo]="email"></app-user-info-label>
-    <app-user-info-label [attributeName]="'matrikel number'" [attributeInfo]="matrikelNummer"></app-user-info-label>
-    <app-user-info-label [attributeName]="'phone number'" [attributeInfo]="phoneNumber"></app-user-info-label>
+    <app-user-info-label [attributeName]="'first name'" [attributeInfo]="firstName" (valueChanged)="this.firstName = $event"></app-user-info-label>
+    <app-user-info-label [attributeName]="'last name'" [attributeInfo]="lastName" (valueChanged)="this.lastName = $event"></app-user-info-label>
+    <app-user-info-label [attributeName]="'E-Mail'" [attributeInfo]="email" (valueChanged)="this.email = $event"></app-user-info-label>
+    <app-user-info-label [attributeName]="'matrikel number'" [attributeInfo]="matrikelNummer" (valueChanged)="this.matrikelNummer = $event"></app-user-info-label>
+    <app-user-info-label [attributeName]="'phone number'" [attributeInfo]="phoneNumber" (valueChanged)="this.phoneNumber = $event"></app-user-info-label>
 
     <!-- isAdmin / isTeacher
     <app-user-info-label [attributeName]="'isAdmin'" [attributeInfo]="isAdmin.toString()"></app-user-info-label>
