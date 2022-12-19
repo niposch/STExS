@@ -36,7 +36,7 @@ public class RoleHelper : IRoleHelper
 
 public enum RoleType
 {
-    User,
-    Teacher,
-    Admin
+    User = 0,
+    Teacher = 1,
+    Admin = 2
 }
