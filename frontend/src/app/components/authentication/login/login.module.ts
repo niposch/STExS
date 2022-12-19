@@ -13,6 +13,9 @@ import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
+  declarations: [
+    LoginComponent
+  ],
   imports: [
     CommonModule,
     LoginRoutingModule,
@@ -24,8 +27,7 @@ import {FormsModule} from "@angular/forms";
     MatInputModule,
     MatButtonModule,
     FormsModule,
-  ],
-  declarations: [LoginComponent]
+  ]
 })
 export class LoginModule {
 }

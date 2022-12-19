@@ -1,0 +1,28 @@
+.edit-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+}
+
+.edit-icon {
+  scale: 60%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.edit-text {
+  font-variant: small-caps;
+  margin: auto;
+}
+
+.edit-button {
+  padding: 0;
+}
+
+.edit {
+  color: #A0A0A0;
+}
+
+.done {
+  color: #050505;
+}
