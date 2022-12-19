@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development --proxy-config proxy.conf.json",
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
-    "swagger": "curl http://localhost:9547/api/swagger/v1/swagger.json --output swagger.json && ng-openapi-gen"
+    "swagger": "ng-openapi-gen"
   },
   "private": true,
   "dependencies": {
