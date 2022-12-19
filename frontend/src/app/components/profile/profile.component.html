@@ -12,6 +12,14 @@
         <mat-label>user name</mat-label>
         <input matInput name="text" required placeholder="{{userName}}" [(ngModel)]="newUserName" type="text">
       </mat-form-field>
+
+      <div id="roleBadges">
+        <mat-chip-list>
+          <mat-chip disableRipple="true" selected color="accent" *ngIf="this.isAdmin">Admin</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="this.isTeacher && !this.isAdmin">Teacher</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="!this.isAdmin && !this.isTeacher">Student</mat-chip>
+        </mat-chip-list>
+      </div>
     </div>
 
     <div class="horizontal-flex">
@@ -26,11 +34,11 @@
   <mat-divider style="min-width:200px"></mat-divider>
 
   <div class="margin10">
-    <app-user-info-label [attributeName]="'first name'" [attributeInfo]="firstName" (valueChanged)="this.firstName = $event"></app-user-info-label>
-    <app-user-info-label [attributeName]="'last name'" [attributeInfo]="lastName" (valueChanged)="this.lastName = $event"></app-user-info-label>
-    <app-user-info-label [attributeName]="'E-Mail'" [attributeInfo]="email" (valueChanged)="this.email = $event"></app-user-info-label>
-    <app-user-info-label [attributeName]="'matrikel number'" [attributeInfo]="matrikelNummer" (valueChanged)="this.matrikelNummer = $event"></app-user-info-label>
-    <app-user-info-label [attributeName]="'phone number'" [attributeInfo]="phoneNumber" (valueChanged)="this.phoneNumber = $event"></app-user-info-label>
+    <app-user-info-label attributeType="text" attributeName='first name' attributeInfo="firs name" [(value)]="this.firstName"></app-user-info-label>
+    <app-user-info-label attributeType="text" attributeName='last name' attributeInfo="last name" [(value)]="this.lastName"></app-user-info-label>
+    <app-user-info-label attributeType="email" attributeName='E-Mail' attributeInfo="email" [(value)]="this.email"></app-user-info-label>
+    <app-user-info-label attributeType="text" attributeName='matrikel number' attributeInfo="matrikel number" [(value)]="this.matrikelNummer"></app-user-info-label>
+    <app-user-info-label attributeType="text" attributeName='phone number' attributeInfo="phone number" [(value)]="this.phoneNumber"></app-user-info-label>
 
     <!-- isAdmin / isTeacher
     <app-user-info-label [attributeName]="'isAdmin'" [attributeInfo]="isAdmin.toString()"></app-user-info-label>

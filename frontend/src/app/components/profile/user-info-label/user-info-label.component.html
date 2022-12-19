@@ -1,23 +1,27 @@
 <!-- NOT EDITING -->
-<div class="row-container" *ngIf="!isEditing" (dblclick)="isEditing = !isEditing">
+<div class="row-container" *ngIf="!isEditing else editing" (dblclick)="isEditing = !isEditing">
   <div class="container">
-    <div class="attribute-heading">{{attributeName == "" ? "null" : attributeName}}</div>
-    <div class="attribute-info">{{newValue == "" ? attributeInfo : newValue}}</div>
+    <div class="attribute-heading">{{attributeName == "" ? "" : attributeName}}</div>
+    <div class="attribute-value">{{value}}</div>
   </div>
-  <app-edit-button (click)="isEditing = !isEditing" [isEditing]="isEditing"></app-edit-button>
+  <app-edit-button (click)="this.startEditing()" [isEditing]="isEditing"></app-edit-button>
 </div>
 
 <!-- EDITING -->
-<div class="row-container" *ngIf="isEditing">
-  <div class="container">
-    <mat-form-field class="input-field">
-      <mat-label>{{attributeName}}</mat-label>
-      <input matInput (keyup)="validateEmail($event)" (keyup.enter)="editButtonClick()" name="text" required placeholder="{{attributeInfo}}" [(ngModel)]="newValue" type="text">
-    </mat-form-field>
-    <!-- E-Mail validation Error -->
-    <mat-label *ngIf="showEmailError && attributeName=='E-Mail'" class="validation-error">Please enter a valid email address!</mat-label>
+<ng-template #editing>
+  <div class="row-container">
+    <div class="container">
+      <mat-form-field class="input-field">
+        <mat-label>{{attributeName}}</mat-label>
+        <input #inputElement matInput (keyup)="validateEmail($event)" (keyup.enter)="editButtonClick()"
+               [value]="this.value"
+               name="text" required placeholder="{{attributeInfo}}" [(ngModel)]="value" type="text">
+      </mat-form-field>
+      <!-- E-Mail validation Error -->
+      <mat-label *ngIf="showEmailError && attributeType=='email'" class="validation-error">Please enter a valid email
+        address!
+      </mat-label>
+    </div>
+    <app-edit-button (click)="editButtonClick()" [isEditing]="isEditing"></app-edit-button>
   </div>
-  <app-edit-button (click)="editButtonClick()" [isEditing]="isEditing"></app-edit-button>
-</div>
-
-
+</ng-template>

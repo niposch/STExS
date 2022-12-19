@@ -25,6 +25,7 @@ import { EditButtonComponent } from './components/profile/edit-button/edit-butto
 import { UserInfoLabelComponent } from './components/profile/user-info-label/user-info-label.component';
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {FormsModule} from "@angular/forms";
     MatCardModule,
     LayoutModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
