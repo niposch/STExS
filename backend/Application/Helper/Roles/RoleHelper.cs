@@ -33,10 +33,3 @@ public class RoleHelper : IRoleHelper
         return this.stringToType[role];
     }
 }
-
-public enum RoleType
-{
-    User = 0,
-    Teacher = 1,
-    Admin = 2
-}
