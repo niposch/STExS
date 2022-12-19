@@ -4,6 +4,11 @@
   height: 100%;
 }
 
+.hide-top-round-corners{
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
 .horizontal-flex {
   display: flex;
   flex-direction: row;

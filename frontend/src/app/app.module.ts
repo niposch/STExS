@@ -26,6 +26,7 @@ import { UserInfoLabelComponent } from './components/profile/user-info-label/use
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {MatChipsModule} from "@angular/material/chips";
     LayoutModule,
     MatInputModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

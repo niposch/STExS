@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {RoleType} from "../../../services/generated/models/role-type";
+import {AuthenticateService} from "../../../services/generated/services/authenticate.service";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -19,13 +21,14 @@ export class ProfileComponent implements OnInit {
   lastName: string = "";
   matrikelNummer: string = "";
   phoneNumber: string = "";
-  hasSaved: boolean = false;
+  savingInProgress: boolean = false;
 
   constructor(private readonly userService: UserService,
+              private readonly authenticationService:AuthenticateService,
               private readonly router: Router) {
   }
 
-  ngOnInit(): void {
+  initUserDataLoading(){
     this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
         console.log(user);
@@ -37,6 +40,9 @@ export class ProfileComponent implements OnInit {
         this.phoneNumber = user.phoneNumber ?? "";
       }
     });
+  }
+  ngOnInit(): void {
+    this.initUserDataLoading();
 
     this.userService.currentRoles.subscribe(roles => {
       if(roles?.includes(RoleType.Admin)){
@@ -68,14 +74,23 @@ export class ProfileComponent implements OnInit {
   }
 
   async saveUserSettings() {
-      if (this.hasSaved) return;
+      if (this.savingInProgress) return;
 
-      this.hasSaved = true;
+      this.savingInProgress = true;
       //BACKEND API POST ROUTE to change user info
-      await new Promise(f => setTimeout(f, 1000));
+      await lastValueFrom(this.authenticationService.apiAuthenticateModifyMyProfilePost({
+        body:{
+          email:this.email,
+          firstName:this.firstName,
+          lastName: this.lastName,
+          userName: this.userName,
+          matrikelNumber: this.matrikelNummer,
+          phoneNumber: this.phoneNumber
+        }
+      }));
+      await lastValueFrom(this.userService.getUserDetails())
 
-
-      this.hasSaved = false;
+      this.savingInProgress = false;
       console.log("SAVED:\t" + this.userName + "\t" + this.firstName + "\t" + this.lastName + "\t" + this.email + "\t" + this.matrikelNummer + "\t" + this.phoneNumber)
   }
 }

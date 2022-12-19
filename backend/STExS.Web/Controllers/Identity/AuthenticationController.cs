@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using STExS.Helper;
 
 namespace STExS.Controllers.Identity;
 
@@ -49,11 +50,11 @@ public class AuthenticateController : ControllerBase
         {
             User = user,
             Roles = roles?
-                .Select(r => this.roleHelper.Parse(r))
-                .Where(r => r != null)
-                .OfType<RoleType>()
-                .ToList() 
-            ?? new List<RoleType>()
+                        .Select(r => this.roleHelper.Parse(r))
+                        .Where(r => r != null)
+                        .OfType<RoleType>()
+                        .ToList() 
+                    ?? new List<RoleType>()
         };
         return this.Ok(res);
     }
@@ -76,6 +77,44 @@ public class AuthenticateController : ControllerBase
             ExpiresUtc = DateTime.UtcNow.AddDays(1),
             AllowRefresh = true
         });
+        return this.Ok();
+    }
+
+    [HttpPost]
+    [Route("modifyMyProfile")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(List<IdentityError>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateMyProfile(ProfileUpdateItem updateItem, CancellationToken cancellationToken)
+    {
+        var userId = this.User.GetUserId();
+        var user = await this.userManager.FindByIdAsync(userId.ToString());
+        if (user == null)
+        {
+            return this.Unauthorized();
+        }
+        user.FirstName = updateItem.FirstName;
+        user.LastName = updateItem.LastName;
+        user.PhoneNumber = updateItem.PhoneNumber;
+        var confirmEmail = false;
+        if (!string.IsNullOrWhiteSpace(updateItem.Email))
+        {
+            user.Email = updateItem.Email;
+            confirmEmail = true;
+        }
+        user.UserName = updateItem.UserName;
+        user.MatrikelNumber = updateItem.MatrikelNumber;
+        var result = await this.userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            return this.BadRequest(result.Errors);
+        }
+        if (confirmEmail)
+        {
+            // TODO implement email confirmation
+        }
+
         return this.Ok();
     }
 
@@ -116,31 +155,4 @@ public class AuthenticateController : ControllerBase
             Message = "User created successfully!"
         });
     }
-}
-
-public class AppRegisterModel
-{
-    public string Email { get; set; } = string.Empty;
-
-    public string Password { get; set; } = string.Empty;
-
-    public string UserName { get; set; } = string.Empty;
-
-    public string FirstName { get; set; } = string.Empty;
-
-    public string LastName { get; set; } = string.Empty;
-
-    public string MatrikelNumber { get; set; } = string.Empty;
-}
-
-public class AppLoginModel
-{
-    public string Email { get; set; }
-    public string Password { get; set; }
-}
-
-public class UserDetailsModel
-{
-    public ApplicationUser User { get; set; }
-    public List<RoleType> Roles { get; set; }
 }
