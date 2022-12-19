@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "STExS.Web",
+    "title": "STExS.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "version": "1.0"
   },
   "paths": {
@@ -1012,6 +1012,15 @@
         },
         "additionalProperties": false
       },
+      "RoleType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "UserDetailsModel": {
         "type": "object",
         "properties": {
@@ -1021,7 +1030,7 @@
           "roles": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/RoleType"
             },
             "nullable": true
           }

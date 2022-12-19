@@ -29,7 +29,7 @@ dotnet tool install --global dotnet-ef
     - it might ask whether to install the dev certificate, press yes
 - open a new terminal in the frontend folder
 - run `yarn quickstart`
-- you can inspect the backend api routes on https://localhost:44345/swagger
+- you can inspect the backend api routes on https://localhost:44345/api/swagger
 - the frontend will be started on http://localhost:4200
 
 ## Helpful commands

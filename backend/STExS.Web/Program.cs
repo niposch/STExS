@@ -20,11 +20,12 @@ builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLogging
 // Configure AutoFac
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 var isTest = builder.Configuration.GetValue("IsTest", false);
+var isCI = builder.Configuration.GetValue("IsCI", true); // true when run through swagger cli tool
 var isDevelopment = builder.Environment.IsDevelopment();
 builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
     var connectionString = builder.Configuration.GetConnectionString("ApplicationDb");
-    if (!isTest) // test environment should provide it's own db options before this point
+    if (!isTest && !isCI) // test environment should provide it's own db options before this point
     {
         b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
             new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
@@ -83,56 +84,60 @@ app.Use(async (context,
     await next(context);
 });
 
-if (!isTest)
+if (!isCI)
 {
-    using var scope = app.Services.CreateScope();
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
-}
-var roleManager = app.Services.GetRequiredService<RoleManager<ApplicationRole>>();
-var applicationRoles = new List<ApplicationRole>
-{
-    new ApplicationRole {Name = "admin"},
-    new ApplicationRole {Name = "user"},
-    new ApplicationRole {Name = "teacher"}
-};
-foreach (var role in applicationRoles)
-{
-    if(roleManager.FindByNameAsync(role.Name).Result == null)
-        roleManager.CreateAsync(role).Wait();
-}
+    
+    if (!isTest)
+    {
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate();
+    }
+    var roleManager = app.Services.GetRequiredService<RoleManager<ApplicationRole>>();
+    var applicationRoles = new List<ApplicationRole>
+    {
+        new ApplicationRole {Name = "admin"},
+        new ApplicationRole {Name = "user"},
+        new ApplicationRole {Name = "teacher"}
+    };
+    foreach (var role in applicationRoles)
+    {
+        if(roleManager.FindByNameAsync(role.Name).Result == null)
+            roleManager.CreateAsync(role).Wait();
+    }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger(c =>
+    if (app.Environment.IsDevelopment())
     {
-        c.RouteTemplate = "api/swagger/{documentName}/swagger.json";
-    });
-    app.UseSwaggerUI(c =>
-    {
-        c.RoutePrefix = "api/swagger";
-        c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Application");
-    });
-    app.UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-    app.UseDeveloperExceptionPage();
-    var userManager = app.Services.GetRequiredService<UserManager<ApplicationUser>>();
-    var user = userManager.FindByNameAsync("dev").Result;
-    if (user == null)
-    {
-        user = new ApplicationUser
+        app.UseSwagger(c =>
         {
-            UserName = "dev",
-            Email = "dev@test.com",
-            FirstName = "John",
-            LastName = "Doe",
-            MatrikelNumber = "J1234567"
-        };
-        userManager.CreateAsync(user, "Test333!").Wait();
-        user = userManager.FindByNameAsync("dev").Result;
-        var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
-        userManager.ConfirmEmailAsync(user, token).Wait();
+            c.RouteTemplate = "api/swagger/{documentName}/swagger.json";
+        });
+        app.UseSwaggerUI(c =>
+        {
+            c.RoutePrefix = "api/swagger";
+            c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Application");
+        });
+        app.UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+        app.UseDeveloperExceptionPage();
+        var userManager = app.Services.GetRequiredService<UserManager<ApplicationUser>>();
+        var user = userManager.FindByNameAsync("dev").Result;
+        if (user == null)
+        {
+            user = new ApplicationUser
+            {
+                UserName = "dev",
+                Email = "dev@test.com",
+                FirstName = "John",
+                LastName = "Doe",
+                MatrikelNumber = "J1234567"
+            };
+            userManager.CreateAsync(user, "Test333!").Wait();
+            user = userManager.FindByNameAsync("dev").Result;
+            var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+            userManager.ConfirmEmailAsync(user, token).Wait();
+        }
         userManager.AddToRoleAsync(user, "admin").Wait();
         userManager.AddToRoleAsync(user, "teacher").Wait();
         userManager.AddToRoleAsync(user, "user").Wait();
