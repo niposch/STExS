@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using STExS.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders; });
@@ -68,7 +70,10 @@ builder.Services.ConfigureApplicationCookie(o =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.SchemaFilter<EnumSchemaFilter>();
+});
 
 var app = builder.Build();
 app.UseForwardedHeaders();

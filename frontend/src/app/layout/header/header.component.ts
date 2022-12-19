@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {RoleType} from "../../../services/generated/models";
 
 @Component({
   selector: 'app-header',
@@ -36,11 +37,11 @@ export class HeaderComponent implements OnInit {
     });
 
     this.userService.currentRoles.subscribe(roles => {
-      if(roles?.includes("admin")){
+      if(roles?.includes(RoleType.Admin)){
         this.isAdmin = true;
         this.isTeacher = true;
       }
-      else if (roles?.includes("teacher")){
+      else if (roles?.includes(RoleType.Teacher)){
         this.isAdmin = false;
         this.isTeacher = true;
       }

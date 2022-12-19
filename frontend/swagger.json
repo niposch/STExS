@@ -1019,7 +1019,12 @@
           2
         ],
         "type": "integer",
-        "format": "int32"
+        "format": "int32",
+        "x-enumNames": [
+          "User",
+          "Teacher",
+          "Admin"
+        ]
       },
       "UserDetailsModel": {
         "type": "object",

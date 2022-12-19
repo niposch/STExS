@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {AuthenticateService} from "../../services/generated/services/authenticate.service";
 import jwtDecode from "jwt-decode";
 import {ApplicationUser} from "../../services/generated/models/application-user";
+import {RoleType} from "../../services/generated/models/role-type";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ import {ApplicationUser} from "../../services/generated/models/application-user"
 export class UserService {
   public currentUser: Observable<ApplicationUser | null>;
   public currentUserSubject: BehaviorSubject<ApplicationUser | null>;
-  public currentRoles: Observable<Array<string> | null>;
-  public currentRolesSubject: BehaviorSubject<Array<string> | null>;
+  public currentRoles: Observable<Array<RoleType> | null>;
+  public currentRolesSubject: BehaviorSubject<Array<RoleType> | null>;
   constructor(private readonly authService: AuthenticateService) {
     this.currentUserSubject = new BehaviorSubject<ApplicationUser | null>(null);
-    this.currentRolesSubject = new BehaviorSubject<Array<string> | null>(null);
+    this.currentRolesSubject = new BehaviorSubject<Array<RoleType> | null>(null);
     this.currentUser = this.currentUserSubject.asObservable();
     this.currentRoles = this.currentRolesSubject.asObservable();
     firstValueFrom(this.hasCookie()).then(hasCookie => {
