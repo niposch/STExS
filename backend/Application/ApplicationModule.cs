@@ -1,4 +1,6 @@
-﻿using Application.Services;
+﻿using Application.Helper.Roles;
+using Application.Interfaces;
+using Application.Services;
 using Application.Services.Exercise;
 using Application.Services.Interfaces;
 using Autofac;
@@ -22,5 +24,11 @@ public class ApplicationModule : Module
         builder.RegisterType<ModuleService>()
             .As<IModuleService>()
             .InstancePerLifetimeScope();
+        
+        // Helper
+        builder.RegisterType<RoleHelper>()
+            .As<IRoleHelper>()
+            .InstancePerLifetimeScope();
+
     }
 }

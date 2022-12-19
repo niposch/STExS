@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -89,6 +90,18 @@ if (!isTest)
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 }
+var roleManager = app.Services.GetRequiredService<RoleManager<ApplicationRole>>();
+var applicationRoles = new List<ApplicationRole>
+{
+    new ApplicationRole {Name = "admin"},
+    new ApplicationRole {Name = "user"},
+    new ApplicationRole {Name = "teacher"}
+};
+foreach (var role in applicationRoles)
+{
+    if(roleManager.FindByNameAsync(role.Name).Result == null)
+        roleManager.CreateAsync(role).Wait();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -120,6 +133,9 @@ if (app.Environment.IsDevelopment())
         user = userManager.FindByNameAsync("dev").Result;
         var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
         userManager.ConfirmEmailAsync(user, token).Wait();
+        userManager.AddToRoleAsync(user, "admin").Wait();
+        userManager.AddToRoleAsync(user, "teacher").Wait();
+        userManager.AddToRoleAsync(user, "user").Wait();
     }
 }
 

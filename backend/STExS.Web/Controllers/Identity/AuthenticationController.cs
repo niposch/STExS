@@ -1,4 +1,6 @@
-﻿using Common.Models.Authentication;
+﻿using Application.Helper.Roles;
+using Application.Interfaces;
+using Common.Models.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,14 +16,17 @@ public class AuthenticateController : ControllerBase
     private readonly RoleManager<ApplicationRole> roleManager;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly IRoleHelper roleHelper;
 
     public AuthenticateController(UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
-        SignInManager<ApplicationUser> signInManager)
+        SignInManager<ApplicationUser> signInManager,
+        IRoleHelper roleHelper)
     {
-        this.userManager = userManager;
-        this.roleManager = roleManager;
-        this.signInManager = signInManager;
+        this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
+        this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+        this.roleHelper = roleHelper ?? throw new ArgumentNullException(nameof(roleHelper));
     }
 
     [HttpPost]
@@ -43,7 +48,12 @@ public class AuthenticateController : ControllerBase
         var res = new UserDetailsModel
         {
             User = user,
-            Roles = roles.ToList()
+            Roles = roles?
+                .Select(r => this.roleHelper.Parse(r))
+                .Where(r => r != null)
+                .OfType<RoleType>()
+                .ToList() 
+            ?? new List<RoleType>()
         };
         return this.Ok(res);
     }
@@ -132,5 +142,5 @@ public class AppLoginModel
 public class UserDetailsModel
 {
     public ApplicationUser User { get; set; }
-    public List<string> Roles { get; set; }
+    public List<RoleType> Roles { get; set; }
 }
