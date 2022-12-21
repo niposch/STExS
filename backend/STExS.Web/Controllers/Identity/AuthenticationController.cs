@@ -147,7 +147,7 @@ public class AuthenticateController : ControllerBase
                 Message = "User creation failed! Please check user details and try again."
             });
 
-        await this.userManager.AddToRoleAsync(user, "user");
+        await this.userManager.AddToRoleAsync(user, RoleHelper.User);
         
         return this.Ok(new
         {

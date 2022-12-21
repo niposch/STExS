@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 using Application;
+using Application.Helper.Roles;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models.Authentication;
@@ -102,9 +103,9 @@ if (!isCI)
     var roleManager = app.Services.GetRequiredService<RoleManager<ApplicationRole>>();
     var applicationRoles = new List<ApplicationRole>
     {
-        new ApplicationRole {Name = "admin"},
-        new ApplicationRole {Name = "user"},
-        new ApplicationRole {Name = "teacher"}
+        new ApplicationRole {Name = RoleHelper.Admin},
+        new ApplicationRole {Name = RoleHelper.User},
+        new ApplicationRole {Name = RoleHelper.Teacher}
     };
     foreach (var role in applicationRoles)
     {
@@ -143,9 +144,9 @@ if (!isCI)
             var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             userManager.ConfirmEmailAsync(user, token).Wait();
         }
-        userManager.AddToRoleAsync(user, "admin").Wait();
-        userManager.AddToRoleAsync(user, "teacher").Wait();
-        userManager.AddToRoleAsync(user, "user").Wait();
+        userManager.AddToRoleAsync(user, RoleHelper.Admin).Wait();
+        userManager.AddToRoleAsync(user, RoleHelper.Teacher).Wait();
+        userManager.AddToRoleAsync(user, RoleHelper.User).Wait();
     }
 }
 

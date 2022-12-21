@@ -4,18 +4,22 @@ namespace Application.Helper.Roles;
 
 public class RoleHelper : IRoleHelper
 {
+    public const string Admin = "admin";
+    public const string Teacher = "teacher";
+    public const string User = "user";
+
     private readonly Dictionary<RoleType, string> typeToString = new Dictionary<RoleType, string>
     {
-        { RoleType.Admin, "admin" },
-        { RoleType.Teacher, "teacher" },
-        { RoleType.User, "user" }
+        { RoleType.Admin, Admin },
+        { RoleType.Teacher, Teacher },
+        { RoleType.User, User }
     };
 
     private readonly Dictionary<string, RoleType> stringToType = new Dictionary<string, RoleType>
     {
-        { "admin", RoleType.Admin },
-        { "teacher", RoleType.Teacher },
-        { "user", RoleType.User }
+        { Admin, RoleType.Admin },
+        { Teacher, RoleType.Teacher },
+        { User, RoleType.User }
     };
 
     public string ToString(RoleType roleType)
