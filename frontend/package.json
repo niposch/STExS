@@ -9,6 +9,7 @@
     "watch": "ng build --watch --configuration development --proxy-config proxy.conf.json",
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test-coverage": "ng test --no-watch --code-coverage",
     "swagger": "ng-openapi-gen"
   },
   "private": true,
