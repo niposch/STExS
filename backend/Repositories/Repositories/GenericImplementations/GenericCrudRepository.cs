@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Repositories.Repositories.GenericImplementations;
 
 public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGenericCrudRepository<T>
-    where T : class, IBaseEntity, IDeletable
+    where T : DeletableBaseEntity
 {
     private readonly ApplicationDbContext context;
 

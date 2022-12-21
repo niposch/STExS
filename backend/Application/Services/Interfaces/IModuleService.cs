@@ -12,8 +12,8 @@ public interface IModuleService
     public Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default);
     public Task<IEnumerable<Module>> GetModulesAsync(CancellationToken cancellationToken = default);
     
-    public Task<IEnumerable<Module>> GetModulesUserIsAcceptedInto(Guid userId, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IEnumerable<Module>> GetArchivedModulesAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<Module>> GetUsersInvitedToModule(Guid moduleId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Module>> GetUsersInvitedToModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     Task UnarchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
 }

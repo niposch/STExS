@@ -55,7 +55,7 @@ public sealed class ModuleService: IModuleService
         return await this.repository.Modules.GetAllArchivedAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedInto(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var participationsForUser =  await this.repository.ModuleParticipations.GetParticipationsForUser(userId);
         var ownerOfModules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId);
@@ -64,7 +64,7 @@ public sealed class ModuleService: IModuleService
             .DistinctBy(m => m.Id);
     }
     
-    public async Task<IEnumerable<Module>> GetUsersInvitedToModule(Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Module>> GetUsersInvitedToModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
     {
         var participationsForModule =  await this.repository.ModuleParticipations.GetParticipationsForUser(moduleId);
         return participationsForModule.Select(p => p.Module);

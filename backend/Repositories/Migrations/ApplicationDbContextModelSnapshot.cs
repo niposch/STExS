@@ -152,7 +152,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Chapters");
+                    b.ToTable("Chapters", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Module", b =>
@@ -182,7 +182,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Modules");
+                    b.ToTable("Modules", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.ModuleParticipation", b =>
@@ -204,7 +204,7 @@ namespace Repositories.Migrations
 
                     b.HasKey("ModuleId", "UserId");
 
-                    b.ToTable("ModuleParticipations");
+                    b.ToTable("ModuleParticipations", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonElement", b =>
@@ -243,7 +243,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("RelatedSolutionId");
 
-                    b.ToTable("ParsonElements");
+                    b.ToTable("ParsonElements", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonExercise", b =>
@@ -286,7 +286,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("ParsonExercises");
+                    b.ToTable("ParsonExercises", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonSolution", b =>
@@ -317,7 +317,7 @@ namespace Repositories.Migrations
                     b.HasIndex("RelatedExerciseId")
                         .IsUnique();
 
-                    b.ToTable("ParsonSolutions");
+                    b.ToTable("ParsonSolutions", (string)null);
                 });
 
             modelBuilder.Entity("Common.Models.WeatherForecast", b =>
@@ -354,7 +354,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("WeatherForecasts");
+                    b.ToTable("WeatherForecasts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -3,7 +3,7 @@
 namespace Common.RepositoryInterfaces.Generic;
 
 public interface IGenericCrudRepository<TModel> : IDeletableEntityRepository<TModel>
-    where TModel : class, IBaseEntity, IDeletable
+    where TModel : DeletableBaseEntity
 {
     Task<TModel?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<List<TModel>> GetAllAsync(CancellationToken cancellationToken = default);

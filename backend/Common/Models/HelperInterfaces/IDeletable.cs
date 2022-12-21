@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Models.HelperInterfaces;
 
-public interface IDeletable
+public abstract class DeletableBaseEntity: BaseEntity
 {
     [NotMapped]
     public bool IsDeleted

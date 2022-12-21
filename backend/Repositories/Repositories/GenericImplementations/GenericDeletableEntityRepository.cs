@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Repositories.Repositories.GenericImplementations;
 
 public class GenericDeletableEntityRepository<TModel> : IDeletableEntityRepository<TModel>
-    where TModel : class, IBaseEntity, IDeletable
+    where TModel : DeletableBaseEntity
 {
     private readonly ApplicationDbContext context;
 

@@ -7,7 +7,7 @@ namespace Repositories.Repositories.GenericImplementations;
 
 public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TModel>,
     IGenericCrudAndArchiveableEntityRepository<TModel>
-    where TModel : class, IBaseEntity, IArchiveable
+    where TModel : ArchiveableBaseEntity
 {
     private readonly ApplicationDbContext context;
 

@@ -2,13 +2,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Models.HelperInterfaces;
 
-public interface IArchiveable : IDeletable
+public abstract class ArchiveableBaseEntity : DeletableBaseEntity
 {
     [NotMapped]
     public bool IsArchived
     {
-        get => ArchivedDate.HasValue;
-        set => ArchivedDate = value ? DateTime.Now : null;
+        get => this.ArchivedDate.HasValue;
+        set
+        {
+            this.ArchivedDate = value ? DateTime.Now : null;
+        }
     }
 
     public DateTime? ArchivedDate { get; set; }

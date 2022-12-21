@@ -94,7 +94,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetModulesUserIsAcceptedInto(userId, cancellationToken);
+        var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
         return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
     }
 
@@ -113,7 +113,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetUsersInvitedToModule(moduleId, cancellationToken);
+        var res = await this.moduleService.GetUsersInvitedToModuleAsync(moduleId, cancellationToken);
 
         return this.Ok(res);
     }
