@@ -30,7 +30,10 @@ public class GenericDeletableEntityRepository<TModel> : IDeletableEntityReposito
     {
         var entityToDelete = await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entityToDelete == null) throw new EntityNotFoundException<TModel>(id);
-        entityToDelete.IsDeleted = true;
+        if (!entityToDelete.IsDeleted)
+        {
+            entityToDelete.IsDeleted = true;
+        }
         await context.SaveChangesAsync(cancellationToken);
     }
 
@@ -40,7 +43,11 @@ public class GenericDeletableEntityRepository<TModel> : IDeletableEntityReposito
         var entityToUndelete =
             await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entityToUndelete == null) throw new EntityNotFoundException<TModel>(id);
-        entityToUndelete.IsDeleted = false;
+        
+        if (entityToUndelete.IsDeleted)
+        {
+            entityToUndelete.IsDeleted = false;
+        }
         await context.SaveChangesAsync(cancellationToken);
+        }
     }
-}

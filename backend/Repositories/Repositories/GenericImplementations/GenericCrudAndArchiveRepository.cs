@@ -40,8 +40,10 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
         var entityToUnarchive =
             await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entityToUnarchive == null) throw new EntityNotFoundException<TModel>(id);
-        entityToUnarchive.IsArchived = false;
-        entityToUnarchive.IsDeleted = false;
+        if (entityToUnarchive.IsArchived)
+        {
+            entityToUnarchive.IsArchived = false;
+        }
         await context.SaveChangesAsync(cancellationToken);
     }
 
