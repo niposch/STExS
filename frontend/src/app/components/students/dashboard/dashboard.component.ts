@@ -14,11 +14,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.currentUserSubject.subscribe(user => {
-      if (user != null) {
-        this.userName = user.userName;
-      }
-    })
+
   }
 
 }

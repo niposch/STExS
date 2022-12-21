@@ -1,0 +1,34 @@
+.checkbox {
+	float: right;
+}
+
+.div-mat-icon {
+	float: right;
+	display: flex;
+	align-items: center;
+	height: 75px;
+}
+
+.mat-icon {
+	transform: scale(2);
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+   width: 30px;
+   height: 30px;
+}
+	
+.button {
+	display: block;
+	margin-bottom: 25px;
+	height: 75px;
+	width: fill;
+	text-align: left;
+	font-size: 20px;
+	line-height: 75px;
+	background-color: #50524d;
+}
+
+.button_admin {
+   background-color: #6a9639;
+}

@@ -5,19 +5,23 @@
     </button>
     <a class="logo" mat-button routerLink="/">STExS</a>
     <a *ngIf="loggedIn" mat-stroked-button routerLink="/dashboard">Dashboard</a>
-    <a *ngIf="loggedIn" mat-stroked-button routerLink="/users">Users</a>
+    <a *ngIf="loggedIn && isAdmin" mat-stroked-button routerLink="/users">Users</a>
+	<a *ngIf="loggedIn" mat-stroked-button [routerLink]="isAdmin ? ['/modules-admin'] : ['/modules-user']">Modules</a>
   </div>
   <div class="header-right">
+    <!-- LOGGED IN -->
     <div *ngIf="this.loggedIn">
-
-      <a class="right-aligned" mat-button routerLink="/account-settings">
+      <a mat-button class="right-aligned" [routerLink]="['/profile']">
         {{userName}}
         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle"></mat-icon>
       </a>
       <button (click)="logout()" mat-button>Logout</button>
     </div>
+
+    <!-- NOT LOGGED IN -->
     <div *ngIf="!this.loggedIn">
       <a mat-button routerLink="/login">Login</a>
       <a mat-button routerLink="/register">Register</a>
     </div>
   </div>
+</div>

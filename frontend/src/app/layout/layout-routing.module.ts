@@ -5,6 +5,9 @@ import {HeaderOnlyLayoutComponent} from './header-only-layout/header-only-layout
 import {DashboardComponent} from "../components/students/dashboard/dashboard.component";
 import {LandingPageComponent} from "../components/landing-page/landing-page.component";
 import {AuthGuard} from "../guards/auth.guard";
+import {ModulesUserComponent} from "../components/students/modules-user/modules-user.component";
+import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
+import {ProfileComponent} from "../components/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -37,22 +40,31 @@ const routes: Routes = [
   },
   {
     path: '',
+    component: MainLayoutComponent,
+    children: [
+      {path: "", component: LandingPageComponent}
+    ]
+  },
+  {
+    path: '',
     canActivate: [AuthGuard],
     children: [
       {
         path: "",
         component: MainLayoutComponent,
         children: [
-          {path: "dashboard", component: DashboardComponent}
+          {path: "dashboard", component: DashboardComponent},
+          {path: "modules-user", component: ModulesUserComponent},
+          {path: "profile", component: ProfileComponent}
         ]
       },
-    ]
-  },
-  {
-    path: "",
-    component: MainLayoutComponent,
-    children: [
-      {path: "", component: LandingPageComponent}
+	    {
+        path: "",
+        component: MainLayoutComponent,
+        children: [
+          {path: "modules-admin", component: ModulesAdminComponent}
+        ]
+      },
     ]
   }
 ]

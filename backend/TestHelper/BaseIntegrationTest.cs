@@ -1,14 +1,10 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
-using Common.Models.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Repositories;
 
 namespace TestHelper;

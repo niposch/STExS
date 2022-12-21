@@ -1,0 +1,14 @@
+<!-- EDIT button -->
+<a mat-button class="edit-button edit" *ngIf="!isEditing">
+  <div class="edit-wrapper">
+    <mat-icon  class="edit-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
+    <p class="edit-text">edit</p>
+  </div>
+</a>
+
+<!-- DONE button -->
+<a mat-raised-button color="accent" class="edit-button done" *ngIf="isEditing">
+  <div class="edit-wrapper">
+    <p class="edit-text">done</p>
+  </div>
+</a>

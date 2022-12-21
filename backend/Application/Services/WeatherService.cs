@@ -1,7 +1,7 @@
-﻿using Application.Interfaces.Repositories.Tables;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models;
+using Common.RepositoryInterfaces.Tables;
 
 namespace Application.Services;
 
@@ -17,37 +17,37 @@ public class WeatherService: IWeatherService
 
     public async Task CreateWeatherReport(WeatherForecast newWeatherForecast, CancellationToken cancellationToken = default)
     {
-        await weatherForecastRepository.Add(newWeatherForecast, cancellationToken);
+        await weatherForecastRepository.AddAsync(newWeatherForecast, cancellationToken);
     }
 
     public async Task<List<WeatherForecast>> GetWeatherForecast(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllActive(cancellationToken);
+        return await weatherForecastRepository.GetAllActiveAsync(cancellationToken);
     }
 
     public async Task<List<WeatherForecast>> GetAllDeleted(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllDeleted(cancellationToken);
+        return await weatherForecastRepository.GetAllDeletedAsync(cancellationToken);
     }
 
     public async Task DeleteWeatherReport(Guid id, CancellationToken cancellationToken = default)
     {
-        await weatherForecastRepository.Delete(id, cancellationToken);
+        await weatherForecastRepository.DeleteAsync(id, cancellationToken);
     }
 
     public async Task UpdateWeatherReport(Guid id, WeatherForecast updatedWeatherForecast,
         CancellationToken cancellationToken = default)
     {
-        await  weatherForecastRepository.Update(updatedWeatherForecast, cancellationToken);
+        await  weatherForecastRepository.UpdateAsync(updatedWeatherForecast, cancellationToken);
     }
 
     public async Task<WeatherForecast> GetWeatherReport(Guid id, CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.TryGetById(id, cancellationToken) ?? throw new EntityNotFoundException(id, typeof(WeatherForecast));
+        return await weatherForecastRepository.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<WeatherForecast>(id);
     }
 
     public async Task<List<WeatherForecast>> GetAllActive(CancellationToken cancellationToken = default)
     {
-        return await weatherForecastRepository.GetAllActive(cancellationToken);
+        return await weatherForecastRepository.GetAllActiveAsync(cancellationToken);
     }
 }

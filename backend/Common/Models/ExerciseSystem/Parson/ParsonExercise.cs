@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem.Parson;
-public sealed class ParsonExercise: BaseExercise
+public sealed class ParsonExercise: BaseExercise, IDeletable
 {
-    // Todo Parson Exercise Datenstruktur implementieren implementieren
+    public DateTime? DeletedDate { get; set; }
+    
+    // Relationships
+    public ParsonSolution ExpectedSolution { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using Application.Interfaces.Repositories.Tables;
-using Common.Models;
+﻿using Common.Models;
+using Common.RepositoryInterfaces.Tables;
 using Repositories.Repositories.GenericImplementations;
 
 namespace Repositories.Repositories;

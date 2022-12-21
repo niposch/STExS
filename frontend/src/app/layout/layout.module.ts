@@ -14,12 +14,13 @@ import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
 
+
 @NgModule({
   declarations: [
     MainLayoutComponent,
     HeaderOnlyLayoutComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     CommonModule,

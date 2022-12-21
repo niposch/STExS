@@ -1,0 +1,29 @@
+<div *ngIf="module">
+  <mat-card color="primary" >
+    <mat-card-header>
+
+      <h2>{{module.moduleName}}</h2>
+      <span style="margin: auto"></span>
+      <span>
+        <button mat-button style="padding:-10px">
+          <mat-icon style="transform:scale(0.85)" aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
+        </button>
+        <button mat-button style="padding:-10px; ">
+          <mat-icon style="transform:scale(0.85)" aria-hidden="false" aria-label="Example home icon" fontIcon="favorite" ></mat-icon>
+        </button>
+      </span>
+    </mat-card-header>
+    <mat-divider ></mat-divider>
+    <div style="margin: 10px"></div>
+    <mat-card-content>
+      {{module.moduleDescription}}
+    </mat-card-content>
+<!--
+      <mat-icon class="mat-icon">add</mat-icon>
+-->
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <mat-spinner mode="indeterminate"></mat-spinner>
+</ng-template>

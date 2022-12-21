@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../../services/user.service";
+import {ModuleService} from "../../services/mockmodule.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
-  constructor() {
+  userModules: number[]=[];
+  userFavouriteModules: boolean[]=[];
+  constructor(private readonly userService: UserService, private readonly moduleService: ModuleService) {
     console.log('Sidebar constructor called');
   }
+  moduleList = this.moduleService.MockModuleList;
 
   ngOnInit(): void {
   }

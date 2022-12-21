@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {RoleType} from "../../../services/generated/models";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   userName: string = "";
   loggedIn: boolean = false;
+  isAdmin: boolean = false;
+  isTeacher = false;
 
   @Input()
   public hasDrawer: boolean = false;
@@ -25,20 +28,35 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.currentUser.subscribe(user => {
+    this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
-        this.userName = user.userName;
+	      console.log(user);
+        this.userName = user.userName ?? "";
         this.loggedIn = true;
-      } else {
-        this.userName = "";
-        this.loggedIn = false;
+      }
+    });
+
+    this.userService.currentRoles.subscribe(roles => {
+      if(roles?.includes(RoleType.Admin)){
+        this.isAdmin = true;
+        this.isTeacher = true;
+      }
+      else if (roles?.includes(RoleType.Teacher)){
+        this.isAdmin = false;
+        this.isTeacher = true;
+      }
+      else{
+        this.isAdmin = false;
+        this.isTeacher = false;
       }
     })
+
   }
 
   logout() {
-    this.userService.logout();
-    this.router.navigate(["/"])
+    this.userService.logout().then(r =>{
+        return this.router.navigate(["/"]);
+    });
   }
 
   toggleDrawer() {

@@ -1,82 +1,55 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, catchError, first, firstValueFrom, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {AuthenticateService} from "../../services/generated/services/authenticate.service";
 import jwtDecode from "jwt-decode";
+import {ApplicationUser} from "../../services/generated/models/application-user";
+import {RoleType} from "../../services/generated/models/role-type";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
-  public currentUser: Observable<User | null>;
-  public currentUserSubject: BehaviorSubject<User | null>;
-
+  public currentUser: Observable<ApplicationUser | null>;
+  public currentUserSubject: BehaviorSubject<ApplicationUser | null>;
+  public currentRoles: Observable<Array<RoleType> | null>;
+  public currentRolesSubject: BehaviorSubject<Array<RoleType> | null>;
   constructor(private readonly authService: AuthenticateService) {
-    let user = JSON.parse(localStorage.getItem('currentUser') ?? "null");
-    if (user == null) {
-      user = null;
-    }
-    this.currentUserSubject = new BehaviorSubject<User | null>(user);
+    this.currentUserSubject = new BehaviorSubject<ApplicationUser | null>(null);
+    this.currentRolesSubject = new BehaviorSubject<Array<RoleType> | null>(null);
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentRoles = this.currentRolesSubject.asObservable();
+    firstValueFrom(this.hasCookie()).then(hasCookie => {
+    })
   }
 
-  login(email: string, password: string) {
-    return this.authService.apiAuthenticateLoginPost$Json({
-      body: {
+  async login(email: string, password: string):Promise<void> {
+    await firstValueFrom(this.authService.apiAuthenticateLoginPost({
+      body:{
         email: email,
         password: password
       }
-    })
-      .pipe(map(tokens => {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          let decodedToken: AccessToken
-          try {
-            decodedToken = jwtDecode<AccessToken>(tokens.accessToken ?? "");
-            console.log(decodedToken);
-          } catch (e) {
-            console.log(e);
-            return null;
-          }
-          let user: User = {
-            accessToken: tokens.accessToken!,
-            refreshToken: tokens.refreshToken!,
-            email: decodedToken.email,
-            firstName: decodedToken.firstName,
-            lastName: decodedToken.lastName,
-            id: decodedToken.sub,
-            userName: decodedToken.userName
-          };
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
-        }),
-      );
+    }));
+    await firstValueFrom(this.getUserDetails());
   }
 
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+  hasCookie():Observable<boolean>{
+    return this.getUserDetails().pipe<any, boolean>(
+      map(() => true),
+      catchError(err => of(false)))
+  }
+
+  getUserDetails():Observable<void>{
+    return this.authService.apiAuthenticateUserDetailsGet$Json().pipe(map(u =>{
+      this.currentUserSubject.next(u?.user ?? null);
+      this.currentRolesSubject.next(u?.roles ?? null);
+    }));
+  }
+
+  async logout():Promise<void> {
     this.currentUserSubject.next(null);
+    this.currentRolesSubject.next(null);
+    await firstValueFrom(this.authService.apiAuthenticateLogoutPost());
   }
-}
-
-interface User {
-  userName: string;
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  accessToken: string;
-  refreshToken: string;
-}
-
-interface AccessToken {
-  userName: string;
-  sub: string; // The subject of the token. This is the user id.
-  email: string;
-  firstName: string;
-  lastName: string;
-  exp: number;
-  iat: number;
 }

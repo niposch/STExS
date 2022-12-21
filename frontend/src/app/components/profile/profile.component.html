@@ -1,0 +1,55 @@
+<mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
+<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''">
+  <mat-card-content>
+    <div class="vertical-flex">
+      <div class="horizontal-flex space-items margin10">
+        <div class="horizontal-flex">
+          <div class="user-icon-container">
+            <mat-icon class="user-icon" aria-hidden="false" aria-label="Example home icon"
+                      fontIcon="account_circle"></mat-icon>
+          </div>
+          <p class="name-heading" *ngIf="!isEditingName">{{userName}}</p>
+
+          <!-- editing user name -->
+          <mat-form-field class="input-field" *ngIf="isEditingName">
+            <mat-label>user name</mat-label>
+            <input matInput name="text" required placeholder="{{userName}}" [(ngModel)]="newUserName" type="text">
+          </mat-form-field>
+
+          <div id="roleBadges">
+            <mat-chip-list>
+              <mat-chip disableRipple="true" selected color="accent" *ngIf="this.isAdmin">Admin</mat-chip>
+              <mat-chip disableRipple="true" selected *ngIf="this.isTeacher && !this.isAdmin">Teacher</mat-chip>
+              <mat-chip disableRipple="true" selected *ngIf="!this.isAdmin && !this.isTeacher">Student</mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+
+        <div class="horizontal-flex">
+          <app-edit-button (click)="editButtonClick()" [isEditing]="isEditingName"></app-edit-button>
+
+          <!-- SAVE BUTTON -->
+          <a *ngIf="savingInProgress" mat-raised-button color="accent" class="save-button" (click)="saveUserSettings()">
+            saving...</a>
+          <a *ngIf="!savingInProgress" mat-raised-button color="primary" class="save-button"
+             (click)="saveUserSettings()">save</a>
+        </div>
+      </div>
+
+      <mat-divider style="min-width:200px"></mat-divider>
+
+      <div class="margin10">
+        <app-user-info-label attributeType="text" attributeName='first name' attributeInfo="firs name"
+                             [(value)]="this.firstName"></app-user-info-label>
+        <app-user-info-label attributeType="text" attributeName='last name' attributeInfo="last name"
+                             [(value)]="this.lastName"></app-user-info-label>
+        <app-user-info-label attributeType="email" attributeName='E-Mail' attributeInfo="email"
+                             [(value)]="this.email"></app-user-info-label>
+        <app-user-info-label attributeType="text" attributeName='matrikel number' attributeInfo="matrikel number"
+                             [(value)]="this.matrikelNummer"></app-user-info-label>
+        <app-user-info-label attributeType="text" attributeName='phone number' attributeInfo="phone number"
+                             [(value)]="this.phoneNumber"></app-user-info-label>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

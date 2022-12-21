@@ -1,9 +1,9 @@
-﻿using Application.Interfaces.Repositories;
-using Application.Interfaces.Repositories.Tables;
-using Autofac;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Autofac;
+using Common.Models.ExerciseSystem;
+using Common.RepositoryInterfaces.Generic;
+using Common.RepositoryInterfaces.Tables;
 using Repositories.Repositories;
+using Module = Autofac.Module;
 
 namespace Repositories;
 
@@ -16,7 +16,28 @@ public class RepositoryModule : Module
         builder.RegisterType<ApplicationRepository>()
             .As<IApplicationRepository>()
             .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonElementRepository>()
+            .As<IParsonElementRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonExerciseRepository>()
+            .As<IParsonExerciseRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonSolutionRepository>()
+            .As<IParsonSolutionRepository>();
+        builder.RegisterType<ModuleRepository>()
+            .As<IModuleRepository>()
+            .InstancePerLifetimeScope();
         RegisterRepositories(builder);
+        builder.RegisterType<ChapterRepository>()
+            .As<IChapterRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<CommonExerciseRepository>()
+            .As<ICommonExerciseRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ModuleParticipationRepository>()
+            .As<IModuleParticipationRepository>()
+            .InstancePerLifetimeScope();
+
         
     }
 
@@ -24,6 +45,9 @@ public class RepositoryModule : Module
     {
         builder.RegisterType<WeatherForecastRepository>()
             .As<IWeatherForecastRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonExerciseRepository>()
+            .As<IParsonExerciseRepository>()
             .InstancePerLifetimeScope();
     }
 }

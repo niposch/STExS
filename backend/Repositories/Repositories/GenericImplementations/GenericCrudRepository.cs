@@ -1,5 +1,5 @@
-﻿using Application.Interfaces.Repositories;
-using Common.Models.HelperInterfaces;
+﻿using Common.Models.HelperInterfaces;
+using Common.RepositoryInterfaces.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.GenericImplementations;
@@ -14,18 +14,18 @@ public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGe
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public Task<T?> TryGetById(Guid id,
+    public Task<T?> TryGetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         return context.Set<T>().FirstOrDefaultAsync(cancellationToken);
     }
 
-    public Task<List<T>> GetAll(CancellationToken cancellationToken = default)
+    public Task<List<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return context.Set<T>().ToListAsync(cancellationToken);
     }
 
-    public async Task<T> Add(T entity,
+    public async Task<T> AddAsync(T entity,
         CancellationToken cancellationToken = default)
     {
         context.RemoveLocalIfTracked(entity);
@@ -34,7 +34,7 @@ public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGe
         return entity;
     }
 
-    public async Task<T> Update(T entity,
+    public async Task<T> UpdateAsync(T entity,
         CancellationToken cancellationToken = default)
     {
         context.RemoveLocalIfTracked(entity);
