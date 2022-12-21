@@ -10,5 +10,5 @@ public class Module :ArchiveableBaseEntity
 
     public string ModuleName { get; set; } = null!;
     public string ModuleDescription { get; set; } = null!;
-    public List<ModuleParticipation> ModuleParticipations { get; set; } = new();
+    public virtual ICollection<ModuleParticipation> ModuleParticipations { get; set; }
 }

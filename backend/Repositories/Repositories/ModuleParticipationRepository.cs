@@ -73,21 +73,17 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
                 p.ModuleId == moduleId, cancellationToken);
     }
 
-    public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForModule(Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
     {
         return await this.context.ModuleParticipations
-            .Include(c => c.User)
-            .Include(c => c.Module)
             .Where(p => p.ModuleId == moduleId)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForUser(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await this.context.ModuleParticipations
-            .Include(c => c.User)
-            .Include(c => c.Module)
-            .Where(p => p.UserId == userId)
+            .Where(p => p.UserId == userId && p.Module.DeletedDate == null)
             .ToListAsync(cancellationToken);
     }
 
