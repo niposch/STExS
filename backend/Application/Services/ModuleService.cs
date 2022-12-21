@@ -1,7 +1,9 @@
 ﻿using Application.Services.Interfaces;
 using Common.Exceptions;
+using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 
@@ -15,8 +17,23 @@ public sealed class ModuleService: IModuleService
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task CreateModuleAsync(Module module, CancellationToken cancellationToken = default)
+    public async Task CreateModuleAsync(string moduleName,
+        string moduleDescription,
+        Guid ownerId,
+        CancellationToken cancellationToken = default)
     {
+        var module = new Module
+        {
+            ArchivedDate = null,
+            IsArchived = false,
+            ModuleParticipations = new List<ModuleParticipation>(),
+            Chapters = new List<Chapter>(),
+            DeletedDate = null,
+            IsDeleted = false,
+            OwnerId = ownerId,
+            ModuleName = moduleName,
+            ModuleDescription = moduleDescription
+        };
         await this.repository.Modules.AddAsync(module, cancellationToken);
     }
 

@@ -1,10 +1,14 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Common.Models.Authentication;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Services.Interfaces;
 
 public interface IModuleService
 {
-    public Task CreateModuleAsync(Module module, CancellationToken cancellationToken = default);
+    public Task CreateModuleAsync(string moduleName,
+        string moduleDescription,
+        Guid ownerId,
+        CancellationToken cancellationToken = default);
     public Task UpdateModuleAsync(Module module, CancellationToken cancellationToken = default);
     public Task DeleteModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     public Task ArchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);

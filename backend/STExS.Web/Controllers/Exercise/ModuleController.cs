@@ -1,4 +1,5 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.Helper.Roles;
+using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,12 @@ public class ModuleController: ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [Authorize]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Authorize(Roles=$"{RoleHelper.Admin},{RoleHelper.Teacher}")]
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(ModuleMapper.ToModule(module, userId));
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId);
         return this.Ok();
     }
 
