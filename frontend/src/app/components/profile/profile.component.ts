@@ -69,7 +69,6 @@ export class ProfileComponent implements OnInit {
 
     if (!this.isEditingName) {
       this.userName = this.newUserName;
-      console.log(this.newUserName);
     }
   }
 
