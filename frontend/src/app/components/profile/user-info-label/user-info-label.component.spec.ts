@@ -44,6 +44,14 @@ describe('UserInfoLabelComponent', () => {
     expect(component.isEditing).toBeTrue();
   });
 
+  it('edit Button should call #startEditing()', fakeAsync(() => {
+    spyOn(component, 'startEditing');
+    let button = fixture.debugElement.nativeElement.querySelector('app-edit-button');
+    button.click();
+    tick();
+    expect(component.startEditing).toHaveBeenCalled();
+  }));
+
   /*
   // TODO TEST EMAIL VALIDATION
 
