@@ -3,6 +3,7 @@ import { UserInfoLabelComponent } from './user-info-label.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {EventEmitter} from "@angular/core";
+import {By} from "@angular/platform-browser";
 
 describe('UserInfoLabelComponent', () => {
   let component: UserInfoLabelComponent;
@@ -52,6 +53,16 @@ describe('UserInfoLabelComponent', () => {
     expect(component.startEditing).toHaveBeenCalled();
   }));
 
+  it('edit Button while editing should call #editButtonClick()', fakeAsync(() => {
+    component.startEditing();
+    spyOn(component, 'editButtonClick');
+    let button = fixture.debugElement.nativeElement.querySelector('app-edit-button');
+    expect(component.isEditing).toBeTrue();
+    button.click();
+    tick();
+    expect(component.editButtonClick).toHaveBeenCalled();
+  }));
+
   /*
   // TODO TEST EMAIL VALIDATION
 
@@ -65,5 +76,4 @@ describe('UserInfoLabelComponent', () => {
     expect(component.emailIsCorrect).toBeTrue(); //error: component.emailIsCorrect is false
   });
   */
-
 });
