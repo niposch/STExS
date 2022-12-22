@@ -3,7 +3,7 @@ using Common.Models.Authentication;
 
 namespace Common.Models.HelperInterfaces;
 
-public interface IBaseEntity
+public abstract class BaseEntity
 {
     [Key] public Guid Id { get; set; }
 

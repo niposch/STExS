@@ -5,16 +5,8 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem;
 
-public class Chapter : IBaseEntity, IDeletable
+public class Chapter : DeletableBaseEntity
 {
-    [Key]
-    public Guid Id { get; set; }
-
-    public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; } = null!;
-
-    public DateTime? DeletedDate { get; set; }
-
     public int RunningNumber { get; set; }
     
     public Guid ModuleId { get; set; }

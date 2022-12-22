@@ -756,6 +756,9 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
+          "isDeleted": {
+            "type": "boolean"
+          },
           "deletedDate": {
             "type": "string",
             "format": "date-time",
@@ -810,12 +813,18 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
-          "archivedDate": {
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedDate": {
             "type": "string",
             "format": "date-time",
             "nullable": true
           },
-          "deletedDate": {
+          "isArchived": {
+            "type": "boolean"
+          },
+          "archivedDate": {
             "type": "string",
             "format": "date-time",
             "nullable": true
@@ -976,6 +985,9 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
+          "isDeleted": {
+            "type": "boolean"
+          },
           "deletedDate": {
             "type": "string",
             "format": "date-time",
@@ -1018,6 +1030,14 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "modificationTime": {
             "type": "string",
             "format": "date-time",
@@ -1026,9 +1046,6 @@
           "creationTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "chapter": {
-            "$ref": "#/components/schemas/Chapter"
           },
           "chapterId": {
             "type": "string",
@@ -1050,13 +1067,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "expectedSolution": {
             "$ref": "#/components/schemas/ParsonSolution"
+          },
+          "chapter": {
+            "$ref": "#/components/schemas/Chapter"
           }
         },
         "additionalProperties": false
@@ -1067,6 +1082,16 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "isDeleted": {
+            "type": "boolean"
           },
           "deletedDate": {
             "type": "string",
@@ -1093,13 +1118,6 @@
             "$ref": "#/components/schemas/ParsonExercise"
           },
           "relatedExerciseId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "ownerId": {
             "type": "string",
             "format": "uuid"
           }
@@ -1196,6 +1214,33 @@
       "WeatherForecast": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "archivedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "date": {
             "type": "string",
             "format": "date-time"
@@ -1212,27 +1257,6 @@
           "summary": {
             "type": "string",
             "nullable": true
-          },
-          "archivedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ownerId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/ApplicationUser"
           },
           "creationTime": {
             "type": "string",

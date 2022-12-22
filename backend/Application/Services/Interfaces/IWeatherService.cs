@@ -8,8 +8,6 @@ public interface IWeatherService
     
     public Task<WeatherForecast> GetWeatherReport(Guid id, CancellationToken cancellationToken = default);
     public Task<List<WeatherForecast>> GetAllActive(CancellationToken cancellationToken = default);
-    public Task<List<WeatherForecast>> GetAllDeleted(CancellationToken cancellationToken = default);
-    
     public Task DeleteWeatherReport(Guid id, CancellationToken cancellationToken = default);
     public Task UpdateWeatherReport(Guid id, WeatherForecast updatedWeatherForecast, CancellationToken cancellationToken = default);
 }

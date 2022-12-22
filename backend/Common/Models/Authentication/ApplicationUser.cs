@@ -13,7 +13,7 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public string MatrikelNumber { get; set; } = string.Empty;
     
-    public List<ModuleParticipation> ModuleParticipations { get; set; } = new List<ModuleParticipation>();
+    public ICollection<ModuleParticipation> ModuleParticipations { get; set; } = new List<ModuleParticipation>();
 }
 
 public class ApplicationRole : IdentityRole<Guid>

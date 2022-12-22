@@ -1,4 +1,5 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.Helper.Roles;
+using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,12 @@ public class ModuleController: ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [Authorize]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Authorize(Roles=$"{RoleHelper.Admin},{RoleHelper.Teacher}")]
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(ModuleMapper.ToModule(module, userId));
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId);
         return this.Ok();
     }
 
@@ -32,14 +34,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateModuleAsync([FromRoute]Guid moduleId, [FromBody]ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
-        var existingModule = await this.moduleService.GetModuleByIdAsync(moduleId, cancellationToken);
-        if (existingModule == null)
-        {
-            return this.NotFound();
-        }
-
-        ModuleMapper.UpdateModule(updateItem, existingModule);
-        await this.moduleService.UpdateModuleAsync(existingModule, cancellationToken);
+        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, cancellationToken);
         return this.Ok();
     }
 
@@ -94,7 +89,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetModulesUserIsAcceptedInto(userId, cancellationToken);
+        var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
         return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
     }
 
@@ -113,7 +108,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetUsersInvitedToModule(moduleId, cancellationToken);
+        var res = await this.moduleService.GetParticipationsForUserAsync(moduleId, cancellationToken);
 
         return this.Ok(res);
     }
@@ -132,7 +127,6 @@ public static class ModuleMapper
             ModuleName = module.ModuleName,
             ModuleDescription = module.ModuleDescription,
             ArchivedDate = module.ArchivedDate,
-            DeletedDate = module.DeletedDate,
             ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
             IsFavorited =  module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false))
         };
@@ -147,7 +141,6 @@ public static class ModuleMapper
             ModuleDescription = moduleCreateItem.ModuleDescription,
             OwnerId = changeUserId,
             ArchivedDate = null,
-            DeletedDate = null,
             Chapters = new List<Chapter>()
         };
     }
@@ -170,10 +163,7 @@ public sealed class ModuleDetailItem {
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
     public DateTime? ArchivedDate { get; set; }
-    public DateTime? DeletedDate { get; set; }
-
     public bool IsArchived => this.ArchivedDate.HasValue;
-    public bool IsDeleted => this.DeletedDate.HasValue;
 
     public List<Guid> ChapterIds { get; set; } = new List<Guid>();
     
