@@ -2,6 +2,7 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import { UserInfoLabelComponent } from './user-info-label.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
+import {EventEmitter} from "@angular/core";
 
 describe('UserInfoLabelComponent', () => {
   let component: UserInfoLabelComponent;
@@ -37,11 +38,24 @@ describe('UserInfoLabelComponent', () => {
       .toBe(false);
   });
 
-  it ('edit button should activate edit mode', fakeAsync(() => {
-    spyOn(component, 'startEditing');
-    let button = fixture.debugElement.nativeElement.querySelectorAll('app-edit-button')[0];
-    button.click();
-    tick();
-    expect(component.startEditing).toHaveBeenCalled();
-  }));
+  it ('#startEditing() should toggle #isEditing',() => {
+    expect(component.isEditing).toBeFalse();
+    component.startEditing();
+    expect(component.isEditing).toBeTrue();
+  });
+
+  /*
+  // TODO TEST EMAIL VALIDATION
+
+  it ('#validateEmail() should validate emails correctly',() => {
+    component.startEditing();
+    let input = fixture.debugElement.nativeElement.querySelector('input');
+
+    input.value = "dev@devtest.com"; //email is correct
+    input.dispatchEvent(new Event('keyup'));
+
+    expect(component.emailIsCorrect).toBeTrue(); //error: component.emailIsCorrect is false
+  });
+  */
+
 });
