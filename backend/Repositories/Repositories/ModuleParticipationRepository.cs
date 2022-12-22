@@ -83,7 +83,7 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await this.context.ModuleParticipations
-            .Where(p => p.UserId == userId && p.Module.DeletedDate == null)
+            .Where(p => p.UserId == userId)
             .ToListAsync(cancellationToken);
     }
 

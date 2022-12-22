@@ -15,39 +15,12 @@ public class GenericDeletableEntityRepository<TModel> : IDeletableEntityReposito
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public Task<List<TModel>> GetAllActiveAsync(CancellationToken cancellationToken = default)
-    {
-        return context.Set<TModel>().Where(e => e.DeletedDate == null).ToListAsync(cancellationToken);
-    }
-
-    public Task<List<TModel>> GetAllDeletedAsync(CancellationToken cancellationToken = default)
-    {
-        return context.Set<TModel>().Where(e => e.DeletedDate != null).ToListAsync(cancellationToken);
-    }
-
     public async Task DeleteAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         var entityToDelete = await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entityToDelete == null) throw new EntityNotFoundException<TModel>(id);
-        if (!entityToDelete.IsDeleted)
-        {
-            entityToDelete.IsDeleted = true;
-        }
+        this.context.Remove(entityToDelete);
         await context.SaveChangesAsync(cancellationToken);
     }
-
-    public async Task UndeleteAsync(Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        var entityToUndelete =
-            await context.Set<TModel>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-        if (entityToUndelete == null) throw new EntityNotFoundException<TModel>(id);
-        
-        if (entityToUndelete.IsDeleted)
-        {
-            entityToUndelete.IsDeleted = false;
-        }
-        await context.SaveChangesAsync(cancellationToken);
-        }
-    }
+}

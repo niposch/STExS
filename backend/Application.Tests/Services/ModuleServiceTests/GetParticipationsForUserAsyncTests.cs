@@ -13,21 +13,13 @@ public sealed class GetParticipationsForUserAsyncTests: Infrastructure
         this.userId = Guid.NewGuid();
         var modules = new[]
         {
-            this.CreateModule(false, false),
-            this.CreateModule(false, false),
-            this.CreateModule(false, false),
+            this.CreateModule(false),
+            this.CreateModule(false),
+            this.CreateModule(false),
             
-            this.CreateModule(true, false),
-            this.CreateModule(true, false),
-            this.CreateModule(true, false),
-            
-            this.CreateModule(false, true),
-            this.CreateModule(false, true),
-            this.CreateModule(false, true),
-            
-            this.CreateModule(true, true),
-            this.CreateModule(true, true),
-            this.CreateModule(true, true),
+            this.CreateModule(true),
+            this.CreateModule(true),
+            this.CreateModule(true)
         };
         var participations = new[]
         {
@@ -36,12 +28,6 @@ public sealed class GetParticipationsForUserAsyncTests: Infrastructure
             
             this.CreateModuleParticipation(this.userId, modules[3], true),
             this.CreateModuleParticipation(this.userId, modules[4], false),
-            
-            this.CreateModuleParticipation(this.userId, modules[6], true),
-            this.CreateModuleParticipation(this.userId, modules[7], false),
-            
-            this.CreateModuleParticipation(this.userId, modules[9], true),
-            this.CreateModuleParticipation(this.userId, modules[10], false),
         };
         
         this.ApplicationDbContext.Modules.AddRange(modules);
@@ -68,14 +54,12 @@ public sealed class GetParticipationsForUserAsyncTests: Infrastructure
             ParticipationConfirmed = isAccepted,
         };
     }
-    private Module CreateModule(bool isArchived, bool isDeleted)
+    private Module CreateModule(bool isArchived)
     {
         return this.Fixture.Build<Module>()
             .Without(m => m.ModuleParticipations)
             .Without(m => m.ArchivedDate)
-            .Without(m => m.DeletedDate)
             .With(m => m.IsArchived, isArchived)
-            .With(m => m.IsDeleted, isDeleted)
             .Create();
     }
 

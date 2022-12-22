@@ -28,8 +28,6 @@ public sealed class ModuleService: IModuleService
             IsArchived = false,
             ModuleParticipations = new List<ModuleParticipation>(),
             Chapters = new List<Chapter>(),
-            DeletedDate = null,
-            IsDeleted = false,
             OwnerId = ownerId,
             ModuleName = moduleName,
             ModuleDescription = moduleDescription
@@ -37,8 +35,16 @@ public sealed class ModuleService: IModuleService
         await this.repository.Modules.AddAsync(module, cancellationToken);
     }
 
-    public async Task UpdateModuleAsync(Module module, CancellationToken cancellationToken = default)
+    public async Task UpdateModuleAsync(Guid moduleId, string newName, string newDescription, CancellationToken cancellationToken = default)
     {
+        var module = await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken);
+        if (module == null)
+        {
+            throw new EntityNotFoundException<Module>(moduleId);
+        }
+
+        module.ModuleName = newName;
+        module.ModuleDescription = newDescription;
         await this.repository.Modules.UpdateAsync(module, cancellationToken);
     }
 
@@ -64,12 +70,17 @@ public sealed class ModuleService: IModuleService
 
     public async Task<IEnumerable<Module>> GetModulesAsync(CancellationToken cancellationToken = default)
     {
-        return await this.repository.Modules.GetAllActiveAsync(cancellationToken);
+        return await this.repository.Modules.GetAllAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Module>> GetArchivedModulesAsync(CancellationToken cancellationToken = default)
     {
         return await this.repository.Modules.GetAllArchivedAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Module>> GetActiveModulesAsync(CancellationToken cancellationToken = default)
+    {
+        return await this.repository.Modules.GetAllActiveAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default)

@@ -14,58 +14,22 @@ public sealed class GetModulesAsyncTests : Infrastructure
                 // Expected Modules
                 this.Fixture.Build<Module>()
                     .With(m => m.IsArchived, false)
-                    .With(m => m.IsDeleted, false)
                     .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
                     .Create(),
                 this.Fixture.Build<Module>()
                     .With(m => m.IsArchived, false)
-                    .With(m => m.IsDeleted, false)
                     .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
                     .Create(),
 
                 // Archived Modules
                 this.Fixture.Build<Module>()
                     .With(m => m.IsArchived, true)
-                    .With(m => m.IsDeleted, false)
                     .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
                     .Create(),
                 this.Fixture.Build<Module>()
                     .With(m => m.IsArchived, true)
-                    .With(m => m.IsDeleted, false)
                     .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
                     .Create(),
-
-                // Deleted Modules
-                this.Fixture.Build<Module>()
-                    .With(m => m.IsArchived, false)
-                    .With(m => m.IsDeleted, true)
-                    .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
-                    .Create(),
-                this.Fixture.Build<Module>()
-                    .With(m => m.IsArchived, false)
-                    .With(m => m.IsDeleted, true)
-                    .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
-                    .Create(),
-
-                // Archived and deleted modules
-                this.Fixture.Build<Module>()
-                    .With(m => m.IsArchived, true)
-                    .With(m => m.IsDeleted, true)
-                    .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
-                    .Create(),
-                this.Fixture.Build<Module>()
-                    .With(m => m.IsArchived, true)
-                    .With(m => m.IsDeleted, true)
-                    .Without(m => m.ArchivedDate)
-                    .Without(m => m.DeletedDate)
-                    .Create()
             });
         this.ApplicationDbContext.SaveChanges();
 
@@ -74,7 +38,7 @@ public sealed class GetModulesAsyncTests : Infrastructure
 
         // Assert
         res.Should().NotBeNull();
-        res.Should().HaveCount(2);
+        res.Should().HaveCount(4);
     }
 
     [Fact]

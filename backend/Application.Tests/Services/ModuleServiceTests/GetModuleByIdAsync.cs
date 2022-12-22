@@ -17,10 +17,8 @@ public sealed class GetModuleByIdAsync: Infrastructure
         this.id = Guid.NewGuid();
         var expectedModule = this.Fixture.Build<Module>()
             .With(x => x.Id, this.id)
-            .Without(m => m.DeletedDate)
             .Without(m => m.ArchivedDate)
             .With(m => m.IsArchived, isArchived)
-            .With(m => m.IsDeleted, isDeleted)
             .Create();
         this.ApplicationDbContext.Modules.Add(expectedModule);
         this.ApplicationDbContext.Modules.Add(this.Fixture.Create<Module>());

@@ -14,65 +14,27 @@ public sealed class GetModulesUserIsAcceptedIntoAsyncTests : Infrastructure
             // Active Modules
             this.Fixture.Build<Module>()
                 .With(m => m.IsArchived, false)
-                .With(m => m.IsDeleted, false)
                 .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
                 .Create(),
             this.Fixture.Build<Module>()
                 .With(m => m.IsArchived, false)
-                .With(m => m.IsDeleted, false)
                 .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
                 .Create(),
             this.Fixture.Build<Module>()
                 .With(m => m.IsArchived, false)
-                .With(m => m.IsDeleted, false)
                 .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
                 .Create()
         };
         var archivedModules = new[]
         {
             this.Fixture.Build<Module>()
                 .With(m => m.IsArchived, true)
-                .With(m => m.IsDeleted, false)
                 .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
                 .Create(),
             this.Fixture.Build<Module>()
                 .With(m => m.IsArchived, true)
-                .With(m => m.IsDeleted, false)
                 .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
                 .Create(),
-        };
-        var deletedModules = new[]
-        {
-            this.Fixture.Build<Module>()
-                .With(m => m.IsArchived, true)
-                .With(m => m.IsDeleted, true)
-                .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
-                .Create(),
-            this.Fixture.Build<Module>()
-                .With(m => m.IsArchived, true)
-                .With(m => m.IsDeleted, true)
-                .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
-                .Create(),
-            
-            this.Fixture.Build<Module>()
-                .With(m => m.IsArchived, false)
-                .With(m => m.IsDeleted, true)
-                .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
-                .Create(),
-            this.Fixture.Build<Module>()
-                .With(m => m.IsArchived, false)
-                .With(m => m.IsDeleted, true)
-                .Without(m => m.ArchivedDate)
-                .Without(m => m.DeletedDate)
-                .Create()
         };
 
         this.userId = Guid.NewGuid();
@@ -81,7 +43,6 @@ public sealed class GetModulesUserIsAcceptedIntoAsyncTests : Infrastructure
 
         var moduleParticipations = activeModules
             .Concat(archivedModules)
-            .Concat(deletedModules)
             .Select(m =>
                 this.Fixture.Build<ModuleParticipation>()
                     .With(p => p.ModuleId, m.Id)
@@ -93,7 +54,6 @@ public sealed class GetModulesUserIsAcceptedIntoAsyncTests : Infrastructure
 
         this.ApplicationDbContext.Modules.AddRange(activeModules);
         this.ApplicationDbContext.Modules.AddRange(archivedModules);
-        this.ApplicationDbContext.Modules.AddRange(deletedModules);
         this.ApplicationDbContext.ModuleParticipations.AddRange(moduleParticipations);
 
         this.ApplicationDbContext.SaveChanges();

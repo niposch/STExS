@@ -34,14 +34,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateModuleAsync([FromRoute]Guid moduleId, [FromBody]ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
-        var existingModule = await this.moduleService.GetModuleByIdAsync(moduleId, cancellationToken);
-        if (existingModule == null)
-        {
-            return this.NotFound();
-        }
-
-        ModuleMapper.UpdateModule(updateItem, existingModule);
-        await this.moduleService.UpdateModuleAsync(existingModule, cancellationToken);
+        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, cancellationToken);
         return this.Ok();
     }
 
@@ -134,7 +127,6 @@ public static class ModuleMapper
             ModuleName = module.ModuleName,
             ModuleDescription = module.ModuleDescription,
             ArchivedDate = module.ArchivedDate,
-            DeletedDate = module.DeletedDate,
             ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
             IsFavorited =  module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false))
         };
@@ -149,7 +141,6 @@ public static class ModuleMapper
             ModuleDescription = moduleCreateItem.ModuleDescription,
             OwnerId = changeUserId,
             ArchivedDate = null,
-            DeletedDate = null,
             Chapters = new List<Chapter>()
         };
     }
@@ -172,10 +163,7 @@ public sealed class ModuleDetailItem {
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
     public DateTime? ArchivedDate { get; set; }
-    public DateTime? DeletedDate { get; set; }
-
     public bool IsArchived => this.ArchivedDate.HasValue;
-    public bool IsDeleted => this.DeletedDate.HasValue;
 
     public List<Guid> ChapterIds { get; set; } = new List<Guid>();
     

@@ -16,6 +16,11 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    public async Task<List<TModel>> GetAllActiveAsync(CancellationToken cancellationToken = default)
+    {
+        return this.context.Set<TModel>().Where(m => m.ArchivedDate == null).ToList();
+    }
+
     public Task<List<TModel>> GetAllArchivedAsync(CancellationToken cancellationToken = default)
     {
         return context.Set<TModel>().Where(e => e.ArchivedDate != null).ToListAsync(cancellationToken);
@@ -45,11 +50,5 @@ public class GenericCrudAndArchiveRepository<TModel> : GenericCrudRepository<TMo
             entityToUnarchive.IsArchived = false;
         }
         await context.SaveChangesAsync(cancellationToken);
-    }
-
-    public new Task<List<TModel>> GetAllActiveAsync(CancellationToken cancellationToken = default)
-    {
-        return context.Set<TModel>().Where(e => e.ArchivedDate == null && e.DeletedDate == null)
-            .ToListAsync(cancellationToken);
     }
 }
