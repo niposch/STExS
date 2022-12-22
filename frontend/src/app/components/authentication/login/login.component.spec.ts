@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
+import {Router} from "@angular/router";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -49,28 +50,28 @@ describe('LoginComponent', () => {
     expect(result).toEqual(false);
   });
 
-  it ('#validateEmail() should validate "test@testdev.com"', () => {
+  it ('#validateEmail() should validate correct email addresses', () => {
     component.email = "test@testdev.com";
     expect(component.emailIsCorrect).toBeFalse();
     component.validateEmail();
     expect(component.emailIsCorrect).toBeTrue();
   });
 
-  it ('#validateEmail() should not validate "test@@testdev.com"', () => {
+  it ('#validateEmail() should not validate incorrect email addresses', () => {
     component.email = "test@@testdev.com";
     expect(component.emailIsCorrect).toBeFalse();
     component.validateEmail();
     expect(component.emailIsCorrect).toBeFalse();
   });
 
-  it ('#validatePassword() should validate "123123123123"', () => {
+  it ('#validatePassword() should validate correct passwords', () => {
     component.password = "123123123123";
     expect(component.passwordIsCorrect).toBeFalse();
     component.validatePassword();
     expect(component.passwordIsCorrect).toBeTrue();
   });
 
-  it ('#validatePassword() should not validate ""', () => {
+  it ('#validatePassword() should not validate incorrect passwords (e.g. empty strings)', () => {
     component.password = "";
     expect(component.passwordIsCorrect).toBeFalse();
     component.validatePassword();
