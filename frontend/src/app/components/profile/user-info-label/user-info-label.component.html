@@ -13,7 +13,7 @@
     <div class="container">
       <mat-form-field class="input-field">
         <mat-label>{{attributeName}}</mat-label>
-        <input #inputElement id="inputFieldID" matInput (keyup)="validateEmail($event)" (keyup.enter)="editButtonClick()"
+        <input #inputElement matInput (keyup)="validateEmail()" (keyup.enter)="editButtonClick()"
                [value]="this.value"
                name="text" required placeholder="{{attributeInfo}}" [(ngModel)]="value" type="text">
       </mat-form-field>

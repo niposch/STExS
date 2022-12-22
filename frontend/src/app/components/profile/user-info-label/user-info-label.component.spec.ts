@@ -63,17 +63,19 @@ describe('UserInfoLabelComponent', () => {
     expect(component.editButtonClick).toHaveBeenCalled();
   }));
 
-  /*
-  // TODO TEST EMAIL VALIDATION
-
-  it ('#validateEmail() should validate emails correctly',() => {
-    component.startEditing();
-    let input = fixture.debugElement.nativeElement.querySelector('input');
-
-    input.value = "dev@devtest.com"; //email is correct
-    input.dispatchEvent(new Event('keyup'));
-
-    expect(component.emailIsCorrect).toBeTrue(); //error: component.emailIsCorrect is false
+  it ('#validateEmail() should validate correct email addresses', () => {
+    component.value = "test@testdev.com";
+    component.attributeType = "email";
+    expect(component.emailIsCorrect).toBeFalse();
+    component.validateEmail();
+    expect(component.emailIsCorrect).toBeTrue();
   });
-  */
+
+  it ('#validateEmail() should not validate incorrect email addresses', () => {
+    component.value = "test@@testdev.com";
+    component.attributeType = "email";
+    expect(component.emailIsCorrect).toBeFalse();
+    component.validateEmail();
+    expect(component.emailIsCorrect).toBeFalse();
+  });
 });
