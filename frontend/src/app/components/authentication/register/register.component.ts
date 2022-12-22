@@ -30,8 +30,8 @@ export class RegisterComponent implements OnInit {
   public userName: string = "";
   public password: string = "";
   public matrikelNumber: string = "";
-  private emailIsCorrect: boolean = false;
-  private passwordIsCorrect: boolean = false;
+  public emailIsCorrect: boolean = false;
+  public passwordIsCorrect: boolean = false;
 
   constructor(private readonly authService: AuthenticateService,
               private readonly router: Router) {
@@ -42,7 +42,6 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.showLoading = true;
-
     this.authService.apiAuthenticateRegisterPost({
       body: {
         email: this.email,
@@ -59,8 +58,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  validateEmail(event: any) {
-    const inputValue = event.target.value;
+  validateEmail() {
+    const inputValue = this.email;
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -77,8 +76,8 @@ export class RegisterComponent implements OnInit {
     this.allRequiredInputsValid()
   }
 
-  validatePassword(event: any) {
-    const inputValue = event.target.value;
+  validatePassword() {
+    const inputValue = this.password;
 
     //RegEx for all the password conditions
     let Reg1UppercaseLetter = new RegExp(/^(?=.*?[A-Z]).{1,}$/);
