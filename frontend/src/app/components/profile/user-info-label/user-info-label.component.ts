@@ -24,7 +24,6 @@ export class UserInfoLabelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   editButtonClick() {
     this.isEditing = !this.isEditing;
     //for passing value to parent object

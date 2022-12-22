@@ -215,6 +215,26 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -756,14 +776,6 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "runningNumber": {
             "type": "integer",
             "format": "int32"
@@ -812,14 +824,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "isArchived": {
             "type": "boolean"
@@ -900,16 +904,7 @@
             "format": "date-time",
             "nullable": true
           },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "isArchived": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "isDeleted": {
             "type": "boolean",
             "readOnly": true
           },
@@ -985,14 +980,6 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "code": {
             "type": "string",
             "nullable": true
@@ -1029,14 +1016,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "modificationTime": {
             "type": "string",
@@ -1089,14 +1068,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "creationTime": {
             "type": "string",
@@ -1224,14 +1195,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "isArchived": {
             "type": "boolean"
