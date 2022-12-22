@@ -5,7 +5,7 @@ namespace Application.Tests.Services.ModuleServiceTests;
 public sealed class GetModulesAsyncTests : Infrastructure
 {
     [Fact]
-    public async Task RetrievesOnlyUnarchivedAndUndeletedModules()
+    public async Task QueriesArchivedAndUnarchivedModules()
     {
         // Arrange
         this.ApplicationDbContext.Modules.AddRange(
