@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
     await this.router.navigate([this.callbackUrl]);
   }
 
-  validateEmail(event: any) {
-    const inputValue = event.target.value;
+  validateEmail() {
+    const inputValue = this.email;
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -65,11 +65,11 @@ export class LoginComponent implements OnInit {
       this.emailIsCorrect = true;
     }
 
-    this.allRequiredInputsValid()
+    this.allRequiredInputsValid();
   }
 
-  validatePassword(event: any) {
-    const inputValue = event.target.value;
+  validatePassword() {
+    const inputValue = this.password;
 
     if (inputValue == "") {
       this.showPasswordError = true;
@@ -79,11 +79,7 @@ export class LoginComponent implements OnInit {
       this.passwordIsCorrect = true;
     }
 
-    let allValid = this.allRequiredInputsValid()
-    if (event.keyCode == 13 && allValid) {
-      this.login();
-      return;
-    }
+    this.allRequiredInputsValid();
   }
 
   allRequiredInputsValid() {
