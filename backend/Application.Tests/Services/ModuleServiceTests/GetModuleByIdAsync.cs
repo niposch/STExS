@@ -7,11 +7,9 @@ public sealed class GetModuleByIdAsync: Infrastructure
 {
     private Guid id;
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    [InlineData(true, true)]
-    public async Task GetsModule(bool isArchived, bool isDeleted)
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task GetsModule(bool isArchived)
     {
         // Arrange
         this.id = Guid.NewGuid();
