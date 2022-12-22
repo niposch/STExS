@@ -82,7 +82,7 @@ public sealed class ModuleService: IModuleService
             .DistinctBy(m => m.Id);
     }
     
-    public async Task<IEnumerable<Module>> GetUsersInvitedToModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Module>> GetParticipationsForUserAsync(Guid moduleId, CancellationToken cancellationToken = default)
     {
         var participationsForModule =  await this.repository.ModuleParticipations.GetParticipationsForUserAsync(moduleId);
         return participationsForModule.Select(p => p.Module);

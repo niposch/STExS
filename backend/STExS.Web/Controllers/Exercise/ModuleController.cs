@@ -115,7 +115,7 @@ public class ModuleController: ControllerBase
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetUsersInvitedToModuleAsync(moduleId, cancellationToken);
+        var res = await this.moduleService.GetParticipationsForUserAsync(moduleId, cancellationToken);
 
         return this.Ok(res);
     }
