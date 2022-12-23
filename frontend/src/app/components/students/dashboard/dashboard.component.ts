@@ -8,12 +8,17 @@ import {UserService} from "../../../services/user.service";
 })
 export class DashboardComponent implements OnInit {
 
-  public userName: string = "";
+  public firstName: string = "";
+  public lastName: string = "";
 
   constructor(private readonly userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.userService.currentUser.subscribe(u =>{
+      this.firstName = u?.firstName ?? ""
+      this.lastName = u?.lastName ?? ""
+    })
 
   }
 

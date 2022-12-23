@@ -29,6 +29,13 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ModuleCreateComponent } from './components/admin/modules-admin/module-create/module-create.component';
+import { ModuleListComponent } from './components/admin/modules-admin/module-list/module-list.component';
+import { JoinModuleComponent } from './components/module/join-module/join-module.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatListModule} from "@angular/material/list";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { ModuleDetailsComponent } from './components/module/module-details/module-details.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +48,10 @@ import { ModuleCreateComponent } from './components/admin/modules-admin/module-c
     ProfileComponent,
     EditButtonComponent,
     UserInfoLabelComponent,
-    ModuleCreateComponent
+    ModuleCreateComponent,
+    ModuleListComponent,
+    JoinModuleComponent,
+    ModuleDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +71,11 @@ import { ModuleCreateComponent } from './components/admin/modules-admin/module-c
     FormsModule,
     MatChipsModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

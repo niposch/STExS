@@ -1,0 +1,12 @@
+<div *ngIf="module != null else loading">
+  <mat-card>
+    <mat-card-title>{{module.moduleName}}</mat-card-title>
+    <mat-card-content>
+      <p>{{module.moduleDescription}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <mat-spinner mode="indeterminate" style="transform: scale(0.5)"></mat-spinner>
+</ng-template>

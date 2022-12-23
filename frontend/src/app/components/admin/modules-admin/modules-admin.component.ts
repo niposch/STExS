@@ -11,17 +11,13 @@ import {firstValueFrom, lastValueFrom} from "rxjs";
   templateUrl: './modules-admin.component.html',
   styleUrls: ['./modules-admin.component.scss']
 })
-export class ModulesAdminComponent implements OnInit {
+export class ModulesAdminComponent implements OnInit{
   userName: string = "";
 
-  moduleList:Array<Module>|null = null;
+  moduleList:Array<Module> | null = null;
 
   constructor(private readonly moduleService:ModuleService,
               private readonly userService:UserService) { }
-
-  ngOnInit(): void {
-    void this.loadModules()
-  }
 
   async loadModules(){
     await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
@@ -29,5 +25,9 @@ export class ModulesAdminComponent implements OnInit {
       .then(modules =>{
         this.moduleList = modules ?? []
       })
+  }
+
+  ngOnInit(): void {
+    this.loadModules()
   }
 }

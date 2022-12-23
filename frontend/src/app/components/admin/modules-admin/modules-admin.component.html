@@ -1,15 +1,12 @@
+<h1>Administrate your modules</h1>
 <div class="modules-list">
-  <div *ngIf="this.moduleList != null else loading">
-    <div *ngFor="let module of this.moduleList " style="margin-bottom: 0.25rem">
-      <app-module [module]="module"></app-module>
-    </div>
-  </div>
-  <ng-template #loading>
-    <mat-spinner mode="indeterminate"></mat-spinner>
-  </ng-template>
-  <app-module add_module="true" name="Create Module"></app-module>
+  <app-module-list [moduleList]="moduleList"></app-module-list>
 </div>
-
 <div style="margin-top: 1.5rem">
   <app-module-create (onModuleCreate)="this.loadModules()" ></app-module-create>
 </div>
+
+<hr>
+<h1>Member in Modules</h1>
+
+
