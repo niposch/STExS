@@ -128,10 +128,10 @@ if (!isCI)
         app.UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseDeveloperExceptionPage();
         var userManager = app.Services.GetRequiredService<UserManager<ApplicationUser>>();
-        var user = userManager.FindByNameAsync("dev").Result;
-        if (user == null)
+        var admin = userManager.FindByNameAsync("dev").Result;
+        if (admin == null)
         {
-            user = new ApplicationUser
+            admin = new ApplicationUser
             {
                 UserName = "dev",
                 Email = "dev@test.com",
@@ -139,13 +139,50 @@ if (!isCI)
                 LastName = "Doe",
                 MatrikelNumber = "J1234567"
             };
+            userManager.CreateAsync(admin, "Test333!").Wait();
+            admin = userManager.FindByNameAsync("dev").Result;
+            var token = userManager.GenerateEmailConfirmationTokenAsync(admin).Result;
+            userManager.ConfirmEmailAsync(admin, token).Wait();
+        }
+        userManager.AddToRoleAsync(admin, RoleHelper.Admin).Wait();
+        userManager.AddToRoleAsync(admin, RoleHelper.Teacher).Wait();
+        userManager.AddToRoleAsync(admin, RoleHelper.User).Wait();
+
+        var teacher = userManager.FindByNameAsync("dev-teacher").Result;
+        if (teacher == null)
+        {
+            teacher = new ApplicationUser
+            {
+                UserName = "dev-teacher",
+                Email = "dev-teacher@test.com",
+                FirstName = "Jeff",
+                LastName = "Doe",
+                MatrikelNumber = "ABC1234",
+            };
+            userManager.CreateAsync(teacher, "Test333!").Wait();
+            teacher = userManager.FindByNameAsync("dev-teacher").Result;
+            var token = userManager.GenerateEmailConfirmationTokenAsync(teacher).Result;
+            userManager.ConfirmEmailAsync(teacher, token).Wait();
+        }
+        userManager.AddToRoleAsync(teacher, RoleHelper.Teacher).Wait();
+        userManager.AddToRoleAsync(teacher, RoleHelper.User).Wait();
+        
+        var user = userManager.FindByNameAsync("dev-user").Result;
+        if (user == null)
+        {
+            user = new ApplicationUser
+            {
+                UserName = "dev-user",
+                Email = "dev-user@test.com",
+                FirstName = "Jane",
+                LastName = "Doe",
+                MatrikelNumber = "ABC1235",
+            };
             userManager.CreateAsync(user, "Test333!").Wait();
-            user = userManager.FindByNameAsync("dev").Result;
+            user = userManager.FindByNameAsync("dev-user").Result;
             var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             userManager.ConfirmEmailAsync(user, token).Wait();
         }
-        userManager.AddToRoleAsync(user, RoleHelper.Admin).Wait();
-        userManager.AddToRoleAsync(user, RoleHelper.Teacher).Wait();
         userManager.AddToRoleAsync(user, RoleHelper.User).Wait();
     }
 }

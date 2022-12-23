@@ -8,6 +8,7 @@ import {AuthGuard} from "../guards/auth.guard";
 import {ModulesUserComponent} from "../components/students/modules-user/modules-user.component";
 import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
 import {ProfileComponent} from "../components/profile/profile.component";
+import {ModuleDetailsComponent} from "../components/module/module-details/module-details.component";
 
 const routes: Routes = [
   {
@@ -55,7 +56,8 @@ const routes: Routes = [
         children: [
           {path: "dashboard", component: DashboardComponent},
           {path: "modules-user", component: ModulesUserComponent},
-          {path: "profile", component: ProfileComponent}
+          {path: "profile", component: ProfileComponent},
+          {path: "module/details", component: ModuleDetailsComponent}
         ]
       },
 	    {

@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: HeaderOnlyLayoutComponent,
     children: [
-      {path: "", component: LandingPageComponent}
+      {path: "", component: LandingPageComponent},
     ]
   }
 ];

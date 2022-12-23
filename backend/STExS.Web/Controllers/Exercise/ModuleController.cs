@@ -9,7 +9,7 @@ namespace STExS.Controllers.Exercise;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ModuleController: ControllerBase
+public class ModuleController : ControllerBase
 {
     private readonly IModuleService moduleService;
 
@@ -21,18 +21,18 @@ public class ModuleController: ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [Authorize(Roles=$"{RoleHelper.Admin},{RoleHelper.Teacher}")]
+    [Authorize(Roles = $"{RoleHelper.Admin},{RoleHelper.Teacher}")]
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId);
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId, cancellationToken);
         return this.Ok();
     }
 
     [HttpPut("{moduleId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [Authorize]
-    public async Task<IActionResult> UpdateModuleAsync([FromRoute]Guid moduleId, [FromBody]ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateModuleAsync([FromRoute] Guid moduleId, [FromBody] ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
         await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, cancellationToken);
         return this.Ok();
@@ -55,7 +55,7 @@ public class ModuleController: ControllerBase
         await this.moduleService.ArchiveModuleAsync(moduleId, cancellationToken);
         return this.Ok();
     }
-    
+
     [HttpPost("unarchive")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [Authorize]
@@ -69,7 +69,7 @@ public class ModuleController: ControllerBase
     [HttpGet("getById")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleDetailItem))]
     [Authorize]
-    public async Task<IActionResult> GetModuleByIdAsync([FromQuery]Guid id, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetModuleByIdAsync([FromQuery] Guid id, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModuleByIdAsync(id, cancellationToken);
         return this.Ok(res);
@@ -87,9 +87,18 @@ public class ModuleController: ControllerBase
     [HttpGet("getModulesForUser")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
-    public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery] Guid userId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
+        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+    }
+
+    [HttpGet("getModulesUserIsAdminOf")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
+    [Authorize(Roles = $"{RoleHelper.Admin},{RoleHelper.Teacher}")]
+    public async Task<IActionResult> GetModulesUserIsAdminOf([FromQuery] Guid? userId = null, CancellationToken cancellationToken = default)
+    {
+        var res = await this.moduleService.GetModulesUserIsAdminOfAsync(userId ?? this.User.GetUserId(), cancellationToken);
         return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
     }
 
@@ -99,18 +108,31 @@ public class ModuleController: ControllerBase
     public async Task<IActionResult> GetArchivedModulesAsync(CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetArchivedModulesAsync(cancellationToken);
-        
+
         return this.Ok(res);
     }
 
     [HttpGet("getUsersForModule")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
-    public async Task<IActionResult> GetUsersInvitedToModule([FromQuery]Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetUsersInvitedToModule([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetParticipationsForUserAsync(moduleId, cancellationToken);
 
         return this.Ok(res);
+    }
+
+    [HttpGet("search")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
+    [Authorize]
+    public async Task<IActionResult> SearchModulesAsync([FromQuery] string? search = null, CancellationToken cancellationToken = default)
+    {
+        var res = await this.moduleService.SearchModulesAsync(search ?? string.Empty, cancellationToken);
+
+        return this.Ok(res
+            .Take(100)
+            .Select(m => ModuleMapper.ToDetailItem(m))
+            .ToList());
     }
 }
 
@@ -128,10 +150,11 @@ public static class ModuleMapper
             ModuleDescription = module.ModuleDescription,
             ArchivedDate = module.ArchivedDate,
             ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
-            IsFavorited =  module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false))
+            IsFavorited = module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false)),
+            teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName
         };
     }
-    
+
     public static Module ToModule(ModuleCreateItem moduleCreateItem, Guid changeUserId)
     {
         return new Module
@@ -144,7 +167,7 @@ public static class ModuleMapper
             Chapters = new List<Chapter>()
         };
     }
-    
+
     public static Module UpdateModule(ModuleUpdateItem moduleUpdateItem, Module module)
     {
         module.ModuleName = moduleUpdateItem.ModuleName;
@@ -153,29 +176,34 @@ public static class ModuleMapper
     }
 }
 
-public sealed class ModuleDetailItem {
+public sealed class ModuleDetailItem
+{
     public Guid ModuleId { get; set; }
-    
+
     public Guid OwnerId { get; set; }
     public string OwnerFirstName { get; set; } = string.Empty;
     public string OwnerLastName { get; set; } = string.Empty;
-    
+
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
     public DateTime? ArchivedDate { get; set; }
     public bool IsArchived => this.ArchivedDate.HasValue;
 
-    public List<Guid> ChapterIds { get; set; } = new List<Guid>();
-    
+    public List<Guid> ChapterIds { get; set; } = new();
+
     public bool IsFavorited { get; set; }
+
+    public string teacherName { get; set; }
 }
 
-public sealed class ModuleCreateItem {
+public sealed class ModuleCreateItem
+{
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
 }
 
-public sealed class ModuleUpdateItem {
+public sealed class ModuleUpdateItem
+{
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
 }

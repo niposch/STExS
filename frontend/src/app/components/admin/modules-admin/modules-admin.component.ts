@@ -11,22 +11,23 @@ import {firstValueFrom, lastValueFrom} from "rxjs";
   templateUrl: './modules-admin.component.html',
   styleUrls: ['./modules-admin.component.scss']
 })
-export class ModulesAdminComponent implements OnInit {
+export class ModulesAdminComponent implements OnInit{
   userName: string = "";
-  loggedIn: boolean = false;
-  isAdmin: boolean = false;
 
-  moduleList:Array<Module> = []
+  moduleList:Array<Module> | null = null;
 
-  constructor(private readonly moduleService:ModuleService, private readonly userService:UserService) { }
+  constructor(private readonly moduleService:ModuleService,
+              private readonly userService:UserService) { }
 
-  ngOnInit(): void {
-    void this.moduleService.apiModuleGetModulesForUserGet$Json({
-      userId:this.userService.currentUserSubject.getValue()?.id ?? ""
+  async loadModules(){
+    await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
     }).toPromise()
       .then(modules =>{
         this.moduleList = modules ?? []
       })
   }
 
+  ngOnInit(): void {
+    this.loadModules()
+  }
 }
