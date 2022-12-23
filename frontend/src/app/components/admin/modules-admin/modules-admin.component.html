@@ -1,6 +1,17 @@
 <p class="heading">Administrate your modules</p>
 <div class="modules-list">
-  <app-module-list [moduleList]="moduleList"></app-module-list>
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header class="expansion-header">
+      <mat-panel-title>
+        Modules
+      </mat-panel-title>
+      <mat-panel-description>
+        Click to see your modules
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-module-list [moduleList]="moduleList"></app-module-list>
+  </mat-expansion-panel>
+
 </div>
 
 <mat-divider class="divider"></mat-divider>
@@ -9,7 +20,8 @@
   <app-module-create (onModuleCreate)="this.loadModules()" ></app-module-create>
 </div>
 
-<hr>
-<h1>Member in Modules</h1>
+<mat-divider class="divider"></mat-divider>
+
+<p class="heading">Member in Modules</p>
 
 
