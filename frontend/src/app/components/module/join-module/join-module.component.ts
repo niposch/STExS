@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ModuleService} from "../../../../services/generated/services/module.service";
 import {Module} from "../../../../services/generated/models/module";
 import {debounce, fromEvent, interval, Observable, Subject} from "rxjs";
@@ -15,6 +15,7 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
   // @ts-ignore
   @ViewChild("searchInput") searchInputRef: ElementRef
 
+  @Input() infoText : string = "";
   public results: Array<ModuleDetailItem> | null = null;
   public displayedColumns = ["moduleName", "teacher", "actions"]
   constructor(private readonly moduleService:ModuleService,
