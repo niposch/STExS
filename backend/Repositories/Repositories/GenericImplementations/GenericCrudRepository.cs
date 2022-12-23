@@ -42,4 +42,12 @@ public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGe
         await context.SaveChangesAsync(cancellationToken);
         return entity;
     }
+    
+    public async Task<List<T>> UpdateRangeAsync(List<T> entities,
+        CancellationToken cancellationToken = default)
+    {
+        context.Set<T>().UpdateRange(entities);
+        await context.SaveChangesAsync(cancellationToken);
+        return entities;
+    }
 }

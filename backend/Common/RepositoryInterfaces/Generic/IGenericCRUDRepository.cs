@@ -9,4 +9,6 @@ public interface IGenericCrudRepository<TModel> : IDeletableEntityRepository<TMo
     Task<List<TModel>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<TModel> AddAsync(TModel entity, CancellationToken cancellationToken = default);
     Task<TModel> UpdateAsync(TModel entity, CancellationToken cancellationToken = default);
+
+    public Task<List<TModel>> UpdateRangeAsync(List<TModel> entities, CancellationToken cancellationToken = default);
 }

@@ -71,8 +71,13 @@ public class AuthenticateController : ControllerBase
             return this.Unauthorized();
         }
         
-        await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
-        return this.Ok();
+        var result = await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
+        if (result.Succeeded)
+        {
+            await this.signInManager.SignInAsync(user, true);
+            return this.Ok();
+        }
+        return this.Unauthorized();
     }
 
     [HttpPost]

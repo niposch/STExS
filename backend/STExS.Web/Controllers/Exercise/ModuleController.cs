@@ -25,7 +25,7 @@ public class ModuleController: ControllerBase
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId);
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId, cancellationToken);
         return this.Ok();
     }
 
@@ -90,6 +90,15 @@ public class ModuleController: ControllerBase
     public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery]Guid userId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
+        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+    }
+    
+    [HttpGet("getModulesUserIsAdminOf")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
+    [Authorize(Roles = $"{RoleHelper.Admin},{RoleHelper.Teacher}")]
+    public async Task<IActionResult> GetModulesUserIsAdminOf([FromQuery]Guid? userId=null, CancellationToken cancellationToken = default)
+    {
+        var res = await this.moduleService.GetModulesUserIsAdminOfAsync(userId ?? this.User.GetUserId(), cancellationToken);
         return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
     }
 

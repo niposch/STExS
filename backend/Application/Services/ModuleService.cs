@@ -63,6 +63,12 @@ public sealed class ModuleService: IModuleService
         await this.repository.Modules.UnarchiveAsync(moduleId, cancellationToken);
     }
 
+    public async Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var modules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId, cancellationToken);
+        return modules.ToList();
+    }
+
     public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);

@@ -1,10 +1,15 @@
-<!-- TODO macht es sinn, dsa mit user modules zu vereinheitlichen? -->
-<!--
-<p>modules-admin works!</p>
 <div class="modules-list">
-    <div *ngFor="let module of this.moduleList ">
-	<app-module name= "{{ module }}" checked="{{false}}"></app-module>
-	</div>
-	<app-module add_module="true" name="Create Module"></app-module>
+  <div *ngIf="this.moduleList != null else loading">
+    <div *ngFor="let module of this.moduleList " style="margin-bottom: 0.25rem">
+      <app-module [module]="module"></app-module>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </ng-template>
+  <app-module add_module="true" name="Create Module"></app-module>
 </div>
--->
+
+<div style="margin-top: 1.5rem">
+  <app-module-create (onModuleCreate)="this.loadModules()" ></app-module-create>
+</div>

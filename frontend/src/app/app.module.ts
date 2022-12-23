@@ -28,6 +28,7 @@ import {FormsModule} from "@angular/forms";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ModuleCreateComponent } from './components/admin/modules-admin/module-create/module-create.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     ModuleComponent,
     ProfileComponent,
     EditButtonComponent,
-    UserInfoLabelComponent
+    UserInfoLabelComponent,
+    ModuleCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -24,4 +24,5 @@ public interface IModuleService
     
     public Task ArchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     public Task UnarchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken);
 }
