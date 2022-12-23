@@ -1,20 +1,25 @@
-<mat-card>
-  <mat-card-title>Neues Modul anlegen</mat-card-title>
-  <form (ngSubmit)="createModule()">
-    <div>
-      <div>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input [(ngModel)]="this.name" matInput name="name"/>
-        </mat-form-field>
+<mat-card >
+  <div class="margin5px">
+    <form (ngSubmit)="createModule()">
+      <div class="horizontal-space margin5px">
+        <mat-card-title class="heading-text">Create a new module</mat-card-title>
+        <button type="submit" mat-raised-button color="accent">create</button>
       </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Description</mat-label>
-          <textarea [(ngModel)]="this.description" matInput name="description"></textarea>
-        </mat-form-field>
+      <mat-divider></mat-divider>
+      <div class="horizontal-container">
+        <div class="margin5px name-field-div">
+          <mat-form-field class="name-field-wrapper">
+            <mat-label>Name</mat-label>
+            <input [(ngModel)]="this.name" matInput name="name"/>
+          </mat-form-field>
+        </div>
+        <div class="margin5px description-field-div">
+          <mat-form-field class="description-field-wrapper">
+            <mat-label>Description</mat-label>
+            <textarea [(ngModel)]="this.description" matInput name="description"></textarea>
+          </mat-form-field>
+        </div>
       </div>
-    </div>
-    <button type="submit" mat-button>Erstellen</button>
-  </form>
+    </form>
+  </div>
 </mat-card>

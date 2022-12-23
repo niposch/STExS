@@ -36,6 +36,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { ModuleDetailsComponent } from './components/module/module-details/module-details.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -53,30 +54,31 @@ import { ModuleDetailsComponent } from './components/module/module-details/modul
     JoinModuleComponent,
     ModuleDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot([]),
-    BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: ""}),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    LayoutModule,
-    MatInputModule,
-    FormsModule,
-    MatChipsModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot([]),
+        BrowserAnimationsModule,
+        ApiModule.forRoot({rootUrl: ""}),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        LayoutModule,
+        MatInputModule,
+        FormsModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatGridListModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

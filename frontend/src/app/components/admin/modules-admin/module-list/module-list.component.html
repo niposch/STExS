@@ -1,12 +1,16 @@
 <div *ngIf="this.moduleList != null else loading">
-  <div *ngFor="let module of this.moduleList" style="margin-bottom: 0.25rem">
-    <app-module [module]="module"></app-module>
+  <div class="flex-layout">
+    <div class="flex-item" *ngFor="let module of this.moduleList">
+        <app-module class="fit-parent" [module]="module"></app-module>
+    </div>
   </div>
+
+  <!-- NO MODULES -->
   <div *ngIf="this.moduleList.length == 0">
     <p>No modules to display</p>
   </div>
 </div>
+
 <ng-template #loading>
   <mat-spinner mode="indeterminate" style="transform: scale(0.5)"></mat-spinner>
 </ng-template>
-<app-module add_module="true" name="Create Module"></app-module>
