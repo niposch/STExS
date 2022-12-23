@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private readonly snackbarService:MatSnackBar
+    private readonly snackbarService:MatSnackBar,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
@@ -92,7 +93,6 @@ export class LoginComponent implements OnInit {
     let allValid = this.allRequiredInputsValid()
     if (event.keyCode == 13 && allValid) {
       this.login();
-      return;
     }
   }
 
