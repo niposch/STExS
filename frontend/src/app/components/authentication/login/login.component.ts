@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../services/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private readonly snackbarService:MatSnackBar
   ) {
   }
 
@@ -46,8 +49,15 @@ export class LoginComponent implements OnInit {
   async login():Promise<void> {
     this.showLoading = true;
     await this.userService.login(this.email, this.password)
-    this.showLoading = false;
-    await this.router.navigate([this.callbackUrl]);
+      .catch(err => {
+        this.snackbarService.open("Login failed.", "Dismiss", {duration: 5000})
+        this.showLoading = false;
+        throw err
+      })
+      .then(() =>{
+        this.showLoading = false;
+        this.router.navigate([this.callbackUrl]);
+      })
   }
 
   validateEmail(event: any) {

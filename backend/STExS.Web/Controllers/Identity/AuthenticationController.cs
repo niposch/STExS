@@ -71,12 +71,7 @@ public class AuthenticateController : ControllerBase
             return this.Unauthorized();
         }
         
-        await this.signInManager.SignInAsync(user, new AuthenticationProperties
-        {
-            IsPersistent = true,
-            ExpiresUtc = DateTime.UtcNow.AddDays(1),
-            AllowRefresh = true
-        });
+        await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
         return this.Ok();
     }
 
