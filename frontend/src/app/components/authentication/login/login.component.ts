@@ -61,8 +61,9 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  validateEmail(event: any) {
-    const inputValue = event.target.value;
+  validateEmail(event : Event | null = null) {
+    // @ts-ignore
+    const inputValue = event?.target?.value ?? this.email;
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -76,11 +77,12 @@ export class LoginComponent implements OnInit {
       this.emailIsCorrect = true;
     }
 
-    this.allRequiredInputsValid()
+    this.allRequiredInputsValid();
   }
 
-  validatePassword(event: any) {
-    const inputValue = event.target.value;
+  validatePassword(event : Event | null = null) {
+    // @ts-ignore
+    const inputValue = event?.target?.value ?? this.password;
 
     if (inputValue == "") {
       this.showPasswordError = true;
@@ -90,10 +92,7 @@ export class LoginComponent implements OnInit {
       this.passwordIsCorrect = true;
     }
 
-    let allValid = this.allRequiredInputsValid()
-    if (event.keyCode == 13 && allValid) {
-      this.login();
-    }
+    this.allRequiredInputsValid();
   }
 
   allRequiredInputsValid() {
