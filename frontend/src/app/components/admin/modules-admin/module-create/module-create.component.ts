@@ -16,7 +16,6 @@ export class ModuleCreateComponent implements OnInit {
 
   @Output()
   public onModuleCreate: EventEmitter<any> = new EventEmitter<any>()
-
   public isLoading = false;
   constructor(private readonly moduleService:ModuleService,
               private readonly snackBar: MatSnackBar) { }
@@ -25,6 +24,13 @@ export class ModuleCreateComponent implements OnInit {
   }
 
   createModule() {
+    if (this.isLoading) {
+      return;
+    }
+    if (this.description == "" && this.name == "") {
+      let snackBar = this.snackBar.open('Please enter a name and a description!', 'ok');
+    }
+
     this.isLoading = true;
     lastValueFrom(this.moduleService.apiModulePost({
       body:{

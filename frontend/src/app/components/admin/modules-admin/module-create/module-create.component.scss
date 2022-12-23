@@ -21,6 +21,17 @@ mat-card {
   justify-content: space-between;
 }
 
+.horizontal-button {
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .horizontal-container {
   display: flex;
   flex-direction: row;

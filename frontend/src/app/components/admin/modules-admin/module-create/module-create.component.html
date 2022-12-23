@@ -3,7 +3,14 @@
     <form (ngSubmit)="createModule()">
       <div class="horizontal-space margin5px">
         <mat-card-title class="heading-text">Create a new module</mat-card-title>
-        <button type="submit" mat-raised-button color="accent">create</button>
+        <div class="horizontal-align">
+          <button type="submit" mat-raised-button color="accent">
+            <div class="horizontal-button">
+              <p class="vertically-centered">create</p>
+              <mat-spinner class="vertically-centered" style="margin-left: 5px" *ngIf="this.isLoading" diameter="20" mode="indeterminate" color="primary"></mat-spinner>
+            </div>
+          </button>
+        </div>
       </div>
       <mat-divider></mat-divider>
       <div class="horizontal-container">
