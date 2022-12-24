@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -12,7 +13,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [HttpClientTestingModule, RouterTestingModule]
+      imports: [HttpClientTestingModule, RouterTestingModule, MatSnackBarModule]
     })
     .compileComponents();
 

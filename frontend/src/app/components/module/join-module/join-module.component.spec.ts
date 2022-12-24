@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JoinModuleComponent } from './join-module.component';
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('JoinModuleComponent', () => {
   let component: JoinModuleComponent;
@@ -8,7 +11,8 @@ describe('JoinModuleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JoinModuleComponent ]
+      declarations: [ JoinModuleComponent ],
+      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule ]
     })
     .compileComponents();
 
