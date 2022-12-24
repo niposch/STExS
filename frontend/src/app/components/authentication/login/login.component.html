@@ -14,15 +14,21 @@
           <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
 
           <!-- PASSWORD -->
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input (change)="validatePassword($event)" (keyup)="validatePassword()" (keyup.enter)="login()" [(ngModel)]="this.password" matInput name="password"
-                   required type="password">
-          </mat-form-field>
+          <div class="pw-container">
+            <mat-form-field class="pw-input">
+              <mat-label>Password</mat-label>
+              <input #passwordInput (change)="validatePassword($event)" (keyup)="validatePassword()" (keyup.enter)="login()" [(ngModel)]="this.password" matInput name="password"
+                     required [type]="this.showPassword ? 'text' : 'password'">
+            </mat-form-field>
+            <button class="icon-button" mat-button (click)="togglePassword()" type="button">
+              <mat-icon *ngIf="this.showPassword">visibility</mat-icon>
+              <mat-icon *ngIf="!this.showPassword">visibility_off</mat-icon>
+            </button>
+          </div>
           <mat-label *ngIf="showPasswordError" class="validation-error">Please enter a password!</mat-label>
 
           <!-- LOGIN BUTTON -->
-          <button (click)="this.loginButtonEnabled && login()" color="accent" [disabled]="!this.loginButtonEnabled" mat-button mat-raised-button type="button">Login</button>
+          <button (click)="this.loginButtonEnabled && login()" color="accent" [disabled]="!this.loginButtonEnabled" mat-button mat-raised-button type="submit">Login</button>
 
           <!-- REGISTER BUTTON -->
           <a color="secondary" routerLink="/register" mat-button mat-stroked-button>Register</a>

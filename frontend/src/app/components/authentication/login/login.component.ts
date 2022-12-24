@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -11,6 +11,8 @@ import {of} from "rxjs";
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('passwordInput') passwordInputField: any;
+
   public showLoading: boolean = false;
 
   public showEmailError: boolean = false;
@@ -18,6 +20,8 @@ export class LoginComponent implements OnInit {
 
   public emailIsCorrect: boolean = false;
   public passwordIsCorrect: boolean = false;
+
+  public showPassword: boolean = false;
 
   public loginButtonEnabled: boolean = false;
   public password: string = "";
@@ -104,4 +108,9 @@ export class LoginComponent implements OnInit {
     }
     return false;
   }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
 }
