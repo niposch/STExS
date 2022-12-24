@@ -33,6 +33,8 @@ export class RegisterComponent implements OnInit {
   public emailIsCorrect: boolean = false;
   public passwordIsCorrect: boolean = false;
 
+  public showPassword: boolean = false;
+
   constructor(private readonly authService: AuthenticateService,
               private readonly router: Router) {
   }
@@ -113,5 +115,9 @@ export class RegisterComponent implements OnInit {
     } else {
       this.registerButtonEnabled = false;
     }
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }

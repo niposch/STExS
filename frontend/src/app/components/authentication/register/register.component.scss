@@ -74,3 +74,41 @@ mat-checkbox {
 li {
     line-height: 12px;
 }
+
+.icon-button {
+  height: 50%;
+  display: table-cell;
+}
+
+.pw-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  width: inherit;
+  overflow: hidden;
+}
+
+.pw-input {
+  display: table-cell;
+  width: 100%;
+  min-width: 80px;
+  margin-right: 10px;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
