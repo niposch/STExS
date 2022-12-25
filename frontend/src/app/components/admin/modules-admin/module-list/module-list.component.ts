@@ -8,7 +8,8 @@ import {ModuleService} from "../../../../../services/generated/services/module.s
   styleUrls: ['./module-list.component.scss']
 })
 export class ModuleListComponent {
-  @Input() moduleList:Array<Module>|null = null;
+  @Input()
+  moduleList:Array<Module>|null = null;
 
   constructor(private readonly moduleService:ModuleService) {}
 
@@ -18,5 +19,9 @@ export class ModuleListComponent {
       .then(modules =>{
         this.moduleList = modules ?? []
       })
+  }
+
+  ngOnInit():void {
+    this.loadModules();
   }
 }

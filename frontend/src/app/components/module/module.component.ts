@@ -3,8 +3,6 @@ import {Module} from "../../../services/generated/models/module";
 import {ModuleService} from "../../../services/generated/services/module.service";
 import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {HttpContext} from "@angular/common/http";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-module',
@@ -20,9 +18,10 @@ export class ModuleComponent implements OnInit {
 
   private isDeleting : boolean = false;
 
+
   constructor(private readonly moduleService:ModuleService,
-              private readonly snackBar: MatSnackBar,
-              private readonly dialog:MatDialog) { }
+              private readonly snackBar: MatSnackBar
+              ) { }
 
   ngOnInit(): void {
   }
@@ -46,15 +45,5 @@ export class ModuleComponent implements OnInit {
     })
   }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
-}
 
-export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }

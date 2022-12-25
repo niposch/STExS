@@ -25,6 +25,6 @@ export class ModulesAdminComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.loadModules()
+    this.loadModules();
   }
 }
