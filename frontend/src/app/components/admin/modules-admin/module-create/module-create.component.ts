@@ -14,8 +14,7 @@ export class ModuleCreateComponent implements OnInit {
   public name:string = ""
   public description: string = ""
 
-  @Output()
-  public onModuleCreate: EventEmitter<any> = new EventEmitter<any>()
+  @Output() public onModuleCreate: EventEmitter<any> = new EventEmitter<any>()
   public isLoading = false;
   constructor(private readonly moduleService:ModuleService,
               private readonly snackBar: MatSnackBar) { }

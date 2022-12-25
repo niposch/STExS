@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Module} from "../../../../../services/generated/models/module";
 import {ModuleService} from "../../../../../services/generated/services/module.service";
-import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-module-list',
@@ -11,8 +10,7 @@ import {UserService} from "../../../../services/user.service";
 export class ModuleListComponent {
   @Input() moduleList:Array<Module>|null = null;
 
-  constructor(private readonly moduleService:ModuleService) {
-  }
+  constructor(private readonly moduleService:ModuleService) {}
 
   async loadModules(){
     await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
