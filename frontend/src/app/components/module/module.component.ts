@@ -25,7 +25,7 @@ export class ModuleComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async deleteModule() {
+  deleteModule() {
     if (this.isDeleting) {
       return;
     }
@@ -33,7 +33,7 @@ export class ModuleComponent implements OnInit {
     this.isDeleting = true;
 
     lastValueFrom(this.moduleService.apiModuleDelete({
-      moduleId: this.module?.id
+      moduleId: this.module?.moduleId
     }))
       .catch(err =>{
       this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000})

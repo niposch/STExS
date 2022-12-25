@@ -24,9 +24,16 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
         
         // TODO exercises need to be deleted as well, once they are implemented
         // this.context.RemoveRange(entity.Chapters.Select(c => c.ParsonExercises));
-        this.context.RemoveRange(entity.Chapters);
         
-        this.context.RemoveRange(entity.ModuleParticipations);
+        //modules without any contents should be deletable
+        if (entity.Chapters != null) {
+            this.context.RemoveRange(entity.Chapters);
+        }
+
+        if (entity.ModuleParticipations != null) {
+            this.context.RemoveRange(entity.ModuleParticipations);
+        }
+
         this.context.Remove(entity);
         await this.context.SaveChangesAsync(cancellationToken);
     }

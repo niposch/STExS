@@ -16,8 +16,7 @@ export class ModulesAdminComponent implements OnInit{
 
   moduleList:Array<Module> | null = null;
 
-  constructor(private readonly moduleService:ModuleService,
-              private readonly userService:UserService) { }
+  constructor(private readonly moduleService:ModuleService) { }
 
   async loadModules(){
     await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({

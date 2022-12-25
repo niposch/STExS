@@ -9,6 +9,16 @@ import {UserService} from "../../../../services/user.service";
   styleUrls: ['./module-list.component.scss']
 })
 export class ModuleListComponent {
-  @Input()
-  moduleList:Array<Module>|null = null;
+  @Input() moduleList:Array<Module>|null = null;
+
+  constructor(private readonly moduleService:ModuleService) {
+  }
+
+  async loadModules(){
+    await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
+    }).toPromise()
+      .then(modules =>{
+        this.moduleList = modules ?? []
+      })
+  }
 }
