@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModuleComponent } from './module.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {ModuleService} from "../../../services/generated/services/module.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 describe('ModuleComponent', () => {
   let component: ModuleComponent;
@@ -12,7 +12,7 @@ describe('ModuleComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ModuleComponent ],
-      imports: [ RouterTestingModule, HttpClientTestingModule ]
+      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule ]
     })
     .compileComponents();
 
