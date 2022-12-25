@@ -3,6 +3,8 @@ import {Module} from "../../../services/generated/models/module";
 import {ModuleService} from "../../../services/generated/services/module.service";
 import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "./delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-module',
@@ -20,7 +22,8 @@ export class ModuleComponent implements OnInit {
 
 
   constructor(private readonly moduleService:ModuleService,
-              private readonly snackBar: MatSnackBar
+              private readonly snackBar: MatSnackBar,
+              private dialog: MatDialog
               ) { }
 
   ngOnInit(): void {
@@ -45,5 +48,18 @@ export class ModuleComponent implements OnInit {
     })
   }
 
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data == "delete") this.deleteModule();
+      }
+    );
+  }
 
 }

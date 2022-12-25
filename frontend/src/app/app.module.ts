@@ -37,6 +37,8 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { ModuleDetailsComponent } from './components/module/module-details/module-details.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-dialog.component";
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
     ModuleCreateComponent,
     ModuleListComponent,
     JoinModuleComponent,
-    ModuleDetailsComponent
+    ModuleDetailsComponent,
+    DeleteDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -77,7 +80,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
         MatListModule,
         MatTableModule,
         MatPaginatorModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDialogModule
     ],
   providers: [],
   bootstrap: [AppComponent]
