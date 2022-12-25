@@ -21,7 +21,7 @@ export class ModuleDetailsComponent implements OnInit {
         return;
       }
         firstValueFrom(this.moduleService.apiModuleGetByIdGet$Json({
-          id: params["id"]
+          moduleId: params["moduleId"]
         }))
           .catch(err => {
             this.module = null;

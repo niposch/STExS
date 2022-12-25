@@ -352,7 +352,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "moduleId",
             "in": "query",
             "schema": {
               "type": "string",
@@ -909,7 +909,7 @@
       "Module": {
         "type": "object",
         "properties": {
-          "id": {
+          "moduleId": {
             "type": "string",
             "format": "uuid"
           },
