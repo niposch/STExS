@@ -28,6 +28,7 @@ export class ModuleCreateComponent implements OnInit {
     }
     if (this.description == "" && this.name == "") {
       let snackBar = this.snackBar.open('Please enter a name and a description!', 'ok');
+      return;
     }
 
     this.isLoading = true;
