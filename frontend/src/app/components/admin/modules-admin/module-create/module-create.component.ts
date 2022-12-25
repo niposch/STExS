@@ -27,7 +27,7 @@ export class ModuleCreateComponent implements OnInit {
       return;
     }
     if (this.description == "" && this.name == "") {
-      let snackBar = this.snackBar.open('Please enter a name and a description!', 'ok');
+      this.snackBar.open('Please enter a name and a description!', 'ok');
       return;
     }
 
@@ -44,6 +44,9 @@ export class ModuleCreateComponent implements OnInit {
         }).then(() => {
       this.isLoading = false;
       this.onModuleCreate.emit()
-    })
+    });
+
+    this.name = "";
+    this.description = "";
   }
 }
