@@ -1,0 +1,31 @@
+.centered-content {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom right, #303030, #202020);
+}
+
+.centered-item {
+  margin-top: -20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+  min-width: 220px;
+  width: 800px;
+  max-width: 1000px;
+}
+
+.main-heading {
+  font-style: normal;
+  font-variant: small-caps;
+  font-weight: bolder;
+  font-size: 60px;
+  font-family: Arial, sans-serif;
+  line-height: 50px;
+  color: #02C0A2;
+  text-align: center;
+}
