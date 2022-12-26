@@ -237,26 +237,6 @@
             }
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Module"
-        ],
-        "parameters": [
-          {
-            "name": "moduleId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
       }
     },
     "/api/Module/{moduleId}": {
@@ -294,6 +274,27 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -352,7 +353,7 @@
         ],
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "id",
             "in": "query",
             "schema": {
               "type": "string",
@@ -909,7 +910,7 @@
       "Module": {
         "type": "object",
         "properties": {
-          "moduleId": {
+          "id": {
             "type": "string",
             "format": "uuid"
           },

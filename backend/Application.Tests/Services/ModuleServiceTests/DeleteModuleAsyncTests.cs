@@ -6,6 +6,8 @@ namespace Application.Tests.Services.ModuleServiceTests;
 public sealed class DeleteModuleAsyncTests: Infrastructure
 {
     private Guid id;
+    private Guid userId;
+    
     [Fact]
     public async Task DeletesModule()
     {
@@ -39,6 +41,6 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
 
     private Task CallAsync()
     {
-        return this.ModuleService.DeleteModuleAsync(this.id);
+        return this.ModuleService.DeleteModuleAsync(this.id, this.userId);
     }
 }

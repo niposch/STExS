@@ -14,7 +14,7 @@ public interface IModuleService
         string newDescription,
         CancellationToken cancellationToken = default);
 
-    public Task DeleteModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    public Task DeleteModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
 
     public Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default);
 

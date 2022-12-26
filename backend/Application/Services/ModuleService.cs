@@ -1,7 +1,10 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.Helper.Roles;
+using Application.Services.Interfaces;
 using Common.Exceptions;
+using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 
@@ -9,10 +12,16 @@ namespace Application.Services;
 public sealed class ModuleService : IModuleService
 {
     private readonly IApplicationRepository repository;
+    private readonly UserManager<ApplicationUser> userManager;
+    private readonly RoleManager<ApplicationRole> roleManager;
 
-    public ModuleService(IApplicationRepository repository)
+    public ModuleService(IApplicationRepository repository, 
+        UserManager<ApplicationUser> userManager,
+        RoleManager<ApplicationRole> roleManager)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
     }
 
     public async Task CreateModuleAsync(string moduleName,
@@ -46,8 +55,21 @@ public sealed class ModuleService : IModuleService
         await this.repository.Modules.UpdateAsync(module, cancellationToken);
     }
 
-    public async Task DeleteModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task DeleteModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
+        var module = (await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken)) ?? throw new EntityNotFoundException<Module>(moduleId);
+        // Check if user is allowed to delete module
+        var user = await this.userManager.FindByIdAsync(userId.ToString());
+        if (user == null) 
+            throw new UnauthorizedException();
+        
+        var roles = this.userManager.GetRolesAsync(user);
+        
+        if (!roles.Result.Contains(RoleHelper.Admin) && !roles.Result.Contains(RoleHelper.Teacher))
+            throw new UnauthorizedException();
+        if (roles.Result.Contains(RoleHelper.Teacher) && module.OwnerId != userId) 
+            throw new UnauthorizedException();
+        
         await this.repository.Modules.DeleteAsync(moduleId, cancellationToken);
     }
 

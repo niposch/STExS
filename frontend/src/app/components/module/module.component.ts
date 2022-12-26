@@ -5,6 +5,7 @@ import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "./delete-dialog/delete-dialog.component";
+import {ModuleDetailItem} from "../../../services/generated/models/module-detail-item";
 
 @Component({
   selector: 'app-module',
@@ -16,7 +17,7 @@ export class ModuleComponent implements OnInit {
   @Input() isFavorited = false;
   @Output() isFavoritedEventEmitter = new EventEmitter<boolean>();
   @Output() onModuleDelete = new EventEmitter<any>();
-  @Input() module:Module | undefined;
+  @Input() module:ModuleDetailItem | undefined;
 
   private isDeleting : boolean = false;
 
@@ -36,8 +37,8 @@ export class ModuleComponent implements OnInit {
 
     this.isDeleting = true;
 
-    lastValueFrom(this.moduleService.apiModuleDelete({
-      moduleId: this.module?.moduleId
+    lastValueFrom(this.moduleService.apiModuleModuleIdDelete({
+      moduleId: this.module!.moduleId!
     }))
       .catch(err =>{
       this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000})

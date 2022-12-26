@@ -38,12 +38,13 @@ public class ModuleController : ControllerBase
         return this.Ok();
     }
 
-    [HttpDelete]
+    [HttpDelete("{moduleId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [Authorize]
-    public async Task<IActionResult> DeleteModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
+    [Authorize(Roles=$"{RoleHelper.Admin},{RoleHelper.Teacher}")]
+    public async Task<IActionResult> DeleteModuleAsync([FromRoute]Guid moduleId, CancellationToken cancellationToken = default)
     {
-        await this.moduleService.DeleteModuleAsync(moduleId, cancellationToken);
+        var userId = this.User.GetUserId();
+        await this.moduleService.DeleteModuleAsync(moduleId, userId, cancellationToken);
         return this.Ok();
     }
 
