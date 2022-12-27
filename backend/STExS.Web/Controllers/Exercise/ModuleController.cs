@@ -135,6 +135,16 @@ public class ModuleController : ControllerBase
             .Select(m => ModuleMapper.ToDetailItem(m))
             .ToList());
     }
+
+    [HttpPost("joinModule/{moduleId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize]
+    public async Task<IActionResult> JoinModuleAsync([FromRoute] Guid moduleId, CancellationToken cancellationToken = default)
+    {
+        var userId = this.User.GetUserId();
+        await this.moduleService.JoinModuleAsync(moduleId, userId, cancellationToken);
+        return this.Ok();
+    }
 }
 
 public static class ModuleMapper

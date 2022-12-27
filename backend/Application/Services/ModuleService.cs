@@ -99,6 +99,11 @@ public sealed class ModuleService : IModuleService
             .ToList();
     }
 
+    public async Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);

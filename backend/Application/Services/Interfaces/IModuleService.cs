@@ -30,4 +30,6 @@ public interface IModuleService
     public Task UnarchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken);
     Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken);
+
+    Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
 }

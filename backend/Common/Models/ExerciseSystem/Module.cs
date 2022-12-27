@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Common.Models.Authentication;
-using Common.Models.HelperInterfaces;
+﻿using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem;
 
@@ -13,4 +11,6 @@ public class Module :ArchiveableBaseEntity, ICreationTimeTracked
     public virtual ICollection<ModuleParticipation> ModuleParticipations { get; set; }
     
     public DateTime CreationTime { get; set; }
+
+    public int? MaxParticipants { get; set; } = null
 }
