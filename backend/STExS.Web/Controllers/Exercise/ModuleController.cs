@@ -152,7 +152,8 @@ public static class ModuleMapper
             ArchivedDate = module.ArchivedDate,
             ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
             IsFavorited = module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false)),
-            teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName
+            teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName,
+            CreationTime = module.CreationTime,
         };
     }
 
@@ -165,7 +166,7 @@ public static class ModuleMapper
             ModuleDescription = moduleCreateItem.ModuleDescription,
             OwnerId = changeUserId,
             ArchivedDate = null,
-            Chapters = new List<Chapter>()
+            Chapters = new List<Chapter>(),
         };
     }
 
@@ -195,6 +196,8 @@ public sealed class ModuleDetailItem
     public bool IsFavorited { get; set; }
 
     public string teacherName { get; set; }
+    
+    public DateTime CreationTime { get; set; }
 }
 
 public sealed class ModuleCreateItem

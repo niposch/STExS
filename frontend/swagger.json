@@ -950,6 +950,10 @@
               "$ref": "#/components/schemas/ModuleParticipation"
             },
             "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1018,6 +1022,10 @@
           "teacherName": {
             "type": "string",
             "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

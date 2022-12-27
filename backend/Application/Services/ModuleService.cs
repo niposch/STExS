@@ -94,6 +94,8 @@ public sealed class ModuleService : IModuleService
         var modules = await this.repository.Modules.GetAllAsync(cancellationToken);
         return modules
             .Where(m => Search(search, m))
+            .OrderByDescending(m => m.IsArchived)
+            .ThenByDescending(m => m.CreationTime)
             .ToList();
     }
 
@@ -132,7 +134,7 @@ public sealed class ModuleService : IModuleService
         var participationsForModule = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(moduleId);
         return participationsForModule.Select(p => p.Module);
     }
-
+    
     private static bool Search(string search, Module module)
     {
         var words = search.Split(" ");

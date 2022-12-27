@@ -44,4 +44,11 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
             .Where(m => m.OwnerId == ownerId)
             .ToListAsync(cancellationToken);
     }
+
+    public Task<List<Module>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return this.context.Modules
+            .Include(m => m.Owner)
+            .ToListAsync(cancellationToken);
+    }
 }

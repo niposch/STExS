@@ -2,6 +2,7 @@ using Common.Models;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.Models.ExerciseSystem.Parson;
+using Common.Models.HelperInterfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,36 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(builder);
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        var creationTimeTracked = ChangeTracker.Entries()
+            .Where(e => e.Entity is ICreationTimeTracked && e.State == EntityState.Added);
+        creationTimeTracked.ToList()
+            .ForEach(e => ((ICreationTimeTracked)e.Entity).CreationTime = DateTime.Now);
+        
+        var lastModificationTimeTracked = ChangeTracker.Entries()
+            .Where(e => e.Entity is IModificationTimeTracked && (e.State == EntityState.Modified || e.State == EntityState.Added));
+        lastModificationTimeTracked.ToList()
+            .ForEach(e => ((IModificationTimeTracked)e.Entity).ModificationTime = DateTime.Now);
+        
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    {
+        var creationTimeTracked = ChangeTracker.Entries()
+            .Where(e => e.Entity is ICreationTimeTracked && e.State == EntityState.Added);
+        creationTimeTracked.ToList()
+            .ForEach(e => ((ICreationTimeTracked)e.Entity).CreationTime = DateTime.Now);
+        
+        var lastModificationTimeTracked = ChangeTracker.Entries()
+            .Where(e => e.Entity is IModificationTimeTracked && (e.State == EntityState.Modified || e.State == EntityState.Added));
+        lastModificationTimeTracked.ToList()
+            .ForEach(e => ((IModificationTimeTracked)e.Entity).ModificationTime = DateTime.Now);
+        
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }
