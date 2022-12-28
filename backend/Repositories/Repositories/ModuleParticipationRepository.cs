@@ -130,4 +130,22 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
         existingItem.ParticipationConfirmed = false;
         await this.context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken)
+    {
+        var participation = await this.context.ModuleParticipations
+            .FirstOrDefaultAsync(m => m.ModuleId == moduleId && m.UserId == userId, cancellationToken);
+        return participation;
+    }
+
+    public async Task<int> GetParticipationCountByModuleIdAsync(Guid moduleId, CancellationToken cancellationToken)
+    {
+        return await this.context.ModuleParticipations.Where(m => m.ModuleId == moduleId).CountAsync(cancellationToken);
+    }
+
+    public async Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken)
+    {
+        this.context.ModuleParticipations.Add(newParticipation);
+        await this.context.SaveChangesAsync(cancellationToken);
+    }
 }

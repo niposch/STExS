@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.Module;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Services.Interfaces;
 
@@ -32,4 +33,5 @@ public interface IModuleService
     Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken);
 
     Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
+    Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
 }

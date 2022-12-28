@@ -652,6 +652,67 @@
         }
       }
     },
+    "/api/Module/joinModule": {
+      "post": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Module/getModuleParticipationStatus": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/ParsonPuzzle/getAll": {
       "get": {
         "tags": [
@@ -954,6 +1015,11 @@
           "creationTime": {
             "type": "string",
             "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1059,6 +1125,22 @@
           }
         },
         "additionalProperties": false
+      },
+      "ModuleParticipationStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotParticipating",
+          "Requested",
+          "Accepted",
+          "Admin"
+        ]
       },
       "ModuleUpdateItem": {
         "type": "object",

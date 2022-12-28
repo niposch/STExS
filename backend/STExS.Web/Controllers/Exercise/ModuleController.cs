@@ -1,4 +1,5 @@
-﻿using Application.Helper.Roles;
+﻿using Application.DTOs.Module;
+using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +74,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> GetModuleByIdAsync([FromQuery] Guid id, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModuleByIdAsync(id, cancellationToken);
-        return this.Ok(res);
+        return this.Ok(ModuleMapper.ToDetailItem(res));
     }
 
     [HttpGet("all")]
@@ -136,14 +137,24 @@ public class ModuleController : ControllerBase
             .ToList());
     }
 
-    [HttpPost("joinModule/{moduleId}")]
+    [HttpPost("joinModule")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [Authorize]
-    public async Task<IActionResult> JoinModuleAsync([FromRoute] Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> JoinModuleAsync([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         await this.moduleService.JoinModuleAsync(moduleId, userId, cancellationToken);
         return this.Ok();
+    }
+    
+    [HttpGet("getModuleParticipationStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleParticipationStatus))]
+    [Authorize]
+    public async Task<IActionResult> GetModuleParticipationStatusAsync([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
+    {
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetModuleParticipationStatusAsync(moduleId, userId, cancellationToken);
+        return this.Ok(res);
     }
 }
 

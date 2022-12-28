@@ -1,4 +1,5 @@
-﻿using Application.Helper.Roles;
+﻿using Application.DTOs.Module;
+using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.Authentication;
@@ -101,7 +102,37 @@ public sealed class ModuleService : IModuleService
 
     public async Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var existingParticipation = await this.repository.ModuleParticipations.TryGetByModuleAndUserIdAsync(moduleId, userId, cancellationToken);
+        if (existingParticipation != null) return existingParticipation.ParticipationConfirmed ? JoinResult.AlreadyJoined : JoinResult.VerificationPending;
+        
+        var newParticipation = new ModuleParticipation
+        {
+            ModuleId = moduleId,
+            UserId = userId,
+            ParticipationConfirmed = false
+        };
+        var module = await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken);
+        if (module == null) return JoinResult.ModuleDoesNotExist;
+        if (module.OwnerId == userId) return JoinResult.UserIsOwner;
+        if(module.IsArchived) return JoinResult.ModuleIsArchived;
+        if (module.MaxParticipants != null)
+        {
+            var participationCount = await this.repository.ModuleParticipations.GetParticipationCountByModuleIdAsync(moduleId, cancellationToken);
+            if (participationCount >= module.MaxParticipants) return JoinResult.ModuleIsFull;
+        }
+        
+        await this.repository.ModuleParticipations.AddAsync(newParticipation, cancellationToken);
+        return JoinResult.JoinedSucessfully;
+    }
+
+    public async Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken)
+    {
+        var module = await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken);
+        if (module == null) throw new EntityNotFoundException<Module>(moduleId);
+        if (module.OwnerId == userId) return ModuleParticipationStatus.Admin;
+        var participation = await this.repository.ModuleParticipations.TryGetByModuleAndUserIdAsync(moduleId, userId, cancellationToken);
+        if (participation == null) return ModuleParticipationStatus.NotParticipating;
+        return participation.ParticipationConfirmed ? ModuleParticipationStatus.Accepted : ModuleParticipationStatus.Requested;
     }
 
     public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)

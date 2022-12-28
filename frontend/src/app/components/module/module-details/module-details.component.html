@@ -3,6 +3,10 @@
     <mat-card-title>{{module.moduleName}}</mat-card-title>
     <mat-card-content>
       <p>{{module.moduleDescription}}</p>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.NotParticipating && module != null" (click)="joinModule(module.moduleId!)">Join</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Admin && module != null" disabled>Admin</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Accepted && module != null" disabled>Joined</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Requested && module != null" disabled>Requested</button>
     </mat-card-content>
   </mat-card>
 </div>

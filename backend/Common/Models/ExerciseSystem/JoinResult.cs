@@ -4,8 +4,9 @@ public enum JoinResult
 {
     JoinedSucessfully = 1,
     AlreadyJoined = 2,
-    AlreadyAcceptedIntoModule = 3,
+    VerificationPending = 3,
     ModuleIsFull = 4,
     ModuleIsArchived = 5,
-    ModuleDoesNotExist = 6
+    ModuleDoesNotExist = 6,
+    UserIsOwner = 7,
 }

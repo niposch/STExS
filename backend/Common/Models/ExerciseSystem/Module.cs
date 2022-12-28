@@ -12,5 +12,5 @@ public class Module :ArchiveableBaseEntity, ICreationTimeTracked
     
     public DateTime CreationTime { get; set; }
 
-    public int? MaxParticipants { get; set; } = null
+    public int? MaxParticipants { get; set; } = null;
 }
