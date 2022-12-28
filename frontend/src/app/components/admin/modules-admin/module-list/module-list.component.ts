@@ -12,7 +12,7 @@ export class ModuleListComponent {
   moduleList:Array<Module>|null = null;
 
   @Input()
-  canDeleteModules = false;
+  isModuleAdmin = false;
   @Output()
   public moduleChange:EventEmitter<any> = new EventEmitter<any>();
 }
