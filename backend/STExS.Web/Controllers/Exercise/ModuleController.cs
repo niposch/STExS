@@ -89,7 +89,17 @@ public class ModuleController : ControllerBase
     [HttpGet("getModulesForUser")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
     [Authorize]
-    public async Task<IActionResult> GetModulesUserIsAcceptedInto([FromQuery] Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetModulesUserIsAcceptedInto(CancellationToken cancellationToken = default)
+    {
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
+        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+    }
+
+    [HttpGet("getModulesForUserAdmin")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ModuleDetailItem>))]
+    [Authorize(Roles = $"{RoleHelper.Admin}")]
+    public async Task<IActionResult> GetModulesUserIsAcceptedInto(Guid userId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
         return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));

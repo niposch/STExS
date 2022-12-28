@@ -20,9 +20,7 @@ export class ModulesUserComponent implements OnInit {
   ngOnInit(): void {
     this.userService.currentUserSubject.subscribe(u => {
       if (u == null) return;
-      firstValueFrom(this.moduleService.apiModuleGetModulesForUserGet$Json({
-        userId: u.id ?? ""
-      }))
+      firstValueFrom(this.moduleService.apiModuleGetModulesForUserGet$Json())
         .then(modules => {
           this.moduleList = modules
             .map(m => {return {module:m, isOwner: u.id == m.ownerId} as ModuleListItem})

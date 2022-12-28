@@ -6,6 +6,10 @@
     </div>
   </div>
   <h4>Continue where you left off</h4>
+  <app-module-list *ngIf="this.participatingInModuleList != null else loading" [moduleList]="this.participatingInModuleList"></app-module-list>
+  <ng-template #loading>
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </ng-template>
   <mat-divider></mat-divider>
 </div>
 

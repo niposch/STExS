@@ -84,6 +84,7 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     {
         return await this.context.ModuleParticipations
             .Where(p => p.UserId == userId)
+            .Include(m => m.Module)
             .ToListAsync(cancellationToken);
     }
 

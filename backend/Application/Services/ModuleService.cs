@@ -157,11 +157,10 @@ public sealed class ModuleService : IModuleService
 
     public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        var participationsForUser = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(userId);
-        var ownerOfModules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId);
-        return ownerOfModules.Concat(participationsForUser
-                .Where(p => p.ParticipationConfirmed)
-                .Select(p => p.Module))
+        var participationsForUser = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(userId, cancellationToken);
+        return participationsForUser
+            .Where(p => p.ParticipationConfirmed)
+            .Select(p => p.Module)
             .DistinctBy(m => m.Id);
     }
 

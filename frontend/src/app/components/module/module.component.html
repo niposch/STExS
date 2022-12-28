@@ -12,7 +12,7 @@
           <button mat-button>
             <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="favorite" ></mat-icon>
           </button>
-          <button mat-button color="warn" (click)="openDialog()">
+          <button *ngIf="this.showDeleteButton" mat-button color="warn" (click)="openDialog()">
             <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
           </button>
         </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Module} from "../../../../../services/generated/models/module";
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 
@@ -11,17 +11,8 @@ export class ModuleListComponent {
   @Input()
   moduleList:Array<Module>|null = null;
 
-  constructor(private readonly moduleService:ModuleService) {}
-
-  async loadModules(){
-    await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
-    }).toPromise()
-      .then(modules =>{
-        this.moduleList = modules ?? []
-      })
-  }
-
-  ngOnInit():void {
-    this.loadModules();
-  }
+  @Input()
+  canDeleteModules = false;
+  @Output()
+  public moduleChange:EventEmitter<any> = new EventEmitter<any>();
 }

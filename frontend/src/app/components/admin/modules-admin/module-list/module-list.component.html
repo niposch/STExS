@@ -1,7 +1,7 @@
 <div *ngIf="this.moduleList != null else loading">
   <div class="flex-layout">
     <div class="flex-item" *ngFor="let module of this.moduleList">
-        <app-module class="fit-parent" [module]="module" (onModuleDelete)="loadModules()"></app-module>
+        <app-module class="fit-parent" [module]="module" (onModuleDelete)="this.moduleChange.emit()" [showDeleteButton]="this.canDeleteModules"></app-module>
     </div>
   </div>
 

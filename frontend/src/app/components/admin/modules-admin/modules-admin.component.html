@@ -9,7 +9,7 @@
         Click to see your modules
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-module-list [moduleList]="this.moduleList"></app-module-list>
+    <app-module-list [moduleList]="this.moduleList" (moduleChange)="loadModules()"></app-module-list>
   </mat-expansion-panel>
 
 </div>
