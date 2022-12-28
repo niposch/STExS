@@ -1,14 +1,17 @@
 ﻿using AutoFixture;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using NuGet.Protocol;
 
 namespace TestHelper;
 
 public static class FixtureExtensions
 {
-    public static T FreezeInject<T>(this IFixture fixture)
+    public static Mock<T> FreezeInject<T>(this IFixture fixture)
+    where T: class
     {
-        var mock = fixture.Freeze<T>();
-        fixture.Inject(mock);
+        var mock = fixture.Freeze<Mock<T>>();
+        fixture.Inject(mock.Object);
         return mock;
     }
     

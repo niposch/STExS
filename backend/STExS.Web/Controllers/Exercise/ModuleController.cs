@@ -166,6 +166,15 @@ public class ModuleController : ControllerBase
         var res = await this.moduleService.GetModuleParticipationStatusAsync(moduleId, userId, cancellationToken);
         return this.Ok(res);
     }
+    
+    [HttpGet("getModuleParticipantCount")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [Authorize]
+    public async Task<IActionResult> GetModuleParticipantCountAsync([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
+    {
+        var res = await this.moduleService.GetModuleParticipantCountAsync(moduleId, cancellationToken);
+        return this.Ok(res);
+    }
 }
 
 public static class ModuleMapper
@@ -184,7 +193,8 @@ public static class ModuleMapper
             ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
             IsFavorited = module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false)),
             teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName,
-            CreationTime = module.CreationTime,
+            CreationTime = module.CreationTime, 
+            MaxParticipants = module.MaxParticipants
         };
     }
 
@@ -229,6 +239,8 @@ public sealed class ModuleDetailItem
     public string teacherName { get; set; }
     
     public DateTime CreationTime { get; set; }
+    
+    public int? MaxParticipants { get; set; }
 }
 
 public sealed class ModuleCreateItem

@@ -135,6 +135,11 @@ public sealed class ModuleService : IModuleService
         return participation.ParticipationConfirmed ? ModuleParticipationStatus.Accepted : ModuleParticipationStatus.Requested;
     }
 
+    public async Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken)
+    {
+        return await this.repository.ModuleParticipations.GetParticipationCountByModuleIdAsync(moduleId, cancellationToken);
+    }
+
     public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);

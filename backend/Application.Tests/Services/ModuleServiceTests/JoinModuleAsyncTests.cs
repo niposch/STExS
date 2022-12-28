@@ -12,7 +12,7 @@ public class JoinModuleAsyncTests : Infrastructure
     {
         // Arrange
         this.userId = Guid.NewGuid();
-        var module = this.CreateModule(false, true, this.userId, 100);
+        var module = this.CreateModule(false, false, this.userId, 100);
         this.moduleId = module.Id;
         this.ApplicationDbContext.SaveChanges();
 
@@ -68,6 +68,8 @@ public class JoinModuleAsyncTests : Infrastructure
             .With(m => m.MaxParticipants, maxMemberCount)
             .Without(m => m.Owner)
             .Without(m => m.ModuleParticipations)
+            .Without(m => m.Owner)
+            .Without(m => m.Chapters)
             .With(m => m.IsArchived, isArchived)
             .Create();
         this.ApplicationDbContext.Modules.Add(module);

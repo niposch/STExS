@@ -1,5 +1,8 @@
-﻿using Common.Exceptions;
+﻿using Application.Helper.Roles;
+using Common.Exceptions;
+using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
+using Moq;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -17,6 +20,14 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
             .With(m => m.Id, this.id)
             .Create());
         this.ApplicationDbContext.SaveChanges();
+        this.userId = Guid.NewGuid();
+        var user = this.Fixture.Build<ApplicationUser>()
+            .With(m => m.Id, this.userId)
+            .Create();
+        this.UserManagerMock.Setup(m => m.FindByIdAsync(this.userId.ToString()))
+            .ReturnsAsync(user);
+        this.UserManagerMock.Setup(m => m.GetRolesAsync(user))
+            .ReturnsAsync(new List<string>{RoleHelper.Admin});
         
         // Act
         await this.CallAsync();

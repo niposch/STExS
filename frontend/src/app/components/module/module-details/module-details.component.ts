@@ -15,6 +15,8 @@ export class ModuleDetailsComponent implements OnInit {
 
   public moduleParticipationStatus = ModuleParticipationStatus
 
+  public moduleParticipantCount:number | null = null;
+
   public participationStatus: ModuleParticipationStatus | null = null;
   constructor(private readonly moduleService:ModuleService,
               private readonly activatedRoute:ActivatedRoute) { }
@@ -45,6 +47,10 @@ export class ModuleDetailsComponent implements OnInit {
       moduleId: moduleId
     })
       .subscribe(value => this.participationStatus = value)
+    this.moduleService.apiModuleGetModuleParticipantCountGet$Json({
+      moduleId: moduleId
+    })
+      .subscribe(count => this.moduleParticipantCount = count)
   }
   async joinModule(moduleId:string){
     await this.moduleService.apiModuleJoinModulePost({

@@ -7,6 +7,9 @@
       <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Admin && module != null" disabled>Admin</button>
       <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Accepted && module != null" disabled>Joined</button>
       <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Requested && module != null" disabled>Requested</button>
+      <div *ngIf="moduleParticipantCount != null && module != null">
+        {{this.moduleParticipantCount!}} / {{this.module!.maxParticipants ?? "unlimited"}}
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

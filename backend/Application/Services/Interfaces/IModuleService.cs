@@ -34,4 +34,5 @@ public interface IModuleService
 
     Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
     Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
+    Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken);
 }
