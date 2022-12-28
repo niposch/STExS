@@ -6,7 +6,7 @@
       </div>
       <div class="button-container">
         <div>
-          <button *ngIf="isModuleAdmin" mat-button>
+          <button *ngIf="isModuleAdmin" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
           </button>
           <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>

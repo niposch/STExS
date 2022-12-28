@@ -9,6 +9,9 @@ import {ModulesUserComponent} from "../components/students/modules-user/modules-
 import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-admin.component";
 import {ProfileComponent} from "../components/profile/profile.component";
 import {ModuleDetailsComponent} from "../components/module/module-details/module-details.component";
+import {
+  AdministrateModuleComponent
+} from "../components/admin/modules-admin/administrate-module/administrate-module.component";
 
 const routes: Routes = [
   {
@@ -57,7 +60,8 @@ const routes: Routes = [
           {path: "dashboard", component: DashboardComponent},
           {path: "modules-user", component: ModulesUserComponent},
           {path: "profile", component: ProfileComponent},
-          {path: "module/details", component: ModuleDetailsComponent}
+          {path: "module/details", component: ModuleDetailsComponent},
+          {path: "module/administrate", component: AdministrateModuleComponent}
         ]
       },
 	    {

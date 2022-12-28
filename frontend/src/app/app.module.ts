@@ -39,6 +39,7 @@ import { ModuleDetailsComponent } from './components/module/module-details/modul
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-dialog.component";
+import { AdministrateModuleComponent } from './components/admin/modules-admin/administrate-module/administrate-module.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-di
     JoinModuleComponent,
     ModuleDetailsComponent,
     DeleteDialogComponent,
+    AdministrateModuleComponent,
   ],
     imports: [
         BrowserModule,
