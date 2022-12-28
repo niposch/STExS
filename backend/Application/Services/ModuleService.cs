@@ -181,6 +181,10 @@ public sealed class ModuleService : IModuleService
         return words.All(word => module.ModuleName.Contains(word,
                                      StringComparison.OrdinalIgnoreCase) ||
                                  module.ModuleDescription.Contains(word,
-                                     StringComparison.OrdinalIgnoreCase));
+                                     StringComparison.OrdinalIgnoreCase) ||
+                                 (module.Owner?.UserName.Contains(word,
+                                     StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                 (module.Owner?.FirstName.Contains(word) ?? false) ||
+                                 (module.Owner?.LastName.Contains(word) ?? false));
     }
 }
