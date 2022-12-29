@@ -1,5 +1,6 @@
 ﻿using Application.Helper.Roles;
 using Application.Services.Interfaces;
+using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STExS.Helper;
@@ -25,13 +26,13 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapter = await this.chapterService.GetChapterAsync(chapterId, userId, cancellationToken);
-        return Ok(chapter);
+        return Ok(ChapterMapper.ToDetailItem(chapter));
     }
     
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid))]
     [Authorize]
-    public async Task<IActionResult> CreateChapter([FromBody] ChapterDetailItem chapter, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateChapter([FromBody] ChapterCreateItem chapter, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         var chapterId = await this.chapterService.CreateChapterAsync(chapter.ModuleId,
@@ -60,7 +61,7 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapters = await this.chapterService.GetChaptersByModuleIdAsync(moduleId, userId, cancellationToken);
-        return Ok(chapters);
+        return Ok(chapters.Select(ChapterMapper.ToDetailItem).ToList());
     }
     
     [HttpGet("all")]
@@ -70,7 +71,7 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapters = await this.chapterService.GetAllChaptersAsync(userId, cancellationToken);
-        return Ok(chapters);
+        return Ok(chapters.Select(ChapterMapper.ToDetailItem).ToList());
     }
     
     public class ReorderChaptersRequest
@@ -113,4 +114,19 @@ public class ChapterCreateItem
     public Guid ModuleId { get; set; }
     public string ChapterName { get; set; } = string.Empty;
     public string ChapterDescription { get; set; } = string.Empty;
+}
+
+public static class ChapterMapper
+{
+    public static ChapterDetailItem ToDetailItem(Chapter chapter)
+    {
+        return new ChapterDetailItem
+        {
+            ChapterDescription = chapter.ChapterDescription,
+            ChapterName = chapter.ChapterName,
+            ModuleId = chapter.ModuleId,
+            RunningNumber = chapter.RunningNumber,
+            ParsonExerciseIds = chapter.ParsonExercises?.Select(e => e.Id).ToList() ?? new List<Guid>()
+        };
+    }
 }

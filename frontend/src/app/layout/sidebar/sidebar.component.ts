@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {ModuleService} from "../../services/mockmodule.service";
-
+import {ModuleService} from "../../../services/generated/services/module.service";
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -13,7 +12,7 @@ export class SidebarComponent implements OnInit {
   constructor(private readonly userService: UserService, private readonly moduleService: ModuleService) {
     console.log('Sidebar constructor called');
   }
-  moduleList = this.moduleService.MockModuleList;
+  moduleList = []
 
   ngOnInit(): void {
   }

@@ -234,17 +234,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChapterDetailItem"
+                "$ref": "#/components/schemas/ChapterCreateItem"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChapterDetailItem"
+                "$ref": "#/components/schemas/ChapterCreateItem"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ChapterDetailItem"
+                "$ref": "#/components/schemas/ChapterCreateItem"
               }
             }
           }
@@ -1287,6 +1287,24 @@
           "creationTime": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChapterCreateItem": {
+        "type": "object",
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

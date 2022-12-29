@@ -30,7 +30,9 @@ public sealed class ChapterService: IChapterService
         {
             ModuleId = moduleId,
             OwnerId = createUserId,
-            RunningNumber = nextRunningNumber
+            RunningNumber = nextRunningNumber,
+            ChapterName = name,
+            ChapterDescription = description
         };
 
         await this.repository.Chapters.AddAsync(chapter, cancellationToken);

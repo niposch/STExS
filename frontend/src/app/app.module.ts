@@ -40,6 +40,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-dialog.component";
 import { AdministrateModuleComponent } from './components/admin/modules-admin/administrate-module/administrate-module.component';
+import { ChapterAdminListComponent } from './components/admin/chapter/chapter-admin-list/chapter-admin-list.component';
+import { ChapterAdminListitemComponent } from './components/admin/chapter/chapter-admin-listitem/chapter-admin-listitem.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { AdministrateModuleComponent } from './components/admin/modules-admin/ad
     ModuleDetailsComponent,
     DeleteDialogComponent,
     AdministrateModuleComponent,
+    ChapterAdminListComponent,
+    ChapterAdminListitemComponent,
   ],
     imports: [
         BrowserModule,
