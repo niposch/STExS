@@ -5,7 +5,7 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem;
 
-public class Chapter : DeletableBaseEntity
+public class Chapter : DeletableBaseEntity, ICreationTimeTracked
 {
     public int RunningNumber { get; set; }
     
@@ -17,4 +17,6 @@ public class Chapter : DeletableBaseEntity
     public Module Module { get; set; } = null!;
 
     public List<ParsonExercise> ParsonExercises { get; set; } = null!; // 1:n Beziehung zu ParsonExercise
+    
+    public DateTime CreationTime { get; set; }
 }

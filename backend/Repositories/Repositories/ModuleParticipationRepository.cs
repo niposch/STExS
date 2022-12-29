@@ -132,7 +132,7 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
         await this.context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken)
+    public async Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
         var participation = await this.context.ModuleParticipations
             .FirstOrDefaultAsync(m => m.ModuleId == moduleId && m.UserId == userId, cancellationToken);
@@ -148,5 +148,13 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     {
         this.context.ModuleParticipations.Add(newParticipation);
         await this.context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<List<ModuleParticipation>> GetByModuleIdsAndUserIdAsync(IEnumerable<Guid> moduleIds, Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await this.context.ModuleParticipations
+            .Where(m => moduleIds.Contains(m.ModuleId) && m.UserId == userId)
+            .Include(m => m.Module)
+            .ToListAsync(cancellationToken);
     }
 }

@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Application.Services;
 using Application.Services.Exercise;
 using Application.Services.Interfaces;
+using Application.Services.Permissions;
 using Autofac;
 
 namespace Application;
@@ -23,6 +24,10 @@ public class ApplicationModule : Module
             .InstancePerLifetimeScope();
         builder.RegisterType<ModuleService>()
             .As<IModuleService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<AccessService>()
+            .As<IAccessService>()
             .InstancePerLifetimeScope();
         
         // Helper

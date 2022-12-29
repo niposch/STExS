@@ -13,5 +13,7 @@ public interface IModuleParticipationRepository
     Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
     Task<int> GetParticipationCountByModuleIdAsync(Guid moduleId, CancellationToken cancellationToken);
     
-    Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken);
+    Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken = default);
+    
+    Task<List<ModuleParticipation>> GetByModuleIdsAndUserIdAsync(IEnumerable<Guid> moduleIds, Guid userId, CancellationToken cancellationToken = default);
 }
