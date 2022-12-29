@@ -14,9 +14,7 @@ public interface IChapterService
         string newName,
         string newDescription,
         CancellationToken cancellationToken = default);
-    
-    public Task ReorderChapterExercises(List<Guid> exerciseIdsInNewOrder, Guid chapterId, CancellationToken cancellationToken = default);
-    
+
     public Task DeleteChapterAsync(Guid chapterId, CancellationToken cancellationToken = default);
     
     public Task<Chapter> GetChapterAsync(Guid chapterId, CancellationToken cancellationToken = default);

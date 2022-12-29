@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Common.Exceptions;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
 
@@ -29,32 +30,37 @@ public sealed class ChapterService: IChapterService
 
     public async Task UpdateChapterAsync(Guid chapterId, string newName, string newDescription, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task ReorderChapterExercises(List<Guid> exerciseIdsInNewOrder, Guid chapterId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
+        var chapter = await this.repository.Chapters.TryGetByIdAsync(chapterId, cancellationToken);
+        
+        if (chapter is null)
+        {
+            throw new EntityNotFoundException<Chapter>(chapterId);
+        }
+        
+        chapter.ChapterName = newName;
+        chapter.ChapterDescription = newDescription;
+        await this.repository.Chapters.UpdateAsync(chapter, cancellationToken);
     }
 
     public async Task DeleteChapterAsync(Guid chapterId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await this.repository.Chapters.DeleteAsync(chapterId, cancellationToken);
     }
 
     public async Task<Chapter> GetChapterAsync(Guid chapterId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return (await this.repository.Chapters.TryGetByIdAsync(chapterId, cancellationToken))
+            ?? throw new EntityNotFoundException<Chapter>(chapterId);
     }
 
     public async Task<List<Chapter>> GetAllChaptersAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await this.repository.Chapters.GetAllAsync(cancellationToken);
     }
 
     public async Task<List<Chapter>> GetChaptersByModuleIdAsync(Guid moduleId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await this.repository.Chapters.GetChaptersByModuleIdAsync(moduleId, cancellationToken);
     }
 
     public async Task ReorderModuleChaptersAsync(List<Guid> chapterIdsInNewOrder, Guid moduleId, CancellationToken cancellationToken = default)
