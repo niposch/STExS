@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Module;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
-using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STExS.Helper;
@@ -175,82 +174,4 @@ public class ModuleController : ControllerBase
         var res = await this.moduleService.GetModuleParticipantCountAsync(moduleId, cancellationToken);
         return this.Ok(res);
     }
-}
-
-public static class ModuleMapper
-{
-    public static ModuleDetailItem ToDetailItem(Module module, Guid? userId = default)
-    {
-        return new ModuleDetailItem
-        {
-            ModuleId = module.Id,
-            OwnerFirstName = module.Owner?.FirstName ?? string.Empty,
-            OwnerLastName = module.Owner?.LastName ?? string.Empty,
-            OwnerId = module.OwnerId,
-            ModuleName = module.ModuleName,
-            ModuleDescription = module.ModuleDescription,
-            ArchivedDate = module.ArchivedDate,
-            ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
-            IsFavorited = module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false)),
-            teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName,
-            CreationTime = module.CreationTime, 
-            MaxParticipants = module.MaxParticipants
-        };
-    }
-
-    public static Module ToModule(ModuleCreateItem moduleCreateItem, Guid changeUserId)
-    {
-        return new Module
-        {
-            Id = Guid.NewGuid(),
-            ModuleName = moduleCreateItem.ModuleName,
-            ModuleDescription = moduleCreateItem.ModuleDescription,
-            OwnerId = changeUserId,
-            ArchivedDate = null,
-            Chapters = new List<Chapter>(),
-        };
-    }
-
-    public static Module UpdateModule(ModuleUpdateItem moduleUpdateItem, Module module)
-    {
-        module.ModuleName = moduleUpdateItem.ModuleName;
-        module.ModuleDescription = moduleUpdateItem.ModuleDescription;
-        return module;
-    }
-}
-
-public sealed class ModuleDetailItem
-{
-    public Guid ModuleId { get; set; }
-
-    public Guid OwnerId { get; set; }
-    public string OwnerFirstName { get; set; } = string.Empty;
-    public string OwnerLastName { get; set; } = string.Empty;
-
-    public string ModuleName { get; set; } = string.Empty;
-    public string ModuleDescription { get; set; } = string.Empty;
-    public DateTime? ArchivedDate { get; set; }
-    public bool IsArchived => this.ArchivedDate.HasValue;
-
-    public List<Guid> ChapterIds { get; set; } = new();
-
-    public bool IsFavorited { get; set; }
-
-    public string teacherName { get; set; }
-    
-    public DateTime CreationTime { get; set; }
-    
-    public int? MaxParticipants { get; set; }
-}
-
-public sealed class ModuleCreateItem
-{
-    public string ModuleName { get; set; } = string.Empty;
-    public string ModuleDescription { get; set; } = string.Empty;
-}
-
-public sealed class ModuleUpdateItem
-{
-    public string ModuleName { get; set; } = string.Empty;
-    public string ModuleDescription { get; set; } = string.Empty;
 }
