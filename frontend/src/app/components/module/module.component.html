@@ -1,13 +1,13 @@
 <div *ngIf="module">
   <mat-card>
     <div  class="horizontal-space">
-      <div class="heading-desc-container">
+      <div style="height: inherit">
         <div class="module-name-container">
           <p *ngIf="!this.module.isArchived" class="module-name">{{module.moduleName}}</p>
           <p *ngIf="this.module.isArchived" class="module-name archived">{{module.moduleName}}</p>
+          <mat-divider class="divider"></mat-divider>
         </div>
         <mat-card-content>
-          <mat-divider class="divider"></mat-divider>
           <div class="card-content">
             <p *ngIf="!this.module.isArchived" class="module-description">{{module.moduleDescription}}</p>
             <p *ngIf="this.module.isArchived" class="module-description archived">{{module.moduleDescription}}</p>
