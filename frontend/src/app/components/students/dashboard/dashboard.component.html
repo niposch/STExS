@@ -1,1 +1,17 @@
-<h1>Hello {{this.userName}}</h1>
+<div class="min-width">
+  <div class="vertical-flex">
+    <div class="horizontal-flex">
+      <h1>Hello</h1>
+      <p class="name-heading">{{this.firstName}}</p>
+    </div>
+  </div>
+  <h4>Continue where you left off</h4>
+  <app-module-list *ngIf="this.participatingInModuleList != null else loading" [moduleList]="this.participatingInModuleList"></app-module-list>
+  <ng-template #loading>
+    <mat-spinner style="transform: scale(0.5)" mode="indeterminate"></mat-spinner>
+  </ng-template>
+  <mat-divider></mat-divider>
+</div>
+
+
+<app-join-module [infoText]="'Join a module'"></app-join-module>

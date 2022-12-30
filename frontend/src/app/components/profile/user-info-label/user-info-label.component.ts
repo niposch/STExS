@@ -8,15 +8,14 @@ import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, O
 export class UserInfoLabelComponent implements OnInit {
   @Input() attributeName: string = "null";
   @Input() attributeType: "text" | "email" = "text";
-
   @Input() attributeInfo: string = "";
   @Input() value: string = "" // two way data binding in angular
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild('inputElement', {static: false}) inputElementRef!: ElementRef;
-  isEditing: boolean = false;
-  showEmailError = true;
-  emailIsCorrect = false;
+  public isEditing: boolean = false;
+  public showEmailError = true;
+  public emailIsCorrect = false;
 
   constructor(private readonly changeDetector: ChangeDetectorRef) {
   }
@@ -24,24 +23,23 @@ export class UserInfoLabelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   editButtonClick() {
     this.isEditing = !this.isEditing;
     //for passing value to parent object
     this.valueChange.emit(this.value);
   }
 
-  validateEmail(event: any) {
+  validateEmail() {
     if (this.attributeType != "email") {
       return;
     }
-    const inputValue = event.target.value;
+    const inputValue = this.value;
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-    let emailIsCorrect = regex.test(inputValue);
+    let emailCorrect = regex.test(inputValue);
 
-    if (inputValue == "" || !emailIsCorrect) {
+    if (inputValue == "" || !emailCorrect) {
       this.showEmailError = true;
       this.emailIsCorrect = false;
     } else {
@@ -53,7 +51,7 @@ export class UserInfoLabelComponent implements OnInit {
   startEditing() {
     this.isEditing = !this.isEditing
     this.changeDetector.detectChanges();
-    this.validateEmail({target:{value:this.value}})
+    this.validateEmail();
     this.inputElementRef.nativeElement.focus()
     this.inputElementRef.nativeElement.select()
   }

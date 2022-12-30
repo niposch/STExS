@@ -1,0 +1,32 @@
+<mat-card>
+  <div class="margin5px">
+    <form (ngSubmit)="createModule()">
+      <div class="horizontal-space margin5px">
+        <mat-card-title class="heading-text">Create a new module</mat-card-title>
+        <div class="horizontal-align">
+          <button type="submit" mat-raised-button color="accent">
+            <div class="horizontal-button">
+              <p class="vertically-centered">create</p>
+              <mat-spinner class="vertically-centered" style="margin-left: 5px" *ngIf="this.isLoading" diameter="20" mode="indeterminate" color="primary"></mat-spinner>
+            </div>
+          </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="horizontal-container">
+        <div class="margin5px name-field-div">
+          <mat-form-field class="name-field-wrapper">
+            <mat-label>Name</mat-label>
+            <input [(ngModel)]="this.name" matInput name="name"/>
+          </mat-form-field>
+        </div>
+        <div class="margin5px description-field-div">
+          <mat-form-field class="description-field-wrapper">
+            <mat-label>Description</mat-label>
+            <textarea [(ngModel)]="this.description" matInput name="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-card>

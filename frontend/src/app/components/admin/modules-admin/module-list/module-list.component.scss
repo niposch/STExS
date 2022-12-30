@@ -1,0 +1,43 @@
+.fill-tile {
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+  justify-self: stretch;
+}
+
+.margin-bottom{
+  margin-bottom: 7px;
+}
+
+.margin-divider {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.list-module {
+  max-width: 33%;
+}
+
+.module-list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.flex-layout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.flex-item {
+  flex: 1;
+  min-width: 400px;
+  padding: 10px;
+}
+
+.fit-parent {
+  width: inherit;
+  height: inherit;
+}

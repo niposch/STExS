@@ -10,4 +10,10 @@ public interface IModuleParticipationRepository
     
     public Task TryConfirmParticipationAsync(Guid userId, Guid moduleId, CancellationToken cancellationToken = default);
     public Task TryUnconfirmParticipationAsync(Guid userId, Guid moduleId, CancellationToken cancellationToken = default);
+    Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
+    Task<int> GetParticipationCountByModuleIdAsync(Guid moduleId, CancellationToken cancellationToken);
+    
+    Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken = default);
+    
+    Task<List<ModuleParticipation>> GetByModuleIdsAndUserIdAsync(IEnumerable<Guid> moduleIds, Guid userId, CancellationToken cancellationToken = default);
 }

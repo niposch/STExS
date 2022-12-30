@@ -84,6 +84,7 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     {
         return await this.context.ModuleParticipations
             .Where(p => p.UserId == userId)
+            .Include(m => m.Module)
             .ToListAsync(cancellationToken);
     }
 
@@ -129,5 +130,31 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
         }
         existingItem.ParticipationConfirmed = false;
         await this.context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<ModuleParticipation?> TryGetByModuleAndUserIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var participation = await this.context.ModuleParticipations
+            .FirstOrDefaultAsync(m => m.ModuleId == moduleId && m.UserId == userId, cancellationToken);
+        return participation;
+    }
+
+    public async Task<int> GetParticipationCountByModuleIdAsync(Guid moduleId, CancellationToken cancellationToken)
+    {
+        return await this.context.ModuleParticipations.Where(m => m.ModuleId == moduleId).CountAsync(cancellationToken);
+    }
+
+    public async Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken)
+    {
+        this.context.ModuleParticipations.Add(newParticipation);
+        await this.context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<List<ModuleParticipation>> GetByModuleIdsAndUserIdAsync(IEnumerable<Guid> moduleIds, Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await this.context.ModuleParticipations
+            .Where(m => moduleIds.Contains(m.ModuleId) && m.UserId == userId)
+            .Include(m => m.Module)
+            .ToListAsync(cancellationToken);
     }
 }

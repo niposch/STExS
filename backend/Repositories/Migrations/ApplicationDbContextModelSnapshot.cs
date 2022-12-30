@@ -134,7 +134,15 @@ namespace Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedDate")
+                    b.Property<string>("ChapterDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChapterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ModuleId")
@@ -164,8 +172,11 @@ namespace Repositories.Migrations
                     b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedDate")
+                    b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("MaxParticipants")
+                        .HasColumnType("int");
 
                     b.Property<string>("ModuleDescription")
                         .IsRequired()
@@ -222,9 +233,6 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");
 
@@ -263,9 +271,6 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -300,9 +305,6 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");
 
@@ -335,9 +337,6 @@ namespace Repositories.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ModificationTime")

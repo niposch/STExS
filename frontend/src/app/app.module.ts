@@ -27,6 +27,21 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ModuleCreateComponent } from './components/admin/modules-admin/module-create/module-create.component';
+import { ModuleListComponent } from './components/admin/modules-admin/module-list/module-list.component';
+import { JoinModuleComponent } from './components/module/join-module/join-module.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatListModule} from "@angular/material/list";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { ModuleDetailsComponent } from './components/module/module-details/module-details.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-dialog.component";
+import { AdministrateModuleComponent } from './components/admin/modules-admin/administrate-module/administrate-module.component';
+import { ChapterAdminListComponent } from './components/admin/chapter/chapter-admin-list/chapter-admin-list.component';
+import { ChapterAdminListitemComponent } from './components/admin/chapter/chapter-admin-listitem/chapter-admin-listitem.component';
 
 @NgModule({
   declarations: [
@@ -38,27 +53,42 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     ModuleComponent,
     ProfileComponent,
     EditButtonComponent,
-    UserInfoLabelComponent
+    UserInfoLabelComponent,
+    ModuleCreateComponent,
+    ModuleListComponent,
+    JoinModuleComponent,
+    ModuleDetailsComponent,
+    DeleteDialogComponent,
+    AdministrateModuleComponent,
+    ChapterAdminListComponent,
+    ChapterAdminListitemComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot([]),
-    BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: ""}),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    LayoutModule,
-    MatInputModule,
-    FormsModule,
-    MatChipsModule,
-    MatProgressBarModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot([]),
+        BrowserAnimationsModule,
+        ApiModule.forRoot({rootUrl: ""}),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        LayoutModule,
+        MatInputModule,
+        FormsModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatGridListModule,
+        MatDialogModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

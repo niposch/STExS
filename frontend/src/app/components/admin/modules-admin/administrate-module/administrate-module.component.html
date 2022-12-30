@@ -1,0 +1,23 @@
+<div *ngIf="module">
+  <mat-card>
+    <div class="horizontal-space">
+      <div class="module-name-container">
+        <p class="module-name">{{module.moduleName}}</p>
+      </div>
+    </div>
+    <mat-card-content>
+      <mat-divider class="divider"></mat-divider>
+      <div class="card-content">
+        <p class="module-description">{{module.moduleDescription}}</p>
+      </div>
+      <div>
+        <h1>Chapters</h1>
+          <app-chapter-admin-list [moduleId]="module.moduleId!"></app-chapter-admin-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <mat-spinner mode="indeterminate"></mat-spinner>
+</ng-template>

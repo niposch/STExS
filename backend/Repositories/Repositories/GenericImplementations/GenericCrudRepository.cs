@@ -17,29 +17,37 @@ public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGe
     public Task<T?> TryGetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        return context.Set<T>().FirstOrDefaultAsync(cancellationToken);
+        return this.context.Set<T>().FirstOrDefaultAsync(module => module.Id == id, cancellationToken);
     }
 
     public Task<List<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return context.Set<T>().ToListAsync(cancellationToken);
+        return this.context.Set<T>().ToListAsync(cancellationToken);
     }
 
     public async Task<T> AddAsync(T entity,
         CancellationToken cancellationToken = default)
     {
-        context.RemoveLocalIfTracked(entity);
-        await context.Set<T>().AddAsync(entity, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        this.context.RemoveLocalIfTracked(entity);
+        await this.context.Set<T>().AddAsync(entity, cancellationToken);
+        await this.context.SaveChangesAsync(cancellationToken);
         return entity;
     }
 
     public async Task<T> UpdateAsync(T entity,
         CancellationToken cancellationToken = default)
     {
-        context.RemoveLocalIfTracked(entity);
-        context.Set<T>().Update(entity);
-        await context.SaveChangesAsync(cancellationToken);
+        this.context.RemoveLocalIfTracked(entity);
+        this.context.Set<T>().Update(entity);
+        await this.context.SaveChangesAsync(cancellationToken);
         return entity;
+    }
+
+    public async Task<List<T>> UpdateRangeAsync(List<T> entities,
+        CancellationToken cancellationToken = default)
+    {
+        this.context.Set<T>().UpdateRange(entities);
+        await this.context.SaveChangesAsync(cancellationToken);
+        return entities;
     }
 }

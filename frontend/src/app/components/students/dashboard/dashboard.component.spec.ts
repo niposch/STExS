@@ -11,10 +11,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule
-      ],
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
       declarations: [
         DashboardComponent
       ],

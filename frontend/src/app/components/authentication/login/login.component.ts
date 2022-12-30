@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../services/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -8,6 +10,8 @@ import {UserService} from "../../../services/user.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  @ViewChild('passwordInput') passwordInputField: any;
 
   public showLoading: boolean = false;
 
@@ -17,6 +21,8 @@ export class LoginComponent implements OnInit {
   public emailIsCorrect: boolean = false;
   public passwordIsCorrect: boolean = false;
 
+  public showPassword: boolean = false;
+
   public loginButtonEnabled: boolean = false;
   public password: string = "";
   public email: string = "";
@@ -25,7 +31,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private readonly snackbarService:MatSnackBar,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
@@ -46,12 +54,20 @@ export class LoginComponent implements OnInit {
   async login():Promise<void> {
     this.showLoading = true;
     await this.userService.login(this.email, this.password)
-    this.showLoading = false;
-    await this.router.navigate([this.callbackUrl]);
+      .catch(err => {
+        this.snackbarService.open("Login failed.", "Dismiss", {duration: 5000})
+        this.showLoading = false;
+        throw err
+      })
+      .then(() =>{
+        this.showLoading = false;
+        this.router.navigate([this.callbackUrl]);
+      })
   }
 
-  validateEmail(event: any) {
-    const inputValue = event.target.value;
+  validateEmail(event : Event | null = null) {
+    // @ts-ignore
+    const inputValue = event?.target?.value ?? this.email;
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -65,11 +81,12 @@ export class LoginComponent implements OnInit {
       this.emailIsCorrect = true;
     }
 
-    this.allRequiredInputsValid()
+    this.allRequiredInputsValid();
   }
 
-  validatePassword(event: any) {
-    const inputValue = event.target.value;
+  validatePassword(event : Event | null = null) {
+    // @ts-ignore
+    const inputValue = event?.target?.value ?? this.password;
 
     if (inputValue == "") {
       this.showPasswordError = true;
@@ -79,11 +96,7 @@ export class LoginComponent implements OnInit {
       this.passwordIsCorrect = true;
     }
 
-    let allValid = this.allRequiredInputsValid()
-    if (event.keyCode == 13 && allValid) {
-      this.login();
-      return;
-    }
+    this.allRequiredInputsValid();
   }
 
   allRequiredInputsValid() {
@@ -95,4 +108,9 @@ export class LoginComponent implements OnInit {
     }
     return false;
   }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
 }

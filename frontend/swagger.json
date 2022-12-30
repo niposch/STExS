@@ -188,6 +188,251 @@
         }
       }
     },
+    "/api/Chapter": {
+      "get": {
+        "tags": [
+          "Chapter"
+        ],
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDetailItem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chapter"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Chapter"
+        ],
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Chapter/forModule": {
+      "get": {
+        "tags": [
+          "Chapter"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Chapter/all": {
+      "get": {
+        "tags": [
+          "Chapter"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Chapter/reorder": {
+      "post": {
+        "tags": [
+          "Chapter"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderChaptersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderChaptersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderChaptersRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Module": {
       "post": {
         "tags": [
@@ -215,26 +460,26 @@
         "responses": {
           "200": {
             "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Module"
-        ],
-        "parameters": [
-          {
-            "name": "moduleId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
           }
         }
       }
@@ -274,6 +519,27 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -407,6 +673,92 @@
         "tags": [
           "Module"
         ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getModulesForUserAdmin": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getModulesUserIsAdminOf": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -529,6 +881,156 @@
                   "items": {
                     "$ref": "#/components/schemas/ModuleDetailItem"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/search": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/joinModule": {
+      "post": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Module/getModuleParticipationStatus": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleParticipationStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Module/getModuleParticipantCount": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -756,17 +1258,17 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "runningNumber": {
             "type": "integer",
             "format": "int32"
+          },
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
+            "nullable": true
           },
           "moduleId": {
             "type": "string",
@@ -779,6 +1281,58 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ParsonExercise"
+            },
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChapterCreateItem": {
+        "type": "object",
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChapterDetailItem": {
+        "type": "object",
+        "properties": {
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parsonExerciseIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
             },
             "nullable": true
           }
@@ -813,14 +1367,6 @@
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
           },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "isArchived": {
             "type": "boolean"
           },
@@ -849,6 +1395,15 @@
             "items": {
               "$ref": "#/components/schemas/ModuleParticipation"
             },
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -900,16 +1455,7 @@
             "format": "date-time",
             "nullable": true
           },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "isArchived": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "isDeleted": {
             "type": "boolean",
             "readOnly": true
           },
@@ -923,6 +1469,19 @@
           },
           "isFavorited": {
             "type": "boolean"
+          },
+          "teacherName": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -957,6 +1516,22 @@
         },
         "additionalProperties": false
       },
+      "ModuleParticipationStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotParticipating",
+          "Requested",
+          "Accepted",
+          "Admin"
+        ]
+      },
       "ModuleUpdateItem": {
         "type": "object",
         "properties": {
@@ -966,6 +1541,11 @@
           },
           "moduleDescription": {
             "type": "string",
+            "nullable": true
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -984,14 +1564,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "code": {
             "type": "string",
@@ -1029,14 +1601,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "modificationTime": {
             "type": "string",
@@ -1089,14 +1653,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "creationTime": {
             "type": "string",
@@ -1181,6 +1737,24 @@
         },
         "additionalProperties": false
       },
+      "ReorderChaptersRequest": {
+        "type": "object",
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "chapterIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RoleType": {
         "enum": [
           0,
@@ -1224,14 +1798,6 @@
           },
           "owner": {
             "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deletedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "isArchived": {
             "type": "boolean"

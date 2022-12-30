@@ -71,13 +71,13 @@ public class AuthenticateController : ControllerBase
             return this.Unauthorized();
         }
         
-        await this.signInManager.SignInAsync(user, new AuthenticationProperties
+        var result = await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
+        if (result.Succeeded)
         {
-            IsPersistent = true,
-            ExpiresUtc = DateTime.UtcNow.AddDays(1),
-            AllowRefresh = true
-        });
-        return this.Ok();
+            await this.signInManager.SignInAsync(user, true);
+            return this.Ok();
+        }
+        return this.Unauthorized();
     }
 
     [HttpPost]

@@ -1,0 +1,40 @@
+h1 {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+h4 {
+  margin-bottom: 3px;
+}
+
+.name-heading {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 3px; /* Adjust as needed */
+  color: #02C0A2;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.min-width {
+  min-width: 400px;
+  overflow: hidden;
+}

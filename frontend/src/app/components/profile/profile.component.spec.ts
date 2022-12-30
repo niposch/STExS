@@ -29,32 +29,28 @@ describe('ProfileComponent', () => {
   });
 
   it ('#editButtonClick() should toggle #isEditingName', () => {
-    // @ts-ignore
-    const comp = new ProfileComponent();
-    expect(comp.isEditingName)
+    expect(component.isEditingName)
       .withContext('not editing at first')
       .toBe(false)
-    comp.editButtonClick();
-    expect(comp.isEditingName)
+    component.editButtonClick();
+    expect(component.isEditingName)
       .withContext('editing after click')
       .toBe(true);
-    comp.editButtonClick();
-    expect(comp.isEditingName)
+    component.editButtonClick();
+    expect(component.isEditingName)
       .withContext('not editing after second click')
       .toBe(false);
   });
 
   it('#editButtonClick() should set #userName to #newUserName if done editing', () => {
-    // @ts-ignore
-    const comp = new ProfileComponent();
-    comp.userName = "example";
-    comp.newUserName = "other name";
-    comp.isEditingName = true;
-    expect(comp.userName == comp.newUserName)
+    component.userName = "example";
+    component.newUserName = "other name";
+    component.isEditingName = true;
+    expect(component.userName == component.newUserName)
       .withContext('not equal at first')
       .toBe(false);
-    comp.editButtonClick();
-    expect(comp.userName == comp.newUserName)
+    component.editButtonClick();
+    expect(component.userName == component.newUserName)
       .withContext('after #editButtonClick()')
       .toBe(true);
   });

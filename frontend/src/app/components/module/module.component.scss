@@ -1,34 +1,80 @@
-.checkbox {
-	float: right;
+mat-card {
+  height: 200px;
 }
 
-.div-mat-icon {
-	float: right;
-	display: flex;
-	align-items: center;
-	height: 75px;
+.module-name{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 0px;
 }
 
-.mat-icon {
-	transform: scale(2);
+.module-name-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 200px;
+  overflow: hidden;
 }
 
-mat-checkbox ::ng-deep .mat-checkbox-inner-container {
-   width: 30px;
-   height: 30px;
-}
-	
-.button {
-	display: block;
-	margin-bottom: 25px;
-	height: 75px;
-	width: fill;
-	text-align: left;
-	font-size: 20px;
-	line-height: 75px;
-	background-color: #50524d;
+.horizontal-space {
+  min-height: 30%;
+  max-height: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
 }
 
-.button_admin {
-   background-color: #6a9639;
+.icon {
+  transform:scale(0.8)
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: fit-content;
+}
+
+.module-description{
+  text-align: justify;
+  text-justify: auto;
+  margin-right: 14px;
+}
+
+.module-description::after{
+  content: "\a";
+  white-space: pre;
+}
+
+.divider{
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.card-content {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  min-height: 40px;
+  max-height: 110px;
+  margin-right: -14px;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

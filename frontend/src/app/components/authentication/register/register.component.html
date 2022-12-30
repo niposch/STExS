@@ -31,18 +31,26 @@
           <!-- EMAIL -->
           <mat-form-field>
             <mat-label>E-Mail</mat-label>
-            <input (keyup)="validateEmail($event)" [(ngModel)]="this.email" matInput name="email" required type="email">
+            <input (keyup)="validateEmail()" [(ngModel)]="this.email" matInput name="email" required type="email">
           </mat-form-field>
           <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
 
           <!-- PASSWORD -->
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input (keyup)="validatePassword($event)" [(ngModel)]="this.password" matInput name="password"
-                   required type="password">
-          </mat-form-field>
+          <div class="pw-container">
+            <mat-form-field class="pw-input">
+              <mat-label>Password</mat-label>
+              <input (change)="validatePassword()" (keyup)="validatePassword()" [(ngModel)]="this.password" matInput name="password"
+                     required [type]="this.showPassword ? 'text' : 'password'">
+            </mat-form-field>
+            <button class="icon-button" mat-button (click)="togglePassword()" type="button">
+              <mat-icon *ngIf="this.showPassword">visibility</mat-icon>
+              <mat-icon *ngIf="!this.showPassword">visibility_off</mat-icon>
+            </button>
+          </div>
+
           <mat-label *ngIf="showPasswordError" class="validation-error">This password must consist of:</mat-label>
           <mat-label *ngIf="showPasswordError" class="validation-error">
+
             <ul>
               <li *ngIf="!PW8CharsLong">min 8 characters in total</li>
               <li *ngIf="!PW1Uppercase">min 1 uppercase letter</li>

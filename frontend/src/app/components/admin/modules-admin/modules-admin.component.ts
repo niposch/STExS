@@ -1,32 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../../services/user.service";
 import {Module} from "../../../../services/generated/models/module";
-import * as module from "module";
 import {ModuleService} from "../../../../services/generated/services/module.service";
-import {firstValueFrom, lastValueFrom} from "rxjs";
-
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-modules-admin',
   templateUrl: './modules-admin.component.html',
   styleUrls: ['./modules-admin.component.scss']
 })
-export class ModulesAdminComponent implements OnInit {
+export class ModulesAdminComponent implements OnInit{
   userName: string = "";
-  loggedIn: boolean = false;
-  isAdmin: boolean = false;
 
-  moduleList:Array<Module> = []
+  moduleList:Array<Module> | null = null;
 
-  constructor(private readonly moduleService:ModuleService, private readonly userService:UserService) { }
+  constructor(private readonly moduleService:ModuleService,
+              private readonly userService:UserService) { }
 
-  ngOnInit(): void {
-    void this.moduleService.apiModuleGetModulesForUserGet$Json({
-      userId:this.userService.currentUserSubject.getValue()?.id ?? ""
+  async loadModules(){
+    await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
     }).toPromise()
       .then(modules =>{
         this.moduleList = modules ?? []
       })
   }
 
+  ngOnInit(): void {
+    this.loadModules();
+  }
 }

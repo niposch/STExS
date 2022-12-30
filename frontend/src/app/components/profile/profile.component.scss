@@ -54,17 +54,26 @@
   flex-direction: row;
   justify-content: center;
   margin: auto;
+  margin-left: 5px;
 }
 
 .margin10 {
   margin: 10px;
+  overflow: hidden;
 }
 
 .input-field {
   margin-bottom: -29px;
   margin-top: -4px;
+  max-width: 400px;
 }
 
 .save-button {
   margin-left: 10px;
+}
+
+.card-width{
+  min-width: 500px;
+  max-width: 800px;
+  margin: auto;
 }

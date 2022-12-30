@@ -17,7 +17,6 @@ mat-card {
 }
 
 .flex-item {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,7 +24,7 @@ mat-card {
 
     padding: 20px;
     min-width: 250px;
-    width: 400px;
+    width: 450px;
     max-width: 600px;
 }
 
@@ -47,15 +46,6 @@ mat-form-field {
     margin-top: 10px;
 }
 
-@media only screen and (min-width: 450px) {
-    .row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
 .name-input {
     width: 100%;
     margin-right: 5px;
@@ -73,4 +63,42 @@ mat-checkbox {
 
 li {
     line-height: 12px;
+}
+
+.icon-button {
+  height: 50%;
+  display: table-cell;
+}
+
+.pw-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  width: inherit;
+  overflow: hidden;
+}
+
+.pw-input {
+  display: table-cell;
+  width: 100%;
+  min-width: 80px;
+  margin-right: 10px;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

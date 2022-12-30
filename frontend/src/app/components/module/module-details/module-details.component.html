@@ -1,0 +1,22 @@
+<div *ngIf="module != null else loading">
+  <mat-card>
+    <mat-card-title>{{module.moduleName}}</mat-card-title>
+    <mat-card-content>
+      <p>{{module.moduleDescription}}</p>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.NotParticipating && module != null" (click)="joinModule(module.moduleId!)">Join</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Admin && module != null" disabled>Admin</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Accepted && module != null" disabled>Joined</button>
+      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Requested && module != null" disabled>Requested</button>
+      <button *ngIf="participationStatus == moduleParticipationStatus.Admin" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:module.moduleId}">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
+      </button>
+      <div *ngIf="moduleParticipantCount != null && module != null">
+        {{this.moduleParticipantCount!}} / {{this.module!.maxParticipants ?? "unlimited"}}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <mat-spinner mode="indeterminate" style="transform: scale(0.5)"></mat-spinner>
+</ng-template>
