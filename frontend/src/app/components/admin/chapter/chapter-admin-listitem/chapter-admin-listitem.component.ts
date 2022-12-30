@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
 
 @Component({
   selector: 'app-chapter-admin-listitem',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChapterAdminListitemComponent implements OnInit {
 
+  @Input() chapter: ChapterDetailItem | null = null;
+
+  public chapterName: string | null | undefined = "chapter_name";
+  public chapterDescription: string | null | undefined = "chapter_description";
+
   constructor() { }
 
   ngOnInit(): void {
+    this.chapterName = this.chapter?.chapterName;
+    this.chapterDescription = this.chapter?.chapterDescription;
   }
 
 }

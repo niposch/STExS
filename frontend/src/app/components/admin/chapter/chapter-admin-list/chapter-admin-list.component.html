@@ -2,20 +2,9 @@
   <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
     <mat-card>
       <mat-card-title class="heading-text">Chapters</mat-card-title>
-      <table mat-table style="width: 100%" [dataSource]="chapters">
-        <ng-container matColumnDef="chapterName">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let element">{{element.runningNumber}}. {{element.chapterName}}</td>
-        </ng-container>
-        <ng-container matColumnDef="chapterActions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-button>Edit</button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
-      </table>
+      <div *ngFor="let entry of this.chapters" class="chapter-list">
+        <app-chapter-admin-listitem [chapter]="entry"></app-chapter-admin-listitem>
+      </div>
     </mat-card>
 
     <mat-card style="margin-top: 10px">
@@ -48,8 +37,6 @@
           </div>
         </form>
     </mat-card>
-
-
   </div>
   <ng-template #unauthorized>
     Unauthorized

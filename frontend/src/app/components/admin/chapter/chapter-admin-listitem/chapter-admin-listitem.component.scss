@@ -1,0 +1,34 @@
+.edit-button {
+  height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.panel-description {
+  height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+mat-panel-description {
+  justify-content: space-between;
+}
+
+.expansion-panel {
+  background-color: #454545;
+}
+
+.expansion-header {
+  height: fit-content;
+}
+
+.chapter-description {
+  height: fit-content;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+mat-divider {
+  margin-left: -5px;
+  margin-right: -5px;
+}
