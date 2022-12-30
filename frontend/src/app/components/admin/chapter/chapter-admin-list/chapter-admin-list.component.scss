@@ -1,0 +1,68 @@
+.heading-text {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.horizontal-button {
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: inherit;
+  width: inherit;
+  margin-bottom: 0px;
+}
+
+.name-field-div {
+  display: table-cell;
+  width: 300px;
+  min-width: 100px;
+  vertical-align: top;
+}
+
+.name-field-wrapper{
+  width: 100%;
+  height: 100%;
+}
+
+.description-field-div {
+  display: table-cell;
+  width: 100%;
+  vertical-align: top;
+  margin-bottom: -5px;
+}
+
+.description-field-wrapper {
+  width: 100%;
+  padding-bottom: -10px;
+}
+
+.margin5px {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.module-description::after{
+  content: "\a";
+  white-space: pre;
+}
+
+.horizontal-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}

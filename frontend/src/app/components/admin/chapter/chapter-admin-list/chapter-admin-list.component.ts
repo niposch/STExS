@@ -28,6 +28,8 @@ export class ChapterAdminListComponent implements OnInit {
     chapterDescription: ""
   } as ChapterCreateItem
 
+  isLoading: boolean = false;
+
   constructor(
     private readonly chapterService: ChapterService,
     private readonly moduleService: ModuleService

@@ -1,38 +1,15 @@
+mat-card {
+  background-color: #333333;
+}
 
-.module-name{
+.module-name {
   font-style: normal;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 30px;
   font-family: Arial, sans-serif;
-  margin-bottom: 0px;
-}
-
-.module-name-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 200px;
-  overflow: hidden;
-}
-
-.horizontal-space {
-  min-height: 30%;
-  max-height: 70%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-}
-
-.icon {
-  transform:scale(0.8)
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: fit-content;
+  line-height: 26px;
+  color: #02C0A2;
+  margin-bottom: 5px;
 }
 
 .module-description{
@@ -41,13 +18,15 @@
   margin-right: 14px;
 }
 
-.module-description::after{
-  content: "\a";
-  white-space: pre;
+.horizontal-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
 }
 
-.divider{
-  margin-bottom: 5px;
+.divider {
+  margin-bottom: 10px;
   margin-top: 5px;
 }
 
@@ -58,6 +37,7 @@
   max-height: 110px;
   margin-right: -14px;
 }
+
 
 // SCROLL BAR
 /* width */

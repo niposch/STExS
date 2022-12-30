@@ -1,31 +1,55 @@
 <div *ngIf="this.chapters != null && this.module != null && this.participationStatus != null">
   <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
-    <table mat-table style="width: 100%" [dataSource]="chapters">
-      <ng-container matColumnDef="chapterName">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{element.runningNumber}}. {{element.chapterName}}</td>
-      </ng-container>
-      <ng-container matColumnDef="chapterActions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button>Edit</button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
-    </table>
-    <h2>Add Chapter</h2>
-    <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput name="name" [(ngModel)]="this.chapterCreateItem.chapterName">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput name="description" [(ngModel)]="this.chapterCreateItem.chapterDescription">
-      </mat-form-field>
-      <button mat-button>Create</button>
-    </form>
+    <mat-card>
+      <mat-card-title class="heading-text">Chapters</mat-card-title>
+      <table mat-table style="width: 100%" [dataSource]="chapters">
+        <ng-container matColumnDef="chapterName">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{element.runningNumber}}. {{element.chapterName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="chapterActions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button>Edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
+      </table>
+    </mat-card>
+
+    <mat-card style="margin-top: 10px">
+        <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
+          <div class="horizontal-space">
+            <mat-card-title class="heading-text">Create a new chapter</mat-card-title>
+            <div class="horizontal-align">
+              <button type="submit" mat-raised-button color="accent">
+                <div class="horizontal-button">
+                  <p class="vertically-centered">create</p>
+                  <mat-spinner class="vertically-centered" style="margin-left: 5px" *ngIf="this.isLoading" diameter="20" mode="indeterminate" color="primary"></mat-spinner>
+                </div>
+              </button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="horizontal-container">
+            <div class="margin5px name-field-div">
+              <mat-form-field class="name-field-wrapper">
+                <mat-label>Name</mat-label>
+                <input matInput name="name" [(ngModel)]="this.chapterCreateItem.chapterName">
+              </mat-form-field>
+            </div>
+            <div class="margin5px description-field-div">
+              <mat-form-field class="description-field-wrapper">
+                <mat-label>Description</mat-label>
+                <input matInput name="description" [(ngModel)]="this.chapterCreateItem.chapterDescription">
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+    </mat-card>
+
+
   </div>
   <ng-template #unauthorized>
     Unauthorized
