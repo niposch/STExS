@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChapterAdminListComponent } from './chapter-admin-list.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('ChapterAdminListComponent', () => {
   let component: ChapterAdminListComponent;
@@ -8,7 +9,8 @@ describe('ChapterAdminListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChapterAdminListComponent ]
+      declarations: [ ChapterAdminListComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
 
