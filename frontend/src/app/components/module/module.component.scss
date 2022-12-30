@@ -1,5 +1,6 @@
 mat-card {
   height: 200px;
+  padding: 0;
 }
 
 .module-name{
@@ -18,13 +19,18 @@ mat-card {
   overflow: hidden;
 }
 
+.heading-desc-container {
+  width: 100%;
+}
+
 .horizontal-space {
   min-height: 30%;
-  max-height: 70%;
+  height: inherit;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
+  padding: 15px;
 }
 
 .icon {
@@ -34,8 +40,8 @@ mat-card {
 .button-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: fit-content;
+  justify-content: space-between;
+  width: fit-content;
 }
 
 .module-description{
@@ -52,6 +58,7 @@ mat-card {
 .divider{
   margin-bottom: 5px;
   margin-top: 5px;
+  width: 100%
 }
 
 .card-content {
@@ -60,6 +67,17 @@ mat-card {
   min-height: 40px;
   max-height: 110px;
   margin-right: -14px;
+}
+
+.option-panel {
+  border-radius: 5px;
+  border-color: #565656;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.archived {
+  color: #5F5F5F;
 }
 
 // SCROLL BAR

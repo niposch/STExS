@@ -42,6 +42,7 @@ import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-di
 import { AdministrateModuleComponent } from './components/admin/modules-admin/administrate-module/administrate-module.component';
 import { ChapterAdminListComponent } from './components/admin/chapter/chapter-admin-list/chapter-admin-list.component';
 import { ChapterAdminListitemComponent } from './components/admin/chapter/chapter-admin-listitem/chapter-admin-listitem.component';
+import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
     AdministrateModuleComponent,
     ChapterAdminListComponent,
     ChapterAdminListitemComponent,
+    ArchiveDialogComponent,
   ],
     imports: [
         BrowserModule,
