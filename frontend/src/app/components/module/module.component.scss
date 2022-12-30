@@ -9,6 +9,10 @@ mat-card {
   font-size: 20px;
   font-family: Arial, sans-serif;
   margin-bottom: 0px;
+  padding-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .module-name-container{
@@ -78,6 +82,11 @@ mat-card {
 
 .archived {
   color: #5F5F5F;
+}
+
+.vertical-container {
+  height: inherit;
+  width: calc(100% - 66px);
 }
 
 mat-card-content {

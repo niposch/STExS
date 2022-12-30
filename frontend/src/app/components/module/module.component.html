@@ -1,7 +1,7 @@
 <div *ngIf="module">
   <mat-card>
     <div  class="horizontal-space">
-      <div style="height: inherit">
+      <div class="vertical-container">
         <div class="module-name-container">
           <p *ngIf="!this.module.isArchived" class="module-name">{{module.moduleName}}</p>
           <p *ngIf="this.module.isArchived" class="module-name archived">{{module.moduleName}}</p>
