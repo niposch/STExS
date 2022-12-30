@@ -13,7 +13,6 @@ import {ChapterCreateItem} from "../../../../../services/generated/models/chapte
 })
 export class ChapterAdminListComponent implements OnInit {
 
-  visibleColumns = ["chapterName", "chapterActions"]
   @Input()
   moduleId: string = null!;
 
