@@ -9,7 +9,7 @@ mat-card {
   font-family: Arial, sans-serif;
   line-height: 26px;
   color: #02C0A2;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .module-description{
@@ -38,6 +38,43 @@ mat-card {
   margin-right: -14px;
 }
 
+.space-items {
+  justify-content: space-between;
+  width: inherit;
+}
+
+.margin10 {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  margin-bottom: -29px;
+  margin-top: -4px;
+  max-width: 500px;
+  width: 300px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+app-user-info-label {
+  width: inherit;
+}
 
 // SCROLL BAR
 /* width */

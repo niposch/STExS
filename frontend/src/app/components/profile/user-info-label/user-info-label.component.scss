@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #404040;
+  background-color: #424242;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 8px;
   overflow: hidden;
   min-width: 200px;
@@ -24,6 +25,7 @@
 .attribute-value {
   font-size: 16px;
   margin-top: 3px;
+  text-align: justify;
 }
 
 .input-field {

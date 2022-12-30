@@ -9,7 +9,7 @@ export class UserInfoLabelComponent implements OnInit {
   @Input() attributeName: string = "null";
   @Input() attributeType: "text" | "email" = "text";
   @Input() attributeInfo: string = "";
-  @Input() value: string = "" // two way data binding in angular
+  @Input() value: string | null | undefined = "" // two way data binding in angular
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild('inputElement', {static: false}) inputElementRef!: ElementRef;
@@ -26,6 +26,7 @@ export class UserInfoLabelComponent implements OnInit {
   editButtonClick() {
     this.isEditing = !this.isEditing;
     //for passing value to parent object
+    // @ts-ignore
     this.valueChange.emit(this.value);
   }
 
@@ -37,6 +38,7 @@ export class UserInfoLabelComponent implements OnInit {
 
     //RegEx for emails
     let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    // @ts-ignore
     let emailCorrect = regex.test(inputValue);
 
     if (inputValue == "" || !emailCorrect) {
