@@ -1,19 +1,12 @@
 <div class="component-width">
   <p class="heading">Administrate your modules</p>
-  <div class="modules-list">
-    <mat-expansion-panel class="expansion-panel">
-      <mat-expansion-panel-header class="expansion-header">
-        <mat-panel-title>
-          Modules
-        </mat-panel-title>
-        <mat-panel-description>
-          Click to see your modules
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+  <mat-card class="modules-list">
+    <mat-card-title>Modules</mat-card-title>
+    <mat-card-content>
+      <mat-divider class="divider"></mat-divider>
       <app-module-list [moduleList]="this.moduleList" (moduleChange)="loadModules()" [isModuleAdmin]="true"></app-module-list>
-    </mat-expansion-panel>
-
-  </div>
+    </mat-card-content>
+  </mat-card>
 
   <mat-divider class="divider"></mat-divider>
 
