@@ -4,6 +4,8 @@ import { AdministrateModuleComponent } from './administrate-module.component';
 import {ActivatedRoute} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from "@angular/material/dialog";
 
 describe('AdministrateModuleComponent', () => {
   let component: AdministrateModuleComponent;
@@ -12,7 +14,7 @@ describe('AdministrateModuleComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AdministrateModuleComponent ],
-      imports: [RouterTestingModule, HttpClientTestingModule]
+      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule, MatDialogModule ]
     })
     .compileComponents();
 
