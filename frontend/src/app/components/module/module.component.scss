@@ -52,8 +52,9 @@ mat-card {
 .module-description{
   text-align: justify;
   text-justify: auto;
-  margin-right: 14px;
-  height: inherit !important;
+  margin-right: 12px;
+  margin-bottom: -12px;
+  height: 100%;
 }
 
 .module-description::after{
@@ -85,7 +86,8 @@ mat-card {
 }
 
 .vertical-container {
-  height: inherit;
+  //height: inherit;
+  height: 170px;
   width: calc(100% - 66px);
 }
 
@@ -109,4 +111,5 @@ mat-card-content {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  width: 5px;
 }
