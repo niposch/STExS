@@ -29,13 +29,15 @@ export class ModuleCreateComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
-    this.showLoading = true;
+
     if (this.description == "" && this.name == "") {
       this.snackBar.open('Please enter a name and a description!', 'ok');
       return;
     }
 
+    this.showLoading = true;
     this.isLoading = true;
+
     lastValueFrom(this.moduleService.apiModulePost({
       body:{
         moduleDescription: this.description,
