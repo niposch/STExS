@@ -17,24 +17,27 @@ import { NotfoundComponent } from '../components/notfound/notfound.component';
 
 
 @NgModule({
-  declarations: [
-    MainLayoutComponent,
-    HeaderOnlyLayoutComponent,
-    HeaderComponent,
-    SidebarComponent,
-    NotfoundComponent,
-  ],
-  imports: [
-    CommonModule,
-    LayoutRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatListModule,
-    MatSidenavModule,
-    FormsModule,
-  ]
+    declarations: [
+        MainLayoutComponent,
+        HeaderOnlyLayoutComponent,
+        HeaderComponent,
+        SidebarComponent,
+        NotfoundComponent,
+    ],
+    exports: [
+        NotfoundComponent
+    ],
+    imports: [
+        CommonModule,
+        LayoutRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatListModule,
+        MatSidenavModule,
+        FormsModule,
+    ]
 })
 export class LayoutModule {
 }

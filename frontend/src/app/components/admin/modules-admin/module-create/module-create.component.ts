@@ -18,6 +18,7 @@ export class ModuleCreateComponent implements OnInit {
 
   @Output() public onModuleCreate: EventEmitter<any> = new EventEmitter<any>()
   public isLoading = false;
+  public showLoading: boolean = false;
   constructor(private readonly moduleService:ModuleService,
               private readonly snackBar: MatSnackBar) { }
 
@@ -28,6 +29,7 @@ export class ModuleCreateComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
+    this.showLoading = true;
     if (this.description == "" && this.name == "") {
       this.snackBar.open('Please enter a name and a description!', 'ok');
       return;
@@ -42,10 +44,13 @@ export class ModuleCreateComponent implements OnInit {
       }
     }))
       .catch(err =>{
-          this.snackBar.open("Could not create Module", "Dismiss", {duration:5000})
+          this.snackBar.open("Could not create Module", "Dismiss", {duration:5000});
+          this.showLoading = false;
+          this.isLoading = false;
           throw err
         }).then(() => {
       this.isLoading = false;
+      this.showLoading = false;
       this.onModuleCreate.emit()
     });
 

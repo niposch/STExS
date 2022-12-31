@@ -82,3 +82,8 @@ mat-slider {
   width: 70px;
   text-align: right;
 }
+
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

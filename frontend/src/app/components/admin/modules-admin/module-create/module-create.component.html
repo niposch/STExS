@@ -1,4 +1,5 @@
-<mat-card>
+<mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+<mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
   <div class="margin5px">
     <form (ngSubmit)="createModule()">
       <div class="horizontal-space margin5px">

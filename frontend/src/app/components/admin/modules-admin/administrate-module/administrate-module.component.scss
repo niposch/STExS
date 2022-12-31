@@ -1,5 +1,8 @@
 mat-card {
   background-color: #333333;
+  min-width: 600px;
+  max-width: 1500px;
+  margin: auto;
 }
 
 .module-name {
@@ -72,9 +75,20 @@ mat-card {
   margin-right: 4px;
 }
 
+.centered-vertically{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 app-user-info-label {
   width: inherit;
 }
+
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 
 // SCROLL BAR
 /* width */
