@@ -65,6 +65,5 @@
   </mat-card>
 </div>
 
-<ng-template #loading>
-  <mat-spinner mode="indeterminate"></mat-spinner>
-</ng-template>
+<mat-spinner class="loading" *ngIf="!module" mode="indeterminate"></mat-spinner>
+

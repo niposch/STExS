@@ -27,7 +27,8 @@ export class ChapterAdminListComponent implements OnInit {
     chapterDescription: ""
   } as ChapterCreateItem
 
-  isLoading: boolean = false;
+  public showLoading: boolean = false;
+  public isLoadingChapters: boolean = true;
 
   constructor(
     private readonly chapterService: ChapterService,
@@ -36,7 +37,9 @@ export class ChapterAdminListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoadingChapters = true;
     this.loadData(this.moduleId)
+    this.isLoadingChapters = false;
   }
 
   loadData(moduleId: string | null) {
@@ -61,20 +64,24 @@ export class ChapterAdminListComponent implements OnInit {
   }
 
   createChapter() {
+    this.showLoading = true;
+
     if ((this.chapterCreateItem.chapterName?.length ?? 0) == 0) {
       return;
     }
     if ((this.chapterCreateItem.chapterDescription?.length ?? 0) == 0) {
       return;
+
     }
+
     this.chapterCreateItem.moduleId = this.moduleId;
     this.chapterService.apiChapterPost$Json({
       body: this.chapterCreateItem
-    })
-      .subscribe(_ => {
+    }).subscribe(_ => {
         this.loadData(this.moduleId);
         this.chapterCreateItem.chapterName = ""
         this.chapterCreateItem.chapterDescription = ""
+        this.showLoading = false;
       })
   }
 }

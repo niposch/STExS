@@ -71,3 +71,13 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.loading{
+  transform: scale(0.5);
+  margin: auto;
+}
+
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

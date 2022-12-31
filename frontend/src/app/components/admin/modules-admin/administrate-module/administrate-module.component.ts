@@ -33,6 +33,8 @@ export class AdministrateModuleComponent implements OnInit {
   private isArchiving: boolean = false;
   public showLoading: boolean = false;
 
+  public loadingModule: boolean = true;
+
   constructor(private readonly activatedRoute:ActivatedRoute,
               private readonly moduleService: ModuleService,
               public snackBar: MatSnackBar,

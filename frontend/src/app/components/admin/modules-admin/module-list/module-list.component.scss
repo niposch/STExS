@@ -23,7 +23,6 @@
   flex-direction: column;
 }
 
-
 .flex-layout {
   width: 100%;
   display: flex;
@@ -40,4 +39,9 @@
 .fit-parent {
   width: inherit;
   height: inherit;
+}
+
+.loading{
+  transform: scale(0.5);
+  margin: auto;
 }

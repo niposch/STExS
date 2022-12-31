@@ -2,12 +2,16 @@
   <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
     <mat-card>
       <mat-card-title class="heading-text">Chapters</mat-card-title>
+      <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
       <div *ngFor="let entry of this.chapters" class="chapter-list">
         <app-chapter-admin-listitem [chapter]="entry"></app-chapter-admin-listitem>
       </div>
     </mat-card>
 
-    <mat-card style="margin-top: 10px">
+    <div style="height: 10px"></div>
+
+    <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
         <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
           <div class="horizontal-space">
             <mat-card-title class="heading-text">Create a new chapter</mat-card-title>
@@ -15,7 +19,6 @@
               <button type="submit" mat-raised-button color="accent">
                 <div class="horizontal-button">
                   <p class="vertically-centered">create</p>
-                  <mat-spinner class="vertically-centered" style="margin-left: 5px" *ngIf="this.isLoading" diameter="20" mode="indeterminate" color="primary"></mat-spinner>
                 </div>
               </button>
             </div>
@@ -42,6 +45,5 @@
     Unauthorized
   </ng-template>
 </div>
-<ng-template #loading>
-  <mat-spinner mode="indeterminate"></mat-spinner>
-</ng-template>
+
+<mat-spinner *ngIf="this.isLoadingChapters" class="loading" mode="indeterminate"></mat-spinner>
