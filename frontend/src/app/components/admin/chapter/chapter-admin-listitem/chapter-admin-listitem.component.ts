@@ -20,4 +20,7 @@ export class ChapterAdminListitemComponent implements OnInit {
     this.chapterDescription = this.chapter?.chapterDescription;
   }
 
+  editButtonClick($event: MouseEvent) {
+    $event.stopPropagation();
+  }
 }

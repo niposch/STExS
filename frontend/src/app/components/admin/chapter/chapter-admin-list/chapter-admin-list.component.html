@@ -3,8 +3,8 @@
     <mat-card>
       <mat-card-title class="heading-text">Chapters</mat-card-title>
       <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
-      <div *ngFor="let entry of this.chapters" class="chapter-list">
-        <app-chapter-admin-listitem [chapter]="entry"></app-chapter-admin-listitem>
+      <div class="chapter-list">
+        <app-chapter-admin-listitem class="chapter-list-item" *ngFor="let entry of this.chapters" [chapter]="entry"></app-chapter-admin-listitem>
       </div>
     </mat-card>
 
