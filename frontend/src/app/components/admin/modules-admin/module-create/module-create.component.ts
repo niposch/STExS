@@ -40,7 +40,7 @@ export class ModuleCreateComponent implements OnInit {
       body:{
         moduleDescription: this.description,
         moduleName: this.name,
-        //maxParticipants: this.nrParticipants,
+        maxParticipants: Number(this.nrParticipants),
       }
     }))
       .catch(err =>{

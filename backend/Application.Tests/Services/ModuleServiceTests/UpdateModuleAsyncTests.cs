@@ -8,6 +8,7 @@ public sealed class UpdateModuleAsyncTests: Infrastructure
     private Guid moduleId;
     private string newName;
     private string newDescription;
+    private int maxParticipants;
 
     [Fact]
     public async Task ChangesPersist()
@@ -47,6 +48,6 @@ public sealed class UpdateModuleAsyncTests: Infrastructure
 
     private Task CallAsync()
     {
-        return this.ModuleService.UpdateModuleAsync(this.moduleId, this.newName, this.newDescription);
+        return this.ModuleService.UpdateModuleAsync(this.moduleId, this.newName, this.newDescription, this.maxParticipants);
     }
 }

@@ -27,7 +27,8 @@ public sealed class ModuleService : IModuleService
 
     public async Task CreateModuleAsync(string moduleName,
         string moduleDescription,
-        Guid ownerId,
+        int newMaxParticipants,
+                Guid ownerId,
         CancellationToken cancellationToken = default)
     {
         var module = new Module
@@ -38,7 +39,8 @@ public sealed class ModuleService : IModuleService
             Chapters = new List<Chapter>(),
             OwnerId = ownerId,
             ModuleName = moduleName,
-            ModuleDescription = moduleDescription
+            ModuleDescription = moduleDescription,
+            MaxParticipants = newMaxParticipants
         };
         await this.repository.Modules.AddAsync(module, cancellationToken);
     }

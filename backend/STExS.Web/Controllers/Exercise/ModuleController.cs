@@ -25,7 +25,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId, cancellationToken);
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, module.MaxParticipants, userId, cancellationToken);
         return this.Ok();
     }
 
