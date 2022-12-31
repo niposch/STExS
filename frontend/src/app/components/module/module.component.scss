@@ -85,6 +85,11 @@ mat-card {
   color: #5F5F5F;
 }
 
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .vertical-container {
   //height: inherit;
   height: 170px;

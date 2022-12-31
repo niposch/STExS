@@ -49,9 +49,10 @@ export class ModuleCreateComponent implements OnInit {
           this.isLoading = false;
           throw err
         }).then(() => {
-      this.isLoading = false;
-      this.showLoading = false;
-      this.onModuleCreate.emit()
+          this.snackBar.open("Successfully created Module", "Dismiss", {duration:2000});
+          this.isLoading = false;
+          this.showLoading = false;
+          this.onModuleCreate.emit()
     });
 
     this.name = "";

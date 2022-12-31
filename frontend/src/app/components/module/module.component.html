@@ -1,5 +1,6 @@
 <div *ngIf="module">
-  <mat-card>
+  <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+  <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
     <div  class="horizontal-space">
       <div class="vertical-container">
         <div class="module-name-container">

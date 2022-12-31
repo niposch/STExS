@@ -24,6 +24,7 @@ export class ModuleComponent implements OnInit {
 
   private isDeleting : boolean = false;
   private isArchiving: boolean = false;
+  public showLoading: boolean = false;
 
 
   constructor(private readonly moduleService:ModuleService,
@@ -53,16 +54,21 @@ export class ModuleComponent implements OnInit {
       return;
     }
 
+    this.showLoading = true;
     this.isDeleting = true;
 
     lastValueFrom(this.moduleService.apiModuleModuleIdDelete({
       moduleId: this.module!.moduleId!
     }))
       .catch(err =>{
-        this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000})
+        this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000});
+        this.isDeleting = false;
+        this.showLoading = false;
         throw err
       }).then(() => {
+      this.snackBar.open("Successfully deleted Module", "Dismiss", {duration:2000});
       this.isDeleting = false;
+      this.showLoading = false;
       this.onModuleChange.emit();
     })
   }
@@ -93,17 +99,21 @@ export class ModuleComponent implements OnInit {
       return;
     }
 
+    this.showLoading = true;
     this.isArchiving = true;
 
     lastValueFrom(this.moduleService.apiModuleArchivePost({
       moduleId: this.module!.moduleId!
     }))
       .catch(err =>{
-        this.snackBar.open("Could not archive Module", "Dismiss", {duration:5000})
+        this.snackBar.open("Could not archive Module", "Dismiss", {duration:5000});
+        this.isArchiving = false;
+        this.showLoading = false;
         throw err
       }).then(() => {
-      this.snackBar.open("Successfully archived Module", "Dismiss", {duration:2000})
+      this.snackBar.open("Successfully archived Module", "Dismiss", {duration:2000});
       this.isArchiving = false;
+      this.showLoading = false;
       this.onModuleChange.emit();
     })
   }
@@ -113,17 +123,21 @@ export class ModuleComponent implements OnInit {
       return;
     }
 
+    this.showLoading = true;
     this.isArchiving = true;
 
     lastValueFrom(this.moduleService.apiModuleUnarchivePost({
       moduleId: this.module!.moduleId!
     }))
       .catch(err =>{
-        this.snackBar.open("Could not unarchive Module", "Dismiss", {duration:5000})
+        this.snackBar.open("Could not unarchive Module", "Dismiss", {duration:5000});
+        this.isArchiving = false;
+        this.showLoading = false;
         throw err
       }).then(() => {
-      this.snackBar.open("Successfully unarchived Module", "Dismiss", {duration:2000})
+      this.snackBar.open("Successfully unarchived Module", "Dismiss", {duration:2000});
       this.isArchiving = false;
+      this.showLoading = false;
       this.onModuleChange.emit();
     })
   }
