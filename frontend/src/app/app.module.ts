@@ -43,6 +43,7 @@ import { AdministrateModuleComponent } from './components/admin/modules-admin/ad
 import { ChapterAdminListComponent } from './components/admin/chapter/chapter-admin-list/chapter-admin-list.component';
 import { ChapterAdminListitemComponent } from './components/admin/chapter/chapter-admin-listitem/chapter-admin-listitem.component';
 import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
+import { MatSliderModule } from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { ArchiveDialogComponent } from './components/module/archive-dialog/archi
         MatTableModule,
         MatPaginatorModule,
         MatGridListModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSliderModule
     ],
   providers: [],
   bootstrap: [AppComponent]

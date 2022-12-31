@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
-import {catchError, firstValueFrom, flatMap, lastValueFrom, mergeMap, of, scan} from "rxjs";
+import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Module} from "../../../../../services/generated/models/module";
+import {MatSliderChange} from "@angular/material/slider";
 
 @Component({
   selector: 'app-module-create',
@@ -13,6 +13,8 @@ export class ModuleCreateComponent implements OnInit {
 
   public name:string = ""
   public description: string = ""
+  public nrParticipants: number | null = 0;
+  public nrParticipantsText: string = "0";
 
   @Output() public onModuleCreate: EventEmitter<any> = new EventEmitter<any>()
   public isLoading = false;
@@ -35,7 +37,8 @@ export class ModuleCreateComponent implements OnInit {
     lastValueFrom(this.moduleService.apiModulePost({
       body:{
         moduleDescription: this.description,
-        moduleName: this.name
+        moduleName: this.name,
+        //maxParticipants: this.nrParticipants,
       }
     }))
       .catch(err =>{
@@ -48,5 +51,18 @@ export class ModuleCreateComponent implements OnInit {
 
     this.name = "";
     this.description = "";
+  }
+
+  changePartNr($event: MatSliderChange) {
+    let value = $event.value;
+    this.nrParticipants = value;
+
+    // @ts-ignore
+    if (value > 201) {
+      this.nrParticipantsText = "not limited"
+    } else {
+      // @ts-ignore
+      this.nrParticipantsText = this.nrParticipants.toString();
+    }
   }
 }
