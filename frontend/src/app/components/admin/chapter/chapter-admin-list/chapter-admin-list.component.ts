@@ -5,6 +5,7 @@ import {ChapterDetailItem} from "../../../../../services/generated/models/chapte
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ChapterCreateItem} from "../../../../../services/generated/models/chapter-create-item";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-chapter-admin-list',
@@ -32,7 +33,8 @@ export class ChapterAdminListComponent implements OnInit {
 
   constructor(
     private readonly chapterService: ChapterService,
-    private readonly moduleService: ModuleService
+    private readonly moduleService: ModuleService,
+    private snackBar : MatSnackBar,
   ) {
   }
 
@@ -64,15 +66,15 @@ export class ChapterAdminListComponent implements OnInit {
   }
 
   createChapter() {
-    this.showLoading = true;
-
     if ((this.chapterCreateItem.chapterName?.length ?? 0) == 0) {
+
       return;
     }
     if ((this.chapterCreateItem.chapterDescription?.length ?? 0) == 0) {
       return;
-
     }
+
+    this.showLoading = true;
 
     this.chapterCreateItem.moduleId = this.moduleId;
     this.chapterService.apiChapterPost$Json({
@@ -82,6 +84,7 @@ export class ChapterAdminListComponent implements OnInit {
         this.chapterCreateItem.chapterName = ""
         this.chapterCreateItem.chapterDescription = ""
         this.showLoading = false;
+        this.snackBar.open('Successfully created Chapter', 'Dismiss', {duration:2000});
       })
   }
 }
