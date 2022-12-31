@@ -46,6 +46,7 @@ public sealed class ModuleService : IModuleService
     public async Task UpdateModuleAsync(Guid moduleId,
         string newName,
         string newDescription,
+        int newMaxParticipants,
         CancellationToken cancellationToken = default)
     {
         var module = await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken);
@@ -53,6 +54,7 @@ public sealed class ModuleService : IModuleService
 
         module.ModuleName = newName;
         module.ModuleDescription = newDescription;
+        module.MaxParticipants = newMaxParticipants;
         await this.repository.Modules.UpdateAsync(module, cancellationToken);
     }
 

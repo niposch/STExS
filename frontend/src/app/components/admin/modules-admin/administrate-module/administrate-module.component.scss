@@ -30,7 +30,7 @@ mat-card {
 
 .divider {
   margin-bottom: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .card-content {
@@ -92,6 +92,42 @@ app-user-info-label {
 .loading{
   transform: scale(0.5);
   margin: auto;
+}
+
+.slider-div {
+  background-color: #424242;
+  border-radius: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+mat-slider {
+  width: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.margin-15-right {
+  margin-right: 15px;
+}
+
+.slider-value-label {
+  width: 70px;
+  text-align: right;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.horizontal-slider-div {
+  display: flex;
+  flex-direction: row;
 }
 
 // SCROLL BAR

@@ -14,7 +14,7 @@
       </div>
 
       <div class="horizontal-flex">
-        <app-edit-button class="button" (click)="editButtonClick()" [isEditing]="isEditingName"></app-edit-button>
+        <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
 
         <!-- SAVE BUTTON -->
         <a *ngIf="savingInProgress" mat-raised-button color="accent" class="button save-button" (click)="saveModuleChanges()">
@@ -57,9 +57,22 @@
 
       <mat-divider class="divider"></mat-divider>
 
+      <!-- MODULE DESCRIPTION -->
       <app-user-info-label attributeType="text" attributeName='Module Description' attributeInfo="Module Description"
-                             [(value)]="this.moduleDescription"></app-user-info-label>
-      <div style="height: 5px"></div>
+      [(value)]="this.moduleDescription"></app-user-info-label>
+
+      <!-- PARTICIPANTS SLIDER -->
+      <div class="slider-div">
+        <div class="horizontal-slider-div">
+          <p class="vertically-centered margin-15-right">allowed participants:</p>
+          <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
+          <mat-slider *ngIf="!this.isEditingPart" disabled class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+          <mat-slider *ngIf="this.isEditingPart" class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+        </div>
+        <app-edit-button class="vertically-centered" (click)="partEditButton()"></app-edit-button>
+      </div>
+      <mat-divider class="divider"></mat-divider>
+
       <app-chapter-admin-list [moduleId]="module.moduleId!"></app-chapter-admin-list>
     </mat-card-content>
   </mat-card>

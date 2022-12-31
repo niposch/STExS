@@ -13,6 +13,8 @@ public interface IModuleService
     public Task UpdateModuleAsync(Guid moduleId,
         string newName,
         string newDescription,
+        int newMaxParticipants,
+        
         CancellationToken cancellationToken = default);
 
     public Task DeleteModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);

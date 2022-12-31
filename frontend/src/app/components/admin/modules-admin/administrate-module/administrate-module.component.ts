@@ -7,6 +7,7 @@ import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog
 import {ArchiveDialogComponent} from "../../../module/archive-dialog/archive-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatSliderChange} from "@angular/material/slider";
 
 @Component({
   selector: 'app-administrate-module',
@@ -26,14 +27,13 @@ export class AdministrateModuleComponent implements OnInit {
 
   public moduleDescription: string | null | undefined = "";
 
-  public maxPart : number | null | undefined = 0;
-  public newMaxPart : number | null | undefined = 0;
-
   private isDeleting : boolean = false;
   private isArchiving: boolean = false;
   public showLoading: boolean = false;
 
-  public loadingModule: boolean = true;
+  public nrParticipants: number = 0;
+  public nrParticipantsText: string = "0";
+  public isEditingPart: boolean = false;
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private readonly moduleService: ModuleService,
@@ -58,12 +58,18 @@ export class AdministrateModuleComponent implements OnInit {
 
         this.moduleName = this.module?.moduleName
         this.moduleDescription = this.module.moduleDescription;
-        this.maxPart = this.module.maxParticipants;
         this.mId = moduleId;
+        this.nrParticipants = Number(this.module.maxParticipants);
+
+        if (this.nrParticipants > 200) {
+          this.nrParticipantsText = "not limited"
+        } else {
+          this.nrParticipantsText = this.nrParticipants.toString();
+        }
       })
   }
 
-  editButtonClick() {
+  nameEditButton() {
     this.isEditingName = !this.isEditingName;
 
     if (this.newModuleName == "") {
@@ -88,9 +94,10 @@ export class AdministrateModuleComponent implements OnInit {
       body: {
         moduleName: this.moduleName,
         moduleDescription: this.moduleDescription,
-        maxParticipants: this.maxPart
+        maxParticipants: this.nrParticipants,
       }
     }));
+    this.snackBar.open("Successfully saved changes!", "Dismiss", {duration:2000})
     await lastValueFrom(this.moduleService.apiModuleGetUsersForModuleGet$Json())
     this.savingInProgress = false;
     this.showLoading = false;
@@ -202,5 +209,23 @@ export class AdministrateModuleComponent implements OnInit {
       this.isArchiving = false;
       this.loadModule(this.mId);
     })
+  }
+
+  changePartNr($event: MatSliderChange) {
+    let value = $event.value;
+    this.nrParticipants = Number(value);
+
+    // @ts-ignore
+    if (value > 201) {
+      this.nrParticipantsText = "not limited"
+      this.nrParticipants = 999999;
+    } else {
+      // @ts-ignore
+      this.nrParticipantsText = this.nrParticipants.toString();
+    }
+  }
+
+  partEditButton() {
+    this.isEditingPart = !this.isEditingPart;
   }
 }
