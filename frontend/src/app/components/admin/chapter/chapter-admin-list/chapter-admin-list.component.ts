@@ -61,8 +61,10 @@ export class ChapterAdminListComponent implements OnInit {
     this.chapterService.apiChapterForModuleGet$Json({
       moduleId: moduleId
     })
-      .subscribe(data => this.chapters = data)
-
+      .subscribe(data => {
+        this.chapters = data;
+        console.log(this.chapters);
+      })
   }
 
   createChapter() {

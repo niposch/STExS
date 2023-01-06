@@ -5,7 +5,8 @@
     </mat-panel-title>
     <mat-panel-description>
       <div></div>
-      <button class="edit-button" mat-button (click)="editButtonClick($event)">Edit</button>
+      <!-- -->
+      <button class="edit-button" mat-button [routerLink]="['/module/administrate/chapter']" [queryParams]="{module_id:this.moduleId, chapter_name:this.chapterName}" (click)="editButtonClick($event)">Edit</button>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-divider></mat-divider>

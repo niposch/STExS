@@ -1,0 +1,44 @@
+.name {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    font-family: Arial, sans-serif;
+    line-height: 26px;
+    color: #02C0A2;
+  }
+
+  .chapter-name {
+    margin-bottom: 0px;
+  }
+  
+  .chapter-description{
+    text-align: justify;
+    text-justify: auto;
+    margin-right: 14px;
+  }
+
+  .horizontal-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  mat-card {
+    background-color: #333333;
+    min-width: 600px;
+    max-width: 1500px;
+    margin: auto;
+  }
+
+  .button {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
