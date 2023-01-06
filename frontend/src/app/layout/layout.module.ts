@@ -14,6 +14,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
 import { NotfoundComponent } from '../components/notfound/notfound.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { NotfoundComponent } from '../components/notfound/notfound.component';
         MatListModule,
         MatSidenavModule,
         FormsModule,
+        MatExpansionModule
     ]
 })
 export class LayoutModule {
