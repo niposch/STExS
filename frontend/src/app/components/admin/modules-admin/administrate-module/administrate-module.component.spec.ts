@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdministrateModuleComponent } from './administrate-module.component';
-import {ActivatedRoute} from "@angular/router";
+import {AdministrateModuleComponent} from './administrate-module.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
@@ -13,10 +12,10 @@ describe('AdministrateModuleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdministrateModuleComponent ],
-      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule, MatDialogModule ]
+      declarations: [AdministrateModuleComponent],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatSnackBarModule, MatDialogModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AdministrateModuleComponent);
     component = fixture.componentInstance;

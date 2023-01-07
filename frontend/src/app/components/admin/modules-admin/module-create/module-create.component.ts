@@ -68,7 +68,7 @@ export class ModuleCreateComponent implements OnInit {
     // @ts-ignore
     if (value > 201) {
       this.nrParticipantsText = "not limited"
-      this.nrParticipants = 999999;
+      this.nrParticipants = null;
     } else {
       // @ts-ignore
       this.nrParticipantsText = this.nrParticipants.toString();

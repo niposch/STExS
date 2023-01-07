@@ -31,7 +31,7 @@ export class AdministrateModuleComponent implements OnInit {
   private isArchiving: boolean = false;
   public showLoading: boolean = false;
 
-  public nrParticipants: number = 0;
+  public nrParticipants: number|null = 0;
   public nrParticipantsText: string = "0";
   public isEditingPart: boolean = false;
 
@@ -59,9 +59,9 @@ export class AdministrateModuleComponent implements OnInit {
         this.moduleName = this.module?.moduleName
         this.moduleDescription = this.module.moduleDescription;
         this.mId = moduleId;
-        this.nrParticipants = Number(this.module.maxParticipants);
+        this.nrParticipants = this.module.maxParticipants ?? 200;
 
-        if (this.nrParticipants > 200) {
+        if (this.nrParticipants == null || this.nrParticipants >= 200) {
           this.nrParticipantsText = "not limited"
         } else {
           this.nrParticipantsText = this.nrParticipants.toString();
@@ -215,10 +215,9 @@ export class AdministrateModuleComponent implements OnInit {
     let value = $event.value;
     this.nrParticipants = Number(value);
 
-    // @ts-ignore
-    if (value > 201) {
+    if (value == null || value >= 200) {
       this.nrParticipantsText = "not limited"
-      this.nrParticipants = 999999;
+      this.nrParticipants = 200;
     } else {
       // @ts-ignore
       this.nrParticipantsText = this.nrParticipants.toString();

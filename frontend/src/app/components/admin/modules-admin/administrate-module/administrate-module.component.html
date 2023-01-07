@@ -66,8 +66,8 @@
         <div class="horizontal-slider-div">
           <p class="vertically-centered margin-15-right">allowed participants:</p>
           <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
-          <mat-slider *ngIf="!this.isEditingPart" disabled class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
-          <mat-slider *ngIf="this.isEditingPart" class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+          <mat-slider *ngIf="!this.isEditingPart" disabled class="vertically-centered" min="1" max="200" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+          <mat-slider *ngIf="this.isEditingPart" class="vertically-centered" min="1" max="200" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
         </div>
         <app-edit-button class="vertically-centered" (click)="partEditButton()"></app-edit-button>
       </div>
