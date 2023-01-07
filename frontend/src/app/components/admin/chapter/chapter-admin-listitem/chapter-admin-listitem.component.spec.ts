@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChapterAdminListitemComponent } from './chapter-admin-listitem.component';
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('ChapterAdminListitemComponent', () => {
   let component: ChapterAdminListitemComponent;
@@ -8,7 +10,8 @@ describe('ChapterAdminListitemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChapterAdminListitemComponent ]
+      declarations: [ ChapterAdminListitemComponent ],
+      imports: [RouterTestingModule, HttpClientTestingModule]
     })
     .compileComponents();
 

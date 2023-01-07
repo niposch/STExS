@@ -34,7 +34,7 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateModuleAsync([FromRoute] Guid moduleId, [FromBody] ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
-        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, updateItem.MaxParticipants ?? 0, cancellationToken);
+        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, updateItem.MaxParticipants, cancellationToken);
         return this.Ok();
     }
 
