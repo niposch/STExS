@@ -16,6 +16,7 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
     {
         // Arrange
         this.id = Guid.NewGuid();
+        
         this.ApplicationDbContext.Modules.Add(this.Fixture.Build<Module>()
             .With(m => m.Id, this.id)
             .Create());
@@ -24,8 +25,10 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
         var user = this.Fixture.Build<ApplicationUser>()
             .With(m => m.Id, this.userId)
             .Create();
+
         this.UserManagerMock.Setup(m => m.FindByIdAsync(this.userId.ToString()))
             .ReturnsAsync(user);
+        
         this.UserManagerMock.Setup(m => m.GetRolesAsync(user))
             .ReturnsAsync(new List<string>{RoleHelper.Admin});
         

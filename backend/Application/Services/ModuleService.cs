@@ -14,15 +14,12 @@ public sealed class ModuleService : IModuleService
 {
     private readonly IApplicationRepository repository;
     private readonly UserManager<ApplicationUser> userManager;
-    private readonly RoleManager<ApplicationRole> roleManager;
 
     public ModuleService(IApplicationRepository repository, 
-        UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager)
+        UserManager<ApplicationUser> userManager)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-        this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
     }
 
     public async Task CreateModuleAsync(string moduleName,
@@ -88,13 +85,13 @@ public sealed class ModuleService : IModuleService
         await this.repository.Modules.UnarchiveAsync(moduleId, cancellationToken);
     }
 
-    public async Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var modules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId, cancellationToken);
         return modules.ToList();
     }
 
-    public async Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken)
+    public async Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken = default)
     {
         var modules = await this.repository.Modules.GetAllAsync(cancellationToken);
         return modules
@@ -139,7 +136,7 @@ public sealed class ModuleService : IModuleService
         return participation.ParticipationConfirmed ? ModuleParticipationStatus.Accepted : ModuleParticipationStatus.Requested;
     }
 
-    public async Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken)
+    public async Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken = default)
     {
         return await this.repository.ModuleParticipations.GetParticipationCountByModuleIdAsync(moduleId, cancellationToken);
     }

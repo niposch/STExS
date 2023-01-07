@@ -31,10 +31,10 @@ public interface IModuleService
 
     public Task ArchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     public Task UnarchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
-    Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken);
-    Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken);
+    Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken = default);
 
     Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
     Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
-    Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken);
+    Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken = default);
 }

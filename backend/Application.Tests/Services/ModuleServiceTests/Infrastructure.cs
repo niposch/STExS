@@ -22,10 +22,14 @@ public abstract class Infrastructure
     {
         this.Fixture = new Fixture().Customize(new AutoMoqCustomization());
         this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        
         this.UserManagerMock = this.Fixture.FreezeInject<UserManager<ApplicationUser>>();
+        
         this.Fixture.Register<IModuleRepository>(this.Fixture.Create<ModuleRepository>);
         this.Fixture.Register<IModuleParticipationRepository>(this.Fixture.Create<ModuleParticipationRepository>);
+        
         this.Fixture.Register<IApplicationRepository>(this.Fixture.Create<ApplicationRepository>);
+        
         this.ApplicationDbContext = this.Fixture.InjectInMemoryDbContext<ApplicationDbContext>();
         
         this.ModuleService = this.Fixture.Create<ModuleService>();
