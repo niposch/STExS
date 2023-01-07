@@ -14,27 +14,32 @@ import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
 import { NotfoundComponent } from '../components/notfound/notfound.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
-  declarations: [
-    MainLayoutComponent,
-    HeaderOnlyLayoutComponent,
-    HeaderComponent,
-    SidebarComponent,
-    NotfoundComponent,
-  ],
-  imports: [
-    CommonModule,
-    LayoutRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatListModule,
-    MatSidenavModule,
-    FormsModule,
-  ]
+    declarations: [
+        MainLayoutComponent,
+        HeaderOnlyLayoutComponent,
+        HeaderComponent,
+        SidebarComponent,
+        NotfoundComponent,
+    ],
+    exports: [
+        NotfoundComponent
+    ],
+    imports: [
+        CommonModule,
+        LayoutRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatListModule,
+        MatSidenavModule,
+        FormsModule,
+        MatExpansionModule
+    ]
 })
 export class LayoutModule {
 }

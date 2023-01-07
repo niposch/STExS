@@ -1,36 +1,49 @@
 <div *ngIf="this.chapters != null && this.module != null && this.participationStatus != null">
   <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
-    <table mat-table style="width: 100%" [dataSource]="chapters">
-      <ng-container matColumnDef="chapterName">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{element.runningNumber}}. {{element.chapterName}}</td>
-      </ng-container>
-      <ng-container matColumnDef="chapterActions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button>Edit</button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
-    </table>
-    <h2>Add Chapter</h2>
-    <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput name="name" [(ngModel)]="this.chapterCreateItem.chapterName">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput name="description" [(ngModel)]="this.chapterCreateItem.chapterDescription">
-      </mat-form-field>
-      <button mat-button>Create</button>
-    </form>
+    <mat-card>
+      <mat-card-title class="heading-text">Chapters</mat-card-title>
+      <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
+      <div class="chapter-list">
+        <app-chapter-admin-listitem class="chapter-list-item" *ngFor="let entry of this.chapters" [chapter]="entry"></app-chapter-admin-listitem>
+      </div>
+    </mat-card>
+
+    <div style="height: 10px"></div>
+
+    <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
+        <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
+          <div class="horizontal-space">
+            <mat-card-title class="heading-text">Create a new chapter</mat-card-title>
+            <div class="horizontal-align">
+              <button type="submit" mat-raised-button color="accent">
+                <div class="horizontal-button">
+                  <p class="vertically-centered">create</p>
+                </div>
+              </button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="horizontal-container">
+            <div class="margin5px name-field-div">
+              <mat-form-field class="name-field-wrapper">
+                <mat-label>Name</mat-label>
+                <input matInput name="name" [(ngModel)]="this.chapterCreateItem.chapterName">
+              </mat-form-field>
+            </div>
+            <div class="margin5px description-field-div">
+              <mat-form-field class="description-field-wrapper">
+                <mat-label>Description</mat-label>
+                <input matInput name="description" [(ngModel)]="this.chapterCreateItem.chapterDescription">
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+    </mat-card>
   </div>
   <ng-template #unauthorized>
     Unauthorized
   </ng-template>
 </div>
-<ng-template #loading>
-  <mat-spinner mode="indeterminate"></mat-spinner>
-</ng-template>
+
+<mat-spinner *ngIf="this.isLoadingChapters" class="loading" mode="indeterminate"></mat-spinner>

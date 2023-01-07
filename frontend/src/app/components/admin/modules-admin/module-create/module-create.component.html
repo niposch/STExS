@@ -1,31 +1,45 @@
-<mat-card>
+<mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
+<mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
   <div class="margin5px">
     <form (ngSubmit)="createModule()">
       <div class="horizontal-space margin5px">
         <mat-card-title class="heading-text">Create a new module</mat-card-title>
-        <div class="horizontal-align">
+        <div class="horizontal-align vertically-centered">
           <button type="submit" mat-raised-button color="accent">
             <div class="horizontal-button">
               <p class="vertically-centered">create</p>
-              <mat-spinner class="vertically-centered" style="margin-left: 5px" *ngIf="this.isLoading" diameter="20" mode="indeterminate" color="primary"></mat-spinner>
             </div>
           </button>
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="horizontal-container">
-        <div class="margin5px name-field-div">
-          <mat-form-field class="name-field-wrapper">
-            <mat-label>Name</mat-label>
-            <input [(ngModel)]="this.name" matInput name="name"/>
-          </mat-form-field>
+
+      <div class="margin5px">
+        <!-- FIRST ROW -->
+        <div class="horizontal-container">
+          <!-- NAME FIELD -->
+          <div class="name-field-div">
+            <mat-form-field class="name-field-wrapper">
+              <mat-label>Name</mat-label>
+              <input [(ngModel)]="this.name" matInput name="name"/>
+            </mat-form-field>
+          </div>
+          <!-- PARTICIPANTS SLIDER -->
+          <div class="slider-div">
+            <p class="vertically-centered margin5px-right">allowed participants:</p>
+            <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
+            <mat-slider class="vertically-centered" min="0" max="205" step="5" (input)="changePartNr($event)"></mat-slider>
+          </div>
         </div>
-        <div class="margin5px description-field-div">
+
+        <!-- SECOND ROW -->
+        <div class="horizontal-container">
           <mat-form-field class="description-field-wrapper">
             <mat-label>Description</mat-label>
-            <textarea [(ngModel)]="this.description" matInput name="description"></textarea>
+            <input [(ngModel)]="this.description" matInput name="description">
           </mat-form-field>
         </div>
+
       </div>
     </form>
   </div>

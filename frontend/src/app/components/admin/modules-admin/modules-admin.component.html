@@ -1,27 +1,18 @@
-<p class="heading">Administrate your modules</p>
-<div class="modules-list">
-  <mat-expansion-panel class="expansion-panel">
-    <mat-expansion-panel-header class="expansion-header">
-      <mat-panel-title>
-        Modules
-      </mat-panel-title>
-      <mat-panel-description>
-        Click to see your modules
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <app-module-list [moduleList]="this.moduleList" (moduleChange)="loadModules()" [isModuleAdmin]="true"></app-module-list>
-  </mat-expansion-panel>
+<div class="component-width">
+  <p class="heading">Administrate your modules</p>
+  <mat-card class="modules-list">
+    <mat-card-title>Modules</mat-card-title>
+    <mat-card-content>
+      <mat-divider class="divider"></mat-divider>
+      <app-module-list [moduleList]="this.moduleList" (moduleChange)="loadModules()" [isModuleAdmin]="true"></app-module-list>
+    </mat-card-content>
+  </mat-card>
 
-</div>
+  <mat-divider class="divider"></mat-divider>
 
-<mat-divider class="divider"></mat-divider>
-
-<div style="margin-top: 1.5rem">
   <app-module-create (onModuleCreate)="this.loadModules()"></app-module-create>
+
+  <mat-divider class="divider"></mat-divider>
+
+  <p class="heading">Member in Modules</p>
 </div>
-
-<mat-divider class="divider"></mat-divider>
-
-<p class="heading">Member in Modules</p>
-
-

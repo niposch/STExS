@@ -1,5 +1,6 @@
 mat-card {
   height: 200px;
+  padding: 0;
 }
 
 .module-name{
@@ -8,6 +9,10 @@ mat-card {
   font-size: 20px;
   font-family: Arial, sans-serif;
   margin-bottom: 0px;
+  padding-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .module-name-container{
@@ -16,15 +21,21 @@ mat-card {
   justify-content: center;
   min-width: 200px;
   overflow: hidden;
+  height: 30px;
+}
+
+.heading-desc-container {
+  width: 100%;
 }
 
 .horizontal-space {
   min-height: 30%;
-  max-height: 70%;
+  height: inherit;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
+  padding: 15px;
 }
 
 .icon {
@@ -34,14 +45,16 @@ mat-card {
 .button-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: fit-content;
+  justify-content: space-between;
+  width: fit-content;
 }
 
 .module-description{
   text-align: justify;
   text-justify: auto;
-  margin-right: 14px;
+  margin-right: 12px;
+  margin-bottom: -12px;
+  height: 100%;
 }
 
 .module-description::after{
@@ -52,14 +65,40 @@ mat-card {
 .divider{
   margin-bottom: 5px;
   margin-top: 5px;
+  width: 100%
 }
 
 .card-content {
   overflow-x: hidden;
   overflow-y: scroll;
-  min-height: 40px;
-  max-height: 110px;
-  margin-right: -14px;
+  height: 140px;
+}
+
+.option-panel {
+  border-radius: 5px;
+  border-color: #565656;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.archived {
+  color: #5F5F5F;
+}
+
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.vertical-container {
+  //height: inherit;
+  height: 170px;
+  width: calc(100% - 66px);
+}
+
+mat-card-content {
+  height: fit-content;
+  max-height: 70%;
 }
 
 // SCROLL BAR
@@ -77,4 +116,5 @@ mat-card {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  width: 5px;
 }

@@ -7,12 +7,14 @@ public interface IModuleService
 {
     public Task CreateModuleAsync(string moduleName,
         string moduleDescription,
+        int newMaxParticipants,
         Guid ownerId,
         CancellationToken cancellationToken = default);
 
     public Task UpdateModuleAsync(Guid moduleId,
         string newName,
         string newDescription,
+        int? newMaxParticipants,
         CancellationToken cancellationToken = default);
 
     public Task DeleteModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);

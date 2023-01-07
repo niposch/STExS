@@ -4,6 +4,6 @@ public sealed class ModuleUpdateItem
 {
     public string ModuleName { get; set; } = string.Empty;
     public string ModuleDescription { get; set; } = string.Empty;
-    
-    public int? MaxParticipants { get; set; }
+
+    public int? MaxParticipants { get; set; } = null;
 }

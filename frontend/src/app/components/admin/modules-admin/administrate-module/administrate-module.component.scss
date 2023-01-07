@@ -1,38 +1,18 @@
+mat-card {
+  background-color: #333333;
+  min-width: 600px;
+  max-width: 1500px;
+  margin: auto;
+}
 
-.module-name{
+.module-name {
   font-style: normal;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 30px;
   font-family: Arial, sans-serif;
+  line-height: 26px;
+  color: #02C0A2;
   margin-bottom: 0px;
-}
-
-.module-name-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 200px;
-  overflow: hidden;
-}
-
-.horizontal-space {
-  min-height: 30%;
-  max-height: 70%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-}
-
-.icon {
-  transform:scale(0.8)
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: fit-content;
 }
 
 .module-description{
@@ -41,14 +21,16 @@
   margin-right: 14px;
 }
 
-.module-description::after{
-  content: "\a";
-  white-space: pre;
+.horizontal-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
 }
 
-.divider{
-  margin-bottom: 5px;
-  margin-top: 5px;
+.divider {
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .card-content {
@@ -57,6 +39,95 @@
   min-height: 40px;
   max-height: 110px;
   margin-right: -14px;
+}
+
+.space-items {
+  justify-content: space-between;
+  width: inherit;
+}
+
+.margin10 {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  margin-bottom: -29px;
+  margin-top: -4px;
+  max-width: 500px;
+  width: 300px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.centered-vertically{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+app-user-info-label {
+  width: inherit;
+}
+
+.hide-top-round-corners{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.loading{
+  transform: scale(0.5);
+  margin: auto;
+}
+
+.slider-div {
+  background-color: #424242;
+  border-radius: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+mat-slider {
+  width: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.margin-15-right {
+  margin-right: 15px;
+}
+
+.slider-value-label {
+  width: 70px;
+  text-align: right;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.horizontal-slider-div {
+  display: flex;
+  flex-direction: row;
 }
 
 // SCROLL BAR

@@ -42,6 +42,9 @@ import {DeleteDialogComponent} from "./components/module/delete-dialog/delete-di
 import { AdministrateModuleComponent } from './components/admin/modules-admin/administrate-module/administrate-module.component';
 import { ChapterAdminListComponent } from './components/admin/chapter/chapter-admin-list/chapter-admin-list.component';
 import { ChapterAdminListitemComponent } from './components/admin/chapter/chapter-admin-listitem/chapter-admin-listitem.component';
+import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
+import { MatSliderModule } from "@angular/material/slider";
+import { ChapterAdminAdministrateComponent } from './components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,8 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
     AdministrateModuleComponent,
     ChapterAdminListComponent,
     ChapterAdminListitemComponent,
+    ArchiveDialogComponent,
+    ChapterAdminAdministrateComponent,
   ],
     imports: [
         BrowserModule,
@@ -87,7 +92,8 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
         MatTableModule,
         MatPaginatorModule,
         MatGridListModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSliderModule
     ],
   providers: [],
   bootstrap: [AppComponent]

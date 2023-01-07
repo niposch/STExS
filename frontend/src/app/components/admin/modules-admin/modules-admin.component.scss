@@ -24,4 +24,11 @@
 
 .modules-list {
   min-width: 350px;
+  background-color: #373737;
+}
+
+.component-width {
+  min-width: 600px;
+  max-width: 1500px;
+  margin: auto;
 }

@@ -23,12 +23,13 @@
   flex-direction: column;
 }
 
-
 .flex-layout {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 
 .flex-item {
@@ -40,4 +41,9 @@
 .fit-parent {
   width: inherit;
   height: inherit;
+}
+
+.loading{
+  transform: scale(0.5);
+  margin: auto;
 }

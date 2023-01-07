@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChapterAdminListitemComponent } from './chapter-admin-listitem.component';
-import {RouterTestingModule} from "@angular/router/testing";
+import { ChapterAdminAdministrateComponent } from './chapter-admin-administrate.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
-describe('ChapterAdminListitemComponent', () => {
-  let component: ChapterAdminListitemComponent;
-  let fixture: ComponentFixture<ChapterAdminListitemComponent>;
+describe('ChapterAdminAdministrateComponent', () => {
+  let component: ChapterAdminAdministrateComponent;
+  let fixture: ComponentFixture<ChapterAdminAdministrateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChapterAdminListitemComponent ],
+      declarations: [ ChapterAdminAdministrateComponent ],
       imports: [RouterTestingModule, HttpClientTestingModule]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChapterAdminListitemComponent);
+    fixture = TestBed.createComponent(ChapterAdminAdministrateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

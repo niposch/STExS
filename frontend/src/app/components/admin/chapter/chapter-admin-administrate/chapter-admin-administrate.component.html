@@ -1,0 +1,21 @@
+<p class="name" >Edit Chapter of {{this.moduleName}}</p>
+<mat-card>
+    <div class="horizontal-flex full-width">
+        <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
+
+        <!-- editing chapter name -->
+        <mat-form-field class="input-field" *ngIf="isEditingName">
+        <mat-label>Chapter Name</mat-label>
+        <input matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
+        </mat-form-field>
+
+        <div class="horizontal-flex">
+            <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
+        </div>
+    </div>
+    <!-- chapter description -->
+    <app-user-info-label attributeType="text" attributeName='Chapter Description' attributeInfo="Chapter Description"
+    [(value)]="this.chapterDescription"></app-user-info-label>
+   
+</mat-card>
+

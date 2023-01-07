@@ -1,7 +1,7 @@
-<div *ngIf="this.moduleList != null else loading">
+<div *ngIf="this.moduleList">
   <div class="flex-layout">
     <div class="flex-item" *ngFor="let module of this.moduleList">
-        <app-module class="fit-parent" [module]="module" (onModuleDelete)="this.moduleChange.emit()" [isModuleAdmin]="this.isModuleAdmin"></app-module>
+        <app-module class="fit-parent" [module]="module" (onModuleChange)="this.moduleChange.emit()" [isModuleAdmin]="this.isModuleAdmin"></app-module>
     </div>
   </div>
 
@@ -11,6 +11,4 @@
   </div>
 </div>
 
-<ng-template #loading>
-  <mat-spinner mode="indeterminate" style="transform: scale(0.5)"></mat-spinner>
-</ng-template>
+<mat-spinner *ngIf="!this.moduleList" class="loading" mode="indeterminate" style="transform: scale(0.5)"></mat-spinner>

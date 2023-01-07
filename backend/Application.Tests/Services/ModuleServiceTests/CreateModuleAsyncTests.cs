@@ -6,6 +6,7 @@ public sealed class CreateModuleAsyncTests: Infrastructure
 {
     private string moduleName = null!;
     private string moduleDescription = null!;
+    private int maxParticipants = 0;
     private Guid ownerId;
     [Fact]
     public async Task CreatesModule()
@@ -29,7 +30,7 @@ public sealed class CreateModuleAsyncTests: Infrastructure
     private Task CallAsync()
     {
         return this.ModuleService.CreateModuleAsync(this.moduleName,
-            this.moduleDescription,
+            this.moduleDescription, this.maxParticipants,
             this.ownerId);
     }
 }

@@ -1,3 +1,41 @@
-<mat-nav-list *ngFor="let i of userModules; let index = index">
+<div *ngIf="this.participatingInModuleList && this.adminModuleList">
+  <mat-accordion class="list-container" multi="false">
+    <div *ngFor="let module of this.participatingInModuleList">
+      <mat-expansion-panel class="list-item" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{module.moduleName}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p> content </p>
+        <div class="flex-row option-panel">
+          <div class= "flex-row">
+            <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div *ngFor="let module of this.adminModuleList">
+      <mat-expansion-panel class="list-item" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{module.moduleName}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p> content </p>
+        <div class="flex-row option-panel">
+          <div class= "flex-row">
+          <button mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
+            Edit <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
+          </button>
+          <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
 
-</mat-nav-list>
+  <div *ngIf="this.participatingInModuleList.length == 0 && this.adminModuleList.length == 0">
+  </div>
+</div>
+

@@ -25,7 +25,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> CreateModuleAsync(ModuleCreateItem module, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, userId, cancellationToken);
+        await this.moduleService.CreateModuleAsync(module.ModuleName, module.ModuleDescription, module.MaxParticipants, userId, cancellationToken);
         return this.Ok();
     }
 
@@ -34,7 +34,7 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateModuleAsync([FromRoute] Guid moduleId, [FromBody] ModuleUpdateItem updateItem, CancellationToken cancellationToken = default)
     {
-        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, cancellationToken);
+        await this.moduleService.UpdateModuleAsync(moduleId, updateItem.ModuleName, updateItem.ModuleDescription, updateItem.MaxParticipants, cancellationToken);
         return this.Ok();
     }
 
