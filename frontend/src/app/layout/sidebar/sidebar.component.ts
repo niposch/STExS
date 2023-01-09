@@ -10,6 +10,8 @@ import {ModuleService} from "../../../services/generated/services/module.service
 export class SidebarComponent implements OnInit {
   public firstName: string = "";
   public lastName: string = "";
+
+  public isLoading: boolean = false;
   participatingInModuleList: Array<ModuleDetailItem> | null = null;
   adminModuleList:Array<ModuleDetailItem> | null = null;
   isModuleAdmin = false;
@@ -27,6 +29,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userService.currentUser.subscribe(u =>{
       this.firstName = u?.firstName ?? ""
       this.lastName = u?.lastName ?? ""
@@ -36,6 +39,6 @@ export class SidebarComponent implements OnInit {
 
     this.loadModules();
 
+    this.isLoading = false;
   }
-
 }
