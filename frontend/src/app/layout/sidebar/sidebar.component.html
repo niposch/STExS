@@ -1,18 +1,23 @@
 <div class="list-container" *ngIf="this.participatingInModuleList && this.adminModuleList">
+  <mat-spinner class="loading" *ngIf="isLoading"></mat-spinner>
 
-    <mat-spinner class="loading" *ngIf="isLoading"></mat-spinner>
+  <mat-label *ngIf="this.participatingInModuleList.length > 0">participation in</mat-label>
+  <div *ngFor="let module of this.participatingInModuleList">
+    <app-sidebar-entry [module]="module"></app-sidebar-entry>
+  </div>
+  <mat-divider *ngIf="this.participatingInModuleList.length > 0"></mat-divider>
 
-    <mat-label *ngIf="this.participatingInModuleList.length > 0">participation in</mat-label>
-    <div *ngFor="let module of this.participatingInModuleList">
-      <app-sidebar-entry [module]="module"></app-sidebar-entry>
-    </div>
-    <mat-divider *ngIf="this.participatingInModuleList.length > 0"></mat-divider>
+  <mat-label *ngIf="this.adminModuleList.length > 0">admin in</mat-label>
+  <div *ngFor="let module of this.adminModuleList">
+    <app-sidebar-entry [module]="module"></app-sidebar-entry>
+  </div>
+  <mat-divider *ngIf="this.adminModuleList.length > 0"></mat-divider>
 
-    <mat-label *ngIf="this.adminModuleList.length > 0">admin in</mat-label>
-    <div *ngFor="let module of this.adminModuleList">
-      <app-sidebar-entry [module]="module"></app-sidebar-entry>
-    </div>
-    <mat-divider *ngIf="this.adminModuleList.length > 0"></mat-divider>
+<!--  <mat-label *ngIf="this.allModules.length > 0">admin in</mat-label>-->
+<!--  <div *ngFor="let module of this.allModules">-->
+<!--    <app-sidebar-entry [module]="module"></app-sidebar-entry>-->
+<!--  </div>-->
+<!--  <mat-divider *ngIf="this.allModules.length > 0"></mat-divider>-->
 
   <div *ngIf="this.participatingInModuleList.length == 0 && this.adminModuleList.length == 0">
     <mat-label>no modules to display</mat-label>
