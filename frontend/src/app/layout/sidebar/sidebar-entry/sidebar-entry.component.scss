@@ -1,0 +1,77 @@
+.loading{
+  transform: scale(0.5);
+  margin: auto;
+}
+
+.list-item{
+  background-color: #555454;
+  margin-top:10px;
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.module-name {
+  font-style: normal;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  line-height: 18px;
+  color: #02C0A2;
+  margin-bottom: 0px;
+  overflow: hidden;
+}
+
+.panel {
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-top: -3px;
+  margin-bottom:-3px;
+}
+
+.expansion-body {
+  margin-left: -12px;
+  margin-right: -12px;
+  margin-bottom: -4px;
+}
+
+.heading-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.desc-label{
+  width: 100%;
+  white-space: nowrap;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

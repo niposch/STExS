@@ -15,6 +15,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
 import { NotfoundComponent } from '../components/notfound/notfound.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SidebarEntryComponent } from './sidebar/sidebar-entry/sidebar-entry.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
         HeaderComponent,
         SidebarComponent,
         NotfoundComponent,
+        SidebarEntryComponent,
     ],
     exports: [
         NotfoundComponent
