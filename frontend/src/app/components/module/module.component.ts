@@ -141,4 +141,18 @@ export class ModuleComponent implements OnInit {
       this.onModuleChange.emit();
     })
   }
+
+  /*
+  favoriteModule() {
+    if (!this.module?.isFavorited) {
+      //favorite this module
+      lastValueFrom(this.moduleService.apiModuleModuleIdPut({
+        //fav this module
+      }))
+    } else {
+      //un-favorite this module
+    }
+  }
+
+   */
 }
