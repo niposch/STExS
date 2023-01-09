@@ -2,12 +2,12 @@
   <app-header [(showDrawer)]="this.showDrawer" [hasDrawer]="true" fxLayout="column"></app-header>
 
   <mat-drawer-container [hasBackdrop]="false" style="flex-grow: 1">
-    <mat-drawer [opened]="showDrawer" mode="side" style="width: 200px">
+    <mat-drawer [opened]="showDrawer" mode="side" style="width: 250px">
       <app-sidebar></app-sidebar>
     </mat-drawer>
     <mat-drawer-content >
       <div class="content-container">
-        <router-outlet ></router-outlet>
+        <router-outlet></router-outlet>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
