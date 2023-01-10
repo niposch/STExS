@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs.Exercises;
+﻿using Common.Models.ExerciseSystem;
+
+namespace Application.DTOs.Exercises;
 
 public class ExerciseListItem
 {

@@ -9,12 +9,6 @@ public class ParsonExerciseEntityTypeConfiguration: IEntityTypeConfiguration<Par
 {
     public void Configure(EntityTypeBuilder<ParsonExercise> builder)
     {
-        builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).ValueGeneratedOnAdd();
-        builder.HasOne<ApplicationUser>(x => x.Owner)
-            .WithMany()
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(p => p.ExpectedSolution)
             .WithOne(p => p.RelatedExercise)
             .OnDelete(DeleteBehavior.Cascade);

@@ -52,6 +52,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }
     
+    public DbSet<BaseExercise> Exercises { get;set; }
     public DbSet<ParsonExercise> ParsonExercises { get; set; }
     
     public DbSet<ParsonSolution> ParsonSolutions { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Common.Models.HelperInterfaces;
 using Common.Models.Authentication;
 
@@ -18,9 +19,12 @@ public abstract class BaseExercise : DeletableBaseEntity,
 
     public string Title { get; set; } = null!;
     
+    [Column(TypeName = "nvarchar(max)")]
     public string? Description { get; set; }
 
     public int RunningNumber { get; set; } // used for ordering in related Chapter
 
-    public int AchieveablePoints { get; set; }
+    public int AchieveablePoints { get; set; } // how many points are possible in this exercise
+
+    public ExerciseType ExerciseType { get; set; }
 }
