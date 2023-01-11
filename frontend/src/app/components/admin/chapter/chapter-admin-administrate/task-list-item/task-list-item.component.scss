@@ -1,0 +1,19 @@
+mat-card {
+  background-color: #454545;
+}
+
+.title {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
