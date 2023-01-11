@@ -9,7 +9,7 @@ import {ModuleDetailItem} from "../../../../services/generated/models/module-det
 export class SidebarEntryComponent implements OnInit {
 
   // @ts-ignore
-  @Input() module : ModuleDetailItem;
+  @Input() module : ModuleDetailItem = { };
 
   constructor() { }
 
