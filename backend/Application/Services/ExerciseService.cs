@@ -1,13 +1,87 @@
-﻿using Application.DTOs.Exercises;
+﻿using System.Xml;
+using Application.DTOs.Exercises;
 using Application.Services.Interfaces;
+using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services;
 
 public sealed class ExerciseService: IExerciseService
 {
-    public async Task<List<Tuple<BaseExercise, ExerciseType>>> GetExercisesForChapterAsync(Guid chapterId, CancellationToken cancellationToken = default)
+    private readonly IApplicationRepository repository;
+
+    public ExerciseService(IApplicationRepository repository)
     {
-        throw new NotImplementedException();
+        this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    }
+
+    public async Task<BaseExercise> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default)
+    {
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(existingExerciseId, cancellationToken);
+        if (exercise is null)
+        {
+            throw new ArgumentException($"Exercise with id {existingExerciseId} does not exist");
+        }
+        
+        var nextAvailableRunningNumber = (await this.repository.CommonExercises.GetForChapterAsync(chapterToCopyTo, cancellationToken))
+            .Select(m => m.RunningNumber)
+            .DefaultIfEmpty(0)
+            .Max() + 1;
+
+        exercise.Id = Guid.NewGuid();
+        
+        exercise.ChapterId = chapterToCopyTo;
+        exercise.Chapter = null!;
+        exercise.RunningNumber = nextAvailableRunningNumber;
+
+        await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
+
+        return exercise;
+    }
+
+    public async Task<List<ExerciseDetailItem>> GetByChapterIdAsync(Guid chapterId, CancellationToken cancellationToken = default)
+    {
+        var exercises = await this.repository.CommonExercises.GetForChapterAsync(chapterId, cancellationToken);
+
+        return exercises.Select(e => this.ToDetailItem(e))
+            .ToList();
+    }
+
+    public async Task DeleteExerciseAsync(Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        await this.repository.CommonExercises.DeleteAsync(exerciseId, cancellationToken);
+    }
+
+    public async Task<ExerciseDetailItem> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, cancellationToken) ?? throw new EntityNotFoundException<BaseExercise>(exerciseId);
+
+        return this.ToDetailItem(exercise);
+    }
+
+    public async Task<List<ExerciseDetailItem>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var all = await this.repository.CommonExercises.GetAllAsync(cancellationToken);
+
+        return all
+            .Select(e => this.ToDetailItem(e))
+            .ToList();
+    }
+
+    private ExerciseDetailItem ToDetailItem(BaseExercise entity)
+    {
+        return new ExerciseDetailItem
+        {
+            Id = entity.Id,
+            ExerciseName = entity.ExerciseName,
+            ChapterId = entity.ChapterId,
+            AchieveablePoints = entity.AchievablePoints,
+            CreationDate = entity.CreationTime,
+            ExerciseDescription = entity.Description,
+            ExerciseType = entity.ExerciseType,
+            ModificationDate = entity.ModificationTime,
+            RunningNumber = entity.RunningNumber
+        };
     }
 }

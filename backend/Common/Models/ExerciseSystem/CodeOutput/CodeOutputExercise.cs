@@ -9,7 +9,4 @@ public class CodeOutputExercise: BaseExercise
     public string ExpectedAnswer { get; set; }
     
     public bool IsMultiLineResponse { get; set; }
-    
-    [Column(TypeName = "nvarchar(max)")]
-    public string CorrectResponse { get; set; }
 }

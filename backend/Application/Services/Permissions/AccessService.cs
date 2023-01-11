@@ -78,6 +78,17 @@ public class AccessService : IAccessService
         return module.OwnerId == userId;
     }
 
+    public async Task<bool> IsChapterAdmin(Guid chapterId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var chapter = await this.repository.Chapters.TryGetByIdAsync(chapterId);
+        if (chapter == null)
+        {
+            return false;
+        }
+
+        return await this.IsModuleAdmin(chapter.ModuleId, userId, cancellationToken);
+    }
+
     public async Task<bool> IsSystemAdmin(Guid userId)
     {
         var user = await userManager.FindByIdAsync(userId.ToString());

@@ -8,5 +8,5 @@ public class ExerciseListItem
     public string ExerciseName { get; set; }
     public ExerciseType ExerciseType { get; set; }
     public int Order { get; set; }
-    public int ReachableScore { get; set; }
+    public int AchivablePoints { get; set; }
 }

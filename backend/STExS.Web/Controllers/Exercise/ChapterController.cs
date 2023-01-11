@@ -143,8 +143,8 @@ public static class ExerciseMapper
         {
             Order = exercise.RunningNumber,
             ExerciseType = exercise.ExerciseType,
-            ExerciseName = exercise.Title,
-            ReachableScore = exercise.AchieveablePoints,
+            ExerciseName = exercise.ExerciseName,
+            AchivablePoints = exercise.AchievablePoints,
             ExerciseId = exercise.Id
         };
     }
