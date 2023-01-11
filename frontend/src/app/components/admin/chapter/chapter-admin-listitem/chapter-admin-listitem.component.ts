@@ -21,7 +21,6 @@ export class ChapterAdminListitemComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    
     this.chapterName = this.chapter?.chapterName;
     this.chapterDescription = this.chapter?.chapterDescription;
     this.moduleId =  this.chapter?.moduleId;

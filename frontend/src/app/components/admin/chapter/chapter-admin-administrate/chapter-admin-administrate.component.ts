@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
+import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
 
 
 @Component({
@@ -17,9 +18,12 @@ import {ChapterDetailItem} from "../../../../../services/generated/models/chapte
 
 export class ChapterAdminAdministrateComponent implements OnInit {
   public moduleId : string | null | undefined = "";
+
+  public module : ModuleDetailItem | null = null;
   public chapter : ChapterDetailItem | null = null;
-  public chapterName : string | null | undefined = "";
-  public chapterDescription : string | null | undefined = "";
+  public chapterName : string | null | undefined = "chapter_name";
+  public chapterDescription : string | null | undefined = "chapter_description";
+
   public isEditingName: boolean = false;
   public newChapterName: string = "";
   public moduleName: string | null | undefined = "";
@@ -30,6 +34,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   private isDeleting: boolean = false;
 
   @Output() onChapterChange = new EventEmitter<any>();
+  private chapterId: string | null = "";
 
 
   constructor(private readonly activatedRoute:ActivatedRoute,
@@ -42,11 +47,15 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     this.isLoading = true;
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["module_id"] != null){
-        this.chapter = params["chapter"];
         this.loadModule(params["module_id"]);
+        this.chapter = params["chapter"];
+        this.chapterId = params["chapterId"];
       }
     })
+    console.log('CHAPTER')
+    console.log(this.chapter);
     this.isLoading = false;
+    this.chapterName = this.chapter?.chapterName;
   }
 
   loadModule(moduleId:string){
@@ -56,6 +65,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     })
       .subscribe(m => {
         this.moduleName = m?.moduleName
+        this.module = m;
       })
   }
 
