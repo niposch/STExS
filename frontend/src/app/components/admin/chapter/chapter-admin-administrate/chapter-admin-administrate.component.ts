@@ -21,6 +21,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
 
   public savingInProgress = false;
   public showLoading = false;
+  public isLoading: boolean = false;
 
 
   constructor(private readonly activatedRoute:ActivatedRoute,
@@ -28,12 +29,14 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     private router: Router, public snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["module_id"] != null){
         this.chapterName = params["chapter_name"];
         this.loadModule(params["module_id"]);
       }
     })
+    this.isLoading = false;
   }
 
   loadModule(moduleId:string){

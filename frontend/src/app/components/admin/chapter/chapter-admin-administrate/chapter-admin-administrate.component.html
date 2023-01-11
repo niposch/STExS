@@ -1,4 +1,5 @@
-<mat-card>
+<mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
+<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''">
   <div>
     <mat-label>chapter of </mat-label>
     <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
@@ -38,7 +39,8 @@
     <mat-divider ></mat-divider>
 
     <app-task-list></app-task-list>
-
   </div>
 </mat-card>
+
+<mat-spinner *ngIf="this.isLoading" mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
 
