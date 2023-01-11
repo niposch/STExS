@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
+import {ChapterService} from "../../../../../services/generated/services/chapter.service";
+import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
 
 
 @Component({
@@ -13,6 +17,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 export class ChapterAdminAdministrateComponent implements OnInit {
   public moduleId : string | null | undefined = "";
+  public chapter : ChapterDetailItem | null = null;
   public chapterName : string | null | undefined = "";
   public chapterDescription : string | null | undefined = "";
   public isEditingName: boolean = false;
@@ -22,17 +27,22 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   public savingInProgress = false;
   public showLoading = false;
   public isLoading: boolean = false;
+  private isDeleting: boolean = false;
+
+  @Output() onChapterChange = new EventEmitter<any>();
 
 
   constructor(private readonly activatedRoute:ActivatedRoute,
-    private readonly moduleService: ModuleService,
-    private router: Router, public snackBar: MatSnackBar,) { }
+              private router: Router, public snackBar: MatSnackBar,
+              private readonly chapterService:ChapterService,
+              private readonly moduleService:ModuleService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["module_id"] != null){
-        this.chapterName = params["chapter_name"];
+        this.chapter = params["chapter"];
         this.loadModule(params["module_id"]);
       }
     })
@@ -71,5 +81,43 @@ export class ChapterAdminAdministrateComponent implements OnInit {
 
   linkToModule() {
     this.router.navigateByUrl("/module/administrate?id="+this.moduleId)
+  }
+
+  deleteChapterDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data == "delete") this.deleteChapter();
+      }
+    );
+  }
+
+  private deleteChapter() {
+    if (this.isDeleting) {
+      return;
+    }
+
+    this.showLoading = true;
+    this.isDeleting = true;
+
+    lastValueFrom(this.chapterService.apiChapterDelete({
+      //chapterId: this.chapter?.runningNumber
+    }))
+      .catch(err =>{
+        this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000});
+        this.isDeleting = false;
+        this.showLoading = false;
+        throw err
+      }).then(() => {
+      this.snackBar.open("Successfully deleted Module", "Dismiss", {duration:2000});
+      this.isDeleting = false;
+      this.showLoading = false;
+      this.onChapterChange.emit();
+    })
   }
 }

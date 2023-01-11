@@ -18,6 +18,13 @@
             saving...</a>
           <a *ngIf="!savingInProgress" mat-raised-button color="primary" class="button save-button"
           (click)="saveModuleChanges()">save</a>
+
+          <div style="width: 10px"></div>
+
+          <button class="button" mat-button color="warn" (click)="deleteChapterDialog()">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+            DELETE
+          </button>
         </div>
     </div>
 
