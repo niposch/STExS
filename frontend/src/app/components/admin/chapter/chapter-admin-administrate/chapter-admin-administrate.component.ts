@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {lastValueFrom} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -10,17 +12,20 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 
 export class ChapterAdminAdministrateComponent implements OnInit {
-  public moduleId : string | null | undefined = ""; 
+  public moduleId : string | null | undefined = "";
   public chapterName : string | null | undefined = "";
   public chapterDescription : string | null | undefined = "";
   public isEditingName: boolean = false;
   public newChapterName: string = "";
   public moduleName: string | null | undefined = "";
 
+  public savingInProgress = false;
+  public showLoading = false;
+
 
   constructor(private readonly activatedRoute:ActivatedRoute,
     private readonly moduleService: ModuleService,
-    private router: Router) { }
+    private router: Router, public snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -49,4 +54,19 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     }
   }
 
+  saveModuleChanges() {
+    if (this.savingInProgress) return;
+
+    this.showLoading = true;
+
+    this.savingInProgress = true;
+    //BACKEND API POST ROUTE to change chapter info
+    this.snackBar.open("Successfully saved changes!", "Dismiss", {duration:2000})
+    this.savingInProgress = false;
+    this.showLoading = false;
+  }
+
+  linkToModule() {
+    this.router.navigateByUrl("/module/administrate?id="+this.moduleId)
+  }
 }

@@ -45,6 +45,8 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
 import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
 import { MatSliderModule } from "@angular/material/slider";
 import { ChapterAdminAdministrateComponent } from './components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
+import { TaskListComponent } from './components/admin/chapter/chapter-admin-administrate/task-list/task-list.component';
+import { TaskListItemComponent } from './components/admin/chapter/chapter-admin-administrate/task-list-item/task-list-item.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { ChapterAdminAdministrateComponent } from './components/admin/chapter/ch
     ChapterAdminListitemComponent,
     ArchiveDialogComponent,
     ChapterAdminAdministrateComponent,
+    TaskListComponent,
+    TaskListItemComponent,
   ],
     imports: [
         BrowserModule,
