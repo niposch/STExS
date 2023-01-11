@@ -13,7 +13,7 @@ import {ModuleDetailItem} from "../../../../services/generated/models/module-det
 })
 export class JoinModuleComponent implements OnInit, AfterViewInit{
   // @ts-ignore
-  @ViewChild("searchInput") searchInputRef: ElementRef
+  @ViewChild("searchInput") searchInputRef: ElementRef;
 
   @Input() infoText : string = "";
   public results: Array<ModuleDetailItem> | null = null;

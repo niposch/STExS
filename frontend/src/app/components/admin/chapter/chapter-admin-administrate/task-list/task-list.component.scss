@@ -1,0 +1,30 @@
+mat-card {
+  margin-top: 5px;
+}
+
+.title {
+  font-weight: bold;
+  margin-right: 20px;
+  min-width: 200px;
+}
+
+table {
+  background-color: #505050;
+  width: 100%
+}
+
+.table-div {
+  background-color: #505050;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: space-between;
+  margin-bottom: -10px;
+}

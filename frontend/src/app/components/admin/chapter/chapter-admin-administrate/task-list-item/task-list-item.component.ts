@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChapterDetailItem} from "../../../../../../services/generated/models/chapter-detail-item";
 import {ModuleDetailItem} from "../../../../../../services/generated/models/module-detail-item";
 
 @Component({
