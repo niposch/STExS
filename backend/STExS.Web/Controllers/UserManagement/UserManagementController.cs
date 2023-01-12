@@ -55,5 +55,26 @@ public class UserManagementController : ControllerBase
 
         return this.Ok(userListItems);
     }
-    
+
+    [HttpPost("changeRole")]
+    [Authorize(Roles = $"{RoleHelper.Admin}")]
+    public async Task ChangeRole(Guid userId,RoleType newRole)
+    {
+        
+       var user = await this.userManager.FindByIdAsync(userId.ToString());
+       await this.userManager.RemoveFromRolesAsync(user,  new List<string> { RoleHelper.Admin, RoleHelper.Teacher, RoleHelper.User });
+       var newRoles = new List<string> {RoleHelper.User};
+       if (newRole is RoleType.Admin)
+       {
+           newRoles.Add(RoleHelper.Admin);
+       }
+       if (newRole is RoleType.Teacher or RoleType.Admin)
+       {
+           newRoles.Add(RoleHelper.Teacher);
+       }
+       
+       await this.userManager.AddToRolesAsync(user, newRoles);
+
+       
+    }
 }  
