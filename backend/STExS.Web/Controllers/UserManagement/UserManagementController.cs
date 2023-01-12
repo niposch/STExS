@@ -62,7 +62,7 @@ public class UserManagementController : ControllerBase
     {
         
        var user = await this.userManager.FindByIdAsync(userId.ToString());
-       await this.userManager.RemoveFromRolesAsync(user,  new List<string> { RoleHelper.Admin, RoleHelper.Teacher, RoleHelper.User });
+       await this.userManager.RemoveFromRolesAsync(user, await this.userManager.GetRolesAsync(user));
        var newRoles = new List<string> {RoleHelper.User};
        if (newRole is RoleType.Admin)
        {
@@ -74,7 +74,5 @@ public class UserManagementController : ControllerBase
        }
        
        await this.userManager.AddToRolesAsync(user, newRoles);
-
-       
     }
 }  
