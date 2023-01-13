@@ -11,7 +11,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-fdescribe('AuthGuard', () => {
+describe('AuthGuard', () => {
   let guard: AuthGuard;
   let userService = jasmine.createSpyObj('UserService', ['hasCookie']);
 
