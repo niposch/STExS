@@ -26,7 +26,12 @@ export class ChapterAdminListitemComponent implements OnInit {
     this.moduleId =  this.chapter?.moduleId;
   }
 
+
   editButtonClick($event: MouseEvent) {
     $event.stopPropagation();
+    this.router.navigate(
+      ['/module/administrate/chapter'],
+      //{queryParams: {chapterId:this.chapter?.chapterId}}
+    )
   }
 }

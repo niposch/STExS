@@ -47,13 +47,9 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     this.isLoading = true;
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["module_id"] != null){
-        this.loadModule(params["module_id"]);
-        this.chapter = params["chapter"];
         this.chapterId = params["chapterId"];
       }
     })
-    console.log('CHAPTER')
-    console.log(this.chapter);
     this.isLoading = false;
     this.chapterName = this.chapter?.chapterName;
   }
