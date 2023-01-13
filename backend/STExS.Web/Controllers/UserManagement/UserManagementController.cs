@@ -4,27 +4,23 @@ using Common.Models.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace STExS.Controllers.UserManagement;
+
 [ApiController]
 [Route("api/[controller]")]
-
 public class UserManagementController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> userManager;
-    private readonly RoleManager<ApplicationRole> roleManager;
 
-    public UserManagementController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+    public UserManagementController(UserManager<ApplicationUser> userManager)
     {
         this.userManager = userManager;
-        this.roleManager = roleManager;
     }
+
     [HttpGet("all")]
     [Authorize(Roles = $"{RoleHelper.Admin}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserListItem>))]
-    
     public async Task<IActionResult> GetAllUsers()
     {
         var userListItems = new List<UserListItem>();
@@ -45,10 +41,12 @@ public class UserManagementController : ControllerBase
             {
                 listItem.CurrentRole = RoleType.Teacher;
             }
+
             if (roles.Contains(RoleHelper.Admin))
             {
                 listItem.CurrentRole = RoleType.Admin;
             }
+
             userListItems.Add(listItem);
         }
 
@@ -58,21 +56,21 @@ public class UserManagementController : ControllerBase
 
     [HttpPost("changeRole")]
     [Authorize(Roles = $"{RoleHelper.Admin}")]
-    public async Task ChangeRole(Guid userId,RoleType newRole)
+    public async Task ChangeRole(Guid userId, RoleType newRole)
     {
-        
-       var user = await this.userManager.FindByIdAsync(userId.ToString());
-       await this.userManager.RemoveFromRolesAsync(user, await this.userManager.GetRolesAsync(user));
-       var newRoles = new List<string> {RoleHelper.User};
-       if (newRole is RoleType.Admin)
-       {
-           newRoles.Add(RoleHelper.Admin);
-       }
-       if (newRole is RoleType.Teacher or RoleType.Admin)
-       {
-           newRoles.Add(RoleHelper.Teacher);
-       }
-       
-       await this.userManager.AddToRolesAsync(user, newRoles);
+        var user = await this.userManager.FindByIdAsync(userId.ToString());
+        await this.userManager.RemoveFromRolesAsync(user, await this.userManager.GetRolesAsync(user));
+        var newRoles = new List<string> { RoleHelper.User };
+        if (newRole is RoleType.Admin)
+        {
+            newRoles.Add(RoleHelper.Admin);
+        }
+
+        if (newRole is RoleType.Teacher or RoleType.Admin)
+        {
+            newRoles.Add(RoleHelper.Teacher);
+        }
+
+        await this.userManager.AddToRolesAsync(user, newRoles);
     }
-}  
+}
