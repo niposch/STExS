@@ -1,5 +1,8 @@
 mat-card {
   background-color: #454545;
+  width: inherit;
+  overflow: hidden;
+  min-width: 300px;
 }
 
 .title {
@@ -12,6 +15,7 @@ mat-card {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  overflow-x: hidden;
 }
 
 .vertically-centered {
@@ -21,4 +25,9 @@ mat-card {
 
 .space-between {
   justify-content: space-between;
+}
+
+mat-chip-list {
+  min-width: fit-content;
+  overflow: hidden;
 }

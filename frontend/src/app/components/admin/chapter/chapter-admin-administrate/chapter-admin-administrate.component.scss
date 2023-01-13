@@ -24,7 +24,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     justify-content: space-between;
-
+    overflow-x: hidden;
   }
 
   .full-width {
@@ -33,8 +33,6 @@
 
   mat-card {
     background-color: #333333;
-    min-width: 600px;
-    max-width: 1500px;
     margin: auto;
   }
 
@@ -65,8 +63,12 @@
     background-color: #424242;
     margin-top: 5px;
     margin-bottom: 5px;
+
     max-height: 50vh;
     overflow-y: scroll;
+
+    overflow-x: hidden;
+    width: 100%;
   }
 
   .hide-top-round-corners{
@@ -90,4 +92,8 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
     width: 5px;
+  }
+
+  .master-card {
+    min-width: 300px;
   }

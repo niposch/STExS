@@ -1,5 +1,5 @@
 <mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
-<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''">
+<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
   <div>
     <mat-label>chapter of </mat-label>
     <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
@@ -40,7 +40,7 @@
       <mat-card-title>Exercises</mat-card-title>
       <mat-card-content>
         <mat-divider style="margin-bottom: 5px"></mat-divider>
-        <div>
+        <div> <!-- *ngFor="let exercise in this.exerciseList" -->
           <app-task-list-item></app-task-list-item>
         </div>
       </mat-card-content>
