@@ -48,9 +48,11 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
             IsMultiLineResponse = createItem.IsMultilineResponse,
             ExpectedAnswer = createItem.ExpectedAnswer,
             RunningNumber = nextAvailableExerciseNumberInChapter,
-            OwnerId = 
+            OwnerId = userId
         };
-        var createdEntity = await this.repository.CodeOutputExercises.CreateAsync(, cancellationToken);
+        var createdEntity = await this.repository.CodeOutputExercises.CreateAsync(entity, cancellationToken);
+
+        return this.ToDetailItemWithAnswers(createdEntity);
     }
 
     public async Task<CodeOutputExerciseDetailItemWithAnswer> UpdateAsync(CodeOutputExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
@@ -70,7 +72,7 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
         entity.AchievablePoints = detailItem.AchieveablePoints;
         entity.ExerciseName = detailItem.ExerciseName;
         entity.ExpectedAnswer = detailItem.ExpectedAnswer;
-        entity.IsMultiLineResponse = detailItem.IsMultiLineRespons;
+        entity.IsMultiLineResponse = detailItem.IsMultiLineResponse;
 
         return entity;
     }

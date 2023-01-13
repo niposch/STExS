@@ -1,6 +1,7 @@
 ﻿using Application.Services;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.CodeOutput;
 using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +22,7 @@ public abstract class Infrastructure
     protected Infrastructure()
     {
         this.Fixture = new Fixture().Customize(new AutoMoqCustomization());
+        this.Fixture.Customize(new AppTestingCustomizations());
         this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         
         this.UserManagerMock = this.Fixture.FreezeInject<UserManager<ApplicationUser>>();

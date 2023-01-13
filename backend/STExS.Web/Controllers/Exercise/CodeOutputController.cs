@@ -32,7 +32,7 @@ public class CodeOutputController:ControllerBase
             return this.Unauthorized();
         }
         
-        var res = await this.codeOutputExerciseService.CreateAsync(createItem, cancellationToken);
+        var res = await this.codeOutputExerciseService.CreateAsync(createItem, this.User.GetUserId(), cancellationToken);
         return this.Ok(res);
     }
     

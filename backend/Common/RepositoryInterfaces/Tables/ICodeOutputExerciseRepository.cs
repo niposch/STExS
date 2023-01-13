@@ -6,5 +6,6 @@ public interface ICodeOutputExerciseRepository
 {
     Task<CodeOutputExercise?> TryGetById(Guid id, CancellationToken cancellationToken = default);
     
-    Task<CodeOutputExercise> UpdateAsync(CodeOutputExercise exercise, CancellationToken cancellationToken);
+    Task<CodeOutputExercise> UpdateAsync(CodeOutputExercise exercise, CancellationToken cancellationToken = default);
+    Task<CodeOutputExercise> CreateAsync(CodeOutputExercise entity, CancellationToken cancellationToken = default);
 }
