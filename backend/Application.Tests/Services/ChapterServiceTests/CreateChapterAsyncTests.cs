@@ -25,17 +25,18 @@ public sealed class CreateChapterAsyncTests : Infrastructure
         this.ApplicationDbContext.Modules.Add(this.Fixture.Build<Module>()
             .With(m => m.Id, this.moduleId)
             .With(m => m.OwnerId, this.ownerId)
+            .Without(m => m.Chapters) // we don't want to also create chapters
             .Create());
         var user = this.Fixture.Build<ApplicationUser>()
             .With(m => m.Id, this.ownerId)
             .Create();
         this.ApplicationDbContext.SaveChanges();
 
-        this.UserManagerMock.Setup(m => m.FindByIdAsync(this.ownerId.ToString()))
-            .ReturnsAsync(user);
-
-        this.UserManagerMock.Setup(m => m.GetRolesAsync(user))
-            .ReturnsAsync(new List<string> { RoleHelper.Admin });
+        this.AccessServiceMock.Setup(a => a.IsModuleAdmin(this.moduleId, this.ownerId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        
+        this.AccessServiceMock.Setup(a => a.CanViewModule(this.moduleId, this.ownerId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
 
         // Act
         await this.CallAsync();

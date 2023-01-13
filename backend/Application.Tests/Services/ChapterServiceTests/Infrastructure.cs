@@ -1,4 +1,6 @@
 ﻿using Application.Services;
+using Application.Services.Interfaces;
+using Application.Services.Permissions;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
@@ -16,16 +18,14 @@ public abstract class Infrastructure
     protected readonly IFixture Fixture;
     protected readonly ApplicationDbContext ApplicationDbContext;
     protected readonly ChapterService ChapterService;
-    protected readonly Mock<UserManager<ApplicationUser>> UserManagerMock;
-    protected readonly Mock<ModuleRepository> ModuleRepositoryMock;
+    protected readonly Mock<IAccessService> AccessServiceMock;
 
     protected Infrastructure()
     {
         this.Fixture = new Fixture().Customize(new AutoMoqCustomization());
         this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         
-        this.UserManagerMock = this.Fixture.FreezeInject<UserManager<ApplicationUser>>();
-        this.ModuleRepositoryMock = this.Fixture.FreezeInject<ModuleRepository>();
+        this.AccessServiceMock = this.Fixture.Freeze<Mock<IAccessService>>();
         
         this.Fixture.Register<IChapterRepository>(this.Fixture.Create<ChapterRepository>);
         
