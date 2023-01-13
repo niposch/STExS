@@ -4,6 +4,8 @@ import {ModuleService} from "../../../../services/generated/services/module.serv
 import {ActivatedRoute} from "@angular/router";
 import {catchError, firstValueFrom, lastValueFrom} from "rxjs";
 import {ModuleParticipationStatus} from "../../../../services/generated/models/module-participation-status";
+import {ChapterDetailItem} from "../../../../services/generated/models/chapter-detail-item";
+import {ChapterService} from "../../../../services/generated/services/chapter.service";
 
 @Component({
   selector: 'app-module-details',
@@ -13,12 +15,14 @@ import {ModuleParticipationStatus} from "../../../../services/generated/models/m
 export class ModuleDetailsComponent implements OnInit {
   public module:ModuleDetailItem | null | undefined = undefined;
 
+  public chapterList:Array<ChapterDetailItem> | null | undefined = undefined;
   public moduleParticipationStatus = ModuleParticipationStatus
 
   public moduleParticipantCount:number | null = null;
 
   public participationStatus: ModuleParticipationStatus | null = null;
   constructor(private readonly moduleService:ModuleService,
+              private readonly chapterService:ChapterService,
               private readonly activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -51,6 +55,13 @@ export class ModuleDetailsComponent implements OnInit {
       moduleId: moduleId
     })
       .subscribe(count => this.moduleParticipantCount = count)
+
+    this.chapterService.apiChapterForModuleGet$Json({
+      moduleId: moduleId
+    })
+      .subscribe(data => {
+        this.chapterList = data;
+      })
   }
   async joinModule(moduleId:string){
     await this.moduleService.apiModuleJoinModulePost({

@@ -1,18 +1,41 @@
 <div *ngIf="module != null else loading">
-  <mat-card>
-    <mat-card-title>{{module.moduleName}}</mat-card-title>
-    <mat-card-content>
-      <p>{{module.moduleDescription}}</p>
-      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.NotParticipating && module != null" (click)="joinModule(module.moduleId!)">Join</button>
-      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Admin && module != null" disabled>Admin</button>
-      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Accepted && module != null" disabled>Joined</button>
-      <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Requested && module != null" disabled>Requested</button>
-      <button *ngIf="participationStatus == moduleParticipationStatus.Admin" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:module.moduleId}">
-        <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
-      </button>
-      <div *ngIf="moduleParticipantCount != null && module != null">
-        {{this.moduleParticipantCount!}} / {{this.module!.maxParticipants ?? "unlimited"}}
+  <mat-card style="background: #383838">
+    <div class="horizontal-container">
+      <mat-card-title class="module-name">{{module.moduleName}}</mat-card-title>
+      <div class="horizontal-container">
+        <mat-label class="vertically-centered margin-right" *ngIf="moduleParticipantCount != null && module != null">
+          {{this.moduleParticipantCount!}} / {{this.module!.maxParticipants ?? "unlimited"}}
+        </mat-label>
+        <button class="margin-right" *ngIf="participationStatus == moduleParticipationStatus.Admin" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:module.moduleId}">
+          <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
+        </button>
+        <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.NotParticipating && module != null" (click)="joinModule(module.moduleId!)">Join</button>
+        <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Admin && module != null" disabled>Admin</button>
+        <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Accepted && module != null" disabled>Joined</button>
+        <button mat-stroked-button *ngIf="participationStatus == moduleParticipationStatus.Requested && module != null" disabled>Requested</button>
       </div>
+    </div>
+    <mat-card-content>
+      <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
+
+      <div class="description-text vertically-centered">
+        <mat-label >{{module.moduleDescription}}</mat-label>
+      </div>
+
+      <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
+
+      <mat-card>
+        <mat-card-title>Chapters</mat-card-title>
+        <mat-card-content>
+          <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
+          <div class="chapter-list">
+            <div class="chapter-item" *ngFor="let chapter of this.chapterList" style="margin-bottom: 5px">
+              <app-chapter-admin-listitem [chapter]="chapter"></app-chapter-admin-listitem>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
     </mat-card-content>
   </mat-card>
 </div>

@@ -16,6 +16,8 @@ export class ChapterAdminListitemComponent implements OnInit {
   public chapterDescription: string | null | undefined = "chapter_description";
   public moduleId: string | null | undefined = "chapter_moduleid";
 
+  @Input() public showEditButton: boolean = false;
+
   constructor(private readonly activatedRoute:ActivatedRoute,
     private readonly moduleService: ModuleService,
     private router: Router) { }

@@ -63,7 +63,6 @@ export class ChapterAdminListComponent implements OnInit {
     })
       .subscribe(data => {
         this.chapters = data;
-        console.log(this.chapters);
       })
   }
 

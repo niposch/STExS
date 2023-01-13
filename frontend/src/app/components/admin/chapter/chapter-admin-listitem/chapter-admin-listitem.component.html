@@ -6,7 +6,7 @@
     <mat-panel-description>
       <div></div>
       <!-- -->
-      <button class="edit-button" mat-button (click)="editButtonClick($event)">Edit</button>
+      <button *ngIf="this.showEditButton" class="edit-button" mat-button (click)="editButtonClick($event)">Edit</button>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-divider></mat-divider>
