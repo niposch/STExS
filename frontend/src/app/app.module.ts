@@ -47,6 +47,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { ChapterAdminAdministrateComponent } from './components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
 import { TaskListComponent } from './components/admin/chapter/chapter-admin-administrate/task-list/task-list.component';
 import { TaskListItemComponent } from './components/admin/chapter/chapter-admin-administrate/task-list-item/task-list-item.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { TaskListItemComponent } from './components/admin/chapter/chapter-admin-
         MatPaginatorModule,
         MatGridListModule,
         MatDialogModule,
-        MatSliderModule
+        MatSliderModule,
+        DragDropModule
     ],
   providers: [],
   bootstrap: [AppComponent]

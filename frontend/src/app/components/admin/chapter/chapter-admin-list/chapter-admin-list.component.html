@@ -1,10 +1,12 @@
 <div *ngIf="this.chapters != null && this.module != null && this.participationStatus != null">
-  <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
+  <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
     <mat-card>
       <mat-card-title class="heading-text">Chapters</mat-card-title>
       <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
-      <div class="chapter-list">
-        <app-chapter-admin-listitem class="chapter-list-item" *ngFor="let entry of this.chapters" [showEditButton]="true" [chapter]="entry"></app-chapter-admin-listitem>
+      <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">
+        <div cdkDrag class="chapter-list-item" *ngFor="let entry of this.chapters">
+          <app-chapter-admin-listitem [showEditButton]="true" [chapter]="entry"></app-chapter-admin-listitem>
+        </div>
       </div>
     </mat-card>
 

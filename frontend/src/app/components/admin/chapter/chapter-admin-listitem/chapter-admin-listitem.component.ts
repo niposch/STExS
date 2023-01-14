@@ -22,7 +22,6 @@ export class ChapterAdminListitemComponent implements OnInit {
   ngOnInit(): void {
     this.chapterName = this.chapter?.chapterName;
     this.chapterDescription = this.chapter?.chapterDescription;
-    console.log(this.chapter?.id);
   }
 
 
