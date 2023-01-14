@@ -9,12 +9,9 @@ import {ChapterDetailItem} from "../../../../../services/generated/models/chapte
   styleUrls: ['./chapter-admin-listitem.component.scss']
 })
 export class ChapterAdminListitemComponent implements OnInit {
-
-  @Input() chapter: ChapterDetailItem | null = null;
-
+  @Input() public chapter: ChapterDetailItem | null = null;
   public chapterName: string | null | undefined = "chapter_name";
   public chapterDescription: string | null | undefined = "chapter_description";
-  public moduleId: string | null | undefined = "chapter_moduleid";
 
   @Input() public showEditButton: boolean = false;
 
@@ -25,7 +22,7 @@ export class ChapterAdminListitemComponent implements OnInit {
   ngOnInit(): void {
     this.chapterName = this.chapter?.chapterName;
     this.chapterDescription = this.chapter?.chapterDescription;
-    this.moduleId =  this.chapter?.moduleId;
+    console.log(this.chapter?.id);
   }
 
 
@@ -33,7 +30,7 @@ export class ChapterAdminListitemComponent implements OnInit {
     $event.stopPropagation();
     this.router.navigate(
       ['/module/administrate/chapter'],
-      //{queryParams: {chapterId:this.chapter?.chapterId}}
+      {queryParams: {chapterId:this.chapter?.id}}
     )
   }
 }

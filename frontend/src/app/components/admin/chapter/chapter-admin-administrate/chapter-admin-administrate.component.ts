@@ -17,25 +17,17 @@ import {ModuleDetailItem} from "../../../../../services/generated/models/module-
 })
 
 export class ChapterAdminAdministrateComponent implements OnInit {
-  public moduleId : string | null | undefined = "";
-
-  public module : ModuleDetailItem | null = null;
   public chapter : ChapterDetailItem | null = null;
   public chapterName : string | null | undefined = "chapter_name";
   public chapterDescription : string | null | undefined = "chapter_description";
-
+  public moduleName: string | null | undefined = "Module";
   public isEditingName: boolean = false;
   public newChapterName: string = "";
-  public moduleName: string | null | undefined = "";
-
   public savingInProgress = false;
   public showLoading = false;
   public isLoading: boolean = false;
   private isDeleting: boolean = false;
-
-  @Output() onChapterChange = new EventEmitter<any>();
-  private chapterId: string | null = "";
-
+  private chapterId: string = "";
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -46,22 +38,30 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.activatedRoute.queryParams.subscribe(params => {
-      if(params["module_id"] != null){
+      if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
+        this.loadChapter(this.chapterId);
       }
     })
     this.isLoading = false;
-    this.chapterName = this.chapter?.chapterName;
   }
 
-  loadModule(moduleId:string){
-    this.moduleId = moduleId;
+  loadChapter(id:string){
+    this.chapterService.apiChapterGet$Json({
+      chapterId: id
+    })
+      .subscribe(c => {
+        this.chapter = c;
+        this.chapterName = c?.chapterName;
+        this.chapterDescription = c?.chapterDescription;
+      })
+
     this.moduleService.apiModuleGetByIdGet$Json({
-      id: moduleId
+      id: this.chapter?.moduleId
     })
       .subscribe(m => {
-        this.moduleName = m?.moduleName
-        this.module = m;
+        this.moduleName = m.moduleName;
+        console.log("MODULE NAME: " + this.moduleName)
       })
   }
 
@@ -75,9 +75,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
 
   saveModuleChanges() {
     if (this.savingInProgress) return;
-
     this.showLoading = true;
-
     this.savingInProgress = true;
     //BACKEND API POST ROUTE to change chapter info
     this.snackBar.open("Successfully saved changes!", "Dismiss", {duration:2000})
@@ -86,7 +84,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   }
 
   linkToModule() {
-    this.router.navigateByUrl("/module/administrate?id="+this.moduleId)
+    this.router.navigateByUrl("/module/administrate?id="+this.chapter?.moduleId)
   }
 
   deleteChapterDialog() {
@@ -95,10 +93,10 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(
       data => {
         if (data == "delete") this.deleteChapter();
+        this.linkToModule();
       }
     );
   }
@@ -112,7 +110,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     this.isDeleting = true;
 
     lastValueFrom(this.chapterService.apiChapterDelete({
-      //chapterId: this.chapter?.runningNumber
+      chapterId: this.chapter?.id
     }))
       .catch(err =>{
         this.snackBar.open("Could not delete Module", "Dismiss", {duration:5000});
@@ -123,7 +121,6 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.snackBar.open("Successfully deleted Module", "Dismiss", {duration:2000});
       this.isDeleting = false;
       this.showLoading = false;
-      this.onChapterChange.emit();
     })
   }
 }
