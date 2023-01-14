@@ -24,7 +24,6 @@ public class JoinModuleAsyncTests : Infrastructure
         this.ApplicationDbContext.ModuleParticipations.Should()
             .HaveCount(1);
         var participation = this.ApplicationDbContext.ModuleParticipations.First();
-        var moduleParticipation = this.ApplicationDbContext.ModuleParticipations.First();
         participation.UserId.Should().Be(this.userId);
         participation.ModuleId.Should().Be(this.moduleId);
     }
