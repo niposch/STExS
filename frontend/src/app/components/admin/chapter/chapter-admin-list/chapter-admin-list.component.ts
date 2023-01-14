@@ -8,6 +8,7 @@ import {ChapterCreateItem} from "../../../../../services/generated/models/chapte
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {ReorderChaptersRequest} from "../../../../../services/generated/models/reorder-chapters-request";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-chapter-admin-list',
@@ -108,7 +109,7 @@ export class ChapterAdminListComponent implements OnInit {
     // @ts-ignore
     moveItemInArray(this.chapters, event.previousIndex, event.currentIndex);
 
-    let chapterIdArray : Array<string> = [];
+    let chapterIdArray: Array<string> = [];
     let chapterI
     // @ts-ignore
     for (chapterI of this.chapters) {
@@ -116,17 +117,14 @@ export class ChapterAdminListComponent implements OnInit {
       chapterIdArray.push(chapterI.id);
     }
 
-    console.log({body: {
-      moduleId: this.moduleId,
-      chapterIds: chapterIdArray
-    }})
-
     // @ts-ignore
-    this.chapterService.apiChapterReorderPost( {
+    lastValueFrom(this.chapterService.apiChapterReorderPost({
       body: {
         moduleId: this.moduleId,
         chapterIds: chapterIdArray
       }
+    })).catch(err => {
+      this.snackBar.open("Could not reorder chapters!", "dismiss")
     })
   }
 }
