@@ -34,9 +34,16 @@ export class UserService {
     await firstValueFrom(this.getUserDetails());
   }
 
-  hasCookie():Observable<boolean>{
+  private hasCookieCache = false;
+  hasCookie(forceLoad=false):Observable<boolean>{
+    if(!forceLoad && this.hasCookieCache){
+      return of(true);
+    }
     return this.getUserDetails().pipe<any, boolean>(
-      map(() => true),
+      map(() => {
+        this.hasCookieCache = true;
+        return true;
+      }),
       catchError(err => of(false)))
   }
 
