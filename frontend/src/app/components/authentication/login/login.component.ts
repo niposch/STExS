@@ -61,8 +61,8 @@ export class LoginComponent implements OnInit {
       })
       .then(() =>{
         this.showLoading = false;
-        this.router.navigate([this.callbackUrl]);
       })
+    await this.router.navigate([this.callbackUrl]);
   }
 
   validateEmail(event : Event | null = null) {

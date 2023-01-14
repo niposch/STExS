@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log(route.url)
     let hasCookie = await firstValueFrom(this.userService.hasCookie())
     if (hasCookie) {
       // logged in so return true
