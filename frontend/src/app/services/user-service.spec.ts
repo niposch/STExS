@@ -7,7 +7,7 @@ import { AppComponent } from '../app.component';
 import { firstValueFrom, of } from 'rxjs';
 import { AuthenticateService } from 'src/services/generated/services';
 
-fdescribe('AuthenticationServiceService', () => {
+describe('AuthenticationServiceService', () => {
   let expectedUser: any;
   let expectedRoles: any;
 
