@@ -2,7 +2,10 @@
   <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
     <mat-card>
       <div>
-        <mat-card-title class="heading-text">Chapters</mat-card-title>
+        <div class="heading-container">
+          <mat-card-title class="heading-text">Chapters</mat-card-title>
+          <mat-label class="info-text">(drag to reorder the chapters)</mat-label>
+        </div>
         <mat-divider style="margin-bottom: 10px"></mat-divider>
         <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
         <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">

@@ -91,3 +91,15 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.heading-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-text {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #909090;
+  margin-left: 10px;
+}
