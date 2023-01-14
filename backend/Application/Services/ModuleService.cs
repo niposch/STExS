@@ -104,8 +104,11 @@ public sealed class ModuleService : IModuleService
     public async Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
         var existingParticipation = await this.repository.ModuleParticipations.TryGetByModuleAndUserIdAsync(moduleId, userId, cancellationToken);
-        if (existingParticipation != null) return existingParticipation.ParticipationConfirmed ? JoinResult.AlreadyJoined : JoinResult.VerificationPending;
-        
+        if (existingParticipation != null)
+        {
+            return existingParticipation.ParticipationConfirmed ? JoinResult.AlreadyJoined : JoinResult.VerificationPending;
+        }
+
         var newParticipation = new ModuleParticipation
         {
             ModuleId = moduleId,
@@ -113,13 +116,28 @@ public sealed class ModuleService : IModuleService
             ParticipationConfirmed = false
         };
         var module = await this.repository.Modules.TryGetByIdAsync(moduleId, cancellationToken);
-        if (module == null) return JoinResult.ModuleDoesNotExist;
-        if (module.OwnerId == userId) return JoinResult.UserIsOwner;
-        if(module.IsArchived) return JoinResult.ModuleIsArchived;
+        if (module == null)
+        {
+            return JoinResult.ModuleDoesNotExist;
+        }
+
+        if (module.OwnerId == userId)
+        {
+            return JoinResult.UserIsOwner;
+        }
+
+        if(module.IsArchived)
+        {
+            return JoinResult.ModuleIsArchived;
+        }
+
         if (module.MaxParticipants != null)
         {
             var participationCount = await this.repository.ModuleParticipations.GetParticipationCountByModuleIdAsync(moduleId, cancellationToken);
-            if (participationCount >= module.MaxParticipants) return JoinResult.ModuleIsFull;
+            if (participationCount >= module.MaxParticipants)
+            {
+                return JoinResult.ModuleIsFull;
+            }
         }
         
         await this.repository.ModuleParticipations.AddAsync(newParticipation, cancellationToken);
