@@ -1,4 +1,4 @@
-﻿namespace STExS.Controllers.Exercise;
+﻿namespace Application.DTOs.Module;
 
 public sealed class ModuleCreateItem
 {
