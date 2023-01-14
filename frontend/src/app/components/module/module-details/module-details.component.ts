@@ -21,6 +21,7 @@ export class ModuleDetailsComponent implements OnInit {
   public moduleParticipantCount:number | null = null;
 
   public participationStatus: ModuleParticipationStatus | null = null;
+  showChapters: boolean = false;
   constructor(private readonly moduleService:ModuleService,
               private readonly chapterService:ChapterService,
               private readonly activatedRoute:ActivatedRoute) { }
@@ -61,6 +62,9 @@ export class ModuleDetailsComponent implements OnInit {
     })
       .subscribe(data => {
         this.chapterList = data;
+        if (this.chapterList.length > 0) {
+          this.showChapters = true;
+        }
       })
   }
   async joinModule(moduleId:string){

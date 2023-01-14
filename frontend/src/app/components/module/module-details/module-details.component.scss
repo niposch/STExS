@@ -35,6 +35,8 @@
 .description-text {
   margin-top: 5px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 // SCROLL BAR
@@ -58,4 +60,11 @@
   max-width: 1500px;
   margin: auto;
   background-color: #383838;
+}
+
+.space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto 5px;
 }

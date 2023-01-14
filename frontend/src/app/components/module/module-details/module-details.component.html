@@ -16,15 +16,20 @@
       </div>
     </div>
     <mat-card-content>
-      <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
+      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
 
       <div class="description-text vertically-centered">
-        <mat-label >{{module.moduleDescription}}</mat-label>
+        <div class="space-between">
+          <mat-label>{{module.ownerFirstName}} {{module.ownerLastName}}</mat-label>
+          <mat-label>{{module.creationTime | date:'medium'}}</mat-label>
+        </div>
+        <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
+        <mat-label style="margin-top: auto; margin-bottom: auto;">{{module.moduleDescription}}</mat-label>
       </div>
 
-      <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
+      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
 
-      <mat-card>
+      <mat-card *ngIf="this.showChapters">
         <mat-card-title>Chapters</mat-card-title>
         <mat-card-content>
           <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
@@ -35,6 +40,8 @@
           </div>
         </mat-card-content>
       </mat-card>
+
+      <mat-label *ngIf="!this.showChapters">no chapters in this module</mat-label>
 
     </mat-card-content>
   </mat-card>
