@@ -1,8 +1,8 @@
 <div *ngIf="module != null else loading">
-  <mat-card style="background: #383838">
-    <div class="horizontal-container">
-      <mat-card-title class="module-name">{{module.moduleName}}</mat-card-title>
-      <div class="horizontal-container">
+  <mat-card class="master-card">
+    <div class="horizontal-container" style="height: 60px">
+      <mat-card-title class="module-name vertically-centered">{{module.moduleName}}</mat-card-title>
+      <div class="horizontal-container vertically-centered">
         <mat-label class="vertically-centered margin-right" *ngIf="moduleParticipantCount != null && module != null">
           {{this.moduleParticipantCount!}} / {{this.module!.maxParticipants ?? "unlimited"}}
         </mat-label>
