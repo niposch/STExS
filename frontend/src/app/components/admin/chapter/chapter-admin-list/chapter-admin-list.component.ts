@@ -127,4 +127,14 @@ export class ChapterAdminListComponent implements OnInit {
       this.snackBar.open("Could not reorder chapters!", "dismiss")
     })
   }
+
+  reloadChapters() {
+    this.chapterService.apiChapterForModuleGet$Json({
+      moduleId: this.moduleId
+    })
+      .subscribe(data => {
+        this.chapters = data;
+        this.chapters?.sort((a,b) => this.compareChapters(a,b));
+      })
+  }
 }

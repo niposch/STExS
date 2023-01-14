@@ -10,7 +10,7 @@
         <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
         <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">
           <div cdkDrag class="chapter-list-item" *ngFor="let entry of this.chapters">
-            <app-chapter-admin-listitem [showEditButton]="true" [chapter]="entry"></app-chapter-admin-listitem>
+            <app-chapter-admin-listitem [showEditButton]="true" [showDeleteButton]="true" [canReorder]="true" [chapter]="entry" (onChapterChange)="reloadChapters()"></app-chapter-admin-listitem>
           </div>
         </div>
       </div>
