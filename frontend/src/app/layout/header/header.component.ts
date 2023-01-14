@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
-	      console.log(user);
         this.userName = user.userName ?? "";
         this.loggedIn = true;
       }
