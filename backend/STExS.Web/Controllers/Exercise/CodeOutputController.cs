@@ -7,7 +7,6 @@ using STExS.Helper;
 
 namespace STExS.Controllers.Exercise;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CodeOutputController:ControllerBase
@@ -23,11 +22,11 @@ public class CodeOutputController:ControllerBase
 
     #region Module Admin Routes
     [HttpPost("create")]
-    [Authorize(Roles = $"{RoleHelper.Admin}, {RoleHelper.Teacher}")]
+    [Authorize(Roles = $"{RoleHelper.Admin},{RoleHelper.Teacher}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CodeOutputExerciseDetailItemWithAnswer))]
     public async Task<IActionResult> CreateExercise([FromBody] CodeOutputExerciseCreateItem createItem, CancellationToken cancellationToken = default)
     {
-        if(!await this.accessService.IsModuleAdmin(createItem.ChapterId, this.User.GetUserId()))
+        if(!await this.accessService.IsChapterAdmin(createItem.ChapterId, this.User.GetUserId()))
         {
             return this.Unauthorized();
         }
@@ -40,7 +39,7 @@ public class CodeOutputController:ControllerBase
     public async Task<IActionResult> UpdateExercise([FromBody] CodeOutputExerciseDetailItemWithAnswer createItem,
         CancellationToken cancellationToken = default)
     {
-        if(!await this.accessService.IsModuleAdmin(createItem.ChapterId, this.User.GetUserId(), cancellationToken))
+        if(!await this.accessService.IsChapterAdmin(createItem.ChapterId, this.User.GetUserId(), cancellationToken))
         {
             return this.Unauthorized();
         }
@@ -56,7 +55,7 @@ public class CodeOutputController:ControllerBase
     {
         var res = await this.codeOutputExerciseService.GetByIdWithAnswerAsync(id, cancellationToken);
         
-        if(!await this.accessService.IsModuleAdmin(res.ChapterId, this.User.GetUserId(), cancellationToken))
+        if(!await this.accessService.IsChapterAdmin(res.ChapterId, this.User.GetUserId(), cancellationToken))
         {
             return this.Unauthorized();
         }
