@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Exercises\Parson" />
+    <Folder Include="DTOs\ExercisesDTOs\Parson" />
     <Folder Include="Helper" />
   </ItemGroup>
 

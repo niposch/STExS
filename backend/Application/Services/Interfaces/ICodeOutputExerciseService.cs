@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Exercises.CodeOutput;
+﻿using Application.DTOs.ExercisesDTOs.CodeOutput;
 using Common.Models.ExerciseSystem.CodeOutput;
 
 namespace Application.Services.Interfaces;

@@ -1,6 +1,6 @@
 ﻿using Common.Models.ExerciseSystem;
 
-namespace Application.DTOs.Exercises;
+namespace Application.DTOs.ExercisesDTOs;
 
 public class ExerciseDetailItem
 {

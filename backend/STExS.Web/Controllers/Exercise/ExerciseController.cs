@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Exercises;
+﻿using Application.DTOs.ExercisesDTOs;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;

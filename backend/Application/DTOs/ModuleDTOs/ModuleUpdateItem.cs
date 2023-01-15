@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Module;
+﻿namespace Application.DTOs.ModuleDTOs;
 
 public sealed class ModuleUpdateItem
 {

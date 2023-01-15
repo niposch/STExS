@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Exercises.CodeOutput;
+﻿using Application.DTOs.ExercisesDTOs.CodeOutput;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;

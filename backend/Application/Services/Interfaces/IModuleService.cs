@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Module;
+﻿using Application.DTOs.ModuleDTOs;
 using Common.Models.ExerciseSystem;
 
 namespace Application.Services.Interfaces;

@@ -1,6 +1,6 @@
 ﻿using Common.Models.ExerciseSystem;
 
-namespace Application.DTOs.Module;
+namespace Application.DTOs.ModuleDTOs;
 
 public static class ModuleMapper
 {

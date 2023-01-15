@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Exercises.CodeOutput;
+﻿namespace Application.DTOs.ExercisesDTOs.CodeOutput;
 
 public class CodeOutputExerciseDetailItemWithAnswer: CodeOutputDetailItem
 {

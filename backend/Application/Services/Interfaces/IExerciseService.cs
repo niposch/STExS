@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Exercises;
+﻿using Application.DTOs.ExercisesDTOs;
 using Common.Models.ExerciseSystem;
 
 namespace Application.Services.Interfaces;

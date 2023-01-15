@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Module;
+﻿using Application.DTOs.ModuleDTOs;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;

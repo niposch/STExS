@@ -1,5 +1,5 @@
 ﻿using System.Xml;
-using Application.DTOs.Exercises;
+using Application.DTOs.ExercisesDTOs;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
