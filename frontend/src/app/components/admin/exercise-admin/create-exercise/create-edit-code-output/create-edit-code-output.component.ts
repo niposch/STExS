@@ -12,6 +12,7 @@ import {lastValueFrom} from "rxjs";
 export class CreateEditCodeOutputComponent implements OnInit {
 
   public expectedAnswer: string = "";
+  public achievablePoints: number = 0;
   public isMultilineResponse : boolean = false;
   public exerciseId: string = "";
   public chapterId : string = "";
@@ -37,11 +38,22 @@ export class CreateEditCodeOutputComponent implements OnInit {
     })
   }
 
+  saveExercise() {
+    if (this.isEditingExercise) {
+      //update exercise
+    } else {
+      this.createExercise();
+    }
+  }
+
   createExercise() {
     lastValueFrom(this.codeOutputService.apiCodeOutputCreatePost$Json({
       body:{
-        exerciseDescription: this.description,
+        expectedAnswer: this.expectedAnswer,
+        isMultilineResponse: this.isMultilineResponse,
         exerciseName: this.name,
+        exerciseDescription: this.description,
+        achieveablePoints: this.achievablePoints,
         chapterId: this.chapterId,
       }
     }))

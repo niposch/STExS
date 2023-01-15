@@ -2,11 +2,11 @@
   <div>
     <div class="horizontal-container card-title">
       <mat-card-title class="vertically-centered">Create a new Code Output Exercise</mat-card-title>
-      <button mat-raised-button color="accent" class="create-button">create</button>
+      <button mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
     </div>
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-      <app-create-exercise></app-create-exercise>
+      <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
     </mat-card-content>
 
     <mat-divider></mat-divider>
@@ -18,7 +18,7 @@
     <mat-checkbox [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
     <mat-form-field class="form-field">
       <mat-label>Achievable Points</mat-label>
-      <input matInput type="number">
+      <input matInput type="number" [(ngModel)]="this.achievablePoints">
     </mat-form-field>
   </div>
 </mat-card>
