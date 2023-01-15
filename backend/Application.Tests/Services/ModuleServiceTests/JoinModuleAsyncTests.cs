@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Common.Models.Authentication;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -120,9 +121,8 @@ public class JoinModuleAsyncTests : Infrastructure
     {
         var module = this.Fixture.Build<Module>()
             .With(m => m.MaxParticipants, maxMemberCount)
-            .Without(m => m.Owner)
             .Without(m => m.ModuleParticipations)
-            .Without(m => m.Owner)
+            .With(m => m.Owner, this.Fixture.Build<ApplicationUser>().Without(o => o.ModuleParticipations).Create())
             .Without(m => m.Chapters)
             .With(m => m.IsArchived, isArchived)
             .Create();
