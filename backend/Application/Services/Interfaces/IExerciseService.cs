@@ -5,7 +5,7 @@ namespace Application.Services.Interfaces;
 
 public interface IExerciseService
 {
-    public Task<BaseExercise> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default);
+    public Task<ExerciseDetailItem> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default);
     
     public Task<List<ExerciseDetailItem>> GetByChapterIdAsync(Guid chapterId, CancellationToken cancellationToken = default);
     

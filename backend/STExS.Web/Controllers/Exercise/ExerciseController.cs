@@ -17,15 +17,6 @@ public class ExerciseController: ControllerBase
     {
         this.exerciseService = exerciseService ?? throw new ArgumentNullException(nameof(exerciseService));
     }
-
-    [Authorize(Roles = $"{RoleHelper.Admin}, {RoleHelper.Teacher}")]
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDetailItem))]
-    public async Task<IActionResult> CopyToChapter([FromQuery] Guid existingExerciseId, [FromQuery] Guid chapterToCopyTo, CancellationToken cancellationToken = default)
-    {
-        var res = await this.exerciseService.CopyToChapterAsync(existingExerciseId, chapterToCopyTo, cancellationToken);
-        return this.Ok(res);
-    }
     
     [HttpDelete]
     [Authorize(Roles = $"{RoleHelper.Admin}, {RoleHelper.Teacher}")]
