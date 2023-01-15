@@ -141,6 +141,19 @@ public sealed class ModuleService : IModuleService
         return await this.repository.ModuleParticipations.GetParticipationCountByModuleIdAsync(moduleId, cancellationToken);
     }
 
+    public async Task<List<ModuleParticipationDetailItem>> GetParticipationsForModuleAsync(Guid moduleId, CancellationToken cancellationToken = default)
+    {
+        var moduleParticipations = await this.repository.ModuleParticipations.GetParticipationsForModuleAsync(moduleId);
+
+        return moduleParticipations.Select(e => ModuleParticipationMapper.ToDetailItem(e))
+            .ToList();
+    }
+
+    public async Task ConfirmModuleParticipationAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        await this.repository.ModuleParticipations.TryConfirmParticipationAsync(userId, moduleId, cancellationToken);
+    }
+
     public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);
