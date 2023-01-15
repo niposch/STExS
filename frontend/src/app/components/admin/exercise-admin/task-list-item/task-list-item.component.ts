@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ModuleDetailItem} from "../../../../../../services/generated/models/module-detail-item";
+import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DeleteDialogComponent} from "../../../../module/delete-dialog/delete-dialog.component";
+import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
 import {lastValueFrom} from "rxjs";
-import {ModuleService} from "../../../../../../services/generated/services/module.service";
+import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ChapterService} from "../../../../../../services/generated/services/chapter.service";
+import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 
 @Component({
   selector: 'app-task-list-item',

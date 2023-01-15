@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {debounce, fromEvent, interval} from "rxjs";
 import {map} from "rxjs/operators";
+import {ChapterService} from "../../../../../services/generated/services/chapter.service";
+import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 
 @Component({
   selector: 'app-task-list',
@@ -14,21 +16,21 @@ export class TaskListComponent implements OnInit, AfterViewInit {
   public loading: boolean = false;
   @ViewChild("searchInput") searchInputRef: ElementRef | undefined
 
-  constructor() { }
+  constructor(private readonly exerciseService: ExerciseService) { }
 
   ngOnInit(): void {
     this.search("")
   }
 
   search(searchString:string){
-    //api route to search through all tasks
+    //api route to search through all task
     /*
-    this.moduleService.apiModuleSearchGet$Json({
+    this.exerciseService.apiExerciseByChapterIdGet$Json({
       search:searchString
     }).subscribe(data => {
       this.results = data
     })
-    */
+     */
   }
 
   addTask(taskId: string) {

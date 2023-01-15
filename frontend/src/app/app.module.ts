@@ -45,9 +45,10 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
 import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
 import { MatSliderModule } from "@angular/material/slider";
 import { ChapterAdminAdministrateComponent } from './components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
-import { TaskListComponent } from './components/admin/chapter/chapter-admin-administrate/task-list/task-list.component';
-import { TaskListItemComponent } from './components/admin/chapter/chapter-admin-administrate/task-list-item/task-list-item.component';
+import { TaskListComponent } from './components/admin/exercise-admin/task-list/task-list.component';
+import { TaskListItemComponent } from './components/admin/exercise-admin/task-list-item/task-list-item.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { CreateExerciseComponent } from './components/admin/exercise-admin/create-exercise/create-exercise.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ChapterAdminAdministrateComponent,
     TaskListComponent,
     TaskListItemComponent,
+    CreateExerciseComponent,
   ],
     imports: [
         BrowserModule,

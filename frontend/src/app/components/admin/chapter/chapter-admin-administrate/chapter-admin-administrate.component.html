@@ -34,16 +34,23 @@
     <app-user-info-label attributeType="text" attributeName='Chapter Description' attributeInfo="Chapter Description"
     [(value)]="this.chapterDescription"></app-user-info-label>
 
-    <mat-divider></mat-divider>
+    <mat-divider style="margin-bottom: 5px"></mat-divider>
 
     <mat-card class="task-card">
       <mat-card-title>Exercises</mat-card-title>
       <mat-card-content>
         <mat-divider style="margin-bottom: 5px"></mat-divider>
-        <div> <!-- *ngFor="let exercise in this.exerciseList" -->
-          <app-task-list-item></app-task-list-item>
+        <div *ngFor="let exercise in this.exerciseList">
+          <app-task-list-item [exercise]="exercise"></app-task-list-item>
         </div>
+        <mat-label *ngIf="!this.hasExercises">No exercises in this chapter! Add one from the Exercise List or create a new one!</mat-label>
       </mat-card-content>
+    </mat-card>
+
+    <mat-divider style="margin-bottom: 5px"></mat-divider>
+
+    <mat-card>
+      <mat-card-title>Create a new Exercise</mat-card-title>
     </mat-card>
 
     <!-- EXERCISE LIST -->
