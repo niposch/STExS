@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-create-exercise',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateExerciseComponent implements OnInit {
 
-  constructor() { }
+  public description = "";
+  public name = "";
+  @Output() descEvent = new EventEmitter<string>();
+  @Output() nameEvent = new EventEmitter<string>();
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  emitValues() {
+    this.descEvent.emit(this.description)
+    this.nameEvent.emit(this.name)
   }
 
 }

@@ -71,6 +71,19 @@
     border-top-right-radius: 0px !important;
   }
 
+  .radio-group {
+    height: 40px;
+  }
+
+  .radio-group > *:not(:last-child) {
+    margin-right: 40px;
+  }
+
+.vertically-centered {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
   // SCROLL BAR
   /* width */
   ::-webkit-scrollbar {

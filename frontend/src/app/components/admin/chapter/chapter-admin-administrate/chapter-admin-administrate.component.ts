@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
@@ -7,7 +7,6 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
-import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 
@@ -32,6 +31,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   private chapterId: string = "";
   public exerciseList: Array<ExerciseDetailItem> | null = null;
   public hasExercises: boolean = false;
+  public exerciseType: number = -1;
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -142,5 +142,17 @@ export class ChapterAdminAdministrateComponent implements OnInit {
           this.hasExercises = false;
         }
       })
+  }
+
+  createExercise() {
+    if (this.exerciseType == -1) {
+      this.snackBar.open("Please select an Exercise Type", "understood");
+      return;
+    }
+
+    this.router.navigate(
+      ['codeoutput/create'],
+      {queryParams: {type: this.exerciseType, chapterId: this.chapterId}}
+    )
   }
 }

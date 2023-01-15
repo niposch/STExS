@@ -50,7 +50,17 @@
     <mat-divider style="margin-bottom: 5px"></mat-divider>
 
     <mat-card>
-      <mat-card-title>Create a new Exercise</mat-card-title>
+      <div class="horizontal-flex">
+        <mat-card-title class="vertically-centered">Create a new Exercise</mat-card-title>
+        <button mat-raised-button color="accent" (click)="createExercise()">create</button>
+      </div>
+      <mat-card-content style="height: 40px">
+        <mat-divider style="margin-bottom: 10px"></mat-divider>
+        <mat-radio-group class="radio-group" [(ngModel)]="exerciseType">
+          <mat-radio-button value="10">Code Output</mat-radio-button>
+          <mat-radio-button value="2">Parson Puzzle</mat-radio-button>
+        </mat-radio-group>
+      </mat-card-content>
     </mat-card>
 
     <!-- EXERCISE LIST -->

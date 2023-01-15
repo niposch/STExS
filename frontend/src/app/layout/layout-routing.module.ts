@@ -11,6 +11,10 @@ import {ProfileComponent} from "../components/profile/profile.component";
 import {ModuleDetailsComponent} from "../components/module/module-details/module-details.component";
 import {AdministrateModuleComponent} from "../components/admin/modules-admin/administrate-module/administrate-module.component";
 import { ChapterAdminAdministrateComponent } from '../components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
+import {CreateExerciseComponent} from "../components/admin/exercise-admin/create-exercise/create-exercise.component";
+import {
+  CreateEditCodeOutputComponent
+} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
 
 const routes: Routes = [
   {
@@ -61,7 +65,8 @@ const routes: Routes = [
           {path: "profile", component: ProfileComponent},
           {path: "module/details", component: ModuleDetailsComponent},
           {path: "module/administrate", component: AdministrateModuleComponent},
-          {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent}
+          {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
+          {path: "codeoutput/create", component: CreateEditCodeOutputComponent}
         ]
       },
 	    {

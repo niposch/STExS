@@ -9,8 +9,7 @@ import {} from "../../../../../services/generated/models/module-participation";
 })
 export class MemberListAdminComponent implements OnInit {
 
-  @Input()
-  public participations: Array<ModuleParticipationDetailItem>
+  //@Input() public participations: Array<ModuleParticipationDetailItem>
 
   constructor(private readonly moduleService:ModuleService) { }
 

@@ -52,3 +52,18 @@ $dark-theme: mat.define-dark-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+}
