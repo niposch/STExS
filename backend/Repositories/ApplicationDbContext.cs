@@ -1,6 +1,7 @@
 using Common.Models;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.CodeOutput;
 using Common.Models.ExerciseSystem.Parson;
 using Common.Models.HelperInterfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -52,6 +53,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }
     
+    public DbSet<BaseExercise> Exercises { get;set; }
+    
+    public DbSet<CodeOutputExercise> CodeOutputExercises { get;set; }
+
     public DbSet<ParsonExercise> ParsonExercises { get; set; }
     
     public DbSet<ParsonSolution> ParsonSolutions { get; set; }

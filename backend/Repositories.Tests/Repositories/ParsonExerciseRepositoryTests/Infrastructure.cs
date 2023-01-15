@@ -15,6 +15,7 @@ public abstract class Infrastructure
     {
         this.Fixture = new Fixture().Customize(new AutoMoqCustomization());
         this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        this.Fixture.Customize(new AppTestingCustomizations());
         this.Context = this.Fixture.InjectInMemoryDbContext<ApplicationDbContext>();
         this.Repository = this.Fixture.Create<ParsonExerciseRepository>();
     }

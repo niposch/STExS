@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,10 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230110172509_AddedCodeOutputExercise")]
+    partial class AddedCodeOutputExercise
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,7 +168,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Exercises", (string)null);
+                    b.ToTable("Exercises");
 
                     b.HasDiscriminator<int>("ExerciseType");
                 });
@@ -203,7 +205,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Chapters", (string)null);
+                    b.ToTable("Chapters");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Module", b =>
@@ -236,7 +238,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Modules", (string)null);
+                    b.ToTable("Modules");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.ModuleParticipation", b =>
@@ -260,7 +262,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ModuleParticipations", (string)null);
+                    b.ToTable("ModuleParticipations");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonElement", b =>
@@ -296,7 +298,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("RelatedSolutionId");
 
-                    b.ToTable("ParsonElements", (string)null);
+                    b.ToTable("ParsonElements");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonSolution", b =>
@@ -324,7 +326,7 @@ namespace Repositories.Migrations
                     b.HasIndex("RelatedExerciseId")
                         .IsUnique();
 
-                    b.ToTable("ParsonSolutions", (string)null);
+                    b.ToTable("ParsonSolutions");
                 });
 
             modelBuilder.Entity("Common.Models.WeatherForecast", b =>
@@ -358,7 +360,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("WeatherForecasts", (string)null);
+                    b.ToTable("WeatherForecasts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -480,6 +482,8 @@ namespace Repositories.Migrations
                         .HasColumnType("bit");
 
                     b.HasIndex("ChapterId");
+
+                    b.HasDiscriminator().HasValue(60);
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonExercise", b =>

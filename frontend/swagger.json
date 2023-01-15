@@ -433,6 +433,353 @@
         }
       }
     },
+    "/api/CodeOutput/create": {
+      "post": {
+        "tags": [
+          "CodeOutput"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CodeOutput/update": {
+      "post": {
+        "tags": [
+          "CodeOutput"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/CodeOutput/withAnswers": {
+      "get": {
+        "tags": [
+          "CodeOutput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CodeOutput": {
+      "get": {
+        "tags": [
+          "CodeOutput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Exercise": {
+      "post": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "existingExerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "chapterToCopyTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Exercise/byChapterId": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Exercise/all": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Module": {
       "post": {
         "tags": [
@@ -1038,44 +1385,6 @@
         }
       }
     },
-    "/api/ParsonPuzzle/getAll": {
-      "get": {
-        "tags": [
-          "ParsonPuzzle"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ParsonExercise"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ParsonExercise"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ParsonExercise"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -1244,6 +1553,58 @@
         },
         "additionalProperties": false
       },
+      "BaseExercise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ownerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "modificationTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "chapter": {
+            "$ref": "#/components/schemas/Chapter"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          }
+        },
+        "additionalProperties": false
+      },
       "Chapter": {
         "type": "object",
         "properties": {
@@ -1277,10 +1638,10 @@
           "module": {
             "$ref": "#/components/schemas/Module"
           },
-          "parsonExercises": {
+          "exercises": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ParsonExercise"
+              "$ref": "#/components/schemas/BaseExercise"
             },
             "nullable": true
           },
@@ -1328,16 +1689,247 @@
             "type": "string",
             "format": "uuid"
           },
-          "parsonExerciseIds": {
+          "exercises": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "$ref": "#/components/schemas/ExerciseListItem"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
+      },
+      "CodeOutputDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isMultiLineResponse": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CodeOutputExerciseCreateItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "expectedAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMultilineResponse": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CodeOutputExerciseDetailItemWithAnswer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isMultiLineResponse": {
+            "type": "boolean"
+          },
+          "expectedAnswer": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExerciseDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExerciseListItem": {
+        "type": "object",
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achivablePoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExerciseType": {
+        "enum": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "SyntaxExercise",
+          "Parson",
+          "FindTheError",
+          "ClozeText",
+          "NaturalLanguageDescripition",
+          "CodeOutput",
+          "ProgrammingTask"
+        ]
       },
       "IdentityError": {
         "type": "object",
@@ -1551,135 +2143,6 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParsonElement": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ownerId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "code": {
-            "type": "string",
-            "nullable": true
-          },
-          "creationTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modificationTime": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "relatedSolution": {
-            "$ref": "#/components/schemas/ParsonSolution"
-          },
-          "relatedSolutionId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParsonExercise": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ownerId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "modificationTime": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "creationTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "runningNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "achieveablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "expectedSolution": {
-            "$ref": "#/components/schemas/ParsonSolution"
-          },
-          "chapter": {
-            "$ref": "#/components/schemas/Chapter"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParsonSolution": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ownerId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "creationTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modificationTime": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "codeElements": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ParsonElement"
-            },
-            "nullable": true
-          },
-          "relatedExercise": {
-            "$ref": "#/components/schemas/ParsonExercise"
-          },
-          "relatedExerciseId": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false

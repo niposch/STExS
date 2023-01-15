@@ -16,7 +16,7 @@ public class Chapter : DeletableBaseEntity, ICreationTimeTracked
     public Guid ModuleId { get; set; }
     public Module Module { get; set; } = null!;
 
-    public List<ParsonExercise> ParsonExercises { get; set; } = null!; // 1:n Beziehung zu ParsonExercise
+    public List<BaseExercise> Exercises { get; set; } = null!; // 1:n Beziehung zu ParsonExercise
     
     public DateTime CreationTime { get; set; }
 }

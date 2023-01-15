@@ -17,7 +17,10 @@ public class ApplicationModule : Module
             .InstancePerLifetimeScope();
 
         builder.RegisterType<ParsonExerciseService>()
-            .As<IParsonPuzzleService>()
+            .As<IParsonExerciseService>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<CodeOutputExerciseService>()
+            .As<ICodeOutputExerciseService>()
             .InstancePerLifetimeScope();
         builder.RegisterType<ChapterService>()
             .As<IChapterService>()

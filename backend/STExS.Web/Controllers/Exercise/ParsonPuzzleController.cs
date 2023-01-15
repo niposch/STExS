@@ -8,18 +8,10 @@ namespace STExS.Controllers.Exercise;
 [ApiController]
 public class ParsonPuzzleController: ControllerBase
 {
-    private readonly IParsonPuzzleService parsonPuzzleService;
+    private readonly IParsonExerciseService parsonExerciseService;
     
-    public ParsonPuzzleController(IParsonPuzzleService parsonPuzzleService)
+    public ParsonPuzzleController(IParsonExerciseService parsonExerciseService)
     {
-        this.parsonPuzzleService = parsonPuzzleService;
-    }
-    
-    [HttpGet("getAll")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ParsonExercise>))]
-    public async Task<IActionResult> GetAll()
-    {
-        var parsonPuzzles = await this.parsonPuzzleService.GetAllAsync();
-        return Ok(parsonPuzzles);
+        this.parsonExerciseService = parsonExerciseService;
     }
 }
