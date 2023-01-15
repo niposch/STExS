@@ -18,8 +18,7 @@ export class ModuleComponent implements OnInit {
   @Input() isFavorited = false;
   @Output() isFavoritedEventEmitter = new EventEmitter<boolean>();
   @Output() onModuleChange = new EventEmitter<any>();
-  @Input()
-  isModuleAdmin = false;
+  @Input()  isModuleAdmin = false;
   @Input() module:ModuleDetailItem | undefined;
 
   private isDeleting : boolean = false;
