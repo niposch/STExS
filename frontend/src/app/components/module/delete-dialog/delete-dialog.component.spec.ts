@@ -31,7 +31,7 @@ describe('DeleteDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should close dialog when close button clicked', fakeAsync(() => {
+  it('should close dialog when close button clicked', fakeAsync(() => {
     let abortButton = fixture.debugElement.query(By.css("#abortButton"))
     expect(abortButton).toBeTruthy();
 
