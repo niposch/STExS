@@ -591,51 +591,6 @@
       }
     },
     "/api/Exercise": {
-      "post": {
-        "tags": [
-          "Exercise"
-        ],
-        "parameters": [
-          {
-            "name": "existingExerciseId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "chapterToCopyTo",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              }
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Exercise"
@@ -773,6 +728,53 @@
                   "items": {
                     "$ref": "#/components/schemas/ExerciseDetailItem"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Exercise/copyExercise": {
+      "post": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "toChapter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
                 }
               }
             }

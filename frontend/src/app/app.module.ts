@@ -49,6 +49,7 @@ import { TaskListComponent } from './components/admin/exercise-admin/task-list/t
 import { TaskListItemComponent } from './components/admin/exercise-admin/task-list-item/task-list-item.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { CreateExerciseComponent } from './components/admin/exercise-admin/create-exercise/create-exercise.component';
+import { MemberListAdminComponent } from './components/admin/modules-admin/member-list-admin/member-list-admin.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { CreateExerciseComponent } from './components/admin/exercise-admin/creat
     TaskListComponent,
     TaskListItemComponent,
     CreateExerciseComponent,
+    MemberListAdminComponent,
   ],
     imports: [
         BrowserModule,
