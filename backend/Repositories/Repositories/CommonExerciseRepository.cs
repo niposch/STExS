@@ -14,9 +14,13 @@ public class CommonExerciseRepository: ICommonExerciseRepository
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default)
-    {
-        return await this.context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
+    public async Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, bool asNoTracking = false, CancellationToken cancellationToken = default) {
+        var query = this.context.Exercises.AsQueryable();
+        if (asNoTracking) {
+            query = query.AsNoTracking();
+        }
+        return await query.FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
+        
     }
 
     public async Task<List<BaseExercise>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -33,7 +37,7 @@ public class CommonExerciseRepository: ICommonExerciseRepository
 
     public async Task DeleteAsync(Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        var exercise = await this.TryGetByIdAsync(exerciseId, cancellationToken);
+        var exercise = await this.TryGetByIdAsync(exerciseId, false, cancellationToken);
         if (exercise is null)
         {
             throw new EntityNotFoundException<BaseExercise>(exerciseId);

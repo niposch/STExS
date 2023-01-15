@@ -28,7 +28,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   public showLoading = false;
   public isLoading: boolean = false;
   private isDeleting: boolean = false;
-  private chapterId: string = "";
+  public chapterId: string = "";
   public exerciseList: Array<ExerciseDetailItem> | null = null;
   public hasExercises: boolean = false;
   public exerciseType: number = -1;
@@ -130,7 +130,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     })
   }
 
-  private loadExercises() {
+  public loadExercises() {
     this.exerciseService.apiExerciseByChapterIdGet$Json({
       chapterId: this.chapterId
     })

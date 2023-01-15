@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
@@ -6,6 +6,8 @@ import {lastValueFrom} from "rxjs";
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
+import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 
 @Component({
   selector: 'app-task-list-item',
@@ -15,11 +17,12 @@ import {ChapterService} from "../../../../../services/generated/services/chapter
 export class TaskListItemComponent implements OnInit {
 
   // should be TaskDetailItem
-  @Input() exercise: ModuleDetailItem = { };
+  @Input() exercise: ExerciseDetailItem = { };
+  @Output() exerciseChange = new EventEmitter<boolean>;
   private isDeleting: boolean = false;
   private showLoading: boolean = false;
   constructor(private dialog: MatDialog,
-              private readonly chapterService:ChapterService,
+              private readonly exerciseService:ExerciseService,
               private readonly snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -34,8 +37,16 @@ export class TaskListItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        //if (data == "delete") this.deleteExercise();
+        if (data == "delete") this.deleteExercise();
       }
     );
+  }
+
+  deleteExercise() {
+    this.exerciseService.apiExerciseDelete({
+      exerciseId: this.exercise.id
+    }).subscribe( () => {
+      this.exerciseChange.emit(true);
+    })
   }
 }

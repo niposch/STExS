@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {debounce, fromEvent, interval} from "rxjs";
 import {map} from "rxjs/operators";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 
 @Component({
   selector: 'app-task-list',
@@ -11,10 +12,12 @@ import {ExerciseService} from "../../../../../services/generated/services/exerci
 })
 export class TaskListComponent implements OnInit, AfterViewInit {
 
-  public results: Array<{ }> | null = null;
-  //results: Array<TaskDetailItem> | null = null;
+  @Input() chapterId: string = "";
+  @Output() exerciseChange = new EventEmitter<boolean>;
+  public results: Array<ExerciseDetailItem> | null = null;
   public loading: boolean = false;
   @ViewChild("searchInput") searchInputRef: ElementRef | undefined
+  public displayedColumns = ["exerciseName", "exerciseDescription", "actions"]
 
   constructor(private readonly exerciseService: ExerciseService) { }
 
@@ -23,8 +26,14 @@ export class TaskListComponent implements OnInit, AfterViewInit {
   }
 
   search(searchString:string){
-    //api route to search through all task
+    this.exerciseService.apiExerciseAllGet$Json()
+      .subscribe(eList => {
+      this.results = eList;
+      console.log(eList)
+    })
+
     /*
+    //TODO searching
     this.exerciseService.apiExerciseByChapterIdGet$Json({
       search:searchString
     }).subscribe(data => {
@@ -49,5 +58,14 @@ export class TaskListComponent implements OnInit, AfterViewInit {
         console.log(searchString)
         this.search(searchString)
       })
+  }
+
+  addExercise(exerciseId: string) {
+    this.exerciseService.apiExerciseCopyExercisePost$Json({
+      exerciseId: exerciseId,
+      toChapter: this.chapterId
+    }).subscribe(() => {
+      this.exerciseChange?.emit(true);
+    })
   }
 }

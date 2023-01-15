@@ -40,9 +40,14 @@
       <mat-card-title>Exercises</mat-card-title>
       <mat-card-content>
         <mat-divider style="margin-bottom: 5px"></mat-divider>
-        <div *ngFor="let exercise in this.exerciseList">
-          <app-task-list-item [exercise]="exercise"></app-task-list-item>
+        <div *ngIf="this.exerciseList != null else loading">
+          <div *ngFor="let exercise of this.exerciseList">
+            <app-task-list-item [exercise]="exercise" (exerciseChange)="this.loadExercises()"></app-task-list-item>
+          </div>
         </div>
+        <ng-template #loading>
+          <mat-spinner mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
+        </ng-template>
         <mat-label *ngIf="!this.hasExercises">No exercises in this chapter! Add one from the Exercise List or create a new one!</mat-label>
       </mat-card-content>
     </mat-card>
@@ -64,9 +69,10 @@
     </mat-card>
 
     <!-- EXERCISE LIST -->
-    <app-task-list></app-task-list>
+    <app-task-list [chapterId]="this.chapterId" (exerciseChange)="this.loadExercises()"></app-task-list>
   </div>
 </mat-card>
 
 <mat-spinner *ngIf="this.isLoading" mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
+
 

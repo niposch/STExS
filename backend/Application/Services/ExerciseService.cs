@@ -18,7 +18,7 @@ public sealed class ExerciseService: IExerciseService
 
     public async Task<ExerciseDetailItem> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default)
     {
-        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(existingExerciseId, cancellationToken);
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(existingExerciseId,true, cancellationToken);
         if (exercise is null)
         {
             throw new ArgumentException($"Exercise with id {existingExerciseId} does not exist");
@@ -34,8 +34,8 @@ public sealed class ExerciseService: IExerciseService
         exercise.ChapterId = chapterToCopyTo;
         exercise.Chapter = null!;
         exercise.RunningNumber = nextAvailableRunningNumber;
-
-        await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
+        
+        exercise = await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
 
         return ToDetailItem(exercise);
     }
@@ -55,7 +55,7 @@ public sealed class ExerciseService: IExerciseService
 
     public async Task<ExerciseDetailItem> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, cancellationToken) ?? throw new EntityNotFoundException<BaseExercise>(exerciseId);
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, false, cancellationToken) ?? throw new EntityNotFoundException<BaseExercise>(exerciseId);
 
         return ToDetailItem(exercise);
     }

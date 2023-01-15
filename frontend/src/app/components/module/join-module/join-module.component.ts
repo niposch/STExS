@@ -21,6 +21,7 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
   constructor(private readonly moduleService:ModuleService,
               private readonly snackBar:MatSnackBar) { }
 
+
   ngOnInit(): void {
     this.search("")
   }
@@ -34,6 +35,7 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
+    /*
     fromEvent<Event>(this.searchInputRef.nativeElement, "keyup")
       .pipe(
         debounce(v => interval(200)),
@@ -44,5 +46,7 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
         console.log(searchString)
         this.search(searchString)
       })
+     */
   }
+
 }
