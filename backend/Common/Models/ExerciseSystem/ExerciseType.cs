@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Exercises;
+﻿namespace Common.Models.ExerciseSystem;
 
 public enum ExerciseType
 {

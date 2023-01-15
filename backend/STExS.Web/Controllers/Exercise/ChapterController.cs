@@ -1,4 +1,5 @@
-﻿using Application.Helper.Roles;
+﻿using Application.DTOs.Exercises;
+using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem;
 using Microsoft.AspNetCore.Authorization;
@@ -102,7 +103,7 @@ public class ChapterDetailItem
     
     public Guid ModuleId { get; set; }
     
-    public List<Guid> ParsonExerciseIds { get; set; } = new List<Guid>();
+    public List<ExerciseListItem> Exercises { get; set; } = new();
 }
 
 public class ChapterUpdateItem
@@ -129,7 +130,25 @@ public static class ChapterMapper
             ChapterName = chapter.ChapterName,
             ModuleId = chapter.ModuleId,
             RunningNumber = chapter.RunningNumber,
-            ParsonExerciseIds = chapter.ParsonExercises?.Select(e => e.Id).ToList() ?? new List<Guid>()
+            Exercises = chapter.Exercises?
+                .Select(e => e.ToListItem())
+                .OrderBy(e => e.Order)
+                .ToList() ?? new List<ExerciseListItem>()
+        };
+    }
+}
+
+public static class ExerciseMapper
+{
+    public static ExerciseListItem ToListItem(this BaseExercise exercise)
+    {
+        return new ExerciseListItem
+        {
+            Order = exercise.RunningNumber,
+            ExerciseType = exercise.ExerciseType,
+            ExerciseName = exercise.ExerciseName,
+            AchivablePoints = exercise.AchievablePoints,
+            ExerciseId = exercise.Id
         };
     }
 }

@@ -6,16 +6,20 @@ namespace Repositories;
 
 public class ApplicationRepository : IApplicationRepository
 {
+    #pragma warning disable
     public ApplicationRepository(IWeatherForecastRepository weatherForecasts,
+        
         IModuleRepository modules,
         IChapterRepository chapters,
         IParsonElementRepository parsonElements,
         IParsonExerciseRepository parsonExercises,
         IParsonSolutionRepository parsonSolutions,
         ICommonExerciseRepository commonExercises,
-        IModuleParticipationRepository moduleParticipations)
+        IModuleParticipationRepository moduleParticipations,
+        ICodeOutputExerciseRepository codeOutputExercises)
+    #pragma warning restore
     {
-        WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
+        this.WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
         this.Modules = modules ?? throw new ArgumentNullException(nameof(modules));
         this.Chapters = chapters ?? throw new ArgumentNullException(nameof(chapters));
         this.ParsonElements = parsonElements ?? throw new ArgumentNullException(nameof(parsonElements));
@@ -23,6 +27,7 @@ public class ApplicationRepository : IApplicationRepository
         this.ParsonSolutions = parsonSolutions ?? throw new ArgumentNullException(nameof(parsonSolutions));
         this.CommonExercises = commonExercises ?? throw new ArgumentNullException(nameof(commonExercises));
         this.ModuleParticipations = moduleParticipations ?? throw new ArgumentNullException(nameof(moduleParticipations));
+        this.CodeOutputExercises = codeOutputExercises ?? throw new ArgumentNullException(nameof(codeOutputExercises));
     }
 
     public IWeatherForecastRepository WeatherForecasts { get; set; } // just for demonstration, will be removed
@@ -36,5 +41,6 @@ public class ApplicationRepository : IApplicationRepository
     public IParsonElementRepository ParsonElements { get; set; }
     public IParsonExerciseRepository ParsonExercises { get; set; }
     public IParsonSolutionRepository ParsonSolutions { get; set; }
+    public ICodeOutputExerciseRepository CodeOutputExercises { get; set; }
     public IModuleParticipationRepository ModuleParticipations { get; set; }
 }

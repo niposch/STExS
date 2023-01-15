@@ -26,13 +26,15 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
         // this.context.RemoveRange(entity.Chapters.Select(c => c.ParsonExercises));
         
         //modules without any contents should be deletable
-        if (entity.Chapters != null) {
+        if (entity.Chapters != null)
+        {
             this.context.RemoveRange(entity.Chapters);
         }
 
         if (entity.ModuleParticipations != null) {
             this.context.RemoveRange(entity.ModuleParticipations);
         }
+
 
         this.context.Remove(entity);
         await this.context.SaveChangesAsync(cancellationToken);

@@ -14,7 +14,7 @@ public class ChapterEntityTypeConfiguration: IEntityTypeConfiguration<Chapter>
             .WithMany()
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
-        builder.HasMany(p => p.ParsonExercises)
+        builder.HasMany(p => p.Exercises)
             .WithOne(e => e.Chapter)
             .OnDelete(DeleteBehavior.Cascade);
     }

@@ -16,6 +16,7 @@ public class RepositoryModule : Module
         builder.RegisterType<ApplicationRepository>()
             .As<IApplicationRepository>()
             .InstancePerLifetimeScope();
+        
         builder.RegisterType<ParsonElementRepository>()
             .As<IParsonElementRepository>()
             .InstancePerLifetimeScope();
@@ -24,15 +25,21 @@ public class RepositoryModule : Module
             .InstancePerLifetimeScope();
         builder.RegisterType<ParsonSolutionRepository>()
             .As<IParsonSolutionRepository>();
+
+        builder.RegisterType<CodeOutputExerciseRepository>()
+            .As<ICodeOutputExerciseRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<CommonExerciseRepository>()
+            .As<ICommonExerciseRepository>()
+            .InstancePerLifetimeScope();
+        
         builder.RegisterType<ModuleRepository>()
             .As<IModuleRepository>()
             .InstancePerLifetimeScope();
         RegisterRepositories(builder);
         builder.RegisterType<ChapterRepository>()
             .As<IChapterRepository>()
-            .InstancePerLifetimeScope();
-        builder.RegisterType<CommonExerciseRepository>()
-            .As<ICommonExerciseRepository>()
             .InstancePerLifetimeScope();
         builder.RegisterType<ModuleParticipationRepository>()
             .As<IModuleParticipationRepository>()
