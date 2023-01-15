@@ -10,32 +10,36 @@ import {ModuleService} from "../../../services/generated/services/module.service
 export class SidebarComponent implements OnInit {
   public firstName: string = "";
   public lastName: string = "";
+
+  public isLoading: boolean = false;
   participatingInModuleList: Array<ModuleDetailItem> | null = null;
   adminModuleList:Array<ModuleDetailItem> | null = null;
-  isModuleAdmin = false;
+  allModules:Array<ModuleDetailItem> | null = null;
 
   constructor(private readonly userService: UserService,
               private readonly moduleService:ModuleService) {
   }
 
-  async loadModules(){
-    await this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
-    }).toPromise()
-      .then(modules =>{
-        this.adminModuleList = modules ?? []
-      })
+  loadModulesAdminOf(){
+    this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
+    }).subscribe(modules => this.adminModuleList = modules)
+  }
+
+  loadModulesPartOf() {
+    this.moduleService.apiModuleGetModulesForUserGet$Json({
+    }).subscribe(modules => this.participatingInModuleList = modules)
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userService.currentUser.subscribe(u =>{
       this.firstName = u?.firstName ?? ""
       this.lastName = u?.lastName ?? ""
     })
-    this.moduleService.apiModuleGetModulesForUserGet$Json()
-      .subscribe(modules => this.participatingInModuleList = modules)
 
-    this.loadModules();
+    this.loadModulesPartOf();
+    this.loadModulesAdminOf();
 
+    this.isLoading = false;
   }
-
 }

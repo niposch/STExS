@@ -1,41 +1,26 @@
-<div *ngIf="this.participatingInModuleList && this.adminModuleList">
-  <mat-accordion class="list-container" multi="false">
-    <div *ngFor="let module of this.participatingInModuleList">
-      <mat-expansion-panel class="list-item" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{module.moduleName}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p> content </p>
-        <div class="flex-row option-panel">
-          <div class= "flex-row">
-            <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </div>
-    <div *ngFor="let module of this.adminModuleList">
-      <mat-expansion-panel class="list-item" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{module.moduleName}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p> content </p>
-        <div class="flex-row option-panel">
-          <div class= "flex-row">
-          <button mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
-            Edit <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
-          </button>
-          <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </div>
-  </mat-accordion>
+<div class="list-container" *ngIf="this.participatingInModuleList && this.adminModuleList">
+  <mat-spinner class="loading" *ngIf="isLoading"></mat-spinner>
+
+  <mat-label *ngIf="this.participatingInModuleList.length > 0">participation in</mat-label>
+  <div *ngFor="let module of this.participatingInModuleList">
+    <app-sidebar-entry [module]="module"></app-sidebar-entry>
+  </div>
+  <mat-divider *ngIf="this.participatingInModuleList.length > 0"></mat-divider>
+
+  <mat-label *ngIf="this.adminModuleList.length > 0">admin in</mat-label>
+  <div *ngFor="let module of this.adminModuleList">
+    <app-sidebar-entry [module]="module"></app-sidebar-entry>
+  </div>
+  <mat-divider *ngIf="this.adminModuleList.length > 0"></mat-divider>
+
+<!--  <mat-label *ngIf="this.allModules.length > 0">favorites</mat-label>-->
+<!--  <div *ngFor="let module of this.allModules">-->
+<!--    <app-sidebar-entry [module]="module"></app-sidebar-entry>-->
+<!--  </div>-->
+<!--  <mat-divider *ngIf="this.allModules.length > 0"></mat-divider>-->
 
   <div *ngIf="this.participatingInModuleList.length == 0 && this.adminModuleList.length == 0">
+    <mat-label>no modules to display</mat-label>
   </div>
 </div>
 

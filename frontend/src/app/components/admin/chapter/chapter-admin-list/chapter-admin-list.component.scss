@@ -73,6 +73,7 @@
   max-height: 40vh;
   overflow-y: scroll;
   padding-right: 10px;
+  margin-right: -10px;
   min-height: 200px;
 }
 
@@ -89,4 +90,16 @@
 .hide-top-round-corners{
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.heading-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-text {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #909090;
+  margin-left: 10px;
 }

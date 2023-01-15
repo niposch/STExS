@@ -10,7 +10,7 @@
   .chapter-name {
     margin-bottom: 0px;
   }
-  
+
   .chapter-description{
     text-align: justify;
     text-justify: auto;
@@ -21,24 +21,77 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     justify-content: space-between;
-
+    overflow-x: hidden;
   }
 
   .full-width {
     width: 100%;
   }
 
-  mat-card {
-    background-color: #333333;
-    min-width: 600px;
-    max-width: 1500px;
-    margin: auto;
-  }
-
   .button {
     margin-left: 4px;
     margin-right: 4px;
+  }
+
+  .module-name {
+    color: #02C0A2;
+  }
+
+  .text-link:hover {
+    cursor: pointer;
+  }
+
+  .name-input {
+    padding-bottom: -5px;
+  }
+
+  .input-field {
+    margin-bottom: -10px;
+    width: 40%;
+    min-width: 200px;
+  }
+
+  .task-card {
+    background-color: #424242;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    max-height: 50vh;
+    overflow-y: scroll;
+
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .hide-top-round-corners{
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+  }
+
+  // SCROLL BAR
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    width: 5px;
+  }
+
+  .master-card {
+    min-width: 300px;
+    background-color: #383838;
+    margin: auto;
+    max-width: 1500px;
   }

@@ -15,6 +15,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormsModule} from "@angular/forms";
 import { NotfoundComponent } from '../components/notfound/notfound.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SidebarEntryComponent } from './sidebar/sidebar-entry/sidebar-entry.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -24,22 +26,24 @@ import { MatExpansionModule } from '@angular/material/expansion';
         HeaderComponent,
         SidebarComponent,
         NotfoundComponent,
+        SidebarEntryComponent,
     ],
     exports: [
         NotfoundComponent
     ],
-    imports: [
-        CommonModule,
-        LayoutRoutingModule,
-        MatButtonModule,
-        MatIconModule,
-        MatAutocompleteModule,
-        MatInputModule,
-        MatListModule,
-        MatSidenavModule,
-        FormsModule,
-        MatExpansionModule
-    ]
+  imports: [
+    CommonModule,
+    LayoutRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatListModule,
+    MatSidenavModule,
+    FormsModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule
+  ]
 })
 export class LayoutModule {
 }

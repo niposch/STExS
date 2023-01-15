@@ -1,0 +1,70 @@
+.module-name {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+  line-height: 30px;
+  color: #02C0A2;
+  margin-bottom: 0px;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.margin-right {
+  margin-right: 5px;
+}
+
+.chapter-list {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.chapter-item {
+  padding-right: 10px;
+}
+
+.description-text {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.master-card {
+  max-width: 1500px;
+  margin: auto;
+  background-color: #383838;
+}
+
+.space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto 5px;
+}

@@ -6,6 +6,9 @@ import {ChapterService} from "../../../../../services/generated/services/chapter
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ChapterCreateItem} from "../../../../../services/generated/models/chapter-create-item";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {ReorderChaptersRequest} from "../../../../../services/generated/models/reorder-chapters-request";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-chapter-admin-list',
@@ -16,11 +19,9 @@ export class ChapterAdminListComponent implements OnInit {
 
   @Input()
   moduleId: string = null!;
-
   module: ModuleDetailItem | undefined;
   participationStatus: ModuleParticipationStatus | undefined;
-
-  moduleParticipationStaus = ModuleParticipationStatus
+  moduleParticipationStatus = ModuleParticipationStatus
   chapters: Array<ChapterDetailItem> | undefined;
 
   chapterCreateItem: ChapterCreateItem = {
@@ -63,7 +64,7 @@ export class ChapterAdminListComponent implements OnInit {
     })
       .subscribe(data => {
         this.chapters = data;
-        console.log(this.chapters);
+        this.chapters?.sort((a,b) => this.compareChapters(a,b));
       })
   }
 
@@ -87,6 +88,53 @@ export class ChapterAdminListComponent implements OnInit {
         this.chapterCreateItem.chapterDescription = ""
         this.showLoading = false;
         this.snackBar.open('Successfully created Chapter', 'Dismiss', {duration:2000});
+      })
+  }
+
+  // for sorting the list of chapters
+  compareChapters(a : ChapterDetailItem, b : ChapterDetailItem) {
+    // @ts-ignore
+    if (a.runningNumber < b.runningNumber) {
+      return -1;
+    }
+    // @ts-ignore
+    if (a.runningNumber > b.runningNumber) {
+      return 1;
+    }
+    return 0;
+  }
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    // @ts-ignore
+    moveItemInArray(this.chapters, event.previousIndex, event.currentIndex);
+
+    let chapterIdArray: Array<string> = [];
+    let chapterI
+    // @ts-ignore
+    for (chapterI of this.chapters) {
+      // @ts-ignore
+      chapterIdArray.push(chapterI.id);
+    }
+
+    // @ts-ignore
+    lastValueFrom(this.chapterService.apiChapterReorderPost({
+      body: {
+        moduleId: this.moduleId,
+        chapterIds: chapterIdArray
+      }
+    })).catch(err => {
+      this.snackBar.open("Could not reorder chapters!", "dismiss")
+    })
+  }
+
+  reloadChapters() {
+    this.chapterService.apiChapterForModuleGet$Json({
+      moduleId: this.moduleId
+    })
+      .subscribe(data => {
+        this.chapters = data;
+        this.chapters?.sort((a,b) => this.compareChapters(a,b));
       })
   }
 }

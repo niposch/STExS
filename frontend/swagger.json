@@ -1673,6 +1673,10 @@
       "ChapterDetailItem": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "runningNumber": {
             "type": "integer",
             "format": "int32"

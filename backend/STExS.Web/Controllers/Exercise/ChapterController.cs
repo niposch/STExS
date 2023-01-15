@@ -93,6 +93,8 @@ public class ChapterController: ControllerBase
 
 public class ChapterDetailItem
 {
+    public Guid Id { get; set; }
+    
     public int RunningNumber { get; set; }
     
     public string ChapterName { get; set; } = string.Empty;
@@ -123,6 +125,7 @@ public static class ChapterMapper
     {
         return new ChapterDetailItem
         {
+            Id = chapter.Id,
             ChapterDescription = chapter.ChapterDescription,
             ChapterName = chapter.ChapterName,
             ModuleId = chapter.ModuleId,

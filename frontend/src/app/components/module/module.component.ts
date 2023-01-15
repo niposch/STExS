@@ -18,8 +18,7 @@ export class ModuleComponent implements OnInit {
   @Input() isFavorited = false;
   @Output() isFavoritedEventEmitter = new EventEmitter<boolean>();
   @Output() onModuleChange = new EventEmitter<any>();
-  @Input()
-  isModuleAdmin = false;
+  @Input()  isModuleAdmin = false;
   @Input() module:ModuleDetailItem | undefined;
 
   private isDeleting : boolean = false;
@@ -141,4 +140,18 @@ export class ModuleComponent implements OnInit {
       this.onModuleChange.emit();
     })
   }
+
+  /*
+  favoriteModule() {
+    if (!this.module?.isFavorited) {
+      //favorite this module
+      lastValueFrom(this.moduleService.apiModuleModuleIdPut({
+        //fav this module
+      }))
+    } else {
+      //un-favorite this module
+    }
+  }
+
+   */
 }

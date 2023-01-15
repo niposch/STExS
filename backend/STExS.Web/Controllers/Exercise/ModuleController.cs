@@ -82,7 +82,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> GetModulesAsync(CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesAsync(cancellationToken);
-        return this.Ok(res);
+        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m)));
     }
 
     [HttpGet("getModulesForUser")]
@@ -120,7 +120,7 @@ public class ModuleController : ControllerBase
     {
         var res = await this.moduleService.GetArchivedModulesAsync(cancellationToken);
 
-        return this.Ok(res);
+        return this.Ok(res.Select(p => ModuleMapper.ToDetailItem(p)).ToList());
     }
 
     [HttpGet("getUsersForModule")]
@@ -130,7 +130,7 @@ public class ModuleController : ControllerBase
     {
         var res = await this.moduleService.GetParticipationsForUserAsync(moduleId, cancellationToken);
 
-        return this.Ok(res);
+        return this.Ok(res.Select(p => ModuleMapper.ToDetailItem(p)).ToList());
     }
 
     [HttpGet("search")]

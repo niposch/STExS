@@ -1,21 +1,55 @@
-<p class="name" >Edit Chapter of {{this.moduleName}}</p>
-<mat-card>
+<mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
+<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
+  <div>
+    <mat-label>chapter of </mat-label>
+    <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
     <div class="horizontal-flex full-width">
-        <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
+      <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
 
         <!-- editing chapter name -->
         <mat-form-field class="input-field" *ngIf="isEditingName">
         <mat-label>Chapter Name</mat-label>
-        <input matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
+        <input class="name-input" matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
         </mat-form-field>
 
         <div class="horizontal-flex">
-            <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
+          <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
+          <a *ngIf="savingInProgress" mat-raised-button color="accent" class="button save-button" (click)="saveModuleChanges()">
+            saving...</a>
+          <a *ngIf="!savingInProgress" mat-raised-button color="primary" class="button save-button"
+          (click)="saveModuleChanges()">save</a>
+
+          <div style="width: 10px"></div>
+
+          <button class="button" mat-button color="warn" (click)="deleteChapterDialog()">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+            DELETE
+          </button>
         </div>
     </div>
+
+    <mat-divider></mat-divider>
+
     <!-- chapter description -->
     <app-user-info-label attributeType="text" attributeName='Chapter Description' attributeInfo="Chapter Description"
     [(value)]="this.chapterDescription"></app-user-info-label>
-   
+
+    <mat-divider></mat-divider>
+
+    <mat-card class="task-card">
+      <mat-card-title>Exercises</mat-card-title>
+      <mat-card-content>
+        <mat-divider style="margin-bottom: 5px"></mat-divider>
+        <div> <!-- *ngFor="let exercise in this.exerciseList" -->
+          <app-task-list-item></app-task-list-item>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- EXERCISE LIST -->
+    <app-task-list></app-task-list>
+  </div>
 </mat-card>
+
+<mat-spinner *ngIf="this.isLoading" mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
 

@@ -1,0 +1,18 @@
+<mat-expansion-panel class="list-item" hideToggle>
+  <mat-expansion-panel-header class="panel">
+    <mat-panel-title class="module-name">{{module.moduleName}}</mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="expansion-body">
+    <mat-label class="desc-label">{{module.moduleDescription}}</mat-label>
+    <mat-divider class="divider"></mat-divider>
+      <div class="button-container">
+        <button mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
+          <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
+        </button>
+        <div style="width: 25px"></div>
+        <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+  </div>
+</mat-expansion-panel>

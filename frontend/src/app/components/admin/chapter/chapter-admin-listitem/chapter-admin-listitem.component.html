@@ -1,14 +1,16 @@
-<mat-expansion-panel class="expansion-panel">
-  <mat-expansion-panel-header class="expansion-header">
-    <mat-panel-title>
-      {{this.chapterName}}
-    </mat-panel-title>
-    <mat-panel-description>
-      <div></div>
-      <!-- -->
-      <button class="edit-button" mat-button [routerLink]="['/module/administrate/chapter']" [queryParams]="{module_id:this.moduleId, chapter_name:this.chapterName}" (click)="editButtonClick($event)">Edit</button>
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-  <mat-divider></mat-divider>
-  <p class="chapter-description">{{this.chapterDescription}}</p>
-</mat-expansion-panel>
+<mat-card class="item">
+  <div class="text-container">
+    <div class="chapter-name-container">
+      <mat-label class="chapter-name vertically-centered">{{this.chapterName}}</mat-label>
+    </div>
+    <mat-divider></mat-divider>
+    <p class="chapter-description">{{this.chapterDescription}}</p>
+  </div>
+  <div *ngIf="this.showEditButton || this.showDeleteButton" class="button-container">
+    <button *ngIf="this.showEditButton" class="button" mat-button (click)="editButtonClick($event)"><mat-icon>edit</mat-icon></button>
+    <button *ngIf="this.showDeleteButton" class="button" mat-button color="warn" (click)="openDeleteDialog()"><mat-icon>delete_forever</mat-icon></button>
+  </div>
+  <div *ngIf="this.canReorder" class="icon-container">
+    <mat-icon> drag_handle</mat-icon>
+  </div>
+</mat-card>

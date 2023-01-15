@@ -1,0 +1,33 @@
+mat-card {
+  background-color: #484848;
+  width: inherit;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+.title {
+  font-weight: bold;
+  margin-right: 20px;
+  min-width: 200px;
+}
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+}
+
+.vertically-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+mat-chip-list {
+  min-width: fit-content;
+  overflow: hidden;
+}

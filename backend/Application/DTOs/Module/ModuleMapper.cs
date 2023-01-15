@@ -1,10 +1,10 @@
 ﻿using Common.Models.ExerciseSystem;
 
-namespace STExS.Controllers.Exercise;
+namespace Application.DTOs.Module;
 
 public static class ModuleMapper
 {
-    public static ModuleDetailItem ToDetailItem(Module module, Guid? userId = default)
+    public static ModuleDetailItem ToDetailItem(Common.Models.ExerciseSystem.Module module, Guid? userId = default)
     {
         return new ModuleDetailItem
         {
@@ -23,9 +23,9 @@ public static class ModuleMapper
         };
     }
 
-    public static Module ToModule(ModuleCreateItem moduleCreateItem, Guid changeUserId)
+    public static Common.Models.ExerciseSystem.Module ToModule(ModuleCreateItem moduleCreateItem, Guid changeUserId)
     {
-        return new Module
+        return new Common.Models.ExerciseSystem.Module
         {
             Id = Guid.NewGuid(),
             ModuleName = moduleCreateItem.ModuleName,
@@ -36,7 +36,7 @@ public static class ModuleMapper
         };
     }
 
-    public static Module UpdateModule(ModuleUpdateItem moduleUpdateItem, Module module)
+    public static Common.Models.ExerciseSystem.Module UpdateModule(ModuleUpdateItem moduleUpdateItem, Common.Models.ExerciseSystem.Module module)
     {
         module.ModuleName = moduleUpdateItem.ModuleName;
         module.ModuleDescription = moduleUpdateItem.ModuleDescription;

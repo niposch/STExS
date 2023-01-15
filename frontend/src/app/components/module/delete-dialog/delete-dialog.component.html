@@ -1,8 +1,8 @@
 <mat-dialog-content>
-  <p class="text">This module will be deleted irreversibly!</p>
+  <p class="text">This item will be deleted irreversibly!</p>
 </mat-dialog-content>
 
 <mat-dialog-actions class="spaced">
-  <button mat-stroked-button color="primary" (click)="abort()">Abort</button>
-  <button mat-raised-button color="warn" (click)="understood()">Understood</button>
+  <button id="abortButton" mat-stroked-button color="primary" (click)="abort()">Abort</button>
+  <button id="understoodButton" mat-raised-button color="warn" (click)="understood()">Understood</button>
 </mat-dialog-actions>

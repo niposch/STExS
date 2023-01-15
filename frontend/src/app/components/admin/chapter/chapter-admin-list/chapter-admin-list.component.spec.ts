@@ -4,6 +4,7 @@ import { ChapterAdminListComponent } from './chapter-admin-list.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from "@angular/material/dialog";
 
 describe('ChapterAdminListComponent', () => {
   let component: ChapterAdminListComponent;
@@ -12,7 +13,7 @@ describe('ChapterAdminListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ChapterAdminListComponent ],
-      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule ]
+      imports: [ RouterTestingModule, HttpClientTestingModule, MatSnackBarModule, MatDialogModule]
     })
     .compileComponents();
 

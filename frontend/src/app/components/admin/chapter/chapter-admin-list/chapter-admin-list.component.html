@@ -1,10 +1,18 @@
 <div *ngIf="this.chapters != null && this.module != null && this.participationStatus != null">
-  <div *ngIf="this.participationStatus == moduleParticipationStaus.Admin else unauthorized">
+  <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
     <mat-card>
-      <mat-card-title class="heading-text">Chapters</mat-card-title>
-      <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
-      <div class="chapter-list">
-        <app-chapter-admin-listitem class="chapter-list-item" *ngFor="let entry of this.chapters" [chapter]="entry"></app-chapter-admin-listitem>
+      <div>
+        <div class="heading-container">
+          <mat-card-title class="heading-text">Chapters</mat-card-title>
+          <mat-label class="info-text">(drag to reorder the chapters)</mat-label>
+        </div>
+        <mat-divider style="margin-bottom: 10px"></mat-divider>
+        <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
+        <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">
+          <div cdkDrag class="chapter-list-item" *ngFor="let entry of this.chapters">
+            <app-chapter-admin-listitem [showEditButton]="true" [showDeleteButton]="true" [canReorder]="true" [chapter]="entry" (onChapterChange)="reloadChapters()"></app-chapter-admin-listitem>
+          </div>
+        </div>
       </div>
     </mat-card>
 
