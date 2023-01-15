@@ -62,4 +62,12 @@ public class ExerciseController: ControllerBase
         return this.Ok(data);
     }
     
+    [HttpPost("copyExercise")]
+    [Authorize(Roles = $"{RoleHelper.Admin}, {RoleHelper.Teacher}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExerciseDetailItem))]
+    public async Task<IActionResult> CopyExercise([FromQuery] Guid exerciseId, [FromQuery] Guid toChapter, CancellationToken cancellationToken = default)
+    {
+        var res = await this.exerciseService.CopyToChapterAsync(exerciseId, toChapter, cancellationToken);
+        return this.Ok(res);
+    }
 }
