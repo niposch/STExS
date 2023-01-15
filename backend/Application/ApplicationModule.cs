@@ -15,10 +15,13 @@ public class ApplicationModule : Module
         builder.RegisterType<WeatherService>()
             .As<IWeatherService>()
             .InstancePerLifetimeScope();
-
+        
+        builder.RegisterType<ExerciseService>()
+               .As<IExerciseService>()
+               .InstancePerLifetimeScope();
         builder.RegisterType<ParsonExerciseService>()
-            .As<IParsonExerciseService>()
-            .InstancePerLifetimeScope();
+               .As<IParsonExerciseService>()
+               .InstancePerLifetimeScope();
         builder.RegisterType<CodeOutputExerciseService>()
             .As<ICodeOutputExerciseService>()
             .InstancePerLifetimeScope();
