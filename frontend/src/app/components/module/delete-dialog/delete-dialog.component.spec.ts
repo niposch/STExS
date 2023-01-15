@@ -9,7 +9,7 @@ describe('DeleteDialogComponent', () => {
   let component: DeleteDialogComponent;
   let fixture: ComponentFixture<DeleteDialogComponent>;
   let dialogRef = {
-    close: () => {}
+    close: (action:string) => {}
   }
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('DeleteDialogComponent', () => {
       declarations: [ DeleteDialogComponent ],
       imports: [ RouterTestingModule, HttpClientTestingModule],
       providers: [
-        { provide: MatDialogRef<DeleteDialogComponent>, useValue: {dialogRef} }
+        { useValue: dialogRef, provide: MatDialogRef<DeleteDialogComponent> }
       ]
     })
     .compileComponents();
@@ -34,8 +34,12 @@ describe('DeleteDialogComponent', () => {
   fit('should close dialog when close button clicked', fakeAsync(() => {
     let abortButton = fixture.debugElement.query(By.css("#abortButton"))
     expect(abortButton).toBeTruthy();
+
+    let spy = spyOn(dialogRef, "close")
+
     abortButton.triggerEventHandler("click");
     fixture.whenStable().then(() => {
+      expect(spy).toHaveBeenCalledWith("abort")
     })
   }));
 });
