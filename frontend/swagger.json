@@ -1883,7 +1883,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
@@ -1957,7 +1958,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
@@ -2006,7 +2008,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",

@@ -17,9 +17,14 @@
     </mat-card-title>
     <!-- DELETE BUTTON -->
 
-    <button mat-button color="warn" (click)="deleteExerciseDialog()" style="height: fit-content">
-      <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
-    </button>
+    <div>
+      <button mat-button (click)="editExercise()" style="height: fit-content">
+        <mat-icon class="icon" aria-hidden="false" fontIcon="edit" ></mat-icon>
+      </button>
+      <button mat-button color="warn" (click)="deleteExerciseDialog()" style="height: fit-content">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+      </button>
+    </div>
   </div>
 
   <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>

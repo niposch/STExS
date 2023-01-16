@@ -1,8 +1,10 @@
 <mat-card class="main-mat-card">
-  <div>
-    <div class="horizontal-container card-title">
-      <mat-card-title class="vertically-centered">Create a new Code Output Exercise</mat-card-title>
-      <button mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
+  <div *ngIf="!this.loading else loadingSpinner">
+    <div class="horizontal-container card-title" style="align-items: center">
+      <button mat-mini-fab (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+      <mat-card-title class="vertically-centered" style="margin-top: 0px; margin-bottom: 0px">Create a new Code Output Exercise</mat-card-title>
+      <button *ngIf="!isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
+      <button *ngIf="isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
     </div>
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
@@ -21,4 +23,7 @@
       <input matInput type="number" [(ngModel)]="this.achievablePoints">
     </mat-form-field>
   </div>
+  <ng-template #loadingSpinner>
+    <mat-spinner mode="indeterminate" style="scale: 0.5"></mat-spinner>
+  </ng-template>
 </mat-card>

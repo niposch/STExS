@@ -43,6 +43,6 @@ export class MemberListAdminComponent implements OnInit {
     })
       .subscribe()
     this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
-    this.toastService.open("User was rejected from joining the module!")
+    this.toastService.open("User was rejected!")
   }
 }

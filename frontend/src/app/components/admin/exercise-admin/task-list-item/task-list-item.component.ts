@@ -1,13 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
-import {lastValueFrom} from "rxjs";
-import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
+import {Router} from "@angular/router";
 import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
 @Component({
@@ -25,6 +22,7 @@ export class TaskListItemComponent implements OnInit {
   private showLoading: boolean = false;
   constructor(private dialog: MatDialog,
               private readonly exerciseService:ExerciseService,
+              private readonly router:Router,
               private readonly snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -50,5 +48,12 @@ export class TaskListItemComponent implements OnInit {
     }).subscribe( () => {
       this.exerciseChange.emit(true);
     })
+  }
+
+  editExercise() {
+    // @ts-ignore
+    if(this.exercise.exerciseType == ExerciseType.CodeOutput){
+      this.router.navigate(["/codeoutput/create"], {queryParams:{exerciseId: this.exercise.id}})
+    }
   }
 }
