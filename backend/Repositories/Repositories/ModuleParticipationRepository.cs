@@ -68,6 +68,8 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     public async Task<bool> IsUserRegisteredInModuleAsync(Guid userId, Guid moduleId, CancellationToken cancellationToken = default)
     {
         return await this.context.ModuleParticipations
+            .Include(m => m.User)
+            .Include(m => m.Module)
             .AnyAsync(p =>
                 p.UserId == userId &&
                 p.ModuleId == moduleId, cancellationToken);
@@ -77,6 +79,8 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
     {
         return await this.context.ModuleParticipations
             .Where(p => p.ModuleId == moduleId)
+            .Include(m => m.User)
+            .Include(m => m.Module)
             .ToListAsync(cancellationToken);
     }
 
@@ -86,6 +90,30 @@ public class ModuleParticipationRepository: IModuleParticipationRepository
             .Where(p => p.UserId == userId)
             .Include(m => m.Module)
             .ToListAsync(cancellationToken);
+    }
+    
+    public async Task<IEnumerable<ModuleParticipation>> GetParticipationsForAdminToAcceptAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await this.context.ModuleParticipations
+            .Where(p => !p.ParticipationConfirmed)
+            .Include(m => m.Module)
+            .Where(p => p.Module.OwnerId == userId)
+            .Include(m => m.User)
+            .Include(m => m.Module)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task RemoveAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var moduleParticipation = await this.context.ModuleParticipations.FirstOrDefaultAsync(m => m.ModuleId == moduleId && m.UserId == userId, cancellationToken);
+        
+        if(moduleParticipation == null)
+        {
+            throw new EntityNotFoundException<ModuleParticipation>(Guid.Empty);
+        }
+        
+        this.context.ModuleParticipations.Remove(moduleParticipation);
+        await this.context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task TryConfirmParticipationAsync(Guid userId, Guid moduleId, CancellationToken cancellationToken = default)

@@ -16,4 +16,6 @@ public interface IModuleParticipationRepository
     Task AddAsync(ModuleParticipation newParticipation, CancellationToken cancellationToken = default);
     
     Task<List<ModuleParticipation>> GetByModuleIdsAndUserIdAsync(IEnumerable<Guid> moduleIds, Guid userId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ModuleParticipation>> GetParticipationsForAdminToAcceptAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task RemoveAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
 }

@@ -42,4 +42,16 @@ describe('DeleteDialogComponent', () => {
       expect(spy).toHaveBeenCalledWith("abort")
     })
   }));
+
+  it('should proceed when proceed button clicked', fakeAsync(() => {
+    let abortButton = fixture.debugElement.query(By.css("#understoodButton"))
+    expect(abortButton).toBeTruthy();
+
+    let spy = spyOn(dialogRef, "close")
+
+    abortButton.triggerEventHandler("click");
+    fixture.whenStable().then(() => {
+      expect(spy).toHaveBeenCalledWith("delete")
+    })
+  }));
 });
