@@ -29,7 +29,6 @@ export class TaskListComponent implements OnInit, AfterViewInit {
     this.exerciseService.apiExerciseAllGet$Json()
       .subscribe(eList => {
       this.results = eList;
-      console.log(eList)
     })
 
     /*

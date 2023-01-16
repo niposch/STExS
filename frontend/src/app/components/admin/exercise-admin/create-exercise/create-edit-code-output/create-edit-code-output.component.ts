@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CodeOutputService} from "../../../../../../services/generated/services/code-output.service";
 import {lastValueFrom} from "rxjs";
@@ -21,6 +21,7 @@ export class CreateEditCodeOutputComponent implements OnInit {
   public isEditingExercise = false;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private snackBar: MatSnackBar,
               private codeOutputService: CodeOutputService) { }
 
@@ -63,6 +64,8 @@ export class CreateEditCodeOutputComponent implements OnInit {
       }).then(() => {
       this.snackBar.open("Successfully created Exercise", "Dismiss", {duration:2000});
     });
+
+    this.router.navigateByUrl('module/administrate/chapter' + this.chapterId)
   }
 
 }

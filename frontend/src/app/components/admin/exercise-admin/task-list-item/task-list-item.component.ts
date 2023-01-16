@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
+import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
 @Component({
   selector: 'app-task-list-item',
@@ -19,6 +20,7 @@ export class TaskListItemComponent implements OnInit {
   // should be TaskDetailItem
   @Input() exercise: ExerciseDetailItem = { };
   @Output() exerciseChange = new EventEmitter<boolean>;
+  public exerciseType = ExerciseType;
   private isDeleting: boolean = false;
   private showLoading: boolean = false;
   constructor(private dialog: MatDialog,

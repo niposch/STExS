@@ -41,7 +41,7 @@
       <mat-card-content>
         <mat-divider style="margin-bottom: 5px"></mat-divider>
         <div *ngIf="this.exerciseList != null else loading">
-          <div *ngFor="let exercise of this.exerciseList">
+          <div *ngFor="let exercise of this.exerciseList" style="margin-bottom: 5px">
             <app-task-list-item [exercise]="exercise" (exerciseChange)="this.loadExercises()"></app-task-list-item>
           </div>
         </div>
