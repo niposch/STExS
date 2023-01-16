@@ -39,6 +39,7 @@ export class CreateEditCodeOutputComponent implements OnInit {
         this.loadExercise(this.exerciseId)
       } else {
         this.isEditingExercise = false;
+        this.loading = false
       }
     })
   }
