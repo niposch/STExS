@@ -63,9 +63,8 @@ export class CreateEditCodeOutputComponent implements OnInit {
         throw err
       }).then(() => {
       this.snackBar.open("Successfully created Exercise", "Dismiss", {duration:2000});
+      this.router.navigate(['/module/administrate/chapter'], {queryParams : {chapterId:this.chapterId}})
     });
-
-    this.router.navigateByUrl('module/administrate/chapter' + this.chapterId)
   }
 
 }
