@@ -4,7 +4,7 @@ namespace Common.RepositoryInterfaces.Tables;
 
 public interface ICommonExerciseRepository
 {
-    public Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default);
+    public Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, bool asNoTracking = false, CancellationToken cancellationToken = default);
     
     public Task<BaseExercise> AddAsync(BaseExercise exercise, CancellationToken cancellationToken = default);
 

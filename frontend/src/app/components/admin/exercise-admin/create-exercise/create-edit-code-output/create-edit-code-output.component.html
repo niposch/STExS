@@ -1,0 +1,29 @@
+<mat-card class="main-mat-card">
+  <div *ngIf="!this.loading else loadingSpinner">
+    <div class="horizontal-container card-title" style="align-items: center">
+      <button mat-mini-fab (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+      <mat-card-title class="vertically-centered" style="margin-top: 0px; margin-bottom: 0px">Create a new Code Output Exercise</mat-card-title>
+      <button *ngIf="!isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
+      <button *ngIf="isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
+    </div>
+    <mat-card-content>
+      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+      <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field class="form-field">
+      <mat-label>Expected Answer</mat-label>
+      <textarea matInput cdkTextareaAutosize [(ngModel)]="this.expectedAnswer"></textarea>
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
+    <mat-form-field class="form-field">
+      <mat-label>Achievable Points</mat-label>
+      <input matInput type="number" [(ngModel)]="this.achievablePoints">
+    </mat-form-field>
+  </div>
+  <ng-template #loadingSpinner>
+    <mat-spinner mode="indeterminate" style="scale: 0.5"></mat-spinner>
+  </ng-template>
+</mat-card>

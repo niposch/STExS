@@ -11,6 +11,6 @@ public class ExerciseDetailItem
     public int RunningNumber { get; set; }
     public int AchieveablePoints { get; set; }
     public Guid ChapterId { get; set; }
-    public DateTime CreationDate { get; set; }
+    public DateTime? CreationDate { get; set; }
     public DateTime? ModificationDate { get; set; }
 }

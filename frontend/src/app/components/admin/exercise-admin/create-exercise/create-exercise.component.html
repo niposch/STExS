@@ -1,0 +1,8 @@
+<mat-form-field class="form-field">
+  <mat-label>Name</mat-label>
+  <input matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+</mat-form-field>
+<mat-form-field class="form-field">
+  <mat-label>Description / Question</mat-label>
+  <textarea matInput cdkTextareaAutosize [(ngModel)]="this.description" (keyup)="emitValues()"></textarea>
+</mat-form-field>

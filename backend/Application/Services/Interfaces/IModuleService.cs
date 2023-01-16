@@ -37,4 +37,9 @@ public interface IModuleService
     Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
     Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);
     Task<int?> GetModuleParticipantCountAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    
+    Task<List<ModuleParticipationDetailItem>> GetParticipationsForModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    Task ConfirmModuleParticipationAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
+    Task<List<ModuleParticipationDetailItem>> GetParticipationsForAdminUserAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task RejectModuleParticipationAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
 }

@@ -591,51 +591,6 @@
       }
     },
     "/api/Exercise": {
-      "post": {
-        "tags": [
-          "Exercise"
-        ],
-        "parameters": [
-          {
-            "name": "existingExerciseId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "chapterToCopyTo",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseDetailItem"
-                }
-              }
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Exercise"
@@ -773,6 +728,53 @@
                   "items": {
                     "$ref": "#/components/schemas/ExerciseDetailItem"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Exercise/copyExercise": {
+      "post": {
+        "tags": [
+          "Exercise"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "toChapter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetailItem"
                 }
               }
             }
@@ -1385,6 +1387,152 @@
         }
       }
     },
+    "/api/ModuleParticipation/forModule": {
+      "get": {
+        "tags": [
+          "ModuleParticipation"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ModuleParticipation/forAdminUser": {
+      "get": {
+        "tags": [
+          "ModuleParticipation"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleParticipationDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ModuleParticipation/confirm": {
+      "post": {
+        "tags": [
+          "ModuleParticipation"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ModuleParticipation/reject": {
+      "post": {
+        "tags": [
+          "ModuleParticipation"
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -1735,7 +1883,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
@@ -1751,9 +1900,12 @@
       "CodeOutputExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "id": {
+          "expectedAnswer": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "isMultilineResponse": {
+            "type": "boolean"
           },
           "exerciseName": {
             "type": "string",
@@ -1763,13 +1915,6 @@
             "type": "string",
             "nullable": true
           },
-          "exerciseType": {
-            "$ref": "#/components/schemas/ExerciseType"
-          },
-          "runningNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
           "achieveablePoints": {
             "type": "integer",
             "format": "int32"
@@ -1777,22 +1922,6 @@
           "chapterId": {
             "type": "string",
             "format": "uuid"
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modificationDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "expectedAnswer": {
-            "type": "string",
-            "nullable": true
-          },
-          "isMultilineResponse": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1829,7 +1958,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
@@ -1878,7 +2008,8 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
@@ -2112,6 +2243,54 @@
           },
           "isFavorite": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModuleParticipationDetailItem": {
+        "type": "object",
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participationConfirmed": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "matrikelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

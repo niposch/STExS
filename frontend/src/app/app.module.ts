@@ -45,9 +45,13 @@ import { ChapterAdminListitemComponent } from './components/admin/chapter/chapte
 import { ArchiveDialogComponent } from './components/module/archive-dialog/archive-dialog.component';
 import { MatSliderModule } from "@angular/material/slider";
 import { ChapterAdminAdministrateComponent } from './components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
-import { TaskListComponent } from './components/admin/chapter/chapter-admin-administrate/task-list/task-list.component';
-import { TaskListItemComponent } from './components/admin/chapter/chapter-admin-administrate/task-list-item/task-list-item.component';
+import { TaskListComponent } from './components/admin/exercise-admin/task-list/task-list.component';
+import { TaskListItemComponent } from './components/admin/exercise-admin/task-list-item/task-list-item.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { CreateExerciseComponent } from './components/admin/exercise-admin/create-exercise/create-exercise.component';
+import {MatRadioModule} from "@angular/material/radio";
+import { MemberListAdminComponent } from './components/admin/modules-admin/member-list-admin/member-list-admin.component';
+import { CreateEditCodeOutputComponent } from './components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component';
 
 @NgModule({
   declarations: [
@@ -72,35 +76,39 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ChapterAdminAdministrateComponent,
     TaskListComponent,
     TaskListItemComponent,
+    CreateExerciseComponent,
+    MemberListAdminComponent,
+    CreateEditCodeOutputComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        RouterModule.forRoot([]),
-        BrowserAnimationsModule,
-        ApiModule.forRoot({rootUrl: ""}),
-        MatButtonModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatDividerModule,
-        MatProgressSpinnerModule,
-        MatCardModule,
-        LayoutModule,
-        MatInputModule,
-        FormsModule,
-        MatChipsModule,
-        MatProgressBarModule,
-        MatSnackBarModule,
-        MatExpansionModule,
-        MatListModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatGridListModule,
-        MatDialogModule,
-        MatSliderModule,
-        DragDropModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule.forRoot([]),
+    BrowserAnimationsModule,
+    ApiModule.forRoot({rootUrl: ""}),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    LayoutModule,
+    MatInputModule,
+    FormsModule,
+    MatChipsModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatSliderModule,
+    DragDropModule,
+    MatRadioModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

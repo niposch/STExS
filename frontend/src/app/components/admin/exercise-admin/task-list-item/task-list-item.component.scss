@@ -6,21 +6,16 @@ mat-card {
 }
 
 .title {
+  height: 100%;
+  line-height: 100%;
   font-weight: bold;
-  margin-right: 20px;
-  min-width: 200px;
+  text-align: center;
 }
 
 .horizontal-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
   overflow-x: hidden;
-}
-
-.vertically-centered {
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .space-between {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
@@ -7,7 +7,8 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
 import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
-import {ModuleDetailItem} from "../../../../../services/generated/models/module-detail-item";
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
+import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 
 
 @Component({
@@ -27,12 +28,16 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   public showLoading = false;
   public isLoading: boolean = false;
   private isDeleting: boolean = false;
-  private chapterId: string = "";
+  public chapterId: string = "";
+  public exerciseList: Array<ExerciseDetailItem> | null = null;
+  public hasExercises: boolean = false;
+  public exerciseType: number = -1;
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
               private readonly chapterService:ChapterService,
               private readonly moduleService:ModuleService,
+              private readonly exerciseService: ExerciseService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -41,6 +46,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
         this.loadChapter(this.chapterId);
+        this.loadExercises();
       }
     })
     this.isLoading = false;
@@ -122,5 +128,31 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.isDeleting = false;
       this.showLoading = false;
     })
+  }
+
+  public loadExercises() {
+    this.exerciseService.apiExerciseByChapterIdGet$Json({
+      chapterId: this.chapterId
+    })
+      .subscribe(e => {
+        this.exerciseList = e;
+        if (this.exerciseList.length > 0) {
+          this.hasExercises = true;
+        } else {
+          this.hasExercises = false;
+        }
+      })
+  }
+
+  createExercise() {
+    if (this.exerciseType == -1) {
+      this.snackBar.open("Please select an Exercise Type", "understood");
+      return;
+    }
+
+    this.router.navigate(
+      ['codeoutput/create'],
+      {queryParams: {type: this.exerciseType, chapterId: this.chapterId}}
+    )
   }
 }

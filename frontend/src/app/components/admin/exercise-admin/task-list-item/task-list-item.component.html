@@ -1,0 +1,36 @@
+<mat-card>
+  <div>
+  <div class="horizontal-container space-between" style="align-items: center; margin-bottom: 0">
+    <mat-card-title class="title" style="margin: 0">
+      <div class="horizontal-container">
+        <mat-label class="vertically-centered">{{exercise.exerciseName}}</mat-label>
+        <mat-chip-list class="vertically-centered" style="margin-left: 15px">
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.SyntaxExercise">syntax exercise</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.NaturalLanguageDescripition">natural language description</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.Parson">parsons puzzle</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.FindTheError">find the bug</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.ClozeText">fill in the blanks</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.CodeOutput">code output</mat-chip>
+          <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.ProgrammingTask">programming exercise</mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-card-title>
+    <!-- DELETE BUTTON -->
+
+    <div>
+      <button mat-button (click)="editExercise()" style="height: fit-content">
+        <mat-icon class="icon" aria-hidden="false" fontIcon="edit" ></mat-icon>
+      </button>
+      <button mat-button color="warn" (click)="deleteExerciseDialog()" style="height: fit-content">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
+  <mat-card-content style="margin: 0">
+    <mat-label>{{exercise.exerciseDescription}}</mat-label>
+  </mat-card-content>
+  </div>
+</mat-card>
