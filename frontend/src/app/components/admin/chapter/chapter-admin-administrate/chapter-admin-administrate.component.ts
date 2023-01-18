@@ -99,8 +99,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     if (this.savingInProgress) return;
     this.showLoading = true;
     this.savingInProgress = true;
-    //BACKEND API POST ROUTE to change chapter info
-    this.snackBar.open("Successfully saved changes!", "Dismiss", {duration:2000})
+    this.snackBar.open("Could not save changes!", "understood", {duration:2000})
     this.savingInProgress = false;
     this.showLoading = false;
   }
