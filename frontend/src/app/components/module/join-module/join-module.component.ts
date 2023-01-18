@@ -1,9 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../services/generated/services/module.service";
-import {Module} from "../../../../services/generated/models/module";
-import {debounce, fromEvent, interval, Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
 
 @Component({
@@ -12,15 +8,11 @@ import {ModuleDetailItem} from "../../../../services/generated/models/module-det
   styleUrls: ['./join-module.component.scss']
 })
 export class JoinModuleComponent implements OnInit, AfterViewInit{
-  // @ts-ignore
-  @ViewChild("searchInput") searchInputRef: ElementRef;
-
+  searchInput : string = "";
   @Input() infoText : string = "";
   public results: Array<ModuleDetailItem> | null = null;
   public displayedColumns = ["moduleName", "teacher", "actions"]
-  constructor(private readonly moduleService:ModuleService,
-              private readonly snackBar:MatSnackBar) { }
-
+  constructor(private readonly moduleService:ModuleService) { }
 
   ngOnInit(): void {
     this.search("")
@@ -32,6 +24,8 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
     }).subscribe(data => {
       this.results = data
     })
+
+
   }
 
   ngAfterViewInit(): void {
