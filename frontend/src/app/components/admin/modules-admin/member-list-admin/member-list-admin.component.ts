@@ -1,10 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
-import {} from "../../../../../services/generated/models/module-participation";
 import {ModuleParticipationDetailItem} from "../../../../../services/generated/models/module-participation-detail-item";
 import {ModuleParticipationService} from "../../../../../services/generated/services/module-participation.service";
-import * as module from "module";
-import {config, every, scan} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -31,9 +28,10 @@ export class MemberListAdminComponent implements OnInit {
       userId: userId,
       moduleId:moduleId
     })
-      .subscribe()
-    this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
-    this.toastService.open("User was accepted into the module!")
+      .subscribe( () => {
+        this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
+        this.toastService.open("User was accepted into the module!", "ok", {duration: 5000})
+      })
   }
 
   async rejectUser(userId: any, moduleId: any):Promise<any> {
@@ -41,8 +39,9 @@ export class MemberListAdminComponent implements OnInit {
       userId: userId,
       moduleId:moduleId
     })
-      .subscribe()
-    this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
-    this.toastService.open("User was rejected!")
+      .subscribe( () => {
+        this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
+        this.toastService.open("User was rejected!", "ok", {duration: 5000})
+      })
   }
 }
