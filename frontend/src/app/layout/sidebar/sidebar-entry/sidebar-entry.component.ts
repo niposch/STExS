@@ -10,6 +10,7 @@ export class SidebarEntryComponent implements OnInit {
 
   // @ts-ignore
   @Input() module : ModuleDetailItem = { };
+  @Input() isAuthorizedToEdit: boolean = false;
 
   constructor() { }
 
