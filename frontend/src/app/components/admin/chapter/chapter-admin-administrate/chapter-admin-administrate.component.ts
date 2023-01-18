@@ -149,19 +149,16 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.snackBar.open("Please select an Exercise Type", "understood");
       return;
     }
-    
-    switch (this.exerciseType) {
-      case ExerciseType.CodeOutput: {
-        this.router.navigate(
-          ['codeoutput/create'],
-          {queryParams: {chapterId: this.chapterId}}
-        );
-        break;
-      }
-      default: {
-        this.router.navigate(['404'])
-        break;
-      }
+
+    if (this.exerciseType == ExerciseType.CodeOutput) {
+      this.router.navigate(
+        ['codeoutput/create'],
+        {queryParams: {chapterId: this.chapterId}}
+      );
+      return;
+    } else {
+      this.router.navigate(['**'])
     }
+
   }
 }
