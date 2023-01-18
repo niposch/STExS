@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, lastValueFrom} from "rxjs";
+import {lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
@@ -9,6 +9,7 @@ import {ChapterService} from "../../../../../services/generated/services/chapter
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
+import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
 
 @Component({
@@ -44,7 +45,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
-        this.loadChapter(this.chapterId).then(r => {
+        this.loadChapter(this.chapterId).then(() => {
           this.loadModule(this.chapter?.moduleId);
           this.loadExercises();
         });
@@ -148,10 +149,19 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.snackBar.open("Please select an Exercise Type", "understood");
       return;
     }
-
-    this.router.navigate(
-      ['codeoutput/create'],
-      {queryParams: {type: this.exerciseType, chapterId: this.chapterId}}
-    )
+    
+    switch (this.exerciseType) {
+      case ExerciseType.CodeOutput: {
+        this.router.navigate(
+          ['codeoutput/create'],
+          {queryParams: {chapterId: this.chapterId}}
+        );
+        break;
+      }
+      default: {
+        this.router.navigate(['404'])
+        break;
+      }
+    }
   }
 }
