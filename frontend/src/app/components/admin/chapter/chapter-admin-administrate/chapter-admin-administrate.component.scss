@@ -8,7 +8,7 @@
   }
 
   .chapter-name {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .chapter-description{
@@ -17,23 +17,18 @@
     margin-right: 14px;
   }
 
-  .horizontal-flex {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    justify-content: space-between;
-    overflow-x: hidden;
-  }
-
   .full-width {
     width: 100%;
   }
 
   .button {
-    margin-left: 4px;
-    margin-right: 4px;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .marginTB-5px {
+    margin-bottom: 5px;
+    margin-top: 5px;
   }
 
   .module-name {
@@ -49,9 +44,9 @@
   }
 
   .input-field {
-    margin-bottom: -10px;
-    width: 40%;
-    min-width: 200px;
+    width: 70%;
+    min-width: 300px;
+    max-width: available;
   }
 
   .task-card {
@@ -67,8 +62,8 @@
   }
 
   .hide-top-round-corners{
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
   }
 
   .radio-group {
@@ -79,9 +74,17 @@
     margin-right: 40px;
   }
 
-.vertically-centered {
+  .vertically-centered {
     margin-top: auto;
     margin-bottom: auto;
+  }
+
+  .full-height {
+    min-height: 100%;
+  }
+
+  .space-between {
+    justify-content: space-between;
   }
 
   // SCROLL BAR

@@ -11,7 +11,6 @@ import {ExerciseDetailItem} from "../../../../../services/generated/models/exerc
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
-
 @Component({
   selector: 'app-chapter-admin-administrate',
   templateUrl: './chapter-admin-administrate.component.html',
@@ -33,6 +32,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   public exerciseList: Array<ExerciseDetailItem> | null = null;
   public hasExercises: boolean = false;
   public exerciseType: number = -1;
+  private moduleId : string = "";
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -45,32 +45,45 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
-        this.loadChapter(this.chapterId).then(() => {
-          this.loadModule(this.chapter?.moduleId);
-          this.loadExercises();
-        });
+        this.loadChapter(this.chapterId);
       }
     })
   }
 
-  async loadChapter(id:string){
-    await this.chapterService.apiChapterGet$Json({
+  loadChapter(id:string){
+    this.chapterService.apiChapterGet$Json({
       chapterId: id
     })
       .subscribe(c => {
         this.chapter = c;
         this.chapterName = c?.chapterName;
         this.chapterDescription = c?.chapterDescription;
+        // @ts-ignore
+        this.moduleId = c?.moduleId;
+
+        this.loadModule(this.moduleId)
+        this.loadExercises();
       })
   }
 
-  loadModule (id:string | undefined) {
-    if (typeof(id) === undefined) return
+  loadModule (id : string) {
+    console.log("ID: " + id)
     this.moduleService.apiModuleGetByIdGet$Json({
-      id: this.chapter?.moduleId
+      id: id
     })
       .subscribe(m => {
         this.moduleName = m.moduleName;
+      })
+  }
+
+  loadExercises() {
+    this.exerciseService.apiExerciseByChapterIdGet$Json({
+      chapterId: this.chapterId
+    })
+      .subscribe(e => {
+        this.exerciseList = e;
+        this.hasExercises = this.exerciseList.length > 0;
+        this.isLoading = false;
       })
   }
 
@@ -131,17 +144,6 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.isDeleting = false;
       this.showLoading = false;
     })
-  }
-
-  loadExercises() {
-      this.exerciseService.apiExerciseByChapterIdGet$Json({
-      chapterId: this.chapterId
-    })
-      .subscribe(e => {
-        this.exerciseList = e;
-        this.hasExercises = this.exerciseList.length > 0;
-        this.isLoading = false;
-      })
   }
 
   createExercise() {
