@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {lastValueFrom} from "rxjs";
+import {catchError, lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
@@ -19,14 +19,14 @@ import {ExerciseService} from "../../../../../services/generated/services/exerci
 
 export class ChapterAdminAdministrateComponent implements OnInit {
   public chapter : ChapterDetailItem | null = null;
-  public chapterName : string | null | undefined = "chapter_name";
-  public chapterDescription : string | null | undefined = "chapter_description";
+  public chapterName : string | null | undefined = "";
+  public chapterDescription : string | null | undefined = "";
   public moduleName: string | null | undefined = "Module";
   public isEditingName: boolean = false;
   public newChapterName: string = "";
   public savingInProgress = false;
   public showLoading = false;
-  public isLoading: boolean = false;
+  public isLoading: boolean = true;
   private isDeleting: boolean = false;
   public chapterId: string = "";
   public exerciseList: Array<ExerciseDetailItem> | null = null;
@@ -40,20 +40,20 @@ export class ChapterAdminAdministrateComponent implements OnInit {
               private readonly exerciseService: ExerciseService,
               private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.isLoading = true;
+  ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
-        this.loadChapter(this.chapterId);
-        this.loadExercises();
+        this.loadChapter(this.chapterId).then(r => {
+          this.loadModule(this.chapter?.moduleId);
+          this.loadExercises();
+        });
       }
     })
-    this.isLoading = false;
   }
 
-  loadChapter(id:string){
-    this.chapterService.apiChapterGet$Json({
+  async loadChapter(id:string){
+    await this.chapterService.apiChapterGet$Json({
       chapterId: id
     })
       .subscribe(c => {
@@ -61,13 +61,15 @@ export class ChapterAdminAdministrateComponent implements OnInit {
         this.chapterName = c?.chapterName;
         this.chapterDescription = c?.chapterDescription;
       })
+  }
 
+  loadModule (id:string | undefined) {
+    if (typeof(id) === undefined) return
     this.moduleService.apiModuleGetByIdGet$Json({
       id: this.chapter?.moduleId
     })
       .subscribe(m => {
         this.moduleName = m.moduleName;
-        console.log("MODULE NAME: " + this.moduleName)
       })
   }
 
@@ -130,17 +132,14 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     })
   }
 
-  public loadExercises() {
-    this.exerciseService.apiExerciseByChapterIdGet$Json({
+  loadExercises() {
+      this.exerciseService.apiExerciseByChapterIdGet$Json({
       chapterId: this.chapterId
     })
       .subscribe(e => {
         this.exerciseList = e;
-        if (this.exerciseList.length > 0) {
-          this.hasExercises = true;
-        } else {
-          this.hasExercises = false;
-        }
+        this.hasExercises = this.exerciseList.length > 0;
+        this.isLoading = false;
       })
   }
 
