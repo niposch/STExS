@@ -1,6 +1,6 @@
-<div *ngIf="module != null else loading">
+<div *ngIf="module != null else loading" class="master-card">
   <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
-  <mat-card class="master-card" [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
+  <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
     <div class="horizontal-container" style="height: 60px">
       <mat-card-title class="module-name vertically-centered">{{module.moduleName}}</mat-card-title>
       <div class="horizontal-container">

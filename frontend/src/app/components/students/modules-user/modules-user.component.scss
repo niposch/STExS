@@ -7,6 +7,12 @@
   overflow-y: scroll;
 }
 
+.component-width {
+  min-width: 600px;
+  max-width: 1500px;
+  margin: auto;
+}
+
 .flex-item {
   flex: 1;
   min-width: 400px;

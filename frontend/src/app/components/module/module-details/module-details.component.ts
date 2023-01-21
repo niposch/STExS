@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
 import {ModuleService} from "../../../../services/generated/services/module.service";
 import {ActivatedRoute} from "@angular/router";
@@ -6,6 +6,7 @@ import {lastValueFrom} from "rxjs";
 import {ModuleParticipationStatus} from "../../../../services/generated/models/module-participation-status";
 import {ChapterDetailItem} from "../../../../services/generated/models/chapter-detail-item";
 import {ChapterService} from "../../../../services/generated/services/chapter.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-module-details',
@@ -25,7 +26,8 @@ export class ModuleDetailsComponent implements OnInit {
   public showLoading: boolean = false;
   constructor(private readonly moduleService:ModuleService,
               private readonly chapterService:ChapterService,
-              private readonly activatedRoute:ActivatedRoute) { }
+              private readonly activatedRoute:ActivatedRoute,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params =>{
@@ -72,10 +74,21 @@ export class ModuleDetailsComponent implements OnInit {
     await this.moduleService.apiModuleJoinModulePost({
       moduleId: moduleId
     })
-      .subscribe( () => {
-        this.getParticipationStatus(moduleId).then(() => {
-          this.showLoading = false;
+      .subscribe( async () => {
+        await lastValueFrom(this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
+          moduleId: moduleId
+        })).catch(err => {
+          this.snackBar.open('An error occurred', 'ok', {duration: 4000})
         })
+          .then(value => {
+            this.participationStatus = value!;
+            if (this.participationStatus == ModuleParticipationStatus.Requested) {
+              this.snackBar.open('Successfully requested joining!', 'dismiss', {duration: 3000})
+            } else if (this.participationStatus == ModuleParticipationStatus.NotParticipating) {
+              this.snackBar.open('Can\'t join this module', 'Ok', {duration: 4000});
+            }
+            this.showLoading = false;
+          })
       })
   }
 
@@ -85,7 +98,6 @@ export class ModuleDetailsComponent implements OnInit {
     })
       .subscribe(value => {
         this.participationStatus = value;
-        console.log(this.participationStatus)
       })
   }
 }

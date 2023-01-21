@@ -1,11 +1,12 @@
 <!--<p>modules-user works!</p>-->
-<mat-label class="heading">Your modules</mat-label>
-
-<div *ngIf="moduleList else loading" class="flex-layout">
-  <div  *ngFor="let module of moduleList" class="flex-item">
-    <app-module class="fit-parent" [module]="module.module" [isFavorited]="false"></app-module>
+<div class="component-width">
+  <mat-label class="heading">Your modules</mat-label>
+  <div *ngIf="moduleList else loading" class="flex-layout">
+    <div  *ngFor="let module of moduleList" class="flex-item">
+      <app-module class="fit-parent" [module]="module.module" [isFavorited]="false"></app-module>
+    </div>
   </div>
+  <ng-template #loading>
+    <mat-spinner style="margin: auto" mode="indeterminate"></mat-spinner>
+  </ng-template>
 </div>
-<ng-template #loading>
-  <mat-spinner style="margin: auto" mode="indeterminate"></mat-spinner>
-</ng-template>
