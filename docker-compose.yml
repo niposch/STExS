@@ -19,6 +19,8 @@ services:
       - ./backend/STExS.Web/appsettings.docker.json:/app/appsettings.json
     depends_on:
       - db
+    environment:
+      - DontBuildSwagger=true
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:

@@ -11,13 +11,15 @@ COPY ["STExS.Web/STExS.Web.csproj", "STExS.Web/"]
 COPY ["../Application/Application.csproj", "Application/"]
 COPY ["Common/Common.csproj", "Common/"]
 COPY ["Repositories/Repositories.csproj", "Repositories/"]
+COPY ["External.Judge0/External.Judge0.csproj", "External.Judge0/"]
+COPY ["External.Storage/External.Storage.csproj", "External.Storage/"]
 RUN dotnet restore "STExS.Web/STExS.Web.csproj"
 COPY . .
 WORKDIR "/src/STExS.Web"
-RUN dotnet build "STExS.Web.csproj" -c Release -o /app/build
+RUN dotnet build "STExS.Web.csproj" -c Release -o /app/build -p:DontBuildSwagger=true
 
 FROM build AS publish
-RUN dotnet publish "STExS.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "STExS.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false -p:DontBuildSwagger=true
 
 FROM base AS final
 WORKDIR /app
