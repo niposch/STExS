@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories.Tests", "Repos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{917CC0A4-FEA6-4273-86AD-4D95050A8FD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.Judge0", "External.Judge0\External.Judge0.csproj", "{AF89C4C3-AA10-4CE9-8475-0162BB13F107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.Storage", "External.Storage\External.Storage.csproj", "{7074B5E8-7071-42C3-B689-6CE0012EB3E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,13 @@ Global
 		{917CC0A4-FEA6-4273-86AD-4D95050A8FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{917CC0A4-FEA6-4273-86AD-4D95050A8FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{917CC0A4-FEA6-4273-86AD-4D95050A8FD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF89C4C3-AA10-4CE9-8475-0162BB13F107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF89C4C3-AA10-4CE9-8475-0162BB13F107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF89C4C3-AA10-4CE9-8475-0162BB13F107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF89C4C3-AA10-4CE9-8475-0162BB13F107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7074B5E8-7071-42C3-B689-6CE0012EB3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7074B5E8-7071-42C3-B689-6CE0012EB3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7074B5E8-7071-42C3-B689-6CE0012EB3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7074B5E8-7071-42C3-B689-6CE0012EB3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

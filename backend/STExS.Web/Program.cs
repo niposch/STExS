@@ -6,6 +6,8 @@ using Application.Helper.Roles;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models.Authentication;
+using External.Judge0;
+using External.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -36,6 +38,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
     }
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule());
+    b.RegisterModule<StorageModule>();
+    b.RegisterModule<Judge0Module>();
 });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
