@@ -10,11 +10,10 @@ import {ModulesAdminComponent} from "../components/admin/modules-admin/modules-a
 import {ProfileComponent} from "../components/profile/profile.component";
 import {ModuleDetailsComponent} from "../components/module/module-details/module-details.component";
 import {AdministrateModuleComponent} from "../components/admin/modules-admin/administrate-module/administrate-module.component";
-import { ChapterAdminAdministrateComponent } from '../components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
-import {
-  CreateEditCodeOutputComponent
-} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
+import {ChapterAdminAdministrateComponent} from '../components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
+import {CreateEditCodeOutputComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
 import {NotfoundComponent} from "../components/notfound/notfound.component";
+import {SolveExerciseComponent} from "../components/students/solve-exercise/solve-exercise.component";
 
 const routes: Routes = [
   {
@@ -68,6 +67,7 @@ const routes: Routes = [
           {path: "module/administrate", component: AdministrateModuleComponent},
           {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
           {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
+          {path: "solve", component: SolveExerciseComponent},
         ]
       },
       {

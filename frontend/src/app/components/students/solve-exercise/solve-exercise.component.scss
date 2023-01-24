@@ -1,0 +1,25 @@
+.comp-container {
+  min-width: 300px;
+  margin: 0 auto;
+  max-width: 1500px;
+  overflow: scroll;
+  height: 100%;
+}
+
+.exercise-cycler {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.number-display {
+  height: fit-content;
+}
+
+.exercise-comp {
+  width: 100%;
+}
