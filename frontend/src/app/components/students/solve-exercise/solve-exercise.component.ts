@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {ExerciseService} from "../../../../services/generated/services/exercise.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ExerciseDetailItem} from "../../../../services/generated/models/exercise-detail-item";
 import {ExerciseType} from "../../../../services/generated/models/exercise-type";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-solve-exercise',
@@ -28,8 +29,10 @@ export class SolveExerciseComponent implements OnInit {
   public showCodeOutput : boolean = false;
 
   constructor(private readonly activatedRoute: ActivatedRoute,
+              private readonly router : Router,
               private readonly exerciseService: ExerciseService,
               public snackBar: MatSnackBar,
+              private location : Location
               ) { }
 
   ngOnInit(): void {
@@ -49,10 +52,15 @@ export class SolveExerciseComponent implements OnInit {
         this.snackBar.open("Could not load Exercises", "ok", {duration:4000});
       }
     ).then(data => {
+      console.log(data)
       // @ts-ignore
       this.exerciseList = data;
       // @ts-ignore
       this.exerciseListLength = this.exerciseList.length;
+      if ((this.exerciseListLength == 0)) {
+        this.location.back();
+        this.snackBar.open('This chapter contains no exercises!', 'ok', {duration: 4000})
+      }
       this.currentExerciseNr = 0;
       this.updateExerciseComp(0);
       this.isLoading = false;
