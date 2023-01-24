@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SolveCodeOutputComponent } from './solve-code-output.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from "@angular/material/dialog";
 
 describe('SolveCodeOutputComponent', () => {
   let component: SolveCodeOutputComponent;
@@ -8,7 +12,8 @@ describe('SolveCodeOutputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SolveCodeOutputComponent ]
+      declarations: [ SolveCodeOutputComponent ],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatSnackBarModule, MatDialogModule]
     })
     .compileComponents();
 
