@@ -19,12 +19,11 @@ public class GradingResultRepository:IGradingResultRepository
         var ex = await this.context.GradingResults.FirstOrDefaultAsync(e => e.Id == gradingResultId, cancellationToken);
 
         return ex;
-        
-        throw new NotImplementedException();
     }
 
     public async Task UpdateAsync(GradingResult gradingResult, CancellationToken cancellationToken = default)
     {
+   
         throw new NotImplementedException();
     }
 
