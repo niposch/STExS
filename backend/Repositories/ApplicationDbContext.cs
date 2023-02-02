@@ -77,6 +77,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     
     public DbSet<Submission> Submissions { get; set; }
     
+    public DbSet<CodeOutputSubmission> CodeOutputSubmissions { get; set; }
+
     public DbSet<UserSubmission> UserSubmissions { get; set; }
     
     public DbSet<TimeTrack> TimeTracks { get; set; }
