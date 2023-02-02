@@ -1749,6 +1749,13 @@
           },
           "exerciseType": {
             "$ref": "#/components/schemas/ExerciseType"
+          },
+          "userSubmissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserSubmission"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2065,6 +2072,54 @@
           "CodeOutput",
           "ProgrammingTask"
         ]
+      },
+      "GradingResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isFinal": {
+            "type": "boolean"
+          },
+          "isAutomatic": {
+            "type": "boolean"
+          },
+          "appealDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userSubmissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userSubmission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gradedSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "gradedSubmission": {
+            "$ref": "#/components/schemas/Submission"
+          }
+        },
+        "additionalProperties": false
       },
       "IdentityError": {
         "type": "object",
@@ -2419,6 +2474,75 @@
           "Admin"
         ]
       },
+      "Submission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userSubmission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          },
+          "userSubmissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gradingResult": {
+            "$ref": "#/components/schemas/GradingResult"
+          },
+          "gradingResultId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "submissionType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrack": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "submission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserDetailsModel": {
         "type": "object",
         "properties": {
@@ -2429,6 +2553,55 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RoleType"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSubmission": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exercise": {
+            "$ref": "#/components/schemas/BaseExercise"
+          },
+          "finalSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "finalSubmission": {
+            "$ref": "#/components/schemas/Submission"
+          },
+          "timeTracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeTrack"
+            },
+            "nullable": true
+          },
+          "submissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Submission"
+            },
+            "nullable": true
+          },
+          "gradingResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradingResult"
             },
             "nullable": true
           }

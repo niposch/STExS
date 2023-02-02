@@ -72,3 +72,123 @@ yarn quickstart;
 ## Asp.Net Identity
 
 - provisional login page is on /Identity/Account/Login
+# Architecture
+## Grading
+```mermaid
+sequenceDiagram
+participant user
+participant exercise
+participant grader
+
+exercise --> exercise: state is new
+user ->> exercise: requests details
+activate user
+exercise ->> user: delivers details
+user -->> exercise: requests new time track to be created
+exercise --> exercise: state is now "in progress"
+
+user ->> user: starts working on exercise
+user -->> exercise: submits temporary solutions + timetrack id
+exercise -->> exercise: updates time track
+exercise -->> exercise: updates temp submission
+user -->> exercise: closes time track
+deactivate user
+user --> user: stops working on solution
+activate user
+user --> user: starts working on exercise again
+user ->> exercise: queries last submitted temp solution
+exercise->> user: returns last submitted temp solution
+user -->> exercise: requests new time track to be created
+
+user -->> exercise: submits temporary solutions + timetrack ids
+user ->> exercise: submits final solution + timetrack id
+exercise -->> exercise: closes time track
+exercise --> exercise: state is now submitted
+exercise -->> user: indicates success
+
+deactivate user
+
+exercise ->> grader: submits solutioon for grading
+activate grader
+grader ->> grader: grades solution
+grader ->> exercise: publishes grading result
+deactivate grader
+exercise ->> exercise: state is now graded
+user --> exercise: can always query their grading state
+```
+---
+```mermaid
+stateDiagram-v2
+processing
+notSubmitted
+saveTemp
+submitted
+graded
+
+[*] --> notSubmitted
+[*] --> processing
+
+
+processing --> submitted
+processing --> saveTemp
+saveTemp --> processing
+submitted --> graded: happens automatically/manually
+
+graded --> [*]
+notSubmitted --> [*]
+
+note left of processing: user works on a solution
+```
+---
+
+```mermaid
+classDiagram
+direction TB
+
+class Module{
+	- 🔑 id: guid
+}
+
+class Chapter{
+	- 🔑 id: guid
+}
+class Exercise{
+	- 🔑 id: guid
+}
+class GradingResult{
+	- 🔑 id: guid
+	- userId: guid
+	- exerciseId: Guid
+	- CreationDate: DateTime
+	- GradedSubmissionId: guid
+}
+class Submission{
+	- 🔑 id: guid
+	- 🔑 userSubmissionId: guid
+	- ExerciseType: enum, discriminator
+	- other data (per exercise type)
+}
+<<abstract>> Submission
+
+class UserSubmission{
+	- 🔑 UserId: guid
+	- 🔑 ExerciseId: guid
+	- FinalSubmission: guid?
+}
+
+class TimeTrack{
+	- 🔑 id: Guid
+	- StartDate: DateTime
+	- ProcessingTime: TimeSpan 
+}
+
+
+Module "1" --> "m" Chapter
+Chapter "1" --> "m" Exercise
+
+Exercise "1" --> "0..1 per user" UserSubmission
+UserSubmission "1" --> "0..m" Submission
+UserSubmission "1" --> "m" TimeTrack
+UserSubmission "1" --> "0..m" GradingResult
+GradingResult "1" --> "0..1" Submission
+```

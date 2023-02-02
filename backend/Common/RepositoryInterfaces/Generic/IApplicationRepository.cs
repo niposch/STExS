@@ -18,4 +18,11 @@ public interface IApplicationRepository
     ICodeOutputExerciseRepository CodeOutputExercises { get; set; }
     
     IModuleParticipationRepository ModuleParticipations { get; set; }
+
+    #region Grading
+    public IUSerSubmissionRepository UserSubmissions { get; set; }
+    public ISubmissionRepository Submissions { get; set; }
+    public IGradingResultRepository GradingResults { get; set; }
+    public ITimeTrackRepository TimeTracks { get; set; }
+    #endregion
 }

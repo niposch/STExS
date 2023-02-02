@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Common.Models.HelperInterfaces;
 using Common.Models.Authentication;
+using Common.Models.Grading;
 
 namespace Common.Models.ExerciseSystem;
 
@@ -27,4 +28,6 @@ public abstract class BaseExercise : DeletableBaseEntity,
     public int AchievablePoints { get; set; } // how many points are possible in this exercise
 
     public ExerciseType ExerciseType { get; set; }
+    
+    public List<UserSubmission> UserSubmissions { get; set; } = new();
 }
