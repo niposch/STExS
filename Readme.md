@@ -10,6 +10,16 @@ Dokumentation Links:
 [Einheitliche Terminologies](https://docs.google.com/spreadsheets/d/1g1vjrXWrB6KE0glshk8_LKinwjlBFHEBEaZ0eKljc3E)
 
 # How to run the project
+## Code Execution Module
+- to run this, the backend must have a judge0 api to talk to and a blob storage
+    - these can be configured in the appsettings.json files
+- for development, run `docker-compose -f .\docker-compose.dev.blob.yml -f .\docker-compose.judge0.yml up` in the root
+  directory of this repo
+    - this will start the judge0 api and a blob storage emulator via docker-compose
+- the judge0 api can be self hosted and a blob storage emulator can also be used for development, but this is not
+  recommended for production
+    - different production grade blob storage solutions may be used see which ones are supported by FluentStorage
+
 
 ## Recommended Dev Setup
 
