@@ -30,4 +30,8 @@
     <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\GradingResultRepositoryTests" />
+  </ItemGroup>
+
 </Project>
