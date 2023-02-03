@@ -1,6 +1,6 @@
 ﻿using Common.Models.Grading;
 
-namespace Application.Services.Grading;
+namespace Application.Services.Interfaces;
 
 public interface ISubmissionService
 {

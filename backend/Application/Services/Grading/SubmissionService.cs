@@ -1,4 +1,5 @@
-﻿using Common.Models.Grading;
+﻿using Application.Services.Interfaces;
+using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services.Grading;
