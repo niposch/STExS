@@ -1,8 +1,9 @@
 ﻿using Repositories.Repositories.Grading;
 using TestHelper;
+
 namespace Repositories.Tests.Repositories.GradingResultRepositoryTests;
 
-public class Infrastructure
+public abstract class Infrastructure
 {
     protected readonly GradingResultRepository Repository;
 
