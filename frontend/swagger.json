@@ -2526,18 +2526,18 @@
             "format": "date-time",
             "nullable": true
           },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
           "userId": {
             "type": "string",
             "format": "uuid"
           },
-          "user": {
-            "$ref": "#/components/schemas/ApplicationUser"
-          },
-          "submissionId": {
+          "exerciseId": {
             "type": "string",
             "format": "uuid"
           },
-          "submission": {
+          "userSubmission": {
             "$ref": "#/components/schemas/UserSubmission"
           }
         },

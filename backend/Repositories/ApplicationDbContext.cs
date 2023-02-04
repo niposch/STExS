@@ -94,7 +94,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
         builder.Entity<UserSubmission>()
             .HasMany(s => s.TimeTracks)
-            .WithOne(t => t.Submission)
+            .WithOne(t => t.UserSubmission)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
         
@@ -125,6 +125,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.Entity<Submission>()
             .HasDiscriminator(s => s.SubmissionType)
             .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput);
+        
+        builder.Entity<TimeTrack>()
+            .HasOne(t => t.UserSubmission)
+            .WithMany(s => s.TimeTracks)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(t => new
+            {
+                t.UserId,
+                t.ExerciseId
+            });
+        
     }
     #endregion
 }

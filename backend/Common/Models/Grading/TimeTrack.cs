@@ -19,9 +19,9 @@ public class TimeTrack
     public DateTime? CloseDateTime { get; set; }
     public DateTime? LastUpdate { get; set; }
     
-    public Guid UserId { get; set; }
     public ApplicationUser User { get; set; }
+    public Guid UserId { get; set; }
+    public Guid ExerciseId { get; set; }
     
-    public Guid SubmissionId { get; set; }
-    public UserSubmission Submission { get; set; }
+    public UserSubmission UserSubmission { get; set; }
 }
