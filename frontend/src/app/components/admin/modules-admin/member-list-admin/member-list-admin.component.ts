@@ -1,10 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
-import {} from "../../../../../services/generated/models/module-participation";
 import {ModuleParticipationDetailItem} from "../../../../../services/generated/models/module-participation-detail-item";
 import {ModuleParticipationService} from "../../../../../services/generated/services/module-participation.service";
-import * as module from "module";
-import {config, every, scan} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -14,8 +11,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class MemberListAdminComponent implements OnInit {
 
-  @Input()
-  public participations: Array<ModuleParticipationDetailItem>|null = null;
+  @Input()  public participations: Array<ModuleParticipationDetailItem>|null = null;
+  @Output() participantUpdate: EventEmitter<boolean> = new EventEmitter<boolean>();
   displayedColumns = ["First Name", "Last Name", "Email", "UserName", "Matrikel Number", "Module Name", "Actions"];
 
   constructor(private readonly moduleService:ModuleService,
@@ -31,9 +28,10 @@ export class MemberListAdminComponent implements OnInit {
       userId: userId,
       moduleId:moduleId
     })
-      .subscribe()
-    this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
-    this.toastService.open("User was accepted into the module!")
+      .subscribe( () => {
+        this.toastService.open("User was accepted into the module!", "ok", {duration: 5000})
+        this.participantUpdate.emit(true);
+      })
   }
 
   async rejectUser(userId: any, moduleId: any):Promise<any> {
@@ -41,8 +39,9 @@ export class MemberListAdminComponent implements OnInit {
       userId: userId,
       moduleId:moduleId
     })
-      .subscribe()
-    this.participations = this.participations?.filter(el => el.userId != userId && el.moduleId != moduleId) ?? null
-    this.toastService.open("User was rejected!")
+      .subscribe( () => {
+        this.toastService.open("User was rejected!", "ok", {duration: 3000})
+        this.participantUpdate.emit(true);
+      })
   }
 }

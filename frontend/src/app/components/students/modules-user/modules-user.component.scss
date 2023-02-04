@@ -1,0 +1,35 @@
+.flex-layout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.component-width {
+  min-width: 600px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+.flex-item {
+  flex: 1;
+  min-width: 400px;
+  padding: 10px;
+}
+
+.fit-parent {
+  width: inherit;
+  height: inherit;
+}
+
+.heading {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+  line-height: 26px;
+  color: #02C0A2;
+  margin-bottom: 20px;
+}

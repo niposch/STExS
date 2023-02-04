@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
@@ -20,11 +19,13 @@ export class ChapterAdminListitemComponent implements OnInit {
 
   @Input() public showEditButton: boolean = false;
   @Input() public showDeleteButton: boolean = false;
+  @Input() public showSolveButton: boolean = false;
   @Input() public canReorder: boolean = false;
   private isDeleting: boolean = false;
   private showLoading: boolean = false;
 
   @Output() onChapterChange = new EventEmitter<any>();
+
 
 
   constructor(private readonly activatedRoute:ActivatedRoute,
@@ -82,5 +83,12 @@ export class ChapterAdminListitemComponent implements OnInit {
       this.snackBar.open("Successfully deleted Module!", "Dismiss", {duration:5000})
       this.onChapterChange.emit();
     })
+  }
+
+  solveChapter() {
+    this.router.navigate(
+      ['/solve'],
+      {queryParams: {chapterId:this.chapter?.id}}
+    )
   }
 }

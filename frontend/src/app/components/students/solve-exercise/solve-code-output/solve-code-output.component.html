@@ -1,0 +1,18 @@
+<mat-card class="master-card">
+  <div *ngIf="!this.isLoading" class="vertical-container">
+    <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
+    <mat-divider></mat-divider>
+    <mat-label class="description">{{this.exercise?.exerciseDescription}}</mat-label>
+    <mat-divider></mat-divider>
+    <div class="horizontal-flex answer">
+      <mat-form-field class="input vertically-centered">
+        <mat-label>Output</mat-label>
+        <input matInput class="input-field">
+      </mat-form-field>
+      <button class="submit" mat-raised-button color="accent">submit</button>
+    </div>
+  </div>
+  <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
+</mat-card>
+
+

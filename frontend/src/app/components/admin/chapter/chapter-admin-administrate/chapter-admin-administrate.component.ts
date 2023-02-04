@@ -9,7 +9,7 @@ import {ChapterService} from "../../../../../services/generated/services/chapter
 import {ChapterDetailItem} from "../../../../../services/generated/models/chapter-detail-item";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
-
+import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
 @Component({
   selector: 'app-chapter-admin-administrate',
@@ -19,19 +19,22 @@ import {ExerciseService} from "../../../../../services/generated/services/exerci
 
 export class ChapterAdminAdministrateComponent implements OnInit {
   public chapter : ChapterDetailItem | null = null;
-  public chapterName : string | null | undefined = "chapter_name";
-  public chapterDescription : string | null | undefined = "chapter_description";
+  public chapterName : string | null | undefined = "";
+  public chapterDescription : string | null | undefined = "";
   public moduleName: string | null | undefined = "Module";
   public isEditingName: boolean = false;
   public newChapterName: string = "";
   public savingInProgress = false;
   public showLoading = false;
-  public isLoading: boolean = false;
+  public isLoading: boolean = true;
   private isDeleting: boolean = false;
   public chapterId: string = "";
   public exerciseList: Array<ExerciseDetailItem> | null = null;
   public hasExercises: boolean = false;
   public exerciseType: number = -1;
+
+  public ExerciseTypeEnum = ExerciseType
+  private moduleId : string = "";
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -40,16 +43,13 @@ export class ChapterAdminAdministrateComponent implements OnInit {
               private readonly exerciseService: ExerciseService,
               private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.isLoading = true;
+  ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["chapterId"] != null){
         this.chapterId = params["chapterId"];
         this.loadChapter(this.chapterId);
-        this.loadExercises();
       }
     })
-    this.isLoading = false;
   }
 
   loadChapter(id:string){
@@ -60,14 +60,32 @@ export class ChapterAdminAdministrateComponent implements OnInit {
         this.chapter = c;
         this.chapterName = c?.chapterName;
         this.chapterDescription = c?.chapterDescription;
-      })
+        // @ts-ignore
+        this.moduleId = c?.moduleId;
 
+        this.loadModule(this.moduleId)
+        this.loadExercises();
+      })
+  }
+
+  loadModule (id : string) {
+    console.log("ID: " + id)
     this.moduleService.apiModuleGetByIdGet$Json({
-      id: this.chapter?.moduleId
+      id: id
     })
       .subscribe(m => {
         this.moduleName = m.moduleName;
-        console.log("MODULE NAME: " + this.moduleName)
+      })
+  }
+
+  loadExercises() {
+    this.exerciseService.apiExerciseByChapterIdGet$Json({
+      chapterId: this.chapterId
+    })
+      .subscribe(e => {
+        this.exerciseList = e;
+        this.hasExercises = this.exerciseList.length > 0;
+        this.isLoading = false;
       })
   }
 
@@ -83,8 +101,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     if (this.savingInProgress) return;
     this.showLoading = true;
     this.savingInProgress = true;
-    //BACKEND API POST ROUTE to change chapter info
-    this.snackBar.open("Successfully saved changes!", "Dismiss", {duration:2000})
+    this.snackBar.open("Could not save changes!", "understood", {duration:2000})
     this.savingInProgress = false;
     this.showLoading = false;
   }
@@ -130,29 +147,21 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     })
   }
 
-  public loadExercises() {
-    this.exerciseService.apiExerciseByChapterIdGet$Json({
-      chapterId: this.chapterId
-    })
-      .subscribe(e => {
-        this.exerciseList = e;
-        if (this.exerciseList.length > 0) {
-          this.hasExercises = true;
-        } else {
-          this.hasExercises = false;
-        }
-      })
-  }
-
   createExercise() {
     if (this.exerciseType == -1) {
       this.snackBar.open("Please select an Exercise Type", "understood");
       return;
     }
 
-    this.router.navigate(
-      ['codeoutput/create'],
-      {queryParams: {type: this.exerciseType, chapterId: this.chapterId}}
-    )
+    if (this.exerciseType == ExerciseType.CodeOutput) {
+      this.router.navigate(
+        ['codeoutput/create'],
+        {queryParams: {chapterId: this.chapterId}}
+      );
+      return;
+    } else {
+      this.router.navigate(['**'])
+    }
+
   }
 }

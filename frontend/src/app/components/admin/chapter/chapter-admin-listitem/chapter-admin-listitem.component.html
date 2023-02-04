@@ -6,9 +6,10 @@
     <mat-divider></mat-divider>
     <p class="chapter-description">{{this.chapterDescription}}</p>
   </div>
-  <div *ngIf="this.showEditButton || this.showDeleteButton" class="button-container">
+  <div *ngIf="this.showEditButton || this.showDeleteButton ||this.showSolveButton" class="button-container">
     <button *ngIf="this.showEditButton" class="button" mat-button (click)="editButtonClick($event)"><mat-icon>edit</mat-icon></button>
     <button *ngIf="this.showDeleteButton" class="button" mat-button color="warn" (click)="openDeleteDialog()"><mat-icon>delete_forever</mat-icon></button>
+    <button *ngIf="this.showSolveButton" class="button" mat-stroked-button color="accent" (click)="solveChapter()">solve now</button>
   </div>
   <div *ngIf="this.canReorder" class="icon-container">
     <mat-icon> drag_handle</mat-icon>

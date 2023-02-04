@@ -1,0 +1,11 @@
+<div class="comp-container">
+  <mat-card *ngIf="!this.isLoading" class="exercise-cycler">
+    <button mat-stroked-button color="primary" (click)="this.updateExerciseComp(-1)" class="vertically-centered">previous</button>
+    <mat-label class="number-display vertically-centered">{{this.currentExerciseNr + 1}} / {{this.exerciseListLength}}</mat-label>
+    <button mat-stroked-button color="primary" (click)="this.updateExerciseComp(1)" class="vertically-centered">next</button>
+  </mat-card>
+
+  <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId"></app-solve-code-output>
+
+  <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
+</div>

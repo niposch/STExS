@@ -14,11 +14,11 @@
 
   <mat-divider class="divider"></mat-divider>
 
-  <p class="heading">Pending Request</p>
+  <p class="heading">Pending Requests</p>
   <div *ngIf="this.pendingParticipations != null else loading">
-    <app-member-list-admin style="width: 100%" [participations]="this.pendingParticipations"></app-member-list-admin>
+    <app-member-list-admin style="width: 100%" [participations]="this.pendingParticipations" (participantUpdate)="this.loadParticipantReq()"></app-member-list-admin>
   </div>
   <ng-template #loading>
-    <mat-spinner mode="indeterminate" style="scale: 0.5"></mat-spinner>
+    <mat-spinner mode="indeterminate" style="scale: 0.5; margin-left: auto; margin-right: auto"></mat-spinner>
   </ng-template>
 </div>

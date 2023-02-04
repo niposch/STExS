@@ -1,6 +1,4 @@
-
-
-<div *ngIf="this.participations != null">
+<div *ngIf="this.participations != null" style="border-radius: 5px">
   <div *ngIf="this.participations.length != 0 else noPendingRequests">
     <table mat-table [dataSource]="this.participations" style="width: 100%">
       <ng-container matColumnDef="First Name">

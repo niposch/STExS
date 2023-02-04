@@ -5,8 +5,8 @@
 }
 
 .hide-top-round-corners{
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 0px !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .horizontal-flex {
@@ -66,10 +66,6 @@
   margin-bottom: -29px;
   margin-top: -4px;
   max-width: 400px;
-}
-
-.save-button {
-  margin-left: 10px;
 }
 
 .card-width{

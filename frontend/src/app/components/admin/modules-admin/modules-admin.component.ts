@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Module} from "../../../../services/generated/models/module";
 import {ModuleService} from "../../../../services/generated/services/module.service";
-import {UserService} from "../../../services/user.service";
 import {ModuleParticipationDetailItem} from "../../../../services/generated/models/module-participation-detail-item";
 import {ModuleParticipationService} from "../../../../services/generated/services/module-participation.service";
-import {filter, map} from "rxjs/operators";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-modules-admin',
@@ -18,8 +17,7 @@ export class ModulesAdminComponent implements OnInit {
   pendingParticipations: Array<ModuleParticipationDetailItem> | null = null;
 
   constructor(private readonly moduleService: ModuleService,
-              private readonly moduleParticipantionService: ModuleParticipationService,
-              private readonly userService: UserService) {
+              private readonly moduleParticipantionService: ModuleParticipationService) {
   }
 
   async loadModules() {
@@ -27,6 +25,10 @@ export class ModulesAdminComponent implements OnInit {
       .then(modules => {
         this.moduleList = modules ?? []
       })
+    this.loadParticipantReq();
+  }
+
+  public loadParticipantReq() {
     this.moduleParticipantionService.apiModuleParticipationForAdminUserGet$Json()
       .pipe(map(participations => participations.filter(p => !p.participationConfirmed)))
       .subscribe(res => {

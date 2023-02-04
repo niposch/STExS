@@ -1,31 +1,45 @@
 <mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
-<mat-card [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
+<mat-card *ngIf="!this.isLoading" [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
   <div>
-    <mat-label>chapter of </mat-label>
-    <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
-    <div class="horizontal-flex full-width">
-      <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
 
-        <!-- editing chapter name -->
-        <mat-form-field class="input-field" *ngIf="isEditingName">
-        <mat-label>Chapter Name</mat-label>
-        <input class="name-input" matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
-        </mat-form-field>
+    <!-- HEADER -->
+    <div class="horizontal-container full-width space-between" style="margin-bottom: 10px">
 
-        <div class="horizontal-flex">
-          <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
-          <a *ngIf="savingInProgress" mat-raised-button color="accent" class="button save-button" (click)="saveModuleChanges()">
-            saving...</a>
-          <a *ngIf="!savingInProgress" mat-raised-button color="primary" class="button save-button"
-          (click)="saveModuleChanges()">save</a>
-
-          <div style="width: 10px"></div>
-
-          <button class="button" mat-button color="warn" (click)="deleteChapterDialog()">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
-            DELETE
-          </button>
+      <!-- LEFT SIDE OF HEADER -->
+      <div class="vertical-container full-height full-width space-between">
+        <div class="marginTB-5px" style="margin-bottom: 10px">
+          <mat-label>chapter of </mat-label>
+          <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
         </div>
+        <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
+        <!-- editing chapter name -->
+        <mat-form-field class="input-field" *ngIf="isEditingName" style="margin-bottom: -28px; margin-top: -2px">
+          <mat-label>Chapter Name</mat-label>
+          <input class="name-input" matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
+        </mat-form-field>
+      </div>
+
+      <!-- RIGHT SIDE OF HEADER -->
+      <div class="vertical-container space-between full-height">
+        <div></div>
+        <div class="horizontal-container">
+          <app-edit-button style="margin-right: 10px" class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
+          <button *ngIf="savingInProgress" mat-raised-button color="accent" class="button" (click)="saveModuleChanges()">
+            saving...</button>
+          <button *ngIf="!savingInProgress" mat-raised-button color="primary" class="button"
+          (click)="saveModuleChanges()">save</button>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="horizontal-container full-width marginTB-5px space-between">
+      <div></div>
+      <button class="button" mat-button color="warn" (click)="deleteChapterDialog()">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+        DELETE
+      </button>
     </div>
 
     <mat-divider></mat-divider>
@@ -55,15 +69,15 @@
     <mat-divider style="margin-bottom: 5px"></mat-divider>
 
     <mat-card>
-      <div class="horizontal-flex">
+      <div class="horizontal-container full-width space-between" style="margin-bottom: 5px">
         <mat-card-title class="vertically-centered">Create a new Exercise</mat-card-title>
         <button mat-raised-button color="accent" (click)="createExercise()">create</button>
       </div>
       <mat-card-content style="height: 40px">
         <mat-divider style="margin-bottom: 10px"></mat-divider>
         <mat-radio-group class="radio-group" [(ngModel)]="exerciseType">
-          <mat-radio-button value="10">Code Output</mat-radio-button>
-          <mat-radio-button value="2">Parson Puzzle</mat-radio-button>
+          <mat-radio-button [value]="ExerciseTypeEnum.CodeOutput">Code Output</mat-radio-button>
+          <mat-radio-button [value]="ExerciseTypeEnum.Parson">Parson Puzzle</mat-radio-button>
         </mat-radio-group>
       </mat-card-content>
     </mat-card>
