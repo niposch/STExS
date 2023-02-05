@@ -24,7 +24,8 @@ public class TimeTrackRepository : ITimeTrackRepository
     public async Task<List<TimeTrack>> GetAllBySubmissionIdAsync(Guid submissionId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.TimeTracks.Where(e => e.SubmissionId == submissionId)
+        var ex = await this.context.TimeTracks.Include(e=>e.UserSubmission).Where(e => e.UserSubmission.FinalSubmissionId ==
+                submissionId)
             .ToListAsync(cancellationToken);
         return ex;
     }
