@@ -41,7 +41,7 @@ mat-card {
 
 .card-content {
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-height: 40px;
   max-height: 110px;
   margin-right: -14px;

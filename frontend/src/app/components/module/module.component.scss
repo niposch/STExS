@@ -8,7 +8,7 @@ mat-card {
   font-weight: bold;
   font-size: 20px;
   font-family: Arial, sans-serif;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   padding-right: 10px;
   white-space: nowrap;
   overflow: hidden;
@@ -70,7 +70,7 @@ mat-card {
 
 .card-content {
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 140px;
 }
 

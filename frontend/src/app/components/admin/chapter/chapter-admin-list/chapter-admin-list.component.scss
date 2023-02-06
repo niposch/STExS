@@ -23,7 +23,7 @@
   flex-direction: row;
   flex-grow: inherit;
   width: inherit;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .name-field-div {
@@ -70,8 +70,8 @@
 .chapter-list {
   display: flex;
   flex-direction: column;
-  max-height: 40vh;
-  overflow-y: scroll;
+  max-height: 400px;
+  overflow-y: auto;
   padding-right: 10px;
   margin-right: -10px;
   min-height: 200px;

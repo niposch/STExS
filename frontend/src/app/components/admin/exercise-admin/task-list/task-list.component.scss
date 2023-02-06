@@ -17,9 +17,9 @@ table {
 .table-div {
   background-color: #505050;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
-  max-height: 50vh;
+  max-height: 500px;
 }
 
 .horizontal-flex {
