@@ -17,6 +17,8 @@ export class SidebarComponent implements OnInit {
   adminModuleList:Array<ModuleDetailItem> | null = null;
   allModules:Array<ModuleDetailItem> | null = null;
 
+  expandedParticipationIndex = 0;
+
   constructor(private readonly userService: UserService,
               private readonly moduleService:ModuleService) {
   }

@@ -17,6 +17,8 @@ import { NotfoundComponent } from '../components/notfound/notfound.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SidebarEntryComponent } from './sidebar/sidebar-entry/sidebar-entry.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatSidenavModule,
     FormsModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CdkAccordionModule,
+    MatMenuModule
   ]
 })
 export class LayoutModule {
