@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {ModuleDetailItem} from "../../../services/generated/models/module-detail-item";
 import {ModuleService} from "../../../services/generated/services/module.service";
+import {map} from "rxjs/operators";
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -21,25 +22,21 @@ export class SidebarComponent implements OnInit {
   }
 
   loadModulesAdminOf(){
-    this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
-    }).subscribe(modules => this.adminModuleList = modules)
+    return this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
+    }).pipe(map(modules => this.adminModuleList = modules))
   }
 
   loadModulesPartOf() {
-    this.moduleService.apiModuleGetModulesForUserGet$Json({
-    }).subscribe(modules => this.participatingInModuleList = modules)
+    return this.moduleService.apiModuleGetModulesForUserGet$Json({
+    }).pipe(map(modules => this.participatingInModuleList = modules));
   }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.userService.currentUser.subscribe(u =>{
-      this.firstName = u?.firstName ?? ""
-      this.lastName = u?.lastName ?? ""
-    })
-
-    this.loadModulesPartOf();
-    this.loadModulesAdminOf();
-
-    this.isLoading = false;
+    this.loadModulesPartOf().subscribe(() => {
+      this.loadModulesAdminOf().subscribe( () => {
+        this.isLoading = false;
+      });
+    });
   }
 }
