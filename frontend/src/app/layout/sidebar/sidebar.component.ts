@@ -24,13 +24,21 @@ export class SidebarComponent implements OnInit {
   }
 
   loadModulesAdminOf(){
+    this.isLoading = true;
     return this.moduleService.apiModuleGetModulesUserIsAdminOfGet$Json({
-    }).pipe(map(modules => this.adminModuleList = modules))
+    }).pipe(map(modules => {
+      this.adminModuleList = modules
+      this.isLoading = false;
+    }))
   }
 
   loadModulesPartOf() {
+    this.isLoading = true;
     return this.moduleService.apiModuleGetModulesForUserGet$Json({
-    }).pipe(map(modules => this.participatingInModuleList = modules));
+    }).pipe(map(modules => {
+      this.participatingInModuleList = modules
+      this.isLoading = false;
+    }));
   }
 
   ngOnInit(): void {
@@ -39,6 +47,7 @@ export class SidebarComponent implements OnInit {
       this.loadModulesAdminOf().subscribe( () => {
         this.isLoading = false;
       });
+      this.isLoading = false;
     });
   }
 }

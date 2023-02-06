@@ -1,5 +1,5 @@
-<div class="list-container" *ngIf="this.participatingInModuleList && this.adminModuleList">
-  <mat-label *ngIf="this.participatingInModuleList.length > 0">participation in</mat-label>
+<div class="list-container" *ngIf="this.participatingInModuleList || this.adminModuleList">
+  <mat-label *ngIf="this.participatingInModuleList && this.participatingInModuleList.length > 0">participation in</mat-label>
   <cdk-accordion class="example-accordion">
     <app-sidebar-entry class="example-accordion-item"
                        *ngFor="let module of this.participatingInModuleList"
@@ -7,7 +7,7 @@
                        [module]="module"></app-sidebar-entry>
   </cdk-accordion>
 
-  <mat-label *ngIf="this.adminModuleList.length > 0">admin in</mat-label>
+  <mat-label *ngIf="this.adminModuleList && this.adminModuleList.length > 0">admin in</mat-label>
   <cdk-accordion class="example-accordion">
     <app-sidebar-entry  class="example-accordion-item"
                         *ngFor="let module of this.adminModuleList"
@@ -15,7 +15,7 @@
                         [module]="module"></app-sidebar-entry>
   </cdk-accordion>
 
-  <div *ngIf="this.participatingInModuleList.length == 0 && this.adminModuleList.length == 0">
+  <div *ngIf="this.participatingInModuleList &&  this.adminModuleList && this.participatingInModuleList.length == 0 && this.adminModuleList.length == 0">
     <mat-label>no modules to display</mat-label>
   </div>
 </div>
