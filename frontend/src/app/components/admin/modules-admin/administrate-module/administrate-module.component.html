@@ -1,4 +1,5 @@
 <div *ngIf="module">
+  <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
   <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
   <mat-card class="master-card" [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
     <!-- HEADER -->
@@ -76,6 +77,12 @@
       <app-chapter-admin-list [moduleId]="module.moduleId!"></app-chapter-admin-list>
     </mat-card-content>
   </mat-card>
+  </div>
+  <ng-template #unauthorized>
+    <mat-card class="master-card">
+      Unauthorized
+    </mat-card>
+  </ng-template>
 </div>
 
 <mat-spinner class="loading" *ngIf="!module" mode="indeterminate"></mat-spinner>
