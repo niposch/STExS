@@ -19,6 +19,7 @@ import { SidebarEntryComponent } from './sidebar/sidebar-entry/sidebar-entry.com
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatExpansionModule,
     MatProgressSpinnerModule,
     CdkAccordionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressBarModule
   ]
 })
 export class LayoutModule {

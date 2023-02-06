@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="this.isLoading" mode="indeterminate" color="accent"></mat-progress-bar>
 <div class="header">
   <div class="header-left">
     <button (click)="this.toggleDrawer()" *ngIf="hasDrawer" mat-button>
@@ -22,8 +23,8 @@
 
     <!-- NOT LOGGED IN -->
     <div *ngIf="!this.loggedIn">
-      <button mat-button routerLink="/login">Login</button>
-      <button mat-button routerLink="/register">Register</button>
+      <button mat-button (click)="this.login()">Login</button>
+      <button mat-button (click)="this.register()">Register</button>
     </div>
   </div>
 </div>
