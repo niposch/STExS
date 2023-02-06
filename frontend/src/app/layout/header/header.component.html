@@ -3,11 +3,13 @@
     <button (click)="this.toggleDrawer()" *ngIf="hasDrawer" mat-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <button mat-button class="logo" routerLink="/">STExS</button>
+    <button *ngIf="!this.loggedIn" mat-button class="logo" routerLink="/">STExS</button>
+    <button *ngIf="this.loggedIn" mat-button class="logo" routerLink="/dashboard">STExS</button>
     <button mat-stroked-button *ngIf="loggedIn" routerLink="/dashboard">Dashboard</button>
     <button mat-stroked-button *ngIf="loggedIn && isAdmin" routerLink="/users">Users</button>
 	<button *ngIf="loggedIn" mat-stroked-button [routerLink]="isAdmin || isTeacher ? ['/modules-admin'] : ['/modules-user']">Modules</button>
   </div>
+
   <div class="header-right">
     <!-- LOGGED IN -->
     <div *ngIf="this.loggedIn">

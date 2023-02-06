@@ -14,13 +14,9 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isTeacher = false;
 
-  @Input()
-  public hasDrawer: boolean = false;
-
-  @Input()
-  public showDrawer: boolean = false;
-  @Output()
-  public showDrawerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()  public hasDrawer: boolean = false;
+  @Input()  public showDrawer: boolean = false;
+  @Output()  public showDrawerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(private readonly userService: UserService,
@@ -53,7 +49,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().then(r =>{
+    this.userService.logout().then( () =>{
         return this.router.navigate(["/"]);
     });
   }
