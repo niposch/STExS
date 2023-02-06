@@ -3,17 +3,17 @@
   <mat-card class="master-card" [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
     <!-- HEADER -->
     <div class="horizontal-space space-items margin10">
-      <div class="horizontal-flex full-width">
-        <p class="module-name" *ngIf="!isEditingName">{{this.moduleName}}</p>
+      <div class="horizontal-flex text-overflow">
+        <mat-label class="module-name text-overflow" *ngIf="!isEditingName">{{this.moduleName}}</mat-label>
 
         <!-- editing module name -->
         <mat-form-field class="input-field" *ngIf="isEditingName">
           <mat-label>Module Name</mat-label>
-          <input matInput name="text" required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
+          <input matInput class="text-overflow" name="text" required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
         </mat-form-field>
       </div>
 
-      <div class="horizontal-flex">
+      <div class="horizontal-flex" style="justify-self: end">
         <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
 
         <!-- SAVE BUTTON -->

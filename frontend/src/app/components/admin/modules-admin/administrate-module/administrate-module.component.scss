@@ -5,14 +5,19 @@ mat-card {
   margin: auto;
 }
 
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .module-name {
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
   font-family: Arial, sans-serif;
-  line-height: 26px;
+  line-height: 40px;
   color: #02C0A2;
-  margin-bottom: 0px;
 }
 
 .module-description{
@@ -22,6 +27,7 @@ mat-card {
 }
 
 .horizontal-space {
+  max-width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

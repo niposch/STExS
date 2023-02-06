@@ -8,6 +8,10 @@
   margin-bottom: 0;
 }
 
+.header-container {
+  max-width: available;
+}
+
 .horizontal-container {
   display: flex;
   flex-direction: row;
@@ -71,4 +75,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
