@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {ModuleDetailItem} from "../../../services/generated/models/module-detail-item";
 import {ModuleService} from "../../../services/generated/services/module.service";
 import {map} from "rxjs/operators";
+import {RoleType} from "../../../services/generated/models/role-type";
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,13 +14,11 @@ export class SidebarComponent implements OnInit {
   public firstName: string = "";
   public lastName: string = "";
 
+  public isAdmin = false;
   public isLoading: boolean = false;
   participatingInModuleList: Array<ModuleDetailItem> | null = null;
   adminModuleList:Array<ModuleDetailItem> | null = null;
   allModules:Array<ModuleDetailItem> | null = null;
-
-  expandedParticipationIndex = 0;
-
   constructor(private readonly userService: UserService,
               private readonly moduleService:ModuleService) {
   }
@@ -44,10 +44,18 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.loadModulesPartOf().subscribe(() => {
-      this.loadModulesAdminOf().subscribe( () => {
-        this.isLoading = false;
-      });
-      this.isLoading = false;
+      this.userService.currentRolesSubject.subscribe(roles => {
+        if (roles != null) {
+          this.isAdmin = roles.includes(RoleType.Admin);
+        }
+        if (this.isAdmin) {
+          this.loadModulesAdminOf().subscribe( () => {
+            this.isLoading = false;
+          });
+        } else {
+          this.isLoading = false;
+        }
+      })
     });
   }
 }
