@@ -44,7 +44,7 @@
           <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
           <div class="chapter-list">
             <div class="chapter-item" *ngFor="let chapter of this.chapterList" style="margin-bottom: 5px">
-              <app-chapter-admin-listitem [chapter]="chapter" [showSolveButton]="true"></app-chapter-admin-listitem>
+              <app-chapter-admin-listitem [chapter]="chapter" [showSolveButton]="this.participationStatus == moduleParticipationStatus.Accepted || this.participationStatus == moduleParticipationStatus.Admin"></app-chapter-admin-listitem>
             </div>
           </div>
         </mat-card-content>
