@@ -24,8 +24,6 @@ export class JoinModuleComponent implements OnInit, AfterViewInit{
     }).subscribe(data => {
       this.results = data
     })
-
-
   }
 
   ngAfterViewInit(): void {
