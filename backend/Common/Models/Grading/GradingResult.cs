@@ -16,6 +16,6 @@ public class GradingResult
     public DateTime CreationDate { get; set; }
     
     public Guid? GradedSubmissionId { get; set; }
-    public Submission? GradedSubmission { get; set; }
+    public BaseSubmission? GradedSubmission { get; set; }
     
 }

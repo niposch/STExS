@@ -14,32 +14,32 @@ public class SubmissionRepository : ISubmissionRepository
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<Submission?> TryGetByIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission?> TryGetByIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
     {
         var ex = await this.context.Submissions.FirstOrDefaultAsync(e => e.UserSubmissionId == submissionId,
             cancellationToken);
         return ex;
     }
 
-    public async Task UpdateAsync(Submission submission, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(BaseSubmission submission, CancellationToken cancellationToken = default)
     {
         this.context.Submissions.Update(submission);
         await this.context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task CreateAsync(Submission submission, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(BaseSubmission submission, CancellationToken cancellationToken = default)
     {
         await this.context.Submissions.AddAsync(submission, cancellationToken);
         await this.context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(Submission submission, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(BaseSubmission submission, CancellationToken cancellationToken = default)
     {
         this.context.Submissions.Remove(submission);
         await this.context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<Submission>> GetAllBySubmissionIdAsync(Guid userId,
+    public async Task<List<BaseSubmission>> GetAllBySubmissionIdAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
         var ex = await this.context.Submissions.Where(e => e.UserSubmissionId == userId).ToListAsync(cancellationToken);

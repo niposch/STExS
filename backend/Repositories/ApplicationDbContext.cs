@@ -75,7 +75,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<GradingResult> GradingResults { get; set; }
     
-    public DbSet<Submission> Submissions { get; set; }
+    public DbSet<BaseSubmission> Submissions { get; set; }
     
     public DbSet<CodeOutputSubmission> CodeOutputSubmissions { get; set; }
 
@@ -88,7 +88,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.Entity<GradingResult>()
             .HasOne(r => r.GradedSubmission)
             .WithOne(s => s.GradingResult)
-            .HasForeignKey<Submission>(s => s.GradingResultId)
+            .HasForeignKey<BaseSubmission>(s => s.GradingResultId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -122,7 +122,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Entity<Submission>()
+        builder.Entity<BaseSubmission>()
             .HasDiscriminator(s => s.SubmissionType)
             .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput);
         

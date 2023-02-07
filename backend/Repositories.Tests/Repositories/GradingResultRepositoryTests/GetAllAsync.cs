@@ -7,29 +7,23 @@ public sealed class GetAllAsync : Infrastructure
 {
     private Guid userId;
 
-    private GradingResult gradingResult_1;
-
-    private GradingResult gradingResult_2;
-
     [Fact]
     public async Task QueriesGradingResults()
     {
         // Arrange
         this.userId = new Guid();
-        this.gradingResult_1 = this.Fixture.Build<GradingResult>()
+        var gradingResult_1 = this.Fixture.Build<GradingResult>()
             .With(e => e.Comment, "comment 1")
             .With(e => e.UserSubmission)
             .Without(e => e.GradedSubmission)
             .Create();
-        this.gradingResult_2 = this.Fixture.Build<GradingResult>()
+        var gradingResult_2 = this.Fixture.Build<GradingResult>()
             .With(e => e.Comment, "comment 2")
             .With(e => e.UserSubmission)
             .Without(e => e.GradedSubmission)
             .Create();
-        this.gradingResult_1.UserSubmission.UserId = this.userId;
-        this.gradingResult_2.UserSubmission.UserId = this.userId;
-
-        this.Context.GradingResults.AddRange(this.gradingResult_1, this.gradingResult_2);
+        this.Context.GradingResults.Add(gradingResult_1);
+        this.Context.GradingResults.Add(gradingResult_2);
         this.Context.SaveChanges();
 
         // Act
@@ -55,6 +49,6 @@ public sealed class GetAllAsync : Infrastructure
 
     private Task<List<GradingResult>> CallAsync()
     {
-        return this.Repository.GetAllAsync(this.userId, default);
+        return this.Repository.GetAllAsync();
     }
 }

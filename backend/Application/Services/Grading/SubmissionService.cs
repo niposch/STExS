@@ -13,24 +13,24 @@ public class SubmissionService:ISubmissionService
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<List<Submission>> GetSubmissionsAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    public async Task<List<BaseSubmission>> GetSubmissionsAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Submission> GetLastSubmission(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission> GetLastSubmission(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Submission> GetSubmissionDetailsAsync(Guid submissionId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission> GetSubmissionDetailsAsync(Guid submissionId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
     public async Task SubmitAsync(Guid userId,
         Guid exerciseId,
-        Submission submission,
+        BaseSubmission submission,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

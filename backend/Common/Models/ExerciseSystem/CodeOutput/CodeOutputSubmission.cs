@@ -4,7 +4,7 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.ExerciseSystem.CodeOutput;
 
-public class CodeOutputSubmission: Submission
+public class CodeOutputSubmission: BaseSubmission
 {
     [Column(TypeName = "nvarchar(max)")]
     public string SubmittedAnswer { get; set; }

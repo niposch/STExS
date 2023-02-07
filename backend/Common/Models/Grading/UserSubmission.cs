@@ -11,9 +11,9 @@ public class UserSubmission
     public BaseExercise Exercise { get; set; }
     
     public Guid? FinalSubmissionId { get; set; }
-    public Submission? FinalSubmission { get; set; }
+    public BaseSubmission? FinalSubmission { get; set; }
     
     public List<TimeTrack> TimeTracks { get; set; } = new();
-    public List<Submission> Submissions { get; set; } = new();
+    public List<BaseSubmission> Submissions { get; set; } = new();
     public List<GradingResult> GradingResults { get; set; } = new();
 }

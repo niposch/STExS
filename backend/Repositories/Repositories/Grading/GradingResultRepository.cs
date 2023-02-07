@@ -1,4 +1,5 @@
-﻿using Common.Models.Grading;
+﻿using Common.Exceptions;
+using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,9 @@ public class GradingResultRepository : IGradingResultRepository
 
     public async Task UpdateAsync(GradingResult gradingResult, CancellationToken cancellationToken = default)
     {
+        if (!this.context.GradingResults.Any(g => g.Id == gradingResult.Id))
+            throw new EntityNotFoundException<GradingResult>(gradingResult.Id);
+        
         this.context.GradingResults.Update(gradingResult);
         await this.context.SaveChangesAsync(cancellationToken);
     }
@@ -35,6 +39,9 @@ public class GradingResultRepository : IGradingResultRepository
 
     public async Task DeleteAsync(GradingResult gradingResult, CancellationToken cancellationToken = default)
     {
+        if(!this.context.GradingResults.Any(g => g.Id == gradingResult.Id))
+            throw new EntityNotFoundException<GradingResult>(gradingResult.Id);
+        
         this.context.GradingResults.Remove(gradingResult);
         await this.context.SaveChangesAsync(cancellationToken);
     }
@@ -47,11 +54,10 @@ public class GradingResultRepository : IGradingResultRepository
         return ex;
     }
 
-    public async Task<List<GradingResult>> GetAllAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<List<GradingResult>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var ex = await this.context.GradingResults
             .Include(e => e.UserSubmission)
-            .Where(e => e.UserSubmission.UserId == userId)
             .ToListAsync(cancellationToken);
         return ex;
     }

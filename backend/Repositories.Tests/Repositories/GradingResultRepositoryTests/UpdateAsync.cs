@@ -4,7 +4,7 @@ namespace Repositories.Tests.Repositories.GradingResultRepositoryTests;
 
 public sealed class UpdateAsync: Infrastructure
 {
-    private GradingResult? gradingResult;
+    private GradingResult gradingResult = null!;
 
     //
     [Fact]
@@ -29,6 +29,7 @@ public sealed class UpdateAsync: Infrastructure
     public async Task ThrowsEntityNotFoundException()
     {
         // Arrange
+        this.gradingResult = this.Fixture.Build<GradingResult>().Without(e=>e.GradedSubmission).Create();
         this.gradingResult.Id = Guid.NewGuid();
         
         // Act

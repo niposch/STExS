@@ -9,5 +9,5 @@ public interface IGradingResultRepository
     public Task CreateAsync(GradingResult gradingResult, CancellationToken cancellationToken = default);
     public Task DeleteAsync(GradingResult gradingResult, CancellationToken cancellationToken = default);
     public Task<List<GradingResult>> GetBySubmissionIdAsync(Guid submissionId, CancellationToken cancellationToken = default);
-    public Task<List<GradingResult>> GetAllAsync(Guid userId, CancellationToken cancellationToken = default);
+    public Task<List<GradingResult>> GetAllAsync(CancellationToken cancellationToken = default);
 }

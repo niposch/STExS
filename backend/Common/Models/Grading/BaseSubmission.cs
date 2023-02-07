@@ -3,7 +3,7 @@ using Common.Models.HelperInterfaces;
 
 namespace Common.Models.Grading;
 
-public abstract class Submission: ICreationTimeTracked
+public abstract class BaseSubmission: ICreationTimeTracked
 {
     public Guid Id { get; set; }
     public DateTime CreationTime { get; set; }
