@@ -30,14 +30,6 @@ public sealed class TimeTrackController: ControllerBase
         return this.Ok(res);
     }
     
-    /*
-     implement these methods:
-    public Task<Guid> CreateTimeTrackAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default);
-    public Task ReportActivityAsync(Guid timeTrackId, CancellationToken cancellationToken = default);
-    public Task<Guid> CloseTimeTrackAsync(Guid timeTrackId, CancellationToken cancellationToken = default);
-    public Task<TimeTrackDetailItem> GetTimeTrackAsync(Guid timeTrackId, CancellationToken cancellationToken = default);
-*/
-    
     [HttpPost]
     [ProducesResponseType(typeof(Guid), 200)]
     public async Task<IActionResult> CreateTimeTrackAsync(Guid exerciseId, CancellationToken cancellationToken = default)
