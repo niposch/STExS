@@ -19,7 +19,7 @@ export class JoinModuleComponent implements OnInit{
   constructor(private readonly moduleService:ModuleService) { }
 
   ngOnInit(): void {
-    this.search("")
+    //this.search("")
   }
 
   // search(searchString: string) {
