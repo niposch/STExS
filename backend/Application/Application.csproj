@@ -12,12 +12,14 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DTOs\ExercisesDTOs\Parson" />
     <Folder Include="Helper" />
+    <Folder Include="Mapper" />
   </ItemGroup>
 
 </Project>

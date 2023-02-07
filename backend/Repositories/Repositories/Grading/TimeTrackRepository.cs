@@ -1,5 +1,6 @@
 ﻿using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
+using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.Grading;
@@ -17,8 +18,8 @@ public class TimeTrackRepository : ITimeTrackRepository
     public async Task<TimeTrack?> TryGetByTimeTrackIdAsync(Guid timeTrackId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.TimeTracks.FirstOrDefaultAsync(e => e.Id == timeTrackId, cancellationToken);
-        return ex;
+        return await this.context.TimeTracks
+            .FirstOrDefaultAsync(e => e.Id == timeTrackId, cancellationToken);
     }
 
     public async Task<List<TimeTrack>> GetAllBySubmissionIdAsync(Guid submissionId,

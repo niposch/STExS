@@ -6,7 +6,7 @@ namespace Common.Exceptions;
 public class EntityNotFoundException<T> : Exception
     where T : class
 {
-    public EntityNotFoundException(Guid id)
+    public EntityNotFoundException(Guid? id)
         : base($"Entity \"{typeof(T).Name}\" Id:({id}) was not found.")
     {
     }

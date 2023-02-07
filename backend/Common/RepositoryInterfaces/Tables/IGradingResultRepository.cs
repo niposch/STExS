@@ -1,6 +1,6 @@
 ﻿using Common.Models.Grading;
 
-namespace Common.RepositoryInterfaces.Generic;
+namespace Common.RepositoryInterfaces.Tables;
 
 public interface IGradingResultRepository
 {

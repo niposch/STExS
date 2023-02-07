@@ -1,6 +1,7 @@
 ﻿using Common.Exceptions;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
+using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.Grading;

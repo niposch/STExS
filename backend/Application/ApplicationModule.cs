@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Application.Services.Exercise;
+using Application.Services.Grading;
 using Application.Services.Interfaces;
 using Application.Services.Permissions;
 using Autofac;
@@ -36,6 +37,10 @@ public class ApplicationModule : Module
             .As<IAccessService>()
             .InstancePerLifetimeScope();
         
+        builder.RegisterType<TimeTrackService>()
+            .As<ITimeTrackService>()
+            .InstancePerLifetimeScope();
+            
         // Helper
         builder.RegisterType<RoleHelper>()
             .As<IRoleHelper>()
