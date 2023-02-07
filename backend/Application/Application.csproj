@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="DTOs\ExercisesDTOs\Parson" />
     <Folder Include="Helper" />
-    <Folder Include="Mapper" />
   </ItemGroup>
 
 </Project>
