@@ -39,4 +39,15 @@ public sealed class TimeTrackController: ControllerBase
         
         return this.Ok(res);
     }
+    
+    [HttpPost("close")]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> CloseTimeTrackAsync(Guid timeTrackId, CancellationToken cancellationToken = default)
+    {
+        var userId = this.User.GetUserId();
+        await timeTrackService.CloseTimeTrackAsync(timeTrackId, cancellationToken);
+        
+        return this.Ok();
+    }
+    
 }

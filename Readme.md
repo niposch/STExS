@@ -192,3 +192,51 @@ UserSubmission "1" --> "m" TimeTrack
 UserSubmission "1" --> "0..m" GradingResult
 GradingResult "1" --> "0..1" Submission
 ```
+
+- how the frontend works on a solution
+- create timetrack
+- work on solution
+- save temp solution
+- submit final solution
+- close timetrack
+```mermaid
+sequenceDiagram
+participant user
+participant exercise
+
+user ->> exercise: requests new time track to be created
+exercise -->> exercise: creates time track
+exercise ->> user: returns time track id
+user ->> exercise: queries last submitted temp solution
+exercise->> user: 404
+activate user
+user -->> user: starts working on solution new
+user ->> exercise: saves temporary solutions + timetrack id
+user ->> exercise: saves temporary solutions + timetrack id
+user ->> exercise: saves temporary solutions + timetrack id
+user ->> user: stops working on solution
+deactivate user
+user ->> exercise: closes time track
+```
+- diagram when temp solution exists
+```mermaid
+sequenceDiagram
+participant user
+participant exercise
+
+user ->> exercise: requests new time track to be created
+exercise -->> exercise: creates time track
+exercise ->> user: returns time track id
+user ->> exercise: queries last submitted temp solution
+
+activate user
+exercise->> user: returns last submitted temp solution
+user -->> user: starts working on solution
+user ->> exercise: saves temporary solutions + timetrack id
+user ->> exercise: saves temporary solutions + timetrack id
+user ->> exercise: submits final solution + timetrack id
+deactivate user
+```
+- when the user submits a (temp) solution on a time track that is already closed a 403 is returned
+- a time track is closed when the user submits a final solution
+- time tracks can only be active for 48 hours
