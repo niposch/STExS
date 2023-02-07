@@ -72,8 +72,9 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetModuleByIdAsync([FromQuery] Guid id, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetModuleByIdAsync(id, cancellationToken);
-        return this.Ok(ModuleMapper.ToDetailItem(res));
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetModuleByIdAsync(id, userId, cancellationToken);
+        return this.Ok(res);
     }
 
     [HttpGet("all")]
@@ -81,8 +82,9 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetModulesAsync(CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetModulesAsync(cancellationToken);
-        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m)));
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetModulesAsync(userId, cancellationToken);
+        return this.Ok(res);
     }
 
     [HttpGet("getModulesForUser")]
@@ -92,7 +94,7 @@ public class ModuleController : ControllerBase
     {
         var userId = this.User.GetUserId();
         var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
-        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+        return this.Ok(res);
     }
 
     [HttpGet("getModulesForUserAdmin")]
@@ -101,7 +103,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> GetModulesUserIsAcceptedInto(Guid userId, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAcceptedIntoAsync(userId, cancellationToken);
-        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+        return this.Ok(res);
     }
 
     [HttpGet("getModulesUserIsAdminOf")]
@@ -110,7 +112,7 @@ public class ModuleController : ControllerBase
     public async Task<IActionResult> GetModulesUserIsAdminOf([FromQuery] Guid? userId = null, CancellationToken cancellationToken = default)
     {
         var res = await this.moduleService.GetModulesUserIsAdminOfAsync(userId ?? this.User.GetUserId(), cancellationToken);
-        return this.Ok(res.Select(m => ModuleMapper.ToDetailItem(m, userId)));
+        return this.Ok(res);
     }
 
     [HttpGet("getArchived")]
@@ -118,9 +120,10 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetArchivedModulesAsync(CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetArchivedModulesAsync(cancellationToken);
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetArchivedModulesAsync(userId, cancellationToken);
 
-        return this.Ok(res.Select(p => ModuleMapper.ToDetailItem(p)).ToList());
+        return this.Ok(res);
     }
 
     [HttpGet("getUsersForModule")]
@@ -128,9 +131,10 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetUsersInvitedToModule([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.GetParticipationsForUserAsync(moduleId, cancellationToken);
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.GetParticipationsForUserAsync(userId, cancellationToken);
 
-        return this.Ok(res.Select(p => ModuleMapper.ToDetailItem(p)).ToList());
+        return this.Ok(res);
     }
 
     [HttpGet("search")]
@@ -138,11 +142,11 @@ public class ModuleController : ControllerBase
     [Authorize]
     public async Task<IActionResult> SearchModulesAsync([FromQuery] string? search = null, CancellationToken cancellationToken = default)
     {
-        var res = await this.moduleService.SearchModulesAsync(search ?? string.Empty, cancellationToken);
+        var userId = this.User.GetUserId();
+        var res = await this.moduleService.SearchModulesAsync(search ?? string.Empty, userId, cancellationToken);
 
         return this.Ok(res
             .Take(100)
-            .Select(m => ModuleMapper.ToDetailItem(m))
             .ToList());
     }
 

@@ -19,23 +19,23 @@ export class JoinModuleComponent implements OnInit{
   constructor(private readonly moduleService:ModuleService) { }
 
   ngOnInit(): void {
-    //this.search("")
+    this.search("")
   }
 
-  // search(searchString: string) {
-  //   this.moduleService.apiModuleSearchGet$Json({
-  //     search: searchString
-  //   }).subscribe(async data => {
-  //     this.results = data;
-  //     for (let module of this.results) {
-  //
-  //     }
-  //   })
-  // }
-  //
-  // private getCurrentPartStatus(module : ModuleDetailItem) {
-  //   return this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
-  //       moduleId: module.moduleId
-  //   })
-  // }
+   search(searchString: string) {
+     this.moduleService.apiModuleSearchGet$Json({
+       search: searchString
+     }).subscribe(async data => {
+       this.results = data;
+       for (let module of this.results) {
+
+       }
+     })
+   }
+
+   private getCurrentPartStatus(module : ModuleDetailItem) {
+     return this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
+         moduleId: module.moduleId
+     })
+   }
 }

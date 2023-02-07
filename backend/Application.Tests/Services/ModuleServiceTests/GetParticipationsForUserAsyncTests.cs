@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -39,10 +40,10 @@ public sealed class GetParticipationsForUserAsyncTests: Infrastructure
         
         // Assert
         result.Should().HaveCount(4);
-        result.Should().Contain(x => x.Id == modules[0].Id);
-        result.Should().Contain(x => x.Id == modules[1].Id);
-        result.Should().Contain(x => x.Id == modules[3].Id);
-        result.Should().Contain(x => x.Id == modules[4].Id);
+        result.Should().Contain(x => x.ModuleId == modules[0].Id);
+        result.Should().Contain(x => x.ModuleId == modules[1].Id);
+        result.Should().Contain(x => x.ModuleId == modules[3].Id);
+        result.Should().Contain(x => x.ModuleId == modules[4].Id);
     }
 
     private ModuleParticipation CreateModuleParticipation(Guid userId, Module module, bool isAccepted)
@@ -63,7 +64,7 @@ public sealed class GetParticipationsForUserAsyncTests: Infrastructure
             .Create();
     }
 
-    private Task<IEnumerable<Module>> CallAsync()
+    private Task<IEnumerable<ModuleDetailItem>> CallAsync()
     {
         return this.ModuleService.GetParticipationsForUserAsync(this.userId);
     }

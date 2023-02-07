@@ -2213,6 +2213,9 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "currentUserParticipationStatus": {
+            "$ref": "#/components/schemas/ModuleParticipationStatus"
           }
         },
         "additionalProperties": false

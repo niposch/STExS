@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -61,10 +62,10 @@ public sealed class GetModulesUserIsAcceptedIntoAsyncTests : Infrastructure
         // Act
         var res = (await this.CallAsync()).ToList();
         res.Should().HaveCount(3);
-        res.Should().Contain(confirmedModules);
+        res.Select(m => m.ModuleId).Should().Contain(confirmedModules.Select(m => m.Id));
     }
 
-    private Task<IEnumerable<Module>> CallAsync()
+    private Task<IEnumerable<ModuleDetailItem>> CallAsync()
     {
         return this.ModuleService.GetModulesUserIsAcceptedIntoAsync(this.userId);
     }

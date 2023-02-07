@@ -1,9 +1,12 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
 public sealed class GetModulesAsyncTests : Infrastructure
 {
+    private Guid userId;
+
     [Fact]
     public async Task QueriesArchivedAndUnarchivedModules()
     {
@@ -55,8 +58,8 @@ public sealed class GetModulesAsyncTests : Infrastructure
         res.Should().BeEmpty();
     }
 
-    private async Task<IEnumerable<Module>> CallAsync()
+    private async Task<IEnumerable<ModuleDetailItem>> CallAsync()
     {
-        return await this.ModuleService.GetModulesAsync();
+        return await this.ModuleService.GetModulesAsync(this.userId);
     }
 }
