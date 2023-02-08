@@ -2,10 +2,9 @@
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
-using Repositories.Repositories;
 using Module = Autofac.Module;
 
-namespace Repositories;
+namespace Repositories.Repositories.Grading;
 
 public class RepositoryModule : Module
 {
@@ -16,7 +15,17 @@ public class RepositoryModule : Module
         builder.RegisterType<ApplicationRepository>()
             .As<IApplicationRepository>()
             .InstancePerLifetimeScope();
-        
+        this.RegisterRepositories(builder);
+    }
+
+    private void RegisterRepositories(ContainerBuilder builder)
+    {
+        builder.RegisterType<WeatherForecastRepository>()
+            .As<IWeatherForecastRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ParsonExerciseRepository>()
+            .As<IParsonExerciseRepository>()
+            .InstancePerLifetimeScope();
         builder.RegisterType<ParsonElementRepository>()
             .As<IParsonElementRepository>()
             .InstancePerLifetimeScope();
@@ -37,24 +46,27 @@ public class RepositoryModule : Module
         builder.RegisterType<ModuleRepository>()
             .As<IModuleRepository>()
             .InstancePerLifetimeScope();
-        RegisterRepositories(builder);
         builder.RegisterType<ChapterRepository>()
             .As<IChapterRepository>()
             .InstancePerLifetimeScope();
         builder.RegisterType<ModuleParticipationRepository>()
             .As<IModuleParticipationRepository>()
             .InstancePerLifetimeScope();
-
         
-    }
-
-    private void RegisterRepositories(ContainerBuilder builder)
-    {
-        builder.RegisterType<WeatherForecastRepository>()
-            .As<IWeatherForecastRepository>()
+        builder.RegisterType<UserSubmissionRepository>()
+            .As<IUSerSubmissionRepository>()
             .InstancePerLifetimeScope();
-        builder.RegisterType<ParsonExerciseRepository>()
-            .As<IParsonExerciseRepository>()
+        
+        builder.RegisterType<SubmissionRepository>()
+            .As<ISubmissionRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<GradingResultRepository>()
+            .As<IGradingResultRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<TimeTrackRepository>()
+            .As<ITimeTrackRepository>()
             .InstancePerLifetimeScope();
     }
 }

@@ -590,6 +590,163 @@
         }
       }
     },
+    "/api/CodeOutputSubmission/submit/{timeTrackId}": {
+      "post": {
+        "tags": [
+          "CodeOutputSubmission"
+        ],
+        "parameters": [
+          {
+            "name": "timeTrackId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "isFinalSubmission",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputSubmissionCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputSubmissionCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeOutputSubmissionCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CodeOutputSubmission/get/{codeOutputExerciseId}": {
+      "get": {
+        "tags": [
+          "CodeOutputSubmission"
+        ],
+        "parameters": [
+          {
+            "name": "codeOutputExerciseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "currentTimeTrackId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputSubmissionDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputSubmissionDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputSubmissionDetailItem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Exercise": {
       "delete": {
         "tags": [
@@ -1533,6 +1690,110 @@
         }
       }
     },
+    "/api/TimeTrack/{timeTrackId}": {
+      "get": {
+        "tags": [
+          "TimeTrack"
+        ],
+        "parameters": [
+          {
+            "name": "timeTrackId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTrackDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTrackDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTrackDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TimeTrack": {
+      "post": {
+        "tags": [
+          "TimeTrack"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TimeTrack/close": {
+      "post": {
+        "tags": [
+          "TimeTrack"
+        ],
+        "parameters": [
+          {
+            "name": "timeTrackId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -1748,6 +2009,49 @@
             "format": "int32"
           },
           "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "userSubmissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserSubmission"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BaseSubmission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userSubmission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gradingResult": {
+            "$ref": "#/components/schemas/GradingResult"
+          },
+          "gradingResultId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "submissionType": {
             "$ref": "#/components/schemas/ExerciseType"
           }
         },
@@ -1976,6 +2280,34 @@
         },
         "additionalProperties": false
       },
+      "CodeOutputSubmissionCreateItem": {
+        "type": "object",
+        "properties": {
+          "submittedAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CodeOutputSubmissionDetailItem": {
+        "type": "object",
+        "properties": {
+          "submittedAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "ExerciseDetailItem": {
         "type": "object",
         "properties": {
@@ -2065,6 +2397,54 @@
           "CodeOutput",
           "ProgrammingTask"
         ]
+      },
+      "GradingResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isFinal": {
+            "type": "boolean"
+          },
+          "isAutomatic": {
+            "type": "boolean"
+          },
+          "appealDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userSubmissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userSubmission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gradedSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "gradedSubmission": {
+            "$ref": "#/components/schemas/BaseSubmission"
+          }
+        },
+        "additionalProperties": false
       },
       "IdentityError": {
         "type": "object",
@@ -2422,6 +2802,101 @@
           "Admin"
         ]
       },
+      "TimeTrack": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userSubmission": {
+            "$ref": "#/components/schemas/UserSubmission"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrackDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeInSec": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastSolutionUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/TimeTrackState"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "finalSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrackState": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Open",
+          "ClosedSuccessfully",
+          "ClosedDueToLossOfContact"
+        ]
+      },
       "UserDetailsModel": {
         "type": "object",
         "properties": {
@@ -2432,6 +2907,55 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RoleType"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSubmission": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ApplicationUser"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exercise": {
+            "$ref": "#/components/schemas/BaseExercise"
+          },
+          "finalSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "finalSubmission": {
+            "$ref": "#/components/schemas/BaseSubmission"
+          },
+          "timeTracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeTrack"
+            },
+            "nullable": true
+          },
+          "submissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseSubmission"
+            },
+            "nullable": true
+          },
+          "gradingResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradingResult"
             },
             "nullable": true
           }
