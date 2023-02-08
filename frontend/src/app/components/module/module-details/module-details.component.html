@@ -36,21 +36,18 @@
         <mat-label class="text-overflow" style="margin-top: auto; margin-bottom: auto;">{{module.moduleDescription}}</mat-label>
       </div>
 
-      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
+      <mat-divider style="margin-top: 10px; margin-bottom: 20px"></mat-divider>
 
-      <mat-card *ngIf="this.showChapters">
+      <div *ngIf="this.showChapters">
         <mat-card-title>Chapters</mat-card-title>
-        <mat-card-content>
-          <mat-divider style="margin-top: 5px; margin-bottom: 10px"></mat-divider>
-          <div class="chapter-list">
-            <div class="chapter-item" *ngFor="let chapter of this.chapterList" style="margin-bottom: 5px">
-              <app-chapter-admin-listitem [chapter]="chapter"
-                                          [showSolveButton]="this.participationStatus == moduleParticipationStatus.Accepted"
-                                          [showEditButton]="this.participationStatus == moduleParticipationStatus.Admin"></app-chapter-admin-listitem>
-            </div>
+        <div class="chapter-list">
+          <div class="chapter-item" *ngFor="let chapter of this.chapterList" style="margin-bottom: 5px">
+            <app-chapter-admin-listitem [chapter]="chapter"
+                                        [showSolveButton]="this.participationStatus == moduleParticipationStatus.Accepted"
+                                        [showEditButton]="this.participationStatus == moduleParticipationStatus.Admin"></app-chapter-admin-listitem>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </div>
+      </div>
 
       <mat-label *ngIf="!this.showChapters">no chapters in this module</mat-label>
 
