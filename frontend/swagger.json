@@ -2301,6 +2301,10 @@
             "type": "string",
             "nullable": true
           },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "submittedAt": {
             "type": "string",
             "format": "date-time"

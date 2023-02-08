@@ -5,13 +5,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {CodeOutputDetailItem} from "../../../../../services/generated/models/code-output-detail-item";
 import {TimeTrackService} from "../../../../../services/generated/services/time-track.service";
 import {CodeOutputSubmissionService} from "../../../../../services/generated/services/code-output-submission.service";
-import {
-  CodeOutputSubmissionDetailItem
-} from "../../../../../services/generated/models/code-output-submission-detail-item";
-import {
-  CodeOutputSubmissionCreateItem
-} from "../../../../../services/generated/models/code-output-submission-create-item";
-
+import {CodeOutputSubmissionDetailItem} from "../../../../../services/generated/models/code-output-submission-detail-item";
 @Component({
   selector: 'app-solve-code-output',
   templateUrl: './solve-code-output.component.html',
@@ -20,10 +14,9 @@ import {
 export class SolveCodeOutputComponent implements OnInit {
 
   @Input() id: string = "";
-  public answerString : string | null | undefined = "";
+  public answerString : string | undefined;
   public exercise : CodeOutputDetailItem | null = {};
-  private lastSubmission : CodeOutputSubmissionDetailItem | void = {};
-  private newSubmission : CodeOutputSubmissionCreateItem = {};
+  private lastSubmission : CodeOutputSubmissionDetailItem | undefined;
   public timeTrackId : string | void | undefined;
   public isLoading : boolean = false;
 
@@ -59,12 +52,12 @@ export class SolveCodeOutputComponent implements OnInit {
       this.snackBar.open('Error: Could not get a TimeTrack instance!', 'dismiss');
     }).then( data => {
       this.timeTrackId = data;
-      console.log("Aquired TimeTrackId: " + this.timeTrackId);
       this.queryLastTempSolution(eId, this.timeTrackId!);
     })
   }
 
   private queryLastTempSolution(eId: string, ttId: string) {
+    let createNewSubmission : boolean = false;
     lastValueFrom(this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json( {
       codeOutputExerciseId: eId,
       currentTimeTrackId: ttId
@@ -72,37 +65,34 @@ export class SolveCodeOutputComponent implements OnInit {
       if (err.status != 404) {
         this.snackBar.open('Error: Something went wrong while getting the last Submission!', 'dismiss')
       } else {
-        this.newSubmission!.exerciseId = eId;
-        this.newSubmission!.submittedAnswer = "";
-        console.log("Created a new Submission: " + this.newSubmission.exerciseId + ", " + this.newSubmission.submittedAnswer);
+        createNewSubmission = true;
       }
     }).then( data => {
-      if (data) {
-        this.lastSubmission = data;
-        this.answerString = this.lastSubmission!.submittedAnswer;
-        console.log("Loaded latest Submission: " + this.lastSubmission.submittedAnswer);
+     if (!createNewSubmission) {
+        this.lastSubmission = data!;
+        this.answerString = this.lastSubmission!.submittedAnswer!;
       }
     })
   }
 
-  public createNewSubmission(ttId: string | void) {
-    this.newSubmission.submittedAnswer = this.answerString;
-    console.log(this.newSubmission.exerciseId + " , " + this.newSubmission.submittedAnswer);
+  public createNewSubmission(ttId: string | void, isFinal: boolean = false) {
     lastValueFrom(this.codeoutputSubmissionService.apiCodeOutputSubmissionSubmitTimeTrackIdPost( {
       timeTrackId: ttId!,
-      isFinalSubmission: false,
-      body: this.newSubmission
+      isFinalSubmission: isFinal,
+      body: {
+        submittedAnswer : this.answerString,
+        exerciseId: this.exercise!.id!
+      }
     })).catch( () => {
       this.snackBar.open('Could not submit the answer!', 'dismiss');
-      return;
     }).then( () => {
-      console.log("Submitted an answer: " + this.newSubmission.submittedAnswer);
-      this.closeTimeTrack(ttId).catch(() => {
-        //this.snackBar.open('Could not close TimeTrack', 'dismiss');
-        return;
-      }).then( () => {
-        //this.snackBar.open("Submitted answer successfully!", 'ok', {duration: 3000});
-      });
+      if (isFinal){
+        this.closeTimeTrack(ttId).catch(() => {
+          this.snackBar.open('Could not close TimeTrack', 'dismiss');
+        }).then( () => {
+          this.snackBar.open("Submitted answer successfully!", 'ok', {duration: 3000});
+        });
+      }
     })
   }
 
