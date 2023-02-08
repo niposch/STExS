@@ -9,7 +9,7 @@
         <mat-label>Output</mat-label>
         <input matInput class="input-field" value="{{this.answerString}}">
       </mat-form-field>
-      <button class="submit" mat-raised-button color="accent">submit</button>
+      <button class="submit" mat-raised-button color="accent" (click)="this.createNewSubmission(this.timeTrackId)">submit</button>
     </div>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
