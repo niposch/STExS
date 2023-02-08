@@ -32,7 +32,13 @@
           <mat-chip-list style="width: fit-content">
             <mat-chip disableRipple="true" color="primary" *ngIf="item.isArchived">archived</mat-chip>
             <mat-chip disableRipple="true" selected color="accent" *ngIf="item.currentUserParticipationStatus == moduleParticipationStatus.Accepted">joined</mat-chip>
-            <mat-chip disableRipple="true" selected color="primary" *ngIf="item.currentUserParticipationStatus == moduleParticipationStatus.Admin" (click)="editModule(item.moduleId)">admin</mat-chip>
+            <mat-chip disableRipple="true"
+                      selected
+                      matTooltip="click to edit the module"
+                      [matTooltipShowDelay]="0"
+                      color="primary"
+                      *ngIf="item.currentUserParticipationStatus == moduleParticipationStatus.Admin"
+                      (click)="editModule(item.moduleId)">admin</mat-chip>
           </mat-chip-list>
         </td>
       </ng-container>
