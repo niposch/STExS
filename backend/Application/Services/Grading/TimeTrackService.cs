@@ -3,6 +3,7 @@ using Common.Exceptions;
 using Common.Models.Authentication;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
+using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.Grading;
@@ -12,16 +13,18 @@ public class TimeTrackService: ITimeTrackService
     private readonly IApplicationRepository repository;
     
     private readonly IAccessService accessService;
+    private readonly IUserSubmissionService userSubmissionService;
 
-    public TimeTrackService(IApplicationRepository repository, IAccessService accessService)
+    public TimeTrackService(IApplicationRepository repository, IAccessService accessService, IUserSubmissionService userSubmissionService)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
+        this.userSubmissionService = userSubmissionService ?? throw new ArgumentNullException(nameof(userSubmissionService));
     }
 
     public async Task<Guid> CreateTimeTrackAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        var userSubmission = await GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
 
         var timeTrack = new TimeTrack
         {
@@ -38,26 +41,6 @@ public class TimeTrackService: ITimeTrackService
         return timeTrack.Id;
     }
     
-    private async Task<UserSubmission> GetOrCreateUserSubmissionAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
-    {
-        var existingSubmission = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        if (existingSubmission != null)
-        {
-            return existingSubmission;
-        }
-        
-        var userSubmission = new UserSubmission
-        {
-            UserId = userId,
-            ExerciseId = exerciseId,
-            FinalSubmissionId = null,
-        };
-        
-        await repository.UserSubmissions.CreateAsync(userSubmission, cancellationToken);
-
-        return userSubmission;
-    }
-
     public async Task ReportActivityAsync(Guid timeTrackId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

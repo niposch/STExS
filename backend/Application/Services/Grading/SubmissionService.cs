@@ -10,11 +10,13 @@ public class SubmissionService:ISubmissionService
     private readonly IApplicationRepository repository;
     
     private readonly ITimeTrackService timeTrackService;
+    private readonly IUserSubmissionService userSubmissionService;
 
-    public SubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService)
+    public SubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService, IUserSubmissionService userSubmissionService)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         this.timeTrackService = timeTrackService ?? throw new ArgumentNullException(nameof(timeTrackService));
+        this.userSubmissionService = userSubmissionService ?? throw new ArgumentNullException(nameof(userSubmissionService));
     }
 
     public async Task<List<BaseSubmission>> GetSubmissionsAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
@@ -49,6 +51,7 @@ public class SubmissionService:ISubmissionService
     public async Task SubmitAsync(Guid userId,
         Guid exerciseId,
         BaseSubmission submission,
+        bool isFinal,
         Guid timeTrackId,
         CancellationToken cancellationToken = default)
     {
@@ -56,14 +59,10 @@ public class SubmissionService:ISubmissionService
         submission.UserId = userId;
         submission.ExerciseId = exerciseId;
         
-        var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
         if (!await this.timeTrackService.IsOpenAsync(timeTrackId, cancellationToken))
         {
             throw new TimeTrackClosedException();
-        }
-        if(userSubmission == null)
-        {
-            throw new EntityNotFoundException<UserSubmission>(null);
         }
         if (userSubmission.FinalSubmissionId != null)
         {
@@ -71,5 +70,11 @@ public class SubmissionService:ISubmissionService
         }
         
         await this.repository.Submissions.CreateAsync(submission, cancellationToken);
+        if (isFinal)
+        {
+            userSubmission.FinalSubmissionId = submission.Id;
+            await this.repository.UserSubmissions.UpdateAsync(userSubmission, cancellationToken);
+        }
+        
     }
 }

@@ -22,7 +22,7 @@ public class CodeOutputSubmissionService: ICodeOutputSubmissionService
 
     public async Task SubmitAsync(Guid userId,
         Guid exerciseId,
-        bool isTemp,
+        bool isFinal,
         string submittedAnswer,
         Guid timeTrackId,
         CancellationToken cancellationToken = default)
@@ -35,6 +35,6 @@ public class CodeOutputSubmissionService: ICodeOutputSubmissionService
             ExerciseId = exerciseId
         };
         
-        await this.submissionService.SubmitAsync(userId, exerciseId, codeOutputSubmission, timeTrackId, cancellationToken);
+        await this.submissionService.SubmitAsync(userId, exerciseId, codeOutputSubmission, isFinal, timeTrackId, cancellationToken);
     }
 }

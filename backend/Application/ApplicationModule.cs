@@ -37,6 +37,10 @@ public class ApplicationModule : Module
             .As<IAccessService>()
             .InstancePerLifetimeScope();
         
+        builder.RegisterType<UserSubmissionService>()
+            .As<IUserSubmissionService>()
+            .InstancePerLifetimeScope();
+        
         builder.RegisterType<TimeTrackService>()
             .As<ITimeTrackService>()
             .InstancePerLifetimeScope();

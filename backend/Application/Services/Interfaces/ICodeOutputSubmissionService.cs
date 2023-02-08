@@ -4,7 +4,7 @@ public interface ICodeOutputSubmissionService
 {
     public Task SubmitAsync(Guid userId,
         Guid exerciseId,
-        bool isTemp,
+        bool isFinal,
         string submittedAnswer,
         Guid timeTrackId,
         CancellationToken cancellationToken = default);

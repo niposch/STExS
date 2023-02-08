@@ -13,6 +13,7 @@ public interface ISubmissionService
     public Task SubmitAsync(Guid userId,
         Guid exerciseId,
         BaseSubmission submission,
+        bool isFinal,
         Guid timeTrackId,
         CancellationToken cancellationToken = default);
 }
