@@ -104,7 +104,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     }
   }
 
-  saveModuleChanges() {
+  saveChapterChanges() {
     if (this.savingInProgress) return;
     this.showLoading = true;
     this.savingInProgress = true;
