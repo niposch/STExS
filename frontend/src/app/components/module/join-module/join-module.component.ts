@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../services/generated/services/module.service";
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
 import {ModuleParticipationStatus} from "../../../../services/generated/models/module-participation-status";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-join-module',
@@ -16,7 +17,8 @@ export class JoinModuleComponent implements OnInit{
   public displayedColumns = ["part", "moduleName", "teacher", "actions"]
 
   moduleParticipationStatus = ModuleParticipationStatus;
-  constructor(private readonly moduleService:ModuleService) { }
+  constructor(private readonly moduleService:ModuleService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.search("")
@@ -29,4 +31,8 @@ export class JoinModuleComponent implements OnInit{
        this.results = data;
      })
    }
+
+  editModule(moduleId: any) {
+    this.router.navigate(['/module/administrate'], {queryParams: {id: moduleId}});
+  }
 }
