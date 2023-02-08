@@ -32,6 +32,8 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   public exerciseList: Array<ExerciseDetailItem> | null = null;
   public hasExercises: boolean = false;
   public exerciseType: number = -1;
+
+  public ExerciseTypeEnum = ExerciseType
   private moduleId : string = "";
 
   constructor(private readonly activatedRoute:ActivatedRoute,
