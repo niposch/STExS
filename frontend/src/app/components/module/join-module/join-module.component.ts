@@ -27,15 +27,6 @@ export class JoinModuleComponent implements OnInit{
        search: searchString
      }).subscribe(async data => {
        this.results = data;
-       for (let module of this.results) {
-
-       }
-     })
-   }
-
-   private getCurrentPartStatus(module : ModuleDetailItem) {
-     return this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
-         moduleId: module.moduleId
      })
    }
 }
