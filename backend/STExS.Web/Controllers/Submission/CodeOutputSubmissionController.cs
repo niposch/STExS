@@ -83,9 +83,8 @@ public class CodeOutputSubmissionController: ControllerBase
     #endregion
 }
 
-public class CodeOutputSubmissionDetailItem
+public class CodeOutputSubmissionDetailItem: CodeOutputSubmissionCreateItem
 {
-    public string SubmittedAnswer { get; set; } = string.Empty;
     public DateTime SubmittedAt { get; set; }
 }
 
