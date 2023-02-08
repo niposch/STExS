@@ -108,7 +108,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             .HasMany(s => s.Submissions)
             .WithOne(s => s.UserSubmission)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(s => new
+            {
+                s.UserId,
+                s.ExerciseId
+            });
         builder.Entity<UserSubmission>()
             .HasKey(s => new
             {

@@ -89,6 +89,19 @@ public class TimeTrackService: ITimeTrackService
         return ToTimeTrackDetailItem(timeTrack, userSubmission);
     }
 
+    public async Task<bool> IsOpenAsync(Guid timeTrackId, CancellationToken cancellationToken = default)
+    {
+        var timeTrack = await repository.TimeTracks.TryGetByTimeTrackIdAsync(timeTrackId, cancellationToken);
+        if (timeTrack == null)
+        {
+            throw new EntityNotFoundException<TimeTrack>(timeTrackId);
+        }
+
+        return timeTrack.CloseDateTime == null &&
+               timeTrack.Start.AddDays(2) >= DateTime.Now &&
+               timeTrack.UserSubmission.FinalSubmissionId == null;
+    }
+
     private TimeTrackState GetTimeTrackState(TimeTrack timeTrack)
     {
         if (timeTrack.CloseDateTime != null)

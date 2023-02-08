@@ -17,7 +17,7 @@ public class SubmissionRepository : ISubmissionRepository
 
     public async Task<BaseSubmission?> TryGetByIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.Submissions.FirstOrDefaultAsync(e => e.UserSubmissionId == submissionId,
+        var ex = await this.context.Submissions.FirstOrDefaultAsync(e => e.Id == submissionId,
             cancellationToken);
         return ex;
     }
@@ -43,7 +43,7 @@ public class SubmissionRepository : ISubmissionRepository
     public async Task<List<BaseSubmission>> GetAllBySubmissionIdAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.Submissions.Where(e => e.UserSubmissionId == userId).ToListAsync(cancellationToken);
+        var ex = await this.context.Submissions.Where(e => e.UserId == userId).ToListAsync(cancellationToken);
         return ex;
     }
 }

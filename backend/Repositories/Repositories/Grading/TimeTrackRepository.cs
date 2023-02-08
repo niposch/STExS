@@ -19,6 +19,7 @@ public class TimeTrackRepository : ITimeTrackRepository
         CancellationToken cancellationToken = default)
     {
         return await this.context.TimeTracks
+            .Include(t => t.UserSubmission)
             .FirstOrDefaultAsync(e => e.Id == timeTrackId, cancellationToken);
     }
 

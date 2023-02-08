@@ -40,7 +40,15 @@ public class ApplicationModule : Module
         builder.RegisterType<TimeTrackService>()
             .As<ITimeTrackService>()
             .InstancePerLifetimeScope();
-            
+
+        builder.RegisterType<SubmissionService>()
+            .As<ISubmissionService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<CodeOutputSubmissionService>()
+            .As<ICodeOutputSubmissionService>()
+            .InstancePerLifetimeScope();
+        
         // Helper
         builder.RegisterType<RoleHelper>()
             .As<IRoleHelper>()

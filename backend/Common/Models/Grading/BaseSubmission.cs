@@ -9,9 +9,10 @@ public abstract class BaseSubmission: ICreationTimeTracked
     public DateTime CreationTime { get; set; }
     
     public UserSubmission UserSubmission { get; set; }
-    public Guid UserSubmissionId { get; set; }
+    public Guid UserId { get; set; }
+    public Guid ExerciseId { get; set; }
     
-    public GradingResult GradingResult { get; set; }
-    public Guid GradingResultId { get; set; }
+    public GradingResult? GradingResult { get; set; }
+    public Guid? GradingResultId { get; set; }
     public ExerciseType SubmissionType { get; set; }
 }

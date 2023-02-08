@@ -18,7 +18,9 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
     public async Task<UserSubmission?> TryGetByIdAsync(Guid userId, Guid exerciseId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.UserSubmissions.FirstOrDefaultAsync(e => e.ExerciseId == exerciseId,
+        var ex = await this.context.UserSubmissions
+            .Include(s => s.Submissions)
+            .FirstOrDefaultAsync(e => e.ExerciseId == exerciseId,
             cancellationToken);
         return ex;
     }
