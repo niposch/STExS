@@ -225,7 +225,7 @@ public sealed class ModuleService : IModuleService
     private ModuleParticipationStatus GetParticipationStatus(Module module, Dictionary<Guid, ModuleParticipation> userModuleParticipations, Guid userId)
     {
         if (module.OwnerId == userId) return ModuleParticipationStatus.Admin;
-        userModuleParticipations.TryGetValue(userId, out var participation);
+        userModuleParticipations.TryGetValue(module.Id, out var participation);
         if (participation == null) return ModuleParticipationStatus.NotParticipating;
         return participation.ParticipationConfirmed ? ModuleParticipationStatus.Accepted : ModuleParticipationStatus.Requested;
     }
