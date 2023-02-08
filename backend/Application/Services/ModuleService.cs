@@ -97,7 +97,7 @@ public sealed class ModuleService : IModuleService
         var modules = await this.repository.Modules.GetAllAsync(cancellationToken);
         return (await this.ToDetailItems(modules
             .Where(m => Search(search, m))
-            .OrderByDescending(m => m.IsArchived)
+            .OrderByDescending(m => !m.IsArchived)
             .ThenByDescending(m => m.CreationTime)
             .ToList(),
                 userId,
