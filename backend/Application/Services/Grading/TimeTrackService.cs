@@ -48,7 +48,14 @@ public class TimeTrackService: ITimeTrackService
 
     public async Task CloseTimeTrackAsync(Guid timeTrackId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var timeTrack = await repository.TimeTracks.TryGetByTimeTrackIdAsync(timeTrackId, cancellationToken);
+        if (timeTrack == null)
+        {
+            throw new EntityNotFoundException<TimeTrack>(timeTrackId);
+        }
+        
+        timeTrack.CloseDateTime = DateTime.Now;
+        await repository.TimeTracks.UpdateAsync(timeTrack, cancellationToken);
     }
 
     public async Task<TimeTrackDetailItem> GetTimeTrackAsync(Guid userId, Guid timeTrackId, CancellationToken cancellationToken = default)
