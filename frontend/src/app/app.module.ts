@@ -54,6 +54,7 @@ import {MemberListAdminComponent} from './components/admin/modules-admin/member-
 import {CreateEditCodeOutputComponent} from './components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component';
 import {SolveCodeOutputComponent} from './components/students/solve-exercise/solve-code-output/solve-code-output.component';
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
+import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import {SolveExerciseComponent} from './components/students/solve-exercise/solve
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    SolveGapTextComponent,
   ],
   imports: [
     BrowserModule,

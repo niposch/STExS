@@ -1,0 +1,59 @@
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.adjust-content {
+  margin-top: 10px;
+}
+
+.text {
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 250%;
+}
+
+.submit {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  min-width: 100px;
+  max-width: 500px;
+  width: 50px;
+  height: 0px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.input-field {
+  background-color: rgba($color: #c9c9c9, $alpha: 0.1);
+}
+
+.master-card {
+  padding-bottom: 0;
+}
