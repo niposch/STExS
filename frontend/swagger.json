@@ -2195,6 +2195,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "userHasSolvedExercise": {
+            "type": "boolean",
+            "nullable": true
+          },
           "isMultiLineResponse": {
             "type": "boolean"
           }
@@ -2268,6 +2272,10 @@
           "modificationDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "userHasSolvedExercise": {
+            "type": "boolean",
             "nullable": true
           },
           "isMultiLineResponse": {
@@ -2350,6 +2358,10 @@
           "modificationDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "userHasSolvedExercise": {
+            "type": "boolean",
             "nullable": true
           }
         },

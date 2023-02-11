@@ -27,10 +27,10 @@ export class SolveCodeOutputComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.loadExercise();
+    void this.loadExercise();
   }
 
-  loadExercise() {
+  async loadExercise():Promise<any> {
     lastValueFrom(this.codeoutputService.apiCodeOutputGet$Json({
       id: this.id
     })).catch(() => {
@@ -39,26 +39,28 @@ export class SolveCodeOutputComponent implements OnInit {
     ).then(data => {
       // @ts-ignore
       this.exercise = data;
-      this.getTimeTrack(this.exercise!.id!);
-      this.isLoading = false;
+      this.getTimeTrack(this.exercise!.id!)
+        .then(() => {
+          this.isLoading = false;
+        });
     })
   }
 
-  private getTimeTrack(eId : string) {
+  private async getTimeTrack(eId : string): Promise<any> {
     console.log(eId);
-    lastValueFrom(this.timeTrackService.apiTimeTrackPost$Json( {
+    await lastValueFrom(this.timeTrackService.apiTimeTrackPost$Json( {
       exerciseId: eId
     })).catch(() => {
       this.snackBar.open('Error: Could not get a TimeTrack instance!', 'dismiss');
     }).then( data => {
       this.timeTrackId = data;
-      this.queryLastTempSolution(eId, this.timeTrackId!);
+      return this.queryLastTempSolution(eId, this.timeTrackId!);
     })
   }
 
-  private queryLastTempSolution(eId: string, ttId: string) {
+  private async queryLastTempSolution(eId: string, ttId: string):Promise<any> {
     let createNewSubmission : boolean = false;
-    lastValueFrom(this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json( {
+    await lastValueFrom(this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json( {
       codeOutputExerciseId: eId,
       currentTimeTrackId: ttId
     })).catch( err => {

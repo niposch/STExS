@@ -88,8 +88,7 @@ public class TimeTrackService: ITimeTrackService
         }
 
         return timeTrack.CloseDateTime == null &&
-               timeTrack.Start.AddDays(2) >= DateTime.Now &&
-               timeTrack.UserSubmission.FinalSubmissionId == null;
+               timeTrack.Start.AddDays(2) >= DateTime.Now;
     }
 
     private TimeTrackState GetTimeTrackState(TimeTrack timeTrack)

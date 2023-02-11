@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Common.Models.ExerciseSystem;
 
 namespace Application.DTOs.ExercisesDTOs;
 
@@ -13,4 +14,8 @@ public class ExerciseDetailItem
     public Guid ChapterId { get; set; }
     public DateTime? CreationDate { get; set; }
     public DateTime? ModificationDate { get; set; }
+    
+    // whether the user has submitted a solution for this exercise
+    [NotMapped]
+    public bool? UserHasSolvedExercise { get; set; }
 }

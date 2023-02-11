@@ -24,7 +24,7 @@ public class SubmissionService:ISubmissionService
         throw new NotImplementedException();
     }
 
-    public async Task<BaseSubmission> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid timeTrackId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid timeTrackId, CancellationToken cancellationToken = default)
     {
         var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
         if (!await this.timeTrackService.IsOpenAsync(timeTrackId, cancellationToken))
@@ -37,10 +37,10 @@ public class SubmissionService:ISubmissionService
         }
         if (userSubmission.FinalSubmissionId != null)
         {
-            throw new AlreadySubmittedException();
+            return await this.repository.Submissions.TryGetByIdAsync(userSubmission.FinalSubmissionId.Value, cancellationToken);
         }
         
-        return userSubmission.Submissions.OrderByDescending(s => s.CreationTime).Last();
+        return userSubmission.Submissions.OrderByDescending(s => s.CreationTime).First();
     }
 
     public async Task<BaseSubmission> GetSubmissionDetailsAsync(Guid submissionId, CancellationToken cancellationToken = default)

@@ -14,6 +14,6 @@ public class UserSubmission
     public BaseSubmission? FinalSubmission { get; set; }
     
     public List<TimeTrack> TimeTracks { get; set; } = new();
-    public List<BaseSubmission> Submissions { get; set; } = new();
+    public List<BaseSubmission?> Submissions { get; set; } = new();
     public List<GradingResult> GradingResults { get; set; } = new();
 }
