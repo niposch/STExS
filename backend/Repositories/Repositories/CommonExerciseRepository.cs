@@ -1,11 +1,13 @@
-﻿using Common.Exceptions;
+﻿using System.Reflection;
+using System.Text.RegularExpressions;
+using Common.Exceptions;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories;
 
-public class CommonExerciseRepository: ICommonExerciseRepository
+public class CommonExerciseRepository : ICommonExerciseRepository
 {
     private readonly ApplicationDbContext context;
 
@@ -14,13 +16,15 @@ public class CommonExerciseRepository: ICommonExerciseRepository
         this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, bool asNoTracking = false, CancellationToken cancellationToken = default) {
+    public async Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    {
         var query = this.context.Exercises.AsQueryable();
-        if (asNoTracking) {
+        if (asNoTracking)
+        {
             query = query.AsNoTracking();
         }
+
         return await query.FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
-        
     }
 
     public async Task<List<BaseExercise>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -42,11 +46,31 @@ public class CommonExerciseRepository: ICommonExerciseRepository
         {
             throw new EntityNotFoundException<BaseExercise>(exerciseId);
         }
-        
+
         this.context.Exercises.Remove(exercise);
         await this.context.SaveChangesAsync(cancellationToken);
     }
-    
+
+    public async Task<List<BaseExercise>> SearchAsync(string search, CancellationToken cancellationToken = default)
+    {
+        var searchWords = search.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var query = this.context.Exercises
+            .AsQueryable();
+        foreach (var w in searchWords)
+        {
+            query = query.Where(e =>
+                e.Description.ToLower().Contains(w) ||
+                e.ExerciseName.ToLower().Contains(w)
+            );
+        }
+        
+        var results = await query.ToListAsync(cancellationToken);
+
+        return results
+            .OrderByDescending(e => e.CreationTime)
+            .ToList();
+    }
+
     public async Task<BaseExercise> AddAsync(BaseExercise entity,
         CancellationToken cancellationToken = default)
     {
