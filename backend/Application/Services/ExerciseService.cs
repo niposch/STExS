@@ -69,6 +69,15 @@ public sealed class ExerciseService: IExerciseService
             .ToList();
     }
 
+    public async Task<List<ExerciseDetailItem>> SearchAsync(string search, CancellationToken cancellationToken = default)
+    {
+        var all = await this.repository.CommonExercises.SearchAsync(search, cancellationToken);
+
+        return all
+            .Select(e => ToDetailItem(e))
+            .ToList();
+    }
+
     private static ExerciseDetailItem ToDetailItem(BaseExercise entity)
     {
         return new ExerciseDetailItem

@@ -14,4 +14,6 @@ public interface IExerciseService
     public Task<ExerciseDetailItem> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default);
     
     public Task<List<ExerciseDetailItem>> GetAllAsync(CancellationToken cancellationToken = default);
+    
+    public Task<List<ExerciseDetailItem>> SearchAsync(string search, CancellationToken cancellationToken = default);
 }
