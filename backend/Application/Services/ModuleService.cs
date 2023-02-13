@@ -1,4 +1,5 @@
-﻿using Application.DTOs.ModuleDTOs;
+﻿using System.Runtime.CompilerServices;
+using Application.DTOs.ModuleDTOs;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Common.Exceptions;
@@ -85,19 +86,22 @@ public sealed class ModuleService : IModuleService
         await this.repository.Modules.UnarchiveAsync(moduleId, cancellationToken);
     }
 
-    public async Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<List<ModuleDetailItem>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var modules = await this.repository.Modules.GetModulesUserIsOwnerOfAsync(userId, cancellationToken);
-        return modules.ToList();
+        return modules.Select(m => ModuleMapper.ToDetailItem(m, userId, ModuleParticipationStatus.Admin)).ToList();
     }
 
-    public async Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken = default)
+    public async Task<List<ModuleDetailItem>> SearchModulesAsync(string search, Guid userId, CancellationToken cancellationToken = default)
     {
         var modules = await this.repository.Modules.GetAllAsync(cancellationToken);
-        return modules
+        return (await this.ToDetailItems(modules
             .Where(m => Search(search, m))
-            .OrderByDescending(m => m.IsArchived)
+            .OrderByDescending(m => !m.IsArchived)
             .ThenByDescending(m => m.CreationTime)
+            .ToList(),
+                userId,
+                cancellationToken))
             .ToList();
     }
 
@@ -167,41 +171,65 @@ public sealed class ModuleService : IModuleService
         await this.repository.ModuleParticipations.RemoveAsync(moduleId, userId, cancellationToken);
     }
 
-    public async Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ModuleDetailItem> GetModuleByIdAsync(Guid id, Guid userId, CancellationToken cancellationToken = default)
     {
-        return await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);
+        var module = await this.repository.Modules.TryGetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException<Module>(id);
+        return (await this.ToDetailItems(new List<Module> { module }, userId, cancellationToken)).First();
     }
 
-    public async Task<IEnumerable<Module>> GetModulesAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleDetailItem>> GetModulesAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        return await this.repository.Modules.GetAllAsync(cancellationToken);
+        var module = await this.repository.Modules.GetAllAsync(cancellationToken);
+        return await this.ToDetailItems(module, userId, cancellationToken);
     }
 
-    public async Task<IEnumerable<Module>> GetArchivedModulesAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleDetailItem>> GetArchivedModulesAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        return await this.repository.Modules.GetAllArchivedAsync(cancellationToken);
+        var modules = await this.repository.Modules.GetAllArchivedAsync(cancellationToken);
+        return await this.ToDetailItems(modules, userId, cancellationToken);
     }
 
-    public async Task<IEnumerable<Module>> GetActiveModulesAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleDetailItem>> GetActiveModulesAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        return await this.repository.Modules.GetAllActiveAsync(cancellationToken);
+        var modules = await this.repository.Modules.GetAllActiveAsync(cancellationToken);
+        return await this.ToDetailItems(modules, userId, cancellationToken);
     }
 
-    public async Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleDetailItem>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var participationsForUser = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(userId, cancellationToken);
         return participationsForUser
             .Where(p => p.ParticipationConfirmed)
             .Select(p => p.Module)
-            .DistinctBy(m => m.Id);
+            .DistinctBy(m => m.Id)
+            .Select(m => ModuleMapper.ToDetailItem(m, userId, ModuleParticipationStatus.Accepted));
     }
 
-    public async Task<IEnumerable<Module>> GetParticipationsForUserAsync(Guid moduleId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ModuleDetailItem>> GetParticipationsForUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        var participationsForModule = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(moduleId);
-        return participationsForModule.Select(p => p.Module);
+        var participationsForModule = await this.repository.ModuleParticipations.GetParticipationsForUserAsync(userId);
+        return await ToDetailItems(participationsForModule.Select(p => p.Module), userId, cancellationToken);
+    }
+
+    private async Task<IEnumerable<ModuleDetailItem>> ToDetailItems(IEnumerable<Module> modules, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var moduleParticipations = (await this.repository.ModuleParticipations.GetParticipationsForUserAsync(userId, cancellationToken))
+            .ToDictionary(m => m.ModuleId);
+        var moduleDetailItems = modules
+            .Select(m => ModuleMapper.ToDetailItem(m, userId, this.GetParticipationStatus(m, moduleParticipations, userId)))
+            .ToList();
+
+        return moduleDetailItems;
     }
     
+    private ModuleParticipationStatus GetParticipationStatus(Module module, Dictionary<Guid, ModuleParticipation> userModuleParticipations, Guid userId)
+    {
+        if (module.OwnerId == userId) return ModuleParticipationStatus.Admin;
+        userModuleParticipations.TryGetValue(module.Id, out var participation);
+        if (participation == null) return ModuleParticipationStatus.NotParticipating;
+        return participation.ParticipationConfirmed ? ModuleParticipationStatus.Accepted : ModuleParticipationStatus.Requested;
+    }
+
     private static bool Search(string search, Module module)
     {
         var words = search.Split(" ");
@@ -214,4 +242,5 @@ public sealed class ModuleService : IModuleService
                                  (module.Owner?.FirstName.Contains(word) ?? false) ||
                                  (module.Owner?.LastName.Contains(word) ?? false));
     }
+    
 }

@@ -1,5 +1,4 @@
 ﻿using Common.Models.ExerciseSystem.Parson;
-
 namespace Repositories.Tests.Repositories.ParsonExerciseRepositoryTests;
 
 public sealed class TryGetByIdAsync: Infrastructure

@@ -8,7 +8,6 @@ public class ApplicationRepository : IApplicationRepository
 {
     #pragma warning disable
     public ApplicationRepository(IWeatherForecastRepository weatherForecasts,
-        
         IModuleRepository modules,
         IChapterRepository chapters,
         IParsonElementRepository parsonElements,
@@ -16,7 +15,11 @@ public class ApplicationRepository : IApplicationRepository
         IParsonSolutionRepository parsonSolutions,
         ICommonExerciseRepository commonExercises,
         IModuleParticipationRepository moduleParticipations,
-        ICodeOutputExerciseRepository codeOutputExercises)
+        ICodeOutputExerciseRepository codeOutputExercises,
+        IUSerSubmissionRepository userSubmissions,
+        ISubmissionRepository submissions,
+        IGradingResultRepository gradingResults,
+        ITimeTrackRepository timeTracks)
     #pragma warning restore
     {
         this.WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
@@ -28,6 +31,11 @@ public class ApplicationRepository : IApplicationRepository
         this.CommonExercises = commonExercises ?? throw new ArgumentNullException(nameof(commonExercises));
         this.ModuleParticipations = moduleParticipations ?? throw new ArgumentNullException(nameof(moduleParticipations));
         this.CodeOutputExercises = codeOutputExercises ?? throw new ArgumentNullException(nameof(codeOutputExercises));
+        
+        this.UserSubmissions = userSubmissions ?? throw new ArgumentNullException(nameof(userSubmissions));
+        this.Submissions = submissions ?? throw new ArgumentNullException(nameof(submissions));
+        this.GradingResults = gradingResults ?? throw new ArgumentNullException(nameof(gradingResults));
+        this.TimeTracks = timeTracks ?? throw new ArgumentNullException(nameof(timeTracks));
     }
 
     public IWeatherForecastRepository WeatherForecasts { get; set; } // just for demonstration, will be removed
@@ -43,4 +51,14 @@ public class ApplicationRepository : IApplicationRepository
     public IParsonSolutionRepository ParsonSolutions { get; set; }
     public ICodeOutputExerciseRepository CodeOutputExercises { get; set; }
     public IModuleParticipationRepository ModuleParticipations { get; set; }
+
+    #region Grading
+    public IUSerSubmissionRepository UserSubmissions { get; set; }
+    
+    public ISubmissionRepository Submissions { get; set; }
+    
+    public IGradingResultRepository GradingResults { get; set; }
+    
+    public ITimeTrackRepository TimeTracks { get; set; }
+    #endregion
 }

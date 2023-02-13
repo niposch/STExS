@@ -14,13 +14,10 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isTeacher = false;
 
-  @Input()
-  public hasDrawer: boolean = false;
-
-  @Input()
-  public showDrawer: boolean = false;
-  @Output()
-  public showDrawerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()  public hasDrawer: boolean = false;
+  @Input()  public showDrawer: boolean = false;
+  @Output()  public showDrawerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isLoading: boolean = false;
 
 
   constructor(private readonly userService: UserService,
@@ -53,10 +50,29 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().then(r =>{
-        return this.router.navigate(["/"]);
+    this.isLoading = true;
+    this.userService.logout().then( () =>{
+      this.router.navigate(["/"]).then(() => {
+        this.isLoading = false;
+      });
+
     });
   }
+
+  login() {
+    this.isLoading = true;
+    this.router.navigate(["/login"]).then(() => {
+      this.isLoading = false;
+    })
+  }
+
+  register() {
+    this.isLoading = true;
+    this.router.navigate(["/register"]).then(() => {
+      this.isLoading = false;
+    })
+  }
+
 
   toggleDrawer() {
     this.showDrawer = !this.showDrawer;

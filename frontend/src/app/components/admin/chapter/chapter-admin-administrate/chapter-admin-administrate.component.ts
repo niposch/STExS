@@ -10,6 +10,7 @@ import {ChapterDetailItem} from "../../../../../services/generated/models/chapte
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
+import {ModuleParticipationStatus} from "../../../../../services/generated/models/module-participation-status";
 
 @Component({
   selector: 'app-chapter-admin-administrate',
@@ -35,6 +36,8 @@ export class ChapterAdminAdministrateComponent implements OnInit {
 
   public ExerciseTypeEnum = ExerciseType
   private moduleId : string = "";
+  public participationStatus: ModuleParticipationStatus | undefined;
+  moduleParticipationStatus = ModuleParticipationStatus;
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -69,7 +72,11 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   }
 
   loadModule (id : string) {
-    console.log("ID: " + id)
+    this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
+      moduleId: id
+    })
+      .subscribe(data => this.participationStatus = data)
+
     this.moduleService.apiModuleGetByIdGet$Json({
       id: id
     })
@@ -97,7 +104,7 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     }
   }
 
-  saveModuleChanges() {
+  saveChapterChanges() {
     if (this.savingInProgress) return;
     this.showLoading = true;
     this.savingInProgress = true;

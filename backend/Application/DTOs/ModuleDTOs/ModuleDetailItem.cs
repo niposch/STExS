@@ -22,4 +22,6 @@ public sealed class ModuleDetailItem
     public DateTime CreationTime { get; set; }
     
     public int? MaxParticipants { get; set; }
+    
+    public ModuleParticipationStatus? CurrentUserParticipationStatus { get; set; }
 }

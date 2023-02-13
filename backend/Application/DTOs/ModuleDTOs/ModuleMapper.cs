@@ -4,7 +4,7 @@ namespace Application.DTOs.ModuleDTOs;
 
 public static class ModuleMapper
 {
-    public static ModuleDetailItem ToDetailItem(Common.Models.ExerciseSystem.Module module, Guid? userId = default)
+    public static ModuleDetailItem ToDetailItem(Common.Models.ExerciseSystem.Module module, Guid? userId = default, ModuleParticipationStatus? currentUserParticipationStatus = default)
     {
         return new ModuleDetailItem
         {
@@ -19,7 +19,8 @@ public static class ModuleMapper
             IsFavorited = module.OwnerId == userId || (userId != null && (module.ModuleParticipations?.Any(r => r.UserId == userId) ?? false)),
             teacherName = module.Owner?.FirstName + " " + module.Owner?.LastName,
             CreationTime = module.CreationTime, 
-            MaxParticipants = module.MaxParticipants
+            MaxParticipants = module.MaxParticipants,
+            CurrentUserParticipationStatus = currentUserParticipationStatus
         };
     }
 

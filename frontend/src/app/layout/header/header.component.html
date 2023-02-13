@@ -1,13 +1,16 @@
+<mat-progress-bar *ngIf="this.isLoading" mode="indeterminate" color="accent"></mat-progress-bar>
 <div class="header">
   <div class="header-left">
     <button (click)="this.toggleDrawer()" *ngIf="hasDrawer" mat-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <button mat-button class="logo" routerLink="/">STExS</button>
+    <button *ngIf="!this.loggedIn" mat-button class="logo" routerLink="/">STExS</button>
+    <button *ngIf="this.loggedIn" mat-button class="logo" routerLink="/dashboard">STExS</button>
     <button mat-stroked-button *ngIf="loggedIn" routerLink="/dashboard">Dashboard</button>
     <button mat-stroked-button *ngIf="loggedIn && isAdmin" routerLink="/users">Users</button>
 	<button *ngIf="loggedIn" mat-stroked-button [routerLink]="isAdmin || isTeacher ? ['/modules-admin'] : ['/modules-user']">Modules</button>
   </div>
+
   <div class="header-right">
     <!-- LOGGED IN -->
     <div *ngIf="this.loggedIn">
@@ -20,8 +23,8 @@
 
     <!-- NOT LOGGED IN -->
     <div *ngIf="!this.loggedIn">
-      <button mat-button routerLink="/login">Login</button>
-      <button mat-button routerLink="/register">Register</button>
+      <button mat-button (click)="this.login()">Login</button>
+      <button mat-button (click)="this.register()">Register</button>
     </div>
   </div>
 </div>

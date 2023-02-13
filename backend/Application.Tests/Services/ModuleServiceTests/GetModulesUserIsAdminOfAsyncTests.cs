@@ -1,4 +1,5 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -59,7 +60,7 @@ public sealed class GetModulesUserIsAdminOfAsyncTests: Infrastructure
         this.ApplicationDbContext.Modules.Add(module);
     }
     
-    private Task<List<Module>> CallAsync()
+    private Task<List<ModuleDetailItem>> CallAsync()
     {
         return this.ModuleService.GetModulesUserIsAdminOfAsync(this.userId);
     }

@@ -19,20 +19,20 @@ public interface IModuleService
 
     public Task DeleteModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
 
-    public Task<Module> GetModuleByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<ModuleDetailItem> GetModuleByIdAsync(Guid id, Guid userId, CancellationToken cancellationToken = default);
 
-    public Task<IEnumerable<Module>> GetModulesAsync(CancellationToken cancellationToken = default);
-    public Task<IEnumerable<Module>> GetArchivedModulesAsync(CancellationToken cancellationToken = default);
-    public Task<IEnumerable<Module>> GetActiveModulesAsync(CancellationToken cancellationToken = default);
+    public Task<IEnumerable<ModuleDetailItem>> GetModulesAsync(Guid userId, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<ModuleDetailItem>> GetArchivedModulesAsync(Guid userId, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<ModuleDetailItem>> GetActiveModulesAsync(Guid userId, CancellationToken cancellationToken = default);
 
 
-    public Task<IEnumerable<Module>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Module>> GetParticipationsForUserAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<ModuleDetailItem>> GetModulesUserIsAcceptedIntoAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ModuleDetailItem>> GetParticipationsForUserAsync(Guid userId, CancellationToken cancellationToken = default);
 
     public Task ArchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
     public Task UnarchiveModuleAsync(Guid moduleId, CancellationToken cancellationToken = default);
-    Task<List<Module>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<List<Module>> SearchModulesAsync(string search, CancellationToken cancellationToken = default);
+    Task<List<ModuleDetailItem>> GetModulesUserIsAdminOfAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<List<ModuleDetailItem>> SearchModulesAsync(string search, Guid userId, CancellationToken cancellationToken = default);
 
     Task<JoinResult> JoinModuleAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default);
     Task<ModuleParticipationStatus> GetModuleParticipationStatusAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken);

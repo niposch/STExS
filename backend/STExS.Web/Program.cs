@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using Repositories.Repositories.Grading;
 using STExS.Helper;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -103,10 +103,12 @@ public sealed class ChapterService: IChapterService
 
     public async Task<List<Chapter>> GetChaptersByModuleIdAsync(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
+        /*
         if (!await this.accessService.CanViewModule(moduleId, userId, cancellationToken))
-        {
+         {
             throw new UnauthorizedException();
         }
+        */
         return await this.repository.Chapters.GetChaptersByModuleIdAsync(moduleId, cancellationToken);
     }
 
