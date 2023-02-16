@@ -55,6 +55,7 @@ import {CreateEditCodeOutputComponent} from './components/admin/exercise-admin/c
 import {SolveCodeOutputComponent} from './components/students/solve-exercise/solve-code-output/solve-code-output.component';
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { CreateEditParsonComponent } from './components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    CreateEditParsonComponent,
   ],
   imports: [
     BrowserModule,
