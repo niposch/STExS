@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build FE Docker Image
-      run: docker build ./STExS/frontend --file Dockerfile --tag stexs-frontend
+      run: docker build ./frontend --tag stexs-frontend
     - name: Build BE Docker Image
-      run:  docker build ./STExS/backend --file Dockerfile --tag stexs-backend
+      run:  docker build ./backend --tag stexs-backend
       
     - name: login to ghcr
       run: echo $GHCR_PAT | docker login ghcr.io -u niposch --password-stdin
