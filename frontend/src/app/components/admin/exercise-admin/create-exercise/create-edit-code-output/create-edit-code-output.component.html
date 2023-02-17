@@ -10,10 +10,14 @@
     </div>
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
       <app-create-exercise [(description)]="this.description" [(name)]="this.name" [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
 
       <div style="margin-top: 10px">
-        <mat-label style="font-size: 16px">Expected Answer</mat-label>
+        <div class="horizontal-container" style="margin-bottom: 5px; margin-top: 5px">
+          <mat-label style="white-space: nowrap; font-size: 16px">Expected Answer</mat-label>
+          <mat-divider style="width: 100%; margin: auto auto auto 5px;"></mat-divider>
+        </div>
         <quill-editor *ngIf="!isOnlyInspectingExercise" [(ngModel)]="this.expectedAnswer" placeholder="write here" ></quill-editor>
         <quill-view-html *ngIf="isOnlyInspectingExercise" [content]="this.expectedAnswer" theme="bubble"></quill-view-html>
       </div>
