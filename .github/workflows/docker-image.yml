@@ -20,6 +20,6 @@ jobs:
       run:  docker build ./backend --tag stexs-backend
       
     - name: login to ghcr
-      run: echo $GHCRPAT | docker login ghcr.io -u niposch --password-stdin; echo $GHCRPAT
+      run:  echo $GHCRPAT; echo $GHCRPAT | docker login ghcr.io -u niposch --password-stdin
     - name: Publish to GHCR
       run: docker push ghcr.io/niposch/STExS/stexs-frontend:latest; docker push ghcr.io/niposch/STExS/stexs-backend:latest
