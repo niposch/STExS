@@ -8,8 +8,7 @@ on:
 
 jobs:
   build:
-    env: # Or as an environment variable
-      GHCRPAT: ${{ secrets.GHCR-PAT }}
+
     runs-on: self-hosted
 
     steps:
@@ -20,6 +19,8 @@ jobs:
       run:  docker build ./backend --tag stexs-backend
       
     - name: login to ghcr
+      env: # Or as an environment variable
+        GHCRPAT: ${{ secrets.GHCR-PAT }}
       run:  echo $GHCRPAT; echo $GHCRPAT | docker login ghcr.io -u niposch --password-stdin
     - name: Publish to GHCR
       run: docker push ghcr.io/niposch/STExS/stexs-frontend:latest; docker push ghcr.io/niposch/STExS/stexs-backend:latest
