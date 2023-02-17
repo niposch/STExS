@@ -45,7 +45,11 @@
     <mat-divider></mat-divider>
 
     <!-- chapter description -->
-    <quill-editor [(ngModel)]="this.chapter.chapterDescription"></quill-editor>
+    <mat-card style="margin: 5px 0px 5px 0px">
+      <mat-card-content>
+        <quill-editor [(ngModel)]="this.chapter.chapterDescription"></quill-editor>
+      </mat-card-content>
+    </mat-card>
 
     <mat-divider style="margin-bottom: 5px"></mat-divider>
 
