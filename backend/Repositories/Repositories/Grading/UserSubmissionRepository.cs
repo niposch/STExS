@@ -21,7 +21,7 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
         var ex = await this.context.UserSubmissions
             .Include(s => s.Submissions)
             .FirstOrDefaultAsync(e => e.ExerciseId == exerciseId,
-            cancellationToken);
+                cancellationToken);
         return ex;
     }
 
@@ -46,13 +46,18 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
     public async Task<List<UserSubmission>> GetAllByUserIdAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.UserSubmissions.Where(e => e.UserId == userId).ToListAsync(cancellationToken);
+        var ex = await this.context.UserSubmissions
+            .Where(e => e.UserId == userId)
+            .ToListAsync(cancellationToken);
         return ex;
     }
 
-    public async Task<IGrouping<Guid, UserSubmission>> GetAllByExerciseIdGroupedByUserIdAsync(Guid exerciseId,
+    public async Task<Dictionary<Guid, UserSubmission>> GetAllByExerciseIdGroupedByUserIdAsync(Guid exerciseId,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var exercises = await this.context.UserSubmissions
+            .Where(e => e.ExerciseId == exerciseId)
+            .ToListAsync(cancellationToken);
+        return exercises.ToDictionary(e => e.ExerciseId);
     }
 }

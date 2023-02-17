@@ -43,7 +43,9 @@ public class SubmissionRepository : ISubmissionRepository
     public async Task<List<BaseSubmission>> GetAllBySubmissionIdAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.Submissions.Where(e => e.UserId == userId).ToListAsync(cancellationToken);
+        var ex = await this.context.Submissions
+            .Where(e => e.UserId == userId)
+            .ToListAsync(cancellationToken);
         return ex;
     }
 }

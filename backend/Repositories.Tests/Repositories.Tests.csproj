@@ -30,4 +30,10 @@
     <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\SubmissionRepositoryTests" />
+    <Folder Include="Repositories\TimeTrackRepositoryTests" />
+    <Folder Include="Repositories\UserSubmissionRepositoryTests" />
+  </ItemGroup>
+
 </Project>

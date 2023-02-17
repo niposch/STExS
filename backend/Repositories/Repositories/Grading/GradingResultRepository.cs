@@ -27,7 +27,7 @@ public class GradingResultRepository : IGradingResultRepository
     {
         if (!this.context.GradingResults.Any(g => g.Id == gradingResult.Id))
             throw new EntityNotFoundException<GradingResult>(gradingResult.Id);
-        
+
         this.context.GradingResults.Update(gradingResult);
         await this.context.SaveChangesAsync(cancellationToken);
     }
@@ -40,9 +40,9 @@ public class GradingResultRepository : IGradingResultRepository
 
     public async Task DeleteAsync(GradingResult gradingResult, CancellationToken cancellationToken = default)
     {
-        if(!this.context.GradingResults.Any(g => g.Id == gradingResult.Id))
+        if (!this.context.GradingResults.Any(g => g.Id == gradingResult.Id))
             throw new EntityNotFoundException<GradingResult>(gradingResult.Id);
-        
+
         this.context.GradingResults.Remove(gradingResult);
         await this.context.SaveChangesAsync(cancellationToken);
     }
@@ -50,7 +50,8 @@ public class GradingResultRepository : IGradingResultRepository
     public async Task<List<GradingResult>> GetBySubmissionIdAsync(Guid submissionId,
         CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.GradingResults.Where(e => e.GradedSubmissionId == submissionId)
+        var ex = await this.context.GradingResults
+            .Where(e => e.GradedSubmissionId == submissionId)
             .ToListAsync(cancellationToken);
         return ex;
     }
