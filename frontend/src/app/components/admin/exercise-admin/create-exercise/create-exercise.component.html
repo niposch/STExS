@@ -2,11 +2,13 @@
   <div style="margin-bottom: 5px;">
     <mat-form-field class="form-field">
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+      <input *ngIf="!this.isOnlyInspecting" matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+      <input *ngIf="this.isOnlyInspecting" disabled matInput [(ngModel)]="this.name" (keyup)="emitValues()">
     </mat-form-field>
   </div>
   <div>
     <mat-label>Description / Question</mat-label>
-    <quill-editor [(ngModel)]="this.description" placeholder="write here" (keyup)="emitValues()"></quill-editor>
+    <quill-editor *ngIf="!this.isOnlyInspecting" [(ngModel)]="this.description" placeholder="write here" (keyup)="emitValues()"></quill-editor>
+    <quill-view-html *ngIf="this.isOnlyInspecting" [content]="this.description" theme="bubble"></quill-view-html>
   </div>
 </div>

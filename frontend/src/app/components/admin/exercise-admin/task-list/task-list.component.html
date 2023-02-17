@@ -35,6 +35,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let exercise">
         <span style="justify-content: end; display: flex; width: 100%">
+          <button (click)="inspectExercise(exercise)" mat-button><mat-icon>pageview</mat-icon> inspect</button>
           <button (click)="addExercise(exercise.id)" mat-button><mat-icon>add</mat-icon> add to chapter</button>
         </span>
         </td>

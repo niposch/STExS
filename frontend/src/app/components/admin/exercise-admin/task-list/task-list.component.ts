@@ -4,6 +4,8 @@ import {map} from "rxjs/operators";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
 
 @Component({
   selector: 'app-task-list',
@@ -21,7 +23,8 @@ export class TaskListComponent implements OnInit, AfterViewInit {
   public isLoading: boolean = false;
 
   constructor(private readonly exerciseService: ExerciseService,
-              public snackBar: MatSnackBar) { }
+              public snackBar: MatSnackBar,
+              public router: Router) { }
 
   ngOnInit(): void {
     this.search("list")
@@ -65,5 +68,16 @@ export class TaskListComponent implements OnInit, AfterViewInit {
       this.isLoading = false;
       this.snackBar.open('Successfully added Exercise', 'ok', {duration:3000})
     })
+  }
+
+  inspectExercise(exercise : ExerciseDetailItem) {
+    if (exercise.exerciseType == ExerciseType.CodeOutput) {
+      this.router.navigate(['codeoutput/create'], {
+        queryParams: {
+          exerciseId: exercise.id,
+          inspecting: true
+        }
+      })
+    }
   }
 }
