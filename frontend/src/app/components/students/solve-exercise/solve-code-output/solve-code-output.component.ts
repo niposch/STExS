@@ -103,4 +103,10 @@ export class SolveCodeOutputComponent implements OnInit {
       timeTrackId: ttId!
     }))
   }
+
+  ngOnDestroy(): void {
+    if (!this.exercise?.userHasSolvedExercise) {
+      this.createNewSubmission(this.timeTrackId,false)
+    }
+  }
 }
