@@ -316,6 +316,67 @@
         }
       }
     },
+    "/api/Chapter/update": {
+      "put": {
+        "tags": [
+          "Chapter"
+        ],
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Chapter/forModule": {
       "get": {
         "tags": [
@@ -2198,6 +2259,20 @@
             "items": {
               "$ref": "#/components/schemas/ExerciseListItem"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChapterUpdateItem": {
+        "type": "object",
+        "properties": {
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
             "nullable": true
           }
         },
