@@ -6,7 +6,10 @@
     <span>
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input matInput [(ngModel)]="this.searchInput" (keyup)="this.search(this.searchInput)">
+        <input matInput [(ngModel)]="this.searchInput" (keyup.enter)="this.search(this.searchInput)">
+        <button mat-icon-button matSuffix (click)="this.search(this.searchInput)">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
     </span>
   </div>

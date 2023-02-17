@@ -24,15 +24,20 @@ export class TaskListComponent implements OnInit, AfterViewInit {
               public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.search("")
+    this.search("list")
   }
 
   search(searchString:string){
+    this.isLoading = true;
     this.exerciseService.apiExerciseSearchGet$Json({
       search:searchString
     })
       .subscribe(eList => {
       this.results = eList;
+      if (this.results.length === 0) {
+        this.snackBar.open('No Exercises found', 'ok', {duration:3000});
+      }
+      this.isLoading = false;
     })
   }
 
