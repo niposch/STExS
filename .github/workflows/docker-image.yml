@@ -17,8 +17,10 @@ jobs:
       run: docker build ./frontend --tag stexs-frontend
     - name: Build BE Docker Image
       run:  docker build ./backend --tag stexs-backend
-      
+    - name: Tag Images
+      run: docker tag stexs-backend ghcr.io/niposch/stexs-backend:latest; docker tag stexs-frontend ghcr.io/niposch/stexs-frontend:latest
     - name: login to ghcr
       run:  echo "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" | docker login ghcr.io -u niposch --password-stdin
-    - name: Publish to GHCR
-      run: docker push ghcr.io/niposch/stexs/stexs-frontend:latest; docker push ghcr.io/niposch/stexs/stexs-backend:latest
+    - name: Push Images
+      run: docker push ghcr.io/niposch/stexs-backend:latest; docker push ghcr.io/niposch/stexs-frontend:latest
+    
