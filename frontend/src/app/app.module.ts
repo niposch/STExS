@@ -115,7 +115,12 @@ import {QuillModule} from "ngx-quill";
     DragDropModule,
     MatRadioModule,
     MatTooltipModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot({
+      modules:{
+        syntax: true,
+        clipboard: true
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

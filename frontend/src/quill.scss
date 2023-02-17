@@ -1,0 +1,40 @@
+@import '~quill/dist/quill.snow.css';
+
+.ql-snow .ql-stroke {
+  stroke: white;
+}
+
+.ql-snow .ql-stroke-miter {
+  stroke: white;
+}
+
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+  fill: white;
+}
+
+.ql-snow .ql-picker {
+  color: white;
+}
+
+.ql-snow .ql-picker-options{
+  background-color: #424242;
+}
+
+
+.ql-snow .ql-tooltip {
+  input {
+    background-color: #424242;
+    color: white;
+  }
+  color: #444;
+  background-color: #424242;
+}
+
+.ql-toolbar.ql-snow{
+  border:none;
+}
+
+.ql-container.ql-snow{
+  border:none;
+}

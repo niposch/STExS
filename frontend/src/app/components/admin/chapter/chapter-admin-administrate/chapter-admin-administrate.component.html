@@ -1,5 +1,5 @@
 <mat-progress-bar [style.visibility]="!this.savingInProgress?'hidden':''" color="accent" mode="indeterminate"></mat-progress-bar>
-<mat-card *ngIf="!this.isLoading" [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
+<mat-card *ngIf="this.chapter != null else loading" [ngClass]="this.savingInProgress ? 'hide-top-round-corners' : ''" class="master-card">
   <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
 
     <!-- HEADER -->
@@ -11,11 +11,11 @@
           <mat-label>chapter of </mat-label>
           <a class="text-link module-name" (click)="linkToModule()">{{this.moduleName}}</a>
         </div>
-        <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapterName}}</p>
+        <p class="name chapter-name" *ngIf="!isEditingName">{{this.chapter.chapterName}}</p>
         <!-- editing chapter name -->
         <mat-form-field class="input-field" *ngIf="isEditingName" style="margin-bottom: -28px; margin-top: -2px">
           <mat-label>Chapter Name</mat-label>
-          <input class="name-input" matInput name="text" required placeholder="{{chapterName}}" [(ngModel)]="newChapterName" type="text">
+          <input class="name-input" matInput name="text" required placeholder="{{this.chapter.chapterName}}" [(ngModel)]="newChapterName" type="text">
         </mat-form-field>
       </div>
 
@@ -23,7 +23,7 @@
       <div class="vertical-container space-between full-height">
         <div></div>
         <div class="horizontal-container">
-          <app-edit-button style="margin-right: 10px" class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
+          <app-edit-button style="margin-right: 10px" class="button" [isEditing]="isEditingName"></app-edit-button>
           <button *ngIf="savingInProgress" mat-raised-button color="accent" class="button" (click)="saveChapterChanges()">
             saving...</button>
           <button *ngIf="!savingInProgress" mat-raised-button color="primary" class="button"
@@ -45,8 +45,7 @@
     <mat-divider></mat-divider>
 
     <!-- chapter description -->
-    <app-user-info-label attributeType="text" attributeName='Chapter Description' attributeInfo="Chapter Description"
-    [(value)]="this.chapterDescription"></app-user-info-label>
+    <quill-editor [(ngModel)]="this.chapter.chapterDescription"></quill-editor>
 
     <mat-divider style="margin-bottom: 5px"></mat-divider>
 
@@ -79,7 +78,6 @@
         </mat-radio-group>
       </mat-card-content>
     </mat-card>
-    <quill-editor></quill-editor>
 
     <!-- EXERCISE LIST -->
     <app-task-list [chapterId]="this.chapterId" (exerciseChange)="this.loadExercises()"></app-task-list>
@@ -89,6 +87,8 @@
     Unauthorized
   </ng-template>
 </mat-card>
-<mat-spinner *ngIf="this.isLoading" mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
+<ng-template #loading>
+  <mat-spinner mode="indeterminate" style="transform: scale(0.5); margin:auto;"></mat-spinner>
+</ng-template>
 
 
