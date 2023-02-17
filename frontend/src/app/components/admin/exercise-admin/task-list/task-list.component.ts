@@ -1,7 +1,6 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {debounce, fromEvent, interval} from "rxjs";
 import {map} from "rxjs/operators";
-import {ChapterService} from "../../../../../services/generated/services/chapter.service";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -17,7 +16,7 @@ export class TaskListComponent implements OnInit, AfterViewInit {
   @Output() exerciseChange = new EventEmitter<boolean>;
   public results: Array<ExerciseDetailItem> | null = null;
   public loading: boolean = false;
-  @ViewChild("searchInput") searchInputRef: ElementRef | undefined
+  public searchInput: string = "";
   public displayedColumns = ["exerciseName", "exerciseDescription", "actions"]
   public isLoading: boolean = false;
 
@@ -29,19 +28,12 @@ export class TaskListComponent implements OnInit, AfterViewInit {
   }
 
   search(searchString:string){
-    this.exerciseService.apiExerciseAllGet$Json()
+    this.exerciseService.apiExerciseSearchGet$Json({
+      search:searchString
+    })
       .subscribe(eList => {
       this.results = eList;
     })
-
-    /*
-    //TODO searching
-    this.exerciseService.apiExerciseByChapterIdGet$Json({
-      search:searchString
-    }).subscribe(data => {
-      this.results = data
-    })
-     */
   }
 
   ngAfterViewInit(): void {

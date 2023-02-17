@@ -6,11 +6,8 @@
     <span>
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input matInput #searchInput>
+        <input matInput [(ngModel)]="this.searchInput" (keyup)="this.search(this.searchInput)">
       </mat-form-field>
-      <button mat-icon-button>
-        <mat-icon fontIcon="search"></mat-icon>
-      </button>
     </span>
   </div>
 </div>
@@ -25,7 +22,11 @@
       </ng-container>
       <ng-container matColumnDef="exerciseDescription">
         <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell class="text-overflow" style="max-width: 300px" *matCellDef="let exercise">{{exercise.exerciseDescription}}</td>
+        <td mat-cell class="text-overflow" style="max-width: 300px;" *matCellDef="let exercise">
+          <div style="max-height: 200px">
+            <quill-view-html [content]="exercise.exerciseDescription!" theme="bubble"></quill-view-html>
+          </div>
+        </td>
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
