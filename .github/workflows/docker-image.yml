@@ -21,4 +21,4 @@ jobs:
     - name: login to ghcr
       run:  echo "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" | docker login ghcr.io -u niposch --password-stdin
     - name: Publish to GHCR
-      run: docker push ghcr.io/niposch/STExS/stexs-frontend:latest; docker push ghcr.io/niposch/STExS/stexs-backend:latest
+      run: docker push ghcr.io/niposch/stexs/stexs-frontend:latest; docker push ghcr.io/niposch/stexs/stexs-backend:latest
