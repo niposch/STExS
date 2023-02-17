@@ -2,7 +2,7 @@
   <div *ngIf="!this.isLoading" class="vertical-container">
     <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
     <mat-divider></mat-divider>
-    <mat-label class="description">{{this.exercise?.exerciseDescription}}</mat-label>
+    <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
     <mat-divider></mat-divider>
     <div class="horizontal-flex answer">
       <mat-form-field class="input vertically-centered">
