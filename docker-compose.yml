@@ -1,34 +1,29 @@
 version: '3.9'
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-  backend:
-    build: 
-      context: ./backend
-      dockerfile: ./STExS.Web/Dockerfile
-    ports:
-      - "5000:80"
-    expose:
-      - "80"
-    restart: on-failure
-    volumes:
-      - ./backend/STExS.Web/appsettings.docker.json:/app/appsettings.json
-    depends_on:
-      - db
-    environment:
-      - DontBuildSwagger=true
-  db:
+  stexs-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Adminxyz123!
     ports:
       - "1433:1433"
-    volumes:
-      - ./sqlserver/data:/var/opt/mssql/data
-      - ./sqlserver/log:/var/opt/mssql/log
-      - ./sqlserver/secrets:/var/opt/mssql/secrets
+  stexs-backend:
+    build: 
+      context: ./backend
+    ports:
+      - "5000:80"
+    expose:
+      - "80"
+    restart: on-failure
+    depends_on:
+      - stexs-db
+    environment:
+      - DontBuildSwagger=true
+      - ASPNETCORE_ENVIRONMENT=Development
+  stexs-frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    restart: on-failure
+    depends_on:
+      - stexs-backend

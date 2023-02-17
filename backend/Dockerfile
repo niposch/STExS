@@ -13,6 +13,8 @@ COPY ["Common/Common.csproj", "Common/"]
 COPY ["Repositories/Repositories.csproj", "Repositories/"]
 RUN dotnet restore "STExS.Web/STExS.Web.csproj"
 COPY . .
+run rm -rf ./STExS.Web/appsettings.Development.json
+run mv ./STExS.Web/appsettings.docker.json ./STExS.Web/appsettings.json
 WORKDIR "/src/STExS.Web"
 RUN dotnet build "STExS.Web.csproj" -c Release -o /app/build -p:DontBuildSwagger=true
 

@@ -1,6 +1,6 @@
 cd ./backend
 docker build -t stexs-backend .
-cd ../../frontend/STExS.Web/
+cd ..
 cd ./frontend
 docker build -t stexs-frontend .
-
+cd ..
