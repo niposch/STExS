@@ -65,8 +65,9 @@ public class ExerciseController: ControllerBase
     
     [HttpGet("search")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ExerciseDetailItem>))]
-    public async Task<IActionResult> Search([FromQuery] string? search = "", CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Search([FromQuery] string? search, CancellationToken cancellationToken = default)
     {
+        search ??= string.Empty;
         var data = await this.exerciseService.SearchAsync(search, cancellationToken);
         return this.Ok(data);
     }

@@ -27,7 +27,7 @@ export class TaskListComponent implements OnInit, AfterViewInit {
               public router: Router) { }
 
   ngOnInit(): void {
-    this.search("list")
+    this.search("")
   }
 
   search(searchString:string){
