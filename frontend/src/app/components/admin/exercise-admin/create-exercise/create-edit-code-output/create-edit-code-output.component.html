@@ -10,17 +10,14 @@
     </div>
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-      <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
-      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+      <app-create-exercise [(description)]="this.description" [(name)]="this.name"></app-create-exercise>
 
-      <div class="form-field-container">
-        <mat-form-field class="form-field">
-          <mat-label>Expected Answer</mat-label>
-          <textarea matInput [(ngModel)]="this.expectedAnswer"></textarea>
-        </mat-form-field>
+      <div style="margin-top: 10px">
+        <mat-label style="font-size: 16px">Expected Answer</mat-label>
+        <quill-editor [(ngModel)]="this.expectedAnswer" placeholder="write here" ></quill-editor>
       </div>
 
-      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
 
       <div class="horizontal-container vertically-centered">
         <div class="vertical-container form-field-container checkbox-container">

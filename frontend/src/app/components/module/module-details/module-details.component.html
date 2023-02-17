@@ -33,7 +33,8 @@
           <mat-label>{{module.creationTime | date:'medium'}}</mat-label>
         </div>
         <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
-        <mat-label class="text-overflow" style="margin-top: auto; margin-bottom: auto;">{{module.moduleDescription}}</mat-label>
+        <mat-label>Description</mat-label>
+        <quill-view-html [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
       </div>
 
       <mat-divider style="margin-top: 10px; margin-bottom: 20px"></mat-divider>

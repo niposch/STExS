@@ -1,14 +1,12 @@
 <div>
-  <div class="form-field-container" style="margin-bottom: 5px;">
+  <div style="margin-bottom: 5px;">
     <mat-form-field class="form-field">
       <mat-label>Name</mat-label>
       <input matInput [(ngModel)]="this.name" (keyup)="emitValues()">
     </mat-form-field>
   </div>
-  <div class="form-field-container">
-    <mat-form-field class="form-field">
-      <mat-label>Description / Question</mat-label>
-      <textarea matInput [(ngModel)]="this.description" (keyup)="emitValues()"></textarea>
-    </mat-form-field>
+  <div>
+    <mat-label>Description / Question</mat-label>
+    <quill-editor [(ngModel)]="this.description" placeholder="write here" (keyup)="emitValues()"></quill-editor>
   </div>
 </div>
