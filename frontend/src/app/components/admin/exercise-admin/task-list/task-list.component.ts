@@ -1,6 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {debounce, fromEvent, interval} from "rxjs";
-import {map} from "rxjs/operators";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -12,7 +10,7 @@ import {ExerciseType} from "../../../../../services/generated/models/exercise-ty
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit, AfterViewInit {
+export class TaskListComponent implements OnInit {
 
   @Input() chapterId: string = "";
   @Output() exerciseChange = new EventEmitter<boolean>;
@@ -42,20 +40,6 @@ export class TaskListComponent implements OnInit, AfterViewInit {
       }
       this.isLoading = false;
     })
-  }
-
-  ngAfterViewInit(): void {
-    // @ts-ignore
-    fromEvent<Event>(this.searchInputRef.nativeElement, "keyup")
-      .pipe(
-        debounce(() => interval(200)),
-        // @ts-ignore
-        map(v => v?.target?.value ?? "")
-      )
-      .subscribe(searchString => {
-        console.log(searchString)
-        this.search(searchString)
-      })
   }
 
   addExercise(exerciseId: string) {
