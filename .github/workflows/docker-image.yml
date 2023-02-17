@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build FE Docker Image
+      run: docker build ./frontend --file Dockerfile --tag stexs-frontend
+    - name: Build BE Docker Image
+      run:  docker build ./backend --file Dockerfile --tag stexs-backend
+      
+    - name: login to ghcr
+      run: echo $GHCR_PAT | docker login ghcr.io -u niposch --password-stdin
+    - name: Publish to GHCR
+      run: docker push ghcr.io/niposch/stexs-frontend:latest; docker push ghcr.io/niposch/stexs-backend:latest
