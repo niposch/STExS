@@ -38,7 +38,7 @@ public class CodeOutputSubmissionController: ControllerBase
         }
         catch (AlreadySubmittedException e)
         {
-            return this.Forbid();
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
         return this.Ok();
     }
