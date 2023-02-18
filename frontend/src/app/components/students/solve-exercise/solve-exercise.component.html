@@ -1,9 +1,9 @@
 <div class="grid" style="width: 100%;">
   <div class="vertical-container task-list" style="" *ngIf="!this.isLoading">
-    <mat-card *ngFor="let exercise of exerciseList" style="margin-bottom: 5px">
-      <mat-chip-list>
-        <mat-chip *ngIf="exercise.userHasSolvedExercise" color="primary" selected>completed</mat-chip>
-      </mat-chip-list>
+    <mat-card *ngFor="let exercise of exerciseList"
+              style="margin-bottom: 5px"
+              [ngClass]="{'has-solved' : exercise.userHasSolvedExercise, 'selected-exercise' : exercise.id == this.currentExerciseId }"
+              (click)="this.updateExerciseCompById(exercise.id)">
       <mat-label>{{exercise.exerciseName}}</mat-label>
     </mat-card>
   </div>

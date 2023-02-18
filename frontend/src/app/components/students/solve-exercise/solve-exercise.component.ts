@@ -88,4 +88,12 @@ export class SolveExerciseComponent implements OnInit {
       })
     }
   }
+
+  public updateExerciseCompById(id : string | undefined) {
+    this.currentExerciseId = id!;
+    let currentExercise : ExerciseDetailItem = this.exerciseList.find((e) => e.id == id)!;
+    this.currentExerciseNr = this.exerciseList.indexOf(currentExercise);
+    this.currentExerciseType = currentExercise.exerciseType!;
+    this.updateCompType();
+  }
 }
