@@ -13,23 +13,20 @@
 
       <app-create-exercise [(description)]="this.description" [(name)]="this.name" [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
 
-      <div style="margin-top: 10px">
-        <div class="horizontal-container" style="margin-bottom: 5px; margin-top: 5px">
-          <mat-label style="white-space: nowrap; font-size: 16px">Expected Answer</mat-label>
-          <mat-divider style="width: 100%; margin: auto auto auto 5px;"></mat-divider>
-        </div>
-        <quill-editor *ngIf="!isOnlyInspectingExercise" [(ngModel)]="this.expectedAnswer" placeholder="write here" ></quill-editor>
-        <quill-view-html *ngIf="isOnlyInspectingExercise" [content]="this.expectedAnswer" theme="bubble"></quill-view-html>
+      <div style="margin-top: 10px; margin-bottom: 10px" class="elevated">
+        <mat-label style="white-space: nowrap; font-size: 16px">Expected Answer</mat-label>
+        <mat-form-field class="form-field" style="width: 100%">
+          <input *ngIf="!this.isOnlyInspectingExercise" matInput type="text" [(ngModel)]="this.expectedAnswer" placeholder="Expected answer">
+          <input *ngIf="this.isOnlyInspectingExercise" disabled matInput type="text" [(ngModel)]="this.expectedAnswer" placeholder="Expected answer">
+        </mat-form-field>
       </div>
 
-      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
-
-      <div class="horizontal-container vertically-centered">
-        <div class="vertical-container form-field-container checkbox-container">
+      <div class="horizontal-container vertically-centered" style="height: fit-content">
+        <div class="vertical-container checkbox-container elevated">
           <mat-checkbox *ngIf="!this.isOnlyInspectingExercise" class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
           <mat-checkbox *ngIf="this.isOnlyInspectingExercise" disabled class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
         </div>
-        <div class="form-field-container">
+        <div class="form-field-container elevated">
           <mat-form-field class="form-field">
             <mat-label>Achievable Points</mat-label>
             <input *ngIf="!this.isOnlyInspectingExercise" matInput type="number" [(ngModel)]="this.achievablePoints">
