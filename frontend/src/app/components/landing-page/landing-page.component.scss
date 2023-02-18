@@ -1,25 +1,23 @@
-
 .centered-content {
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     overflow: hidden;
-    background-image: linear-gradient(to bottom right, #303030, #202020);
 }
 
 .centered-item {
-    margin-top: -20%;
+  margin-top: -20%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 
-    padding: 20px;
-    min-width: 220px;
-    width: 600px;
-    max-width: 600px;
+  padding: 20px;
+  min-width: 220px;
+  width: 600px;
+  max-width: 600px;
 }
 
 .main-heading {
@@ -45,7 +43,39 @@
   margin: 10px;
 }
 
+.stexs {
+  width: fit-content;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+
+  padding: 20px;
+  min-width: 220px;
+
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  background: rgba(0,0,0,0.25);
+}
+
+
 .text-link {
   text-underline: white;
   color: inherit;
+}
+
+.bg-animation {
+  width: 100%;
+  height: 100%;
+  background-image: url("bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.fg-animation {
+  backdrop-filter: blur(5px);
+  background: linear-gradient(to top,  rgba(0,0,0,0.7) 30%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
 }

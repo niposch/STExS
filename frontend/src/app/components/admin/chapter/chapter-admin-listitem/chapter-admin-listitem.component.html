@@ -6,10 +6,11 @@
     <mat-divider style="margin-bottom: 5px"></mat-divider>
     <quill-view-html [content]="this.chapterDescription!" theme="bubble"></quill-view-html>
   </div>
-  <div *ngIf="this.showEditButton || this.showDeleteButton ||this.showSolveButton" class="button-container">
+  <div *ngIf="this.showEditButton || this.showDeleteButton ||this.showSolveButton || this.isSolved" class="button-container">
     <button *ngIf="this.showEditButton" class="button" mat-button (click)="editButtonClick($event)"><mat-icon>edit</mat-icon></button>
     <button *ngIf="this.showDeleteButton" class="button" mat-button color="warn" (click)="openDeleteDialog()"><mat-icon>delete_forever</mat-icon></button>
     <button *ngIf="this.showSolveButton" class="button" mat-stroked-button color="accent" (click)="solveChapter()">solve now</button>
+    <mat-icon *ngIf="this.isSolved" color="accent">check</mat-icon>
   </div>
   <div *ngIf="this.canReorder" class="icon-container">
     <mat-icon> drag_handle</mat-icon>
