@@ -9,8 +9,8 @@
           <mat-divider class="divider"></mat-divider>
         </div>
         <div class="card-content">
-          <p *ngIf="!this.module.isArchived" class="module-description">{{module.moduleDescription}}</p>
-          <p *ngIf="this.module.isArchived" class="module-description archived">{{module.moduleDescription}}</p>
+          <quill-view-html *ngIf="!this.module.isArchived" [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
+          <quill-view-html *ngIf="this.module.isArchived" [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
         </div>
       </div>
       <div class="button-container option-panel">

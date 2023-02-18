@@ -3,8 +3,8 @@
     <div class="chapter-name-container">
       <mat-label class="chapter-name vertically-centered">{{this.chapterName}}</mat-label>
     </div>
-    <mat-divider></mat-divider>
-    <p class="chapter-description">{{this.chapterDescription}}</p>
+    <mat-divider style="margin-bottom: 5px"></mat-divider>
+    <quill-view-html [content]="this.chapterDescription!" theme="bubble"></quill-view-html>
   </div>
   <div *ngIf="this.showEditButton || this.showDeleteButton ||this.showSolveButton" class="button-container">
     <button *ngIf="this.showEditButton" class="button" mat-button (click)="editButtonClick($event)"><mat-icon>edit</mat-icon></button>

@@ -180,4 +180,12 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     }
 
   }
+
+  nameEditButton() {
+    this.isEditingName = !this.isEditingName;
+
+    if ( (!this.isEditingName) && (this.newChapterName != "") ) {
+      this.chapter!.chapterName = this.newChapterName;
+    }
+  }
 }

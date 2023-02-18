@@ -89,6 +89,7 @@ export class SolveCodeOutputComponent implements OnInit {
       this.snackBar.open('Could not submit the answer!', 'dismiss');
     }).then( () => {
       if (isFinal){
+        this.exercise!.userHasSolvedExercise = true;
         this.closeTimeTrack(ttId).catch(() => {
           this.snackBar.open('Could not close TimeTrack', 'dismiss');
         }).then( () => {
@@ -102,5 +103,11 @@ export class SolveCodeOutputComponent implements OnInit {
     return lastValueFrom(this.timeTrackService.apiTimeTrackClosePost({
       timeTrackId: ttId!
     }))
+  }
+
+  ngOnDestroy(): void {
+    if (!this.exercise?.userHasSolvedExercise) {
+      this.createNewSubmission(this.timeTrackId,false)
+    }
   }
 }

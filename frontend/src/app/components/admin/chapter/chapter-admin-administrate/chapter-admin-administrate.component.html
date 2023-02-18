@@ -15,7 +15,7 @@
         <!-- editing chapter name -->
         <mat-form-field class="input-field" *ngIf="isEditingName" style="margin-bottom: -28px; margin-top: -2px">
           <mat-label>Chapter Name</mat-label>
-          <input class="name-input" matInput name="text" required placeholder="{{this.chapter.chapterName}}" [(ngModel)]="newChapterName" type="text">
+          <input class="name-input" matInput name="text" required placeholder="{{this.chapter.chapterName}}" [(ngModel)]="newChapterName" type="text" [value]="this.chapter.chapterName">
         </mat-form-field>
       </div>
 
@@ -23,7 +23,7 @@
       <div class="vertical-container space-between full-height">
         <div></div>
         <div class="horizontal-container">
-          <app-edit-button style="margin-right: 10px" class="button" [isEditing]="isEditingName"></app-edit-button>
+          <app-edit-button style="margin-right: 10px" class="button" [isEditing]="isEditingName" (click)="this.nameEditButton()"></app-edit-button>
           <button *ngIf="savingInProgress" mat-raised-button color="accent" class="button" (click)="saveChapterChanges()">
             saving...</button>
           <button *ngIf="!savingInProgress" mat-raised-button color="primary" class="button"

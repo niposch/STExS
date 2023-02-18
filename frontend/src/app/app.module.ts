@@ -56,6 +56,7 @@ import {SolveCodeOutputComponent} from './components/students/solve-exercise/sol
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {QuillModule} from "ngx-quill";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
 
 @NgModule({
   declarations: [
@@ -86,42 +87,43 @@ import {QuillModule} from "ngx-quill";
     SolveCodeOutputComponent,
     SolveExerciseComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot([]),
-    BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: ""}),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    LayoutModule,
-    MatInputModule,
-    FormsModule,
-    MatChipsModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatSliderModule,
-    DragDropModule,
-    MatRadioModule,
-    MatTooltipModule,
-    QuillModule.forRoot({
-      modules:{
-        syntax: true,
-        clipboard: true
-      }
-    })
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot([]),
+        BrowserAnimationsModule,
+        ApiModule.forRoot({rootUrl: ""}),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        LayoutModule,
+        MatInputModule,
+        FormsModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatSliderModule,
+        DragDropModule,
+        MatRadioModule,
+        MatTooltipModule,
+        QuillModule.forRoot({
+            modules: {
+                syntax: true,
+                clipboard: true
+            }
+        }),
+        CdkAccordionModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

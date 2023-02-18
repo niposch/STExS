@@ -1,14 +1,22 @@
 <div>
-  <div class="form-field-container" style="margin-bottom: 5px;">
+  <div style="margin-bottom: 5px;">
     <mat-form-field class="form-field">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+      <div class="horizontal-container" style="margin-bottom: 8px">
+        <mat-label style="white-space: nowrap;">Name</mat-label>
+        <mat-divider style="width: 100%; margin: auto auto auto 5px;"></mat-divider>
+      </div>
+      <div>
+        <input *ngIf="!this.isOnlyInspecting" matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+        <input *ngIf="this.isOnlyInspecting" disabled matInput [(ngModel)]="this.name" (keyup)="emitValues()">
+      </div>
     </mat-form-field>
   </div>
-  <div class="form-field-container">
-    <mat-form-field class="form-field">
-      <mat-label>Description / Question</mat-label>
-      <textarea matInput [(ngModel)]="this.description" (keyup)="emitValues()"></textarea>
-    </mat-form-field>
+  <div style="margin-top: 10px">
+    <div class="horizontal-container" style="margin-bottom: 5px">
+      <mat-label style="white-space: nowrap;">Description / Question</mat-label>
+      <mat-divider style="width: 100%; margin: auto auto auto 5px;"></mat-divider>
+    </div>
+    <quill-editor *ngIf="!this.isOnlyInspecting" [(ngModel)]="this.description" placeholder="write here" (keyup)="emitValues()"></quill-editor>
+    <quill-view-html *ngIf="this.isOnlyInspecting" [content]="this.description" theme="bubble"></quill-view-html>
   </div>
 </div>
