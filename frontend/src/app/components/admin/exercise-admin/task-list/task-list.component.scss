@@ -14,9 +14,9 @@ mat-card {
   border-top-right-radius: 0;
 }
 
-table {
-  background-color: #505050;
-  width: 100%
+.table-div {
+  max-height: 50vh;
+  overflow: auto;
 }
 
 /*.table-div {
@@ -86,4 +86,12 @@ table {
 
 .example-accordion-item-body {
   background-color: #393939;
+}
+
+.elevated {
+  padding: 10px;
+  box-shadow:0 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+  background-color: #424242;
+  margin-top: 5px;
 }
