@@ -28,6 +28,10 @@ export class SolveCodeOutputComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     void this.loadExercise();
+
+    setInterval(() => {
+      this.ngOnDestroy()
+    }, 5 * 1000);
   }
 
   async loadExercise():Promise<any> {
@@ -85,12 +89,12 @@ export class SolveCodeOutputComponent implements OnInit {
         submittedAnswer : this.answerString,
         exerciseId: this.exercise!.id!
       }
-    })).catch( () => {
-      this.snackBar.open('Could not submit the answer!', 'dismiss');
-    }).then( () => {
-      if (isFinal){
-        this.exercise!.userHasSolvedExercise = true;
-        this.closeTimeTrack(ttId).catch(() => {
+    }))
+      //.catch( () => {this.snackBar.open('Could not submit the answer!', 'dismiss');})
+      .then( () => {
+        if (isFinal){
+          this.exercise!.userHasSolvedExercise = true;
+          this.closeTimeTrack(ttId).catch(() => {
           this.snackBar.open('Could not close TimeTrack', 'dismiss');
         }).then( () => {
           this.snackBar.open("Submitted answer successfully!", 'ok', {duration: 3000});
