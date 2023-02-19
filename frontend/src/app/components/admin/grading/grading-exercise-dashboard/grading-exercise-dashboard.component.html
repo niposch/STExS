@@ -1,14 +1,18 @@
 
 <!-- display an angular material table of exercise gradings -->
+<style>
+  mat-row:last-of-type{
+    border-bottom: 0px;
+  }
+</style>
 <div *ngIf="this.gradingResults != null && this.exercise != null else loadingGradings">
   <!-- display exercise information -->
-  <div class="row">
-    <div class="col-12">
+  <div style="margin-bottom: 15px">
       <h3>Exercise: {{this.exercise.exerciseName}}</h3>
-      <p>Max Points: {{this.exercise.achievablePoints}}</p>
-    </div>
+      <p>Max Points: {{this.exercise.achieveablePoints}}</p>
+      <quill-view-html style="height: unset" [content]="this.exercise.exerciseDescription ?? ''"></quill-view-html>
   </div>
-  <mat-table [dataSource]="this.gradingResults" matSort>
+  <mat-table style="border-radius: 5px; padding: 2px; border: 1px solid #5f5f5f" [dataSource]="this.gradingResults" matSort>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.userFirstName}} {{element.userLastName}} {{element.matrikelNumber}}</mat-cell>

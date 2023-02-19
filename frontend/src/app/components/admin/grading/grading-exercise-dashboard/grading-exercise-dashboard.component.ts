@@ -5,6 +5,7 @@ import {ExerciseService} from "../../../../../services/generated/services/exerci
 import {ActivatedRoute} from "@angular/router";
 import {GradingService} from "../../../../../services/generated/services/grading.service";
 import {lastValueFrom} from "rxjs";
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 
 @Component({
   selector: 'app-grading-exercise-dashboard',
@@ -13,7 +14,7 @@ import {lastValueFrom} from "rxjs";
 })
 export class GradingExerciseDashboardComponent implements OnInit {
 
-  public exercise:BaseExercise| null = null;
+  public exercise:ExerciseDetailItem| null = null;
   public gradingResults: Array<ExerciseReportItem> | null = null;
   constructor(
     private readonly exerciseService: ExerciseService,
