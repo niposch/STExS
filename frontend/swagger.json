@@ -1047,7 +1047,7 @@
         }
       }
     },
-    "/chapter": {
+    "/api/Grading/chapter": {
       "get": {
         "tags": [
           "Grading"
@@ -1059,7 +1059,7 @@
         }
       }
     },
-    "/module": {
+    "/api/Grading/module": {
       "get": {
         "tags": [
           "Grading"
@@ -1071,7 +1071,7 @@
         }
       }
     },
-    "/exercise": {
+    "/api/Grading/exercise": {
       "get": {
         "tags": [
           "Grading"

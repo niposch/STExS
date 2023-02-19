@@ -17,6 +17,9 @@ import {SolveExerciseComponent} from "../components/students/solve-exercise/solv
 import {
   GradingModuleDashboardComponent
 } from "../components/admin/grading/grading-module-dashboard/grading-module-dashboard.component";
+import {
+  GradingExerciseDashboardComponent
+} from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
 
 const routes: Routes = [
   {
@@ -71,7 +74,8 @@ const routes: Routes = [
           {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
           {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
           {path: "solve", component: SolveExerciseComponent},
-          {path: "grading", component: GradingModuleDashboardComponent}
+          {path: "grading", component: GradingModuleDashboardComponent},
+          {path: "grading/exercise", component: GradingExerciseDashboardComponent}
         ]
       },
       {

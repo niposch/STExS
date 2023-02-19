@@ -48,7 +48,7 @@
             <div>{{ exercise.exerciseName }}</div>
             <div style="flex: 1 1 auto"></div>
 
-            <button style="justify-self: flex-end" mat-stroked-button> <mat-icon matListIcon>trending_up</mat-icon></button>
+            <button [routerLink]="['/grading/exercise']" [queryParams]="{exerciseId:exercise.id}" style="justify-self: flex-end" mat-stroked-button> <mat-icon matListIcon>trending_up</mat-icon></button>
           </div>
         </div>
       </div>
