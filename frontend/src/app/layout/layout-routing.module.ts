@@ -14,6 +14,9 @@ import {ChapterAdminAdministrateComponent} from '../components/admin/chapter/cha
 import {CreateEditCodeOutputComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
 import {NotfoundComponent} from "../components/notfound/notfound.component";
 import {SolveExerciseComponent} from "../components/students/solve-exercise/solve-exercise.component";
+import {
+  GradingModuleDashboardComponent
+} from "../components/admin/grading/grading-module-dashboard/grading-module-dashboard.component";
 
 const routes: Routes = [
   {
@@ -68,6 +71,7 @@ const routes: Routes = [
           {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
           {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
           {path: "solve", component: SolveExerciseComponent},
+          {path: "grading", component: GradingModuleDashboardComponent}
         ]
       },
       {

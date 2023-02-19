@@ -57,6 +57,7 @@ import {SolveExerciseComponent} from './components/students/solve-exercise/solve
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {QuillModule} from "ngx-quill";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {CdkAccordionModule} from "@angular/cdk/accordion";
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    GradingModuleDashboardComponent,
   ],
     imports: [
         BrowserModule,

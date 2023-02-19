@@ -1,0 +1,62 @@
+
+<h2>Module Information</h2>
+<div *ngIf="module != null else moduleLoading">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>{{ module.moduleName }}</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <quill-view-html [content]="module.moduleDescription ?? ''"></quill-view-html>
+    </mat-card-content>
+  </mat-card>
+</div>
+<ng-template #moduleLoading>
+  <div class="loading-module">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<div style="padding: 10px 0px 10px 0px">
+
+  <mat-divider></mat-divider>
+</div>
+
+
+<h2>Chapters</h2>
+<mat-accordion *ngIf="chapterList != null else loadingChapters">
+  <mat-expansion-panel *ngFor="let listItem of chapterList">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ listItem.chapter.chapterName }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="chapter-content">
+      <div class="chapter-content__header">
+        <div class="chapter-content__header__actions">
+        </div>
+      </div>
+      <div class="chapter-content__body">
+        <quill-view-html [content]="listItem.chapter.chapterDescription ?? ''"></quill-view-html>
+      </div>
+      <!-- list of all exercises in the chapter -->
+      <div style="border-radius: 5px; border: 1px solid #5f5f5f; margin-top: 10px; padding:15px">
+        <h3>Exercises</h3>
+        <div *ngFor="let exercise of listItem.exercises">
+          <div style="display: flex; align-items: baseline">
+            <div>{{ exercise.exerciseName }}</div>
+            <div style="flex: 1 1 auto"></div>
+
+            <button style="justify-self: flex-end" mat-stroked-button> <mat-icon matListIcon>trending_up</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<ng-template #loadingChapters>
+  <div class="loading-chapters">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
