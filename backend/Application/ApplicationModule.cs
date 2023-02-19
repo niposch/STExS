@@ -36,6 +36,10 @@ public class ApplicationModule : Module
         builder.RegisterType<AccessService>()
             .As<IAccessService>()
             .InstancePerLifetimeScope();
+
+        builder.RegisterType<GradingService>()
+            .As<IGradingService>()
+            .InstancePerLifetimeScope();
         
         builder.RegisterType<UserSubmissionService>()
             .As<IUserSubmissionService>()

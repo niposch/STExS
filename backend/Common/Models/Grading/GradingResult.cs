@@ -1,4 +1,6 @@
-﻿namespace Common.Models.Grading;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Common.Models.Grading;
 
 public class GradingResult
 {
@@ -9,6 +11,9 @@ public class GradingResult
     public bool IsFinal { get; set; }
     public bool IsAutomatic { get; set; }
     public DateTime? AppealDate { get; set; }
+    
+    [NotMapped]
+    public bool IsAppealed => AppealDate != null;
     
     public Guid UserSubmissionId { get; set; }
     public UserSubmission UserSubmission { get; set; }

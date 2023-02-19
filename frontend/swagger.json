@@ -1047,6 +1047,78 @@
         }
       }
     },
+    "/chapter": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/module": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/exercise": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Module": {
       "post": {
         "tags": [
@@ -2514,6 +2586,88 @@
         },
         "additionalProperties": false
       },
+      "ExerciseReportItem": {
+        "type": "object",
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "userFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "matrikelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastSubmissionTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastGradingTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastPoints": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastComment": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIsFinalSubmission": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastIsAutomatic": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastSubmissionState": {
+            "$ref": "#/components/schemas/SubmissionState"
+          },
+          "lastSubmissionGradingState": {
+            "$ref": "#/components/schemas/SubmissionGradingState"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFinalSubmission": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "ExerciseType": {
         "enum": [
           10,
@@ -2561,6 +2715,10 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "isAppealed": {
+            "type": "boolean",
+            "readOnly": true
           },
           "userSubmissionId": {
             "type": "string",
@@ -2938,6 +3096,36 @@
           "User",
           "Teacher",
           "Admin"
+        ]
+      },
+      "SubmissionGradingState": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotGraded",
+          "AutomaticGraded",
+          "ManuallyGraded"
+        ]
+      },
+      "SubmissionState": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotStarted",
+          "StartedButNothingSubmitted",
+          "TemporarySubmitted",
+          "FinalSolutionSubmitted"
         ]
       },
       "TimeTrack": {
