@@ -11,8 +11,8 @@ import {MatSliderChange} from "@angular/material/slider";
 })
 export class ModuleCreateComponent implements OnInit {
 
-  public name:string = ""
-  public description: string = ""
+  public name:string = "";
+  public description: string = "";
   public nrParticipants: number | null = 0;
   public nrParticipantsText: string = "0";
 
@@ -38,6 +38,8 @@ export class ModuleCreateComponent implements OnInit {
     this.showLoading = true;
     this.isLoading = true;
 
+    console.log(this.description);
+
     lastValueFrom(this.moduleService.apiModulePost({
       body:{
         moduleDescription: this.description,
@@ -55,10 +57,9 @@ export class ModuleCreateComponent implements OnInit {
           this.isLoading = false;
           this.showLoading = false;
           this.onModuleCreate.emit()
+          this.name = "";
+          this.description = "";
     });
-
-    this.name = "";
-    this.description = "";
   }
 
   changePartNr($event: MatSliderChange) {

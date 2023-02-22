@@ -8,7 +8,7 @@
       <span>
         <mat-form-field>
           <mat-label>Search</mat-label>
-          <input matInput [(ngModel)]="this.searchInput" (keyup.enter)="this.search(this.searchInput)">
+          <input matInput [(ngModel)]="this.searchInput" (keyup)="this.search(this.searchInput)">
           <button mat-icon-button matSuffix (click)="this.search(this.searchInput)">
             <mat-icon>search</mat-icon>
           </button>
@@ -44,13 +44,19 @@
             [attr.id]="'accordion-body-' + index"
             [attr.aria-labelledby]="'accordion-header-' + index">
             <div class="horizontal-container">
-              <mat-label>Description</mat-label>
+              <mat-label style="margin-right: 5px">Description</mat-label>
               <mat-divider style="width: 100%; margin:auto"></mat-divider>
             </div>
-            <quill-view-html [content]="exercise.exerciseDescription!" theme="bubble"></quill-view-html>
-            <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-            <mat-label>Achievable Points</mat-label>
-            <input matInput disabled [value]="exercise.achieveablePoints!.toString()!">
+            <div class="elevated">
+              <quill-view-html [content]="exercise.exerciseDescription!" theme="bubble"></quill-view-html>
+            </div>
+            <div class="horizontal-container" style="margin-top: 10px">
+              <mat-label style="white-space: nowrap; margin-right: 5px">Achievable Points</mat-label>
+              <mat-divider style="width: 100%; margin:auto"></mat-divider>
+            </div>
+            <div class="elevated">
+              <input matInput disabled [value]="exercise.achieveablePoints!.toString()!">
+            </div>
           </div>
         </cdk-accordion-item>
       </cdk-accordion>

@@ -5,7 +5,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {CodeOutputDetailItem} from "../../../../../services/generated/models/code-output-detail-item";
 import {TimeTrackService} from "../../../../../services/generated/services/time-track.service";
 import {CodeOutputSubmissionService} from "../../../../../services/generated/services/code-output-submission.service";
-import {CodeOutputSubmissionDetailItem} from "../../../../../services/generated/models/code-output-submission-detail-item";
+import {
+  CodeOutputSubmissionDetailItem
+} from "../../../../../services/generated/models/code-output-submission-detail-item";
+
 @Component({
   selector: 'app-solve-code-output',
   templateUrl: './solve-code-output.component.html',
@@ -17,7 +20,7 @@ export class SolveCodeOutputComponent implements OnInit {
   public answerString : string | undefined;
   public exercise : CodeOutputDetailItem | null = {};
   private lastSubmission : CodeOutputSubmissionDetailItem | undefined;
-  public timeTrackId : string | void | undefined;
+  public timeTrackId : string | null | undefined;
   public isLoading : boolean = false;
 
   constructor(private readonly codeoutputService: CodeOutputService,
@@ -27,11 +30,17 @@ export class SolveCodeOutputComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    void this.loadExercise();
+    void this.loadExercise().then(() => {
+      if (!this.exercise?.userHasSolvedExercise) {
+        setInterval(() => {
+          this.tempSave();
+        }, 30 * 1000);
+      }
+    });
   }
 
   async loadExercise():Promise<any> {
-    lastValueFrom(this.codeoutputService.apiCodeOutputGet$Json({
+    await lastValueFrom(this.codeoutputService.apiCodeOutputGet$Json({
       id: this.id
     })).catch(() => {
         this.snackBar.open("Could not load this Code-Output Exercise", "ok", {duration: 3000});
@@ -47,15 +56,15 @@ export class SolveCodeOutputComponent implements OnInit {
   }
 
   private async getTimeTrack(eId : string): Promise<any> {
-    console.log(eId);
-    await lastValueFrom(this.timeTrackService.apiTimeTrackPost$Json( {
+    if (this.exercise?.userHasSolvedExercise) return;
+
+    this.timeTrackId = await lastValueFrom(this.timeTrackService.apiTimeTrackPost$Json({
       exerciseId: eId
     })).catch(() => {
       this.snackBar.open('Error: Could not get a TimeTrack instance!', 'dismiss');
-    }).then( data => {
-      this.timeTrackId = data;
-      return this.queryLastTempSolution(eId, this.timeTrackId!);
-    })
+      return null;
+    });
+    return this.queryLastTempSolution(eId, this.timeTrackId!);
   }
 
   private async queryLastTempSolution(eId: string, ttId: string):Promise<any> {
@@ -77,7 +86,7 @@ export class SolveCodeOutputComponent implements OnInit {
     })
   }
 
-  public createNewSubmission(ttId: string | void, isFinal: boolean = false) {
+  public createNewSubmission(ttId: string | null | undefined, isFinal: boolean = false) {
     lastValueFrom(this.codeoutputSubmissionService.apiCodeOutputSubmissionSubmitTimeTrackIdPost( {
       timeTrackId: ttId!,
       isFinalSubmission: isFinal,
@@ -85,29 +94,31 @@ export class SolveCodeOutputComponent implements OnInit {
         submittedAnswer : this.answerString,
         exerciseId: this.exercise!.id!
       }
-    })).catch( () => {
-      this.snackBar.open('Could not submit the answer!', 'dismiss');
-    }).then( () => {
-      if (isFinal){
-        this.exercise!.userHasSolvedExercise = true;
-        this.closeTimeTrack(ttId).catch(() => {
-          this.snackBar.open('Could not close TimeTrack', 'dismiss');
-        }).then( () => {
-          this.snackBar.open("Submitted answer successfully!", 'ok', {duration: 3000});
-        });
-      }
+    }))
+      //.catch( () => {this.snackBar.open('Could not submit the answer!', 'dismiss');})
+      .then( () => {
+        if (isFinal){
+          this.exercise!.userHasSolvedExercise = true;
+          this.closeTimeTrack(ttId!).catch(() => {
+            this.snackBar.open('Could not close TimeTrack', 'dismiss');
+          }).then( () => {
+            this.snackBar.open("Submitted answer successfully!", 'ok', {duration: 3000});
+          });
+        }
     })
   }
 
-  private closeTimeTrack(ttId: string | void) {
+  private closeTimeTrack(ttId: string) {
     return lastValueFrom(this.timeTrackService.apiTimeTrackClosePost({
       timeTrackId: ttId!
     }))
   }
 
   ngOnDestroy(): void {
-    if (!this.exercise?.userHasSolvedExercise) {
-      this.createNewSubmission(this.timeTrackId,false)
-    }
+    this.tempSave();
+  }
+
+  tempSave() {
+    this.createNewSubmission(this.timeTrackId,false)
   }
 }
