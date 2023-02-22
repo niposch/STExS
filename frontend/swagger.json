@@ -1915,7 +1915,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserListsModel"
+                    "$ref": "#/components/schemas/UserListModel"
                   }
                 }
               },
@@ -1923,7 +1923,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserListsModel"
+                    "$ref": "#/components/schemas/UserListModel"
                   }
                 }
               },
@@ -1931,7 +1931,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserListsModel"
+                    "$ref": "#/components/schemas/UserListModel"
                   }
                 }
               }
@@ -3109,7 +3109,7 @@
         },
         "additionalProperties": false
       },
-      "UserListsModel": {
+      "UserListModel": {
         "type": "object",
         "properties": {
           "firstName": {
@@ -3127,7 +3127,7 @@
             "type": "string",
             "nullable": true
           },
-          "isConfirmed": {
+          "emailConfirmed": {
             "type": "boolean"
           }
         },

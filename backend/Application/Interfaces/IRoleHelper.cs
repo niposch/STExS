@@ -7,4 +7,5 @@ public interface IRoleHelper
     public string ToString(RoleType roleType);
 
     public RoleType? Parse(string role);
+    public RoleType GetHighestRole(List<RoleType> roleTypes);
 }

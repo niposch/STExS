@@ -16,18 +16,17 @@ namespace STExS.Controllers.Identity;
 [AllowAnonymous]
 public class UserManagementController : ControllerBase
 {
-    private readonly RoleManager<ApplicationRole> roleManager;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IRoleHelper roleHelper;
-    private readonly IAccessService? accessService;
+    private readonly IAccessService accessService;
 
     public UserManagementController(UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager,
-        IRoleHelper roleHelper)
+        IRoleHelper roleHelper,
+        IAccessService accessService)
     {
         this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-        this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
         this.roleHelper = roleHelper ?? throw new ArgumentNullException(nameof(roleHelper));
+        this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
     }
 
     [HttpGet]
@@ -44,13 +43,17 @@ public class UserManagementController : ControllerBase
         {
             foreach (var user in users)
             {
+                var highestRole = await this.userManager.GetRolesAsync(user) ?? new List<string>();
                 res.Add(
                     new UserListModel()
                     {
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         HighestRoleType =
-                            await this.userManager.GetRolesAsync(user),
+                            this.roleHelper.GetHighestRole(highestRole.Select(role => this.roleHelper.Parse(role))
+                                .Where(r => r != null)
+                                .OfType<RoleType>()
+                                .ToList()),
                         Email = user.Email,
                         EmailConfirmed = user.EmailConfirmed
                     }
