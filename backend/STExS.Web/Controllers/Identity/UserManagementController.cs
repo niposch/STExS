@@ -55,7 +55,9 @@ public class UserManagementController : ControllerBase
                                 .OfType<RoleType>()
                                 .ToList()),
                         Email = user.Email,
-                        EmailConfirmed = user.EmailConfirmed
+                        EmailConfirmed = user.EmailConfirmed,
+                        UserId = user.Id,
+                        MatrikelNumber = user.MatrikelNumber
                     }
                 );
             }
@@ -66,4 +68,46 @@ public class UserManagementController : ControllerBase
 
         return this.Unauthorized();
     }
+    
+    [HttpPost]
+    [Route("changeRole")]
+    [Authorize(Roles = $"{RoleHelper.Admin}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserListModel))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ChangeRole([FromQuery] RoleType newHighestRole, [FromQuery] Guid userId, CancellationToken cancellationToken = default)
+    {
+        var currentUserId = this.User.GetUserId();
+        
+        if (currentUserId == userId)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError); // you cant change your own role
+        }
+        
+        var userToModify = await this.userManager.FindByIdAsync(userId.ToString());
+        if (userToModify == null)
+        {
+            return this.NotFound();
+        }
+
+        var roles = await this.userManager.GetRolesAsync(userToModify);
+        await this.userManager.RemoveFromRolesAsync(userToModify, roles);
+        
+        var rolesToAddTo = new List<string>();
+        if (newHighestRole == RoleType.Admin)
+        {
+            rolesToAddTo.Add(RoleHelper.Admin);
+            rolesToAddTo.Add(RoleHelper.Teacher);
+        }
+        else if (newHighestRole == RoleType.Teacher)
+        {
+            rolesToAddTo.Add(RoleHelper.Teacher);
+        }
+        rolesToAddTo.Add(RoleHelper.User);
+        
+        await this.userManager.AddToRolesAsync(userToModify, rolesToAddTo);
+        
+        return this.Ok();
+    }
+    
 }

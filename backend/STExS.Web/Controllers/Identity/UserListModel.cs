@@ -9,4 +9,8 @@ public class UserListModel
     public RoleType HighestRoleType { get; set; }= RoleType.User;
     public string Email { get; set; } = string.Empty;
     public bool EmailConfirmed { get; set; } = false;
+    
+    public string MatrikelNumber { get; set; } = string.Empty;
+    
+    public Guid UserId { get; set; }
 }
