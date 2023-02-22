@@ -57,6 +57,10 @@ import {SolveExerciseComponent} from './components/students/solve-exercise/solve
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {QuillModule} from "ngx-quill";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
+import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
+import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
+import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
 
 @NgModule({
   declarations: [
@@ -86,6 +90,10 @@ import {CdkAccordionModule} from "@angular/cdk/accordion";
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    GradingModuleDashboardComponent,
+    GradingExerciseDashboardComponent,
+    SubmissionStatePipe,
+    SubmissionGradingStatePipe,
   ],
     imports: [
         BrowserModule,

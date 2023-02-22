@@ -50,9 +50,15 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
         return ex;
     }
 
-    public async Task<IGrouping<Guid, UserSubmission>> GetAllByExerciseIdGroupedByUserIdAsync(Guid exerciseId,
+    public async Task<Dictionary<Guid, UserSubmission>> GetAllByExerciseIdGroupedByUserIdAsync(Guid exerciseId,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await this.context.UserSubmissions
+            .Where(e => e.ExerciseId == exerciseId)
+            .Include(e => e.FinalSubmission)
+            .ThenInclude(s => s.GradingResult)
+            .Include(e => e.Submissions)
+            .ThenInclude(s => s.GradingResult)
+            .ToDictionaryAsync(e => e.UserId, cancellationToken);
     }
 }

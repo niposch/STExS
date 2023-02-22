@@ -1,0 +1,52 @@
+
+<!-- display an angular material table of exercise gradings -->
+<style>
+  mat-row:last-of-type{
+    border-bottom: 0px;
+  }
+</style>
+<div *ngIf="this.gradingResults != null && this.exercise != null else loadingGradings">
+  <!-- display exercise information -->
+  <div style="margin-bottom: 15px">
+      <h3>Exercise: {{this.exercise.exerciseName}}</h3>
+      <p>Max Points: {{this.exercise.achieveablePoints}}</p>
+      <quill-view-html style="height: unset" [content]="this.exercise.exerciseDescription ?? ''"></quill-view-html>
+  </div>
+  <mat-table style="border-radius: 5px; padding: 2px; border: 1px solid #5f5f5f" [dataSource]="this.gradingResults" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userFirstName}} {{element.userLastName}} {{element.matrikelNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="points">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Achieved Points </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastPoints ?? 0}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="submissionDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Submission Date </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastSubmissionTime | date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="submissionState">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Submission State </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastSubmissionState | submissionState}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="gradingState">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Grading State </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastSubmissionGradingState | submissionGradingState}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button matTooltip="manually grade this users submission" mat-button (click)="this.openGradingDialog(element)"><mat-icon>spellcheck</mat-icon></button>
+        <button mat-button matTooltip="check the revision history" (click)="this.openSubmissionListDialog(element)"><mat-icon>update</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="['name','points', 'submissionDate', 'submissionState', 'gradingState', 'actions']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name','points', 'submissionDate', 'submissionState', 'gradingState', 'actions'];"></mat-row>
+  </mat-table>
+</div>
+<ng-template #loadingGradings>
+  <mat-spinner></mat-spinner>
+</ng-template>
