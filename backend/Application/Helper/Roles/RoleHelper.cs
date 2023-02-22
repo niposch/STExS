@@ -27,6 +27,20 @@ public class RoleHelper : IRoleHelper
         return this.typeToString[roleType];
     }
 
+    public RoleType GetHighestRole(List<RoleType> roleTypes)
+    {
+        if (roleTypes.Contains(RoleType.Admin))
+        {
+            return RoleType.Admin;
+        }
+
+        if (roleTypes.Contains(RoleType.Teacher))
+        {
+            return RoleType.Teacher;
+        }
+        return RoleType.User;
+    }
+
     public RoleType? Parse(string role)
     {
         if (!this.stringToType.ContainsKey(role))
