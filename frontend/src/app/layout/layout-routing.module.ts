@@ -23,6 +23,7 @@ import {
 import {AdministrateUsersComponent} from "../components/admin/administrate-users/administrate-users.component";
 import {RoleType} from "../../services/generated/models";
 import {RoleGuard} from "../guards/role.guard";
+import {NoAccessComponent} from "../components/no-access/no-access.component";
 
 const routes: Routes = [
   {
@@ -100,8 +101,8 @@ const routes: Routes = [
         path: "",
         component: HeaderOnlyLayoutComponent,
         children: [
-          {path: "**", component: NotfoundComponent},
-          {path: "notfound", component: NotfoundComponent}
+          {path: "notfound", component: NotfoundComponent},
+          {path: "forbidden", component: NoAccessComponent},
         ]
       }
     ]

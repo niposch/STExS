@@ -66,6 +66,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatMenuModule} from "@angular/material/menu";
 import { ChangeRoleDialogComponent } from './components/admin/administrate-users/change-role-dialog/change-role-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
+import { NoAccessComponent } from './components/no-access/no-access.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import {MatSelectModule} from "@angular/material/select";
     SubmissionGradingStatePipe,
     AdministrateUsersComponent,
     ChangeRoleDialogComponent,
+    NoAccessComponent,
   ],
   imports: [
     BrowserModule,

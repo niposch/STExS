@@ -16,9 +16,7 @@ export class RoleGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let roles = await firstValueFrom(this.userService.currentRoles);
-    console.log(roles);
     const requiredRole = route.data['requiredRoles'];
-    console.log(requiredRole)
     // @ts-ignore
     if (roles.includes(requiredRole)) {
       // has the required role so return true
@@ -26,7 +24,7 @@ export class RoleGuard implements CanActivate {
     }
 
     // doesn't have the required role so redirect to notfound page
-    await this.router.navigate(['/notfound']);
+    await this.router.navigate(['/forbidden']);
     return false;
   }
 }
