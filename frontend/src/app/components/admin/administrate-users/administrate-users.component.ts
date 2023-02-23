@@ -10,6 +10,8 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {RoleType} from "../../../../services/generated/models/role-type";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangeRoleDialogComponent} from "./change-role-dialog/change-role-dialog.component";
+import {UserService} from "../../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-administrate-users',
@@ -31,9 +33,22 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
   constructor(private userManagementService : UserManagementService,
               private snackBar: MatSnackBar,
               private _liveAnnouncer: LiveAnnouncer,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private userService: UserService,
+              private router: Router) { }
+
+  canActivate(): boolean {
+    if (this.userService.currentUser != null) {
+      if (this.userService.currentRolesSubject.value!.includes(RoleType.Admin)) {
+        return true;
+      }
+    }
+    this.router.navigate(['/dashboard']);
+    return false;
+  }
 
   ngOnInit(): void {
+    this.canActivate();
   }
 
   ngAfterViewInit(): void {
