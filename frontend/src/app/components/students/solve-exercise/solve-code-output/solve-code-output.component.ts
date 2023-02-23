@@ -1,8 +1,8 @@
 import {
   AfterViewInit, ChangeDetectorRef,
   Component,
-  ElementRef,
-  Input, OnDestroy,
+  ElementRef, EventEmitter,
+  Input, OnDestroy, Output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -35,6 +35,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
   public timeTrackId: string | null | undefined = null;
   public isLoading: boolean = false;
   public isSubmitting: boolean = false;
+  @Output() solvedChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private readonly codeoutputService: CodeOutputService,
@@ -163,7 +164,10 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
           }
         )
       )
-      this.exercise!.userHasSolvedExercise = true;
+      if (isFinal) {
+        this.solvedChange.emit({solved: true, exerciseId: this.exercise!.id!});
+        this.exercise!.userHasSolvedExercise = true;
+      }
       this.isSubmitting = false;
     } catch (err) {
       this.snackBar.open('Could not submit the answer!', 'dismiss');

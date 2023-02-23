@@ -109,4 +109,13 @@ export class SolveExerciseComponent implements OnInit {
     this.currentExerciseType = currentExercise.exerciseType!;
     this.updateCompType();
   }
+
+  changeSolvedStatus($event: any) {
+    console.log($event);
+    let index = this.exerciseList.findIndex((e) => {
+      return e.id == $event.exerciseId;
+    })
+    this.exerciseList[index].userHasSolvedExercise = $event.solved;
+    console.log(this.exerciseList)
+  }
 }
