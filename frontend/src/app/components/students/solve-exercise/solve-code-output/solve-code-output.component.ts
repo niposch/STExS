@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component,
   ElementRef,
   Input, OnChanges,
@@ -44,7 +44,8 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
     private readonly codeoutputService: CodeOutputService,
     private readonly codeoutputSubmissionService: CodeOutputSubmissionService,
     private readonly timeTrackService: TimeTrackService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
@@ -52,6 +53,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
     // @ts-ignore
     if (changes.id.currentValue != changes.id.previousValue) {
       this.isLoading = true;
+      this.changeDetectorRef.detectChanges();
       void this.loadExercise();
     }
     }
@@ -77,6 +79,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.isLoading = true;
+    this.changeDetectorRef.detectChanges();
     void this.loadExercise();
   }
 
@@ -90,6 +93,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
       if (!this.exercise!.userHasSolvedExercise) {
         await this.getTimeTrack(this.exercise!.id!).then(() => {
           this.isLoading = false;
+          this.changeDetectorRef.detectChanges();
         });
         await this.queryLastTempSolution(this.exercise!.id!, this.timeTrackId!);
       } else {
@@ -102,6 +106,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
         );
         this.answerString = lastSubmission.submittedAnswer ?? '';
         this.isLoading = false;
+        this.changeDetectorRef.detectChanges();
       }
     } catch (err) {
       this.snackBar.open('Could not load this Code-Output Exercise', 'ok', {
