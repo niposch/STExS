@@ -72,7 +72,7 @@ const routes: Routes = [
           {
             path: "",
             canActivate: [RoleGuard],
-            data: {requiredRoles: RoleType.Admin || RoleType.Teacher},
+            data: {requiredRoles: [RoleType.Admin, RoleType.Teacher]},
             children: [
               {path: "modules-admin", component: ModulesAdminComponent},
               {path: "module/administrate", component: AdministrateModuleComponent},
@@ -85,7 +85,7 @@ const routes: Routes = [
           {
             path: "",
             canActivate: [RoleGuard],
-            data: {requiredRoles: RoleType.Admin},
+            data: {requiredRoles: [RoleType.Admin]},
             children: [
               {path: "users", component: AdministrateUsersComponent}
             ]
