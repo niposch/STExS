@@ -11,7 +11,7 @@ import {RoleType} from "../../../../../services/generated/models/role-type";
 export class ChangeRoleDialogComponent {
 
   public roles = RoleType;
-  public newRole: RoleType = -1;
+  public newRole: RoleType = this.roles.User;
   constructor(public dialogRef: MatDialogRef<ChangeRoleDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {user : UserListModel}) {}
 

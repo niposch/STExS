@@ -84,7 +84,7 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
       newHighestRole: user.highestRoleType
     }))
       .then(() => {
-        this.snackBar.open("Role changed", "Close", {duration: 2000})
+        this.snackBar.open("Role changed successfully!", "Close", {duration: 2000})
       })
       .catch((error) => {
         console.log(error);

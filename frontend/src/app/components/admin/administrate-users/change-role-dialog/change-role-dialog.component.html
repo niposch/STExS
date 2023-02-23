@@ -3,7 +3,7 @@
   <div mat-dialog-content class="select">
     <mat-form-field appearance="fill" style="width: 100%">
       <mat-label>New Role</mat-label>
-      <mat-select [(value)]="newRole" required [value]="roles.User">
+      <mat-select [(value)]="newRole" required [value]="newRole">
         <mat-option [value]="roles.Admin">Admin</mat-option>
         <mat-option [value]="roles.Teacher">Teacher</mat-option>
         <mat-option [value]="roles.User">User</mat-option>
