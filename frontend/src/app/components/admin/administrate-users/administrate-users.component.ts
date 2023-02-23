@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {UserManagementService} from "../../../../services/generated/services/user-management.service";
 import {UserListModel} from "../../../../services/generated/models/user-list-model";
-import {lastValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -11,7 +11,6 @@ import {RoleType} from "../../../../services/generated/models/role-type";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangeRoleDialogComponent} from "./change-role-dialog/change-role-dialog.component";
 import {UserService} from "../../../services/user.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-administrate-users',
@@ -34,22 +33,9 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
               private snackBar: MatSnackBar,
               private _liveAnnouncer: LiveAnnouncer,
               public dialog: MatDialog,
-              private userService: UserService,
-              private router: Router) { }
+              private userService: UserService) { }
 
-  canActivate(): boolean {
-    if (this.userService.currentUser != null) {
-      if (this.userService.currentRolesSubject.value!.includes(RoleType.Admin)) {
-        return true;
-      }
-    }
-    this.router.navigate(['/dashboard']);
-    return false;
-  }
-
-  ngOnInit(): void {
-    this.canActivate();
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.isLoading = true;
@@ -80,7 +66,13 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openDialog(user : UserListModel): void {
+  async openDialog(user: UserListModel): Promise<void> {
+    let canChangeRole = await this.canChangeRoles(user);
+    if (!canChangeRole) {
+      this.snackBar.open("You can't change your own role", "Close", {duration: 2000})
+      return;
+    }
+
     const dialogRef = this.dialog.open(ChangeRoleDialogComponent, {
       data: {user: user},
     });
@@ -105,5 +97,10 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
         console.log(error);
         this.snackBar.open("Error while changing role", "Close")
       })
+  }
+
+  async canChangeRoles(user: UserListModel) {
+    let currentUser = await firstValueFrom(this.userService.currentUser)
+    return currentUser?.id != user.userId;
   }
 }
