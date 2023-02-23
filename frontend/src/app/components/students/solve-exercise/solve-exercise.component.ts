@@ -93,9 +93,10 @@ export class SolveExerciseComponent implements OnInit {
   }
 
   private updateCompType() {
+    this.showCodeOutput = false;
+    this.changeDetectorRef.detectChanges();
     if (this.currentExerciseType == ExerciseType.CodeOutput) {
       this.showCodeOutput = true;
-      this.changeDetectorRef.detectChanges();
     }
   }
 

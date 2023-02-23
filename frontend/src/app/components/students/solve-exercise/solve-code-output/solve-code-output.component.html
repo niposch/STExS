@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="this.isSubmitting" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-card class="master-card">
   <div *ngIf="!this.isLoading" class="vertical-container">
     <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
@@ -13,8 +14,8 @@
       <div *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
       <ng-template #submitButton>
         <button class="submit" mat-raised-button color="accent"
-                (click)="this.createNewSubmission(this.timeTrackId, true)">
-          submit
+                (click)="this.createNewSubmission(this.timeTrackId, true, this.answerString)">
+          <mat-label>submit</mat-label>
         </button>
       </ng-template>
       <ng-template #disabledSubmitButton>

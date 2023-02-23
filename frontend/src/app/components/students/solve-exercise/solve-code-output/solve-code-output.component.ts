@@ -2,11 +2,8 @@ import {
   AfterViewInit, ChangeDetectorRef,
   Component,
   ElementRef,
-  Input, OnChanges,
-  OnInit,
-  SimpleChanges,
+  Input, OnDestroy,
   ViewChild,
-  ViewChildren,
 } from '@angular/core';
 import {
   debounce,
@@ -15,8 +12,6 @@ import {
   interval,
   lastValueFrom,
   map,
-  Observable,
-  Subscription,
 } from 'rxjs';
 import {CodeOutputService} from '../../../../../services/generated/services/code-output.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -32,13 +27,14 @@ import {
   templateUrl: './solve-code-output.component.html',
   styleUrls: ['./solve-code-output.component.scss'],
 })
-export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
+export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
   @Input() id: string = '';
   public answerString: string | undefined;
   public exercise: CodeOutputDetailItem | null = {};
   private lastSubmission: CodeOutputSubmissionDetailItem | undefined;
-  public timeTrackId: string | null | undefined;
+  public timeTrackId: string | null | undefined = null;
   public isLoading: boolean = false;
+  public isSubmitting: boolean = false;
 
   constructor(
     private readonly codeoutputService: CodeOutputService,
@@ -48,15 +44,6 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
     private readonly changeDetectorRef: ChangeDetectorRef
   ) {
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // @ts-ignore
-    if (changes.id.currentValue != changes.id.previousValue) {
-      this.isLoading = true;
-      this.changeDetectorRef.detectChanges();
-      void this.loadExercise();
-    }
-    }
 
   @ViewChild('answerInputField') set answerInputField(
     input: ElementRef<HTMLInputElement>
@@ -72,7 +59,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
         )
         .subscribe((value) => {
           console.log('value', value);
-          this.tempSave();
+          this.tempSave(value);
         });
     }
   }
@@ -157,39 +144,30 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
       });
   }
 
-  public createNewSubmission(
+  public async createNewSubmission(
     ttId: string | null | undefined,
-    isFinal: boolean = false
-  ) {
-    lastValueFrom(
-      this.codeoutputSubmissionService.apiCodeOutputSubmissionSubmitTimeTrackIdPost(
-        {
-          timeTrackId: ttId!,
-          isFinalSubmission: isFinal,
-          body: {
-            submittedAnswer: this.answerString,
-            exerciseId: this.exercise!.id!,
-          },
-        }
+    isFinal: boolean = false,
+    answer: string | undefined = undefined
+  ) : Promise<any> {
+    try {
+      this.isSubmitting = true;
+      await lastValueFrom(
+        this.codeoutputSubmissionService.apiCodeOutputSubmissionSubmitTimeTrackIdPost(
+          {
+            timeTrackId: ttId!,
+            isFinalSubmission: isFinal,
+            body: {
+              submittedAnswer: answer,
+              exerciseId: this.exercise!.id!,
+            },
+          }
+        )
       )
-    )
-      .catch(() => {
-        this.snackBar.open('Could not submit the answer!', 'dismiss');
-      })
-      .then(() => {
-        if (isFinal) {
-          this.exercise!.userHasSolvedExercise = true;
-          this.closeTimeTrack(ttId!)
-            .catch(() => {
-              this.snackBar.open('Could not close TimeTrack', 'dismiss');
-            })
-            .then(() => {
-              this.snackBar.open('Submitted answer successfully!', 'ok', {
-                duration: 3000,
-              });
-            });
-        }
-      });
+      this.exercise!.userHasSolvedExercise = true;
+      this.isSubmitting = false;
+    } catch (err) {
+      this.snackBar.open('Could not submit the answer!', 'dismiss');
+    }
   }
 
   private closeTimeTrack(ttId: string) {
@@ -201,10 +179,17 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnDestroy(): void {
-    this.tempSave();
+    if (this.exercise?.userHasSolvedExercise) return;
+    this.tempSave(this.answerString).then(() => {
+      if (this.timeTrackId == null) return;
+      this.closeTimeTrack(this.timeTrackId);
+    })
   }
 
-  tempSave() {
-    this.createNewSubmission(this.timeTrackId, false);
+  async tempSave(answerString?: string) : Promise<any> {
+    if (answerString == undefined) return;
+    if (this.exercise?.userHasSolvedExercise) return;
+    console.log('tempSave', answerString);
+    await this.createNewSubmission(this.timeTrackId, false, answerString);
   }
 }
