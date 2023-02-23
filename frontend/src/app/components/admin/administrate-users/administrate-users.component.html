@@ -23,7 +23,13 @@
     <!-- highestRoleType Column -->
     <ng-container matColumnDef="highestRoleType">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element"> {{element.highestRoleType}} </td>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <mat-chip *ngIf="element.highestRoleType == roles.Admin" selected color="warn">Admin</mat-chip>
+          <mat-chip *ngIf="element.highestRoleType == roles.Teacher" selected color="accent">Teacher</mat-chip>
+          <mat-chip *ngIf="element.highestRoleType == roles.User" selectable="false">User</mat-chip>
+        </mat-chip-list>
+      </td>
     </ng-container>
 
     <!-- email Column -->

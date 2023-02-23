@@ -7,6 +7,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {RoleType} from "../../../../services/generated/models/role-type";
 
 @Component({
   selector: 'app-administrate-users',
@@ -27,6 +28,8 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
 
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
+
+  public roles = RoleType;
   constructor(private userManagementService : UserManagementService,
               private snackBar: MatSnackBar,
               private _liveAnnouncer: LiveAnnouncer) { }
