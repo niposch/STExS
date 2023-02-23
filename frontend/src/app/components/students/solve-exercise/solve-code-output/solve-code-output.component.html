@@ -7,12 +7,12 @@
     <div class="horizontal-flex answer">
       <mat-form-field class="input vertically-centered">
         <mat-label>Output</mat-label>
-        <input [readonly]="exercise?.userHasSolvedExercise ?? false" matInput class="input-field" [(ngModel)]="this.answerString">
+        <input #answerInputField [readonly]="exercise?.userHasSolvedExercise ?? false" matInput class="input-field"
+          [(ngModel)]="this.answerString">
       </mat-form-field>
-      <button [disabled]="exercise?.userHasSolvedExercise ?? false" class="submit" mat-raised-button color="accent" (click)="this.createNewSubmission(this.timeTrackId, true)">submit</button>
+      <button [disabled]="exercise?.userHasSolvedExercise ?? false" class="submit" mat-raised-button color="accent"
+        (click)="this.createNewSubmission(this.timeTrackId, true)">submit</button>
     </div>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
 </mat-card>
-
-

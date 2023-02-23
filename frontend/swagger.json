@@ -2832,10 +2832,10 @@
             "type": "integer",
             "format": "int32"
           },
-          "isFinal": {
-            "type": "boolean"
+          "gradingState": {
+            "$ref": "#/components/schemas/GradingState"
           },
-          "isAutomatic": {
+          "isAutomaticallyGraded": {
             "type": "boolean"
           },
           "appealDate": {
@@ -2843,16 +2843,13 @@
             "format": "date-time",
             "nullable": true
           },
+          "finalAppealDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "isAppealed": {
             "type": "boolean",
             "readOnly": true
-          },
-          "userSubmissionId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "userSubmission": {
-            "$ref": "#/components/schemas/UserSubmission"
           },
           "creationDate": {
             "type": "string",
@@ -2868,6 +2865,28 @@
           }
         },
         "additionalProperties": false
+      },
+      "GradingState": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Unreviewed",
+          "InProgress",
+          "Graded",
+          "Appealed",
+          "AppealAccepted",
+          "AppealRejected",
+          "FinallyGraded"
+        ]
       },
       "IdentityError": {
         "type": "object",

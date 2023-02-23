@@ -26,22 +26,26 @@ public class CodeOutputGradingService : ICodeOutputGradingService
         {
             Id = Guid.NewGuid(),
             Comment = "Graded automatically",
-            IsFinal = false,
-            AppealDate = DateTime.Now.AddDays(14),
-            IsAutomatic = true,
+            FinalAppealDate = DateTime.Now.AddDays(14),
+            IsAutomaticallyGraded = true,
             CreationDate = DateTime.Now,
             GradedSubmissionId = submission.Id,
-            UserId =  submission.UserId,
-            ExerciseId = submission.ExerciseId,
-            Points = 0
+            Points = 0,
+            GradingState = GradingState.InProgress
         };
+        
+        await this.repository.GradingResults.CreateAsync(gradingResult);
+        submission.GradingResultId = gradingResult.Id;
+        await this.repository.Submissions.UpdateAsync(submission);
 
         if(submission.SubmittedAnswer == exercise.ExpectedAnswer)
         {
             gradingResult.Points =  exercise.AchievablePoints;
         }
-
-        await this.repository.GradingResults.CreateAsync(gradingResult);
+        
+        gradingResult.GradingState = GradingState.Graded;
+        
+        await this.repository.GradingResults.UpdateAsync(gradingResult);
     }
 }
 

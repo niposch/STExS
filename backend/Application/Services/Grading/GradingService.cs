@@ -20,8 +20,6 @@ public sealed class GradingService : IGradingService
         this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
     }
 
-    // we get a basesubmission, if it is an instance of CodeOutputSubmission, we should Call the GradeAsync method on the codeoutput grading service
-    // otherwise do nothing for now
     public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
     {
         if(submission is CodeOutputSubmission codeOutputSubmission)
@@ -76,7 +74,7 @@ public sealed class GradingService : IGradingService
             var lastSubmissionGradingState = SubmissionGradingState.NotGraded;
             if(lastSubmission?.GradingResult != null)
             {
-                lastSubmissionGradingState = lastSubmission.GradingResult.IsAutomatic ? SubmissionGradingState.AutomaticGraded : SubmissionGradingState.ManuallyGraded;
+                lastSubmissionGradingState = lastSubmission.GradingResult.IsAutomaticallyGraded ? SubmissionGradingState.AutomaticGraded : SubmissionGradingState.ManuallyGraded;
             }
 
             var item = new ExerciseReportItem
@@ -94,7 +92,7 @@ public sealed class GradingService : IGradingService
                 LastComment = userSubmission?.FinalSubmission?.GradingResult?.Comment,
                 LastPoints = lastSubmission?.GradingResult?.Points,
                 LastGradingTime = lastSubmission?.GradingResult?.CreationDate,
-                LastIsAutomatic = lastSubmission?.GradingResult?.IsAutomatic,
+                LastIsAutomatic = lastSubmission?.GradingResult?.IsAutomaticallyGraded,
                 LastSubmissionId = lastSubmission?.Id,
                 LastSubmissionTime = lastSubmission?.CreationTime,
                 IsFinalSubmission = isFinalSubmission,
