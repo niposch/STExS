@@ -1,0 +1,66 @@
+
+<mat-label class="heading">Manage Users</mat-label>
+
+<mat-card class="table-container">
+  <table mat-table
+         matSort
+         [dataSource]="this.dataSource!"
+         (matSortChange)="announceSortChange($event)"
+         [hidden]="this.isLoading">
+
+    <!-- lastName Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+
+    <!-- firstName Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> First Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+
+    <!-- highestRoleType Column -->
+    <ng-container matColumnDef="highestRoleType">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{element.highestRoleType}} </td>
+    </ng-container>
+
+    <!-- email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> E-Mail </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- matrikelNumber Column -->
+    <ng-container matColumnDef="matrikelNumber">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Matrikel Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.matrikelNumber}} </td>
+    </ng-container>
+
+    <!-- actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button
+                [matMenuTriggerFor]="menu"
+                matTooltip="more actions"><mat-icon>more_vert</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item
+                  matTooltip="select a new role for this user"
+                  matTooltipPosition="before">change role</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</mat-card>
+
+<mat-spinner *ngIf="this.isLoading" style="margin:auto"></mat-spinner>

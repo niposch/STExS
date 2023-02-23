@@ -20,6 +20,7 @@ import {
 import {
   GradingExerciseDashboardComponent
 } from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
+import {AdministrateUsersComponent} from "../components/admin/administrate-users/administrate-users.component";
 
 const routes: Routes = [
   {
@@ -75,7 +76,8 @@ const routes: Routes = [
           {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
           {path: "solve", component: SolveExerciseComponent},
           {path: "grading", component: GradingModuleDashboardComponent},
-          {path: "grading/exercise", component: GradingExerciseDashboardComponent}
+          {path: "grading/exercise", component: GradingExerciseDashboardComponent},
+          {path: "users", component: AdministrateUsersComponent}
         ]
       },
       {

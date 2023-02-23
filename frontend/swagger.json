@@ -2847,7 +2847,11 @@
             "type": "boolean",
             "readOnly": true
           },
-          "userSubmissionId": {
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
             "type": "string",
             "format": "uuid"
           },
