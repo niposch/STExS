@@ -1,0 +1,17 @@
+<div class="dialog">
+  <mat-label mat-dialog-title style="white-space: normal">Change the role of: {{data.user.firstName}} {{data.user.lastName}}</mat-label>
+  <div mat-dialog-content class="select">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>New Role</mat-label>
+      <mat-select [(value)]="newRole" required [value]="roles.User">
+        <mat-option [value]="roles.Admin">Admin</mat-option>
+        <mat-option [value]="roles.Teacher">Teacher</mat-option>
+        <mat-option [value]="roles.User">User</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="button-container">
+    <button mat-button (click)="onNoClick()">Abort</button>
+    <button mat-button color="warn" [mat-dialog-close]="newRole">Change Role</button>
+  </div>
+</div>

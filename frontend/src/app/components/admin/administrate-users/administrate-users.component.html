@@ -54,7 +54,8 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item
                   matTooltip="select a new role for this user"
-                  matTooltipPosition="before">change role</button>
+                  matTooltipPosition="before"
+                  (click)="openDialog(element)">change role</button>
         </mat-menu>
       </td>
     </ng-container>

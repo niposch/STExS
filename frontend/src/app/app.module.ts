@@ -64,6 +64,8 @@ import { SubmissionGradingStatePipe } from './pipes/submission/submission-gradin
 import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatMenuModule} from "@angular/material/menu";
+import { ChangeRoleDialogComponent } from './components/admin/administrate-users/change-role-dialog/change-role-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -98,6 +100,7 @@ import {MatMenuModule} from "@angular/material/menu";
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
     AdministrateUsersComponent,
+    ChangeRoleDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,7 +139,8 @@ import {MatMenuModule} from "@angular/material/menu";
     }),
     CdkAccordionModule,
     MatSortModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

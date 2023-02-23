@@ -8,6 +8,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {RoleType} from "../../../../services/generated/models/role-type";
+import {MatDialog} from "@angular/material/dialog";
+import {ChangeRoleDialogComponent} from "./change-role-dialog/change-role-dialog.component";
 
 @Component({
   selector: 'app-administrate-users',
@@ -19,20 +21,17 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
   public users: UserListModel[] | undefined;
   public isLoading: boolean = false;
   displayedColumns: string[] = ['lastName', 'firstName', 'highestRoleType', 'email', 'matrikelNumber' ,'actions'];
-
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   // @ts-ignore
   public dataSource : MatTableDataSource<UserListModel>;
-
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
-
   public roles = RoleType;
   constructor(private userManagementService : UserManagementService,
               private snackBar: MatSnackBar,
-              private _liveAnnouncer: LiveAnnouncer) { }
+              private _liveAnnouncer: LiveAnnouncer,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -64,5 +63,32 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  openDialog(user : UserListModel): void {
+    const dialogRef = this.dialog.open(ChangeRoleDialogComponent, {
+      data: {user: user},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        user.highestRoleType = result;
+        this.changeRole(user);
+      }
+    });
+  }
+
+  async changeRole(user : UserListModel) {
+    await lastValueFrom(this.userManagementService.apiUserManagementChangeRolePost$Json({
+      userId : user.userId,
+      newHighestRole: user.highestRoleType
+    }))
+      .then(() => {
+        this.snackBar.open("Role changed", "Close", {duration: 2000})
+      })
+      .catch((error) => {
+        console.log(error);
+        this.snackBar.open("Error while changing role", "Close")
+      })
   }
 }
