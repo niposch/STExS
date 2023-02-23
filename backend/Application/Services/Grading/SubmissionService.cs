@@ -27,13 +27,9 @@ public class SubmissionService:ISubmissionService
         throw new NotImplementedException();
     }
 
-    public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid timeTrackId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid? timeTrackId, CancellationToken cancellationToken = default)
     {
         var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        if (!await this.timeTrackService.IsOpenAsync(timeTrackId, cancellationToken))
-        {
-            throw new TimeTrackClosedException();
-        }
         if(userSubmission == null)
         {
             throw new EntityNotFoundException<UserSubmission>(null);
@@ -41,6 +37,14 @@ public class SubmissionService:ISubmissionService
         if (userSubmission.FinalSubmissionId != null)
         {
             return await this.repository.Submissions.TryGetByIdAsync(userSubmission.FinalSubmissionId.Value, cancellationToken);
+        }
+        if(timeTrackId == null)
+        {
+            throw new ArgumentNullException(nameof(timeTrackId));
+        }
+        if (!await this.timeTrackService.IsOpenAsync(timeTrackId.Value, cancellationToken))
+        {
+            throw new TimeTrackClosedException();
         }
         
         return userSubmission.Submissions.OrderByDescending(s => s.CreationTime).FirstOrDefault();

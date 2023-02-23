@@ -2,13 +2,15 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
+  Input, OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
 import {
   debounce,
+  filter,
   fromEvent,
   interval,
   lastValueFrom,
@@ -16,19 +18,21 @@ import {
   Observable,
   Subscription,
 } from 'rxjs';
-import { CodeOutputService } from '../../../../../services/generated/services/code-output.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CodeOutputDetailItem } from '../../../../../services/generated/models/code-output-detail-item';
-import { TimeTrackService } from '../../../../../services/generated/services/time-track.service';
-import { CodeOutputSubmissionService } from '../../../../../services/generated/services/code-output-submission.service';
-import { CodeOutputSubmissionDetailItem } from '../../../../../services/generated/models/code-output-submission-detail-item';
+import {CodeOutputService} from '../../../../../services/generated/services/code-output.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {CodeOutputDetailItem} from '../../../../../services/generated/models/code-output-detail-item';
+import {TimeTrackService} from '../../../../../services/generated/services/time-track.service';
+import {CodeOutputSubmissionService} from '../../../../../services/generated/services/code-output-submission.service';
+import {
+  CodeOutputSubmissionDetailItem
+} from '../../../../../services/generated/models/code-output-submission-detail-item';
 
 @Component({
   selector: 'app-solve-code-output',
   templateUrl: './solve-code-output.component.html',
   styleUrls: ['./solve-code-output.component.scss'],
 })
-export class SolveCodeOutputComponent implements AfterViewInit {
+export class SolveCodeOutputComponent implements AfterViewInit, OnChanges {
   @Input() id: string = '';
   public answerString: string | undefined;
   public exercise: CodeOutputDetailItem | null = {};
@@ -41,23 +45,28 @@ export class SolveCodeOutputComponent implements AfterViewInit {
     private readonly codeoutputSubmissionService: CodeOutputSubmissionService,
     private readonly timeTrackService: TimeTrackService,
     public snackBar: MatSnackBar
-  ) {}
-  public answerChanged: Observable<string> = new Observable<string>((sub) => {
-    this.answerChangedSub = sub;
-  });
-  private answerChangedSub: Subscription | undefined;
+  ) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // @ts-ignore
+    if (changes.id.currentValue != changes.id.previousValue) {
+      this.isLoading = true;
+      void this.loadExercise();
+    }
+    }
 
   @ViewChild('answerInputField') set answerInputField(
     input: ElementRef<HTMLInputElement>
   ) {
     if (input) {
-      this.answerChangedSub?.unsubscribe();
-      // select the value of the input field
-      // add a debounce of 2 seconds
-      this.answerChangedSub = fromEvent(input.nativeElement, 'keyup')
+      fromEvent(input.nativeElement, 'keyup')
         .pipe(
           map((v) => input.nativeElement.value),
-          debounce((i) => interval(4000))
+          debounce((i) => interval(4000)),
+          filter((i) => {
+            return !this.exercise?.userHasSolvedExercise;
+          })
         )
         .subscribe((value) => {
           console.log('value', value);
@@ -68,35 +77,40 @@ export class SolveCodeOutputComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.isLoading = true;
-    void this.loadExercise().then(() => {
-      if (!this.exercise?.userHasSolvedExercise) {
-      }
-    });
+    void this.loadExercise();
   }
 
   async loadExercise(): Promise<any> {
-    await lastValueFrom(
-      this.codeoutputService.apiCodeOutputGet$Json({
-        id: this.id,
-      })
-    )
-      .catch(() => {
-        this.snackBar.open('Could not load this Code-Output Exercise', 'ok', {
-          duration: 3000,
-        });
-      })
-      .then((data) => {
-        // @ts-ignore
-        this.exercise = data;
-        this.getTimeTrack(this.exercise!.id!).then(() => {
+    try {
+      this.exercise = await lastValueFrom(
+        this.codeoutputService.apiCodeOutputGet$Json({
+          id: this.id,
+        })
+      );
+      if (!this.exercise!.userHasSolvedExercise) {
+        await this.getTimeTrack(this.exercise!.id!).then(() => {
           this.isLoading = false;
         });
+        await this.queryLastTempSolution(this.exercise!.id!, this.timeTrackId!);
+      } else {
+        let lastSubmission = await lastValueFrom(
+          this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json(
+            {
+              codeOutputExerciseId: this.exercise!.id!,
+            }
+          )
+        );
+        this.answerString = lastSubmission.submittedAnswer ?? '';
+        this.isLoading = false;
+      }
+    } catch (err) {
+      this.snackBar.open('Could not load this Code-Output Exercise', 'ok', {
+        duration: 3000,
       });
+    }
   }
 
   private async getTimeTrack(eId: string): Promise<any> {
-    if (this.exercise?.userHasSolvedExercise) return;
-
     this.timeTrackId = await lastValueFrom(
       this.timeTrackService.apiTimeTrackPost$Json({
         exerciseId: eId,
@@ -108,7 +122,6 @@ export class SolveCodeOutputComponent implements AfterViewInit {
       );
       return null;
     });
-    return this.queryLastTempSolution(eId, this.timeTrackId!);
   }
 
   private async queryLastTempSolution(eId: string, ttId: string): Promise<any> {

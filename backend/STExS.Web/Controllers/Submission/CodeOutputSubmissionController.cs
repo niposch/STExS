@@ -48,7 +48,7 @@ public class CodeOutputSubmissionController: ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Route("get/{codeOutputExerciseId:guid}")]
-    public async Task<IActionResult> TryGetLastCodeOutputSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid currentTimeTrackId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> TryGetLastCodeOutputSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid? currentTimeTrackId = null, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         try
