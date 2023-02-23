@@ -32,7 +32,7 @@ public class CodeOutputSubmissionController: ControllerBase
     public async Task<IActionResult> SubmitCodeOutputSubmission([FromBody] CodeOutputSubmissionCreateItem createItem, Guid timeTrackId, [FromQuery]bool isFinalSubmission, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        try
+        try 
         {
             await this.codeOutputSubmissionService.SubmitAsync(userId, createItem.ExerciseId, isFinalSubmission, createItem.SubmittedAnswer, timeTrackId, cancellationToken);
         }

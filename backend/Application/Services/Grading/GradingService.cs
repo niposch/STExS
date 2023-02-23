@@ -2,6 +2,7 @@
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.CodeOutput;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 
@@ -11,9 +12,22 @@ public sealed class GradingService : IGradingService
 {
     private readonly IApplicationRepository applicationRepository;
 
-    public GradingService(IApplicationRepository applicationRepository)
+    private readonly ICodeOutputGradingService codeOutputGradingService;
+
+    public GradingService(IApplicationRepository applicationRepository, ICodeOutputGradingService codeOutputGradingService)
     {
         this.applicationRepository = applicationRepository;
+        this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
+    }
+
+    // we get a basesubmission, if it is an instance of CodeOutputSubmission, we should Call the GradeAsync method on the codeoutput grading service
+    // otherwise do nothing for now
+    public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
+    {
+        if(submission is CodeOutputSubmission codeOutputSubmission)
+        {
+            await this.codeOutputGradingService.GradeAsync(codeOutputSubmission);
+        }
     }
 
     public async Task<List<ExerciseReportItem>> GetExerciseReportAsync(Guid exerciseId, CancellationToken cancellationToken = default)

@@ -11,6 +11,7 @@ public class SubmissionService:ISubmissionService
     
     private readonly ITimeTrackService timeTrackService;
     private readonly IUserSubmissionService userSubmissionService;
+    private readonly IGradingService gradingService;
 
     public SubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService, IUserSubmissionService userSubmissionService)
     {

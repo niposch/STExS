@@ -15,7 +15,8 @@ public class GradingResult
     [NotMapped]
     public bool IsAppealed => AppealDate != null;
     
-    public Guid UserSubmissionId { get; set; }
+    public Guid ExerciseId {get;set;}
+    public Guid UserId {get;set;}
     public UserSubmission UserSubmission { get; set; }
     
     public DateTime CreationDate { get; set; }
