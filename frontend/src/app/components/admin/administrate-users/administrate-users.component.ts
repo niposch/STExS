@@ -29,6 +29,7 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
   public roles = RoleType;
+  public searchString = "";
   constructor(private userManagementService : UserManagementService,
               private snackBar: MatSnackBar,
               private _liveAnnouncer: LiveAnnouncer,
@@ -102,5 +103,15 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
   async canChangeRoles(user: UserListModel) {
     let currentUser = await firstValueFrom(this.userService.currentUser)
     return currentUser?.id != user.userId;
+  }
+
+  searchUsers() {
+    this.dataSource.data = this.users!.filter((user) => {
+        return user.firstName?.toLowerCase().includes(this.searchString.toLowerCase())
+        || user.lastName?.toLowerCase().includes(this.searchString.toLowerCase())
+        || user.email?.toLowerCase().includes(this.searchString.toLowerCase())
+        || user.matrikelNumber?.toString().includes(this.searchString);
+    })
+
   }
 }

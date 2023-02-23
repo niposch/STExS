@@ -1,5 +1,14 @@
 
-<mat-label class="heading">Manage Users</mat-label>
+<div class="horizontal-container" style="justify-content: space-between">
+  <mat-label class="heading vertically-centered">Manage Users</mat-label>
+  <mat-form-field class="vertically-centered" (keyup)="this.searchUsers()">
+    <mat-label>Search Users</mat-label>
+    <input matInput [(ngModel)]="searchString">
+    <mat-icon matSuffix
+              >search</mat-icon>
+  </mat-form-field>
+</div>
+
 
 <mat-card class="table-container">
   <table mat-table
