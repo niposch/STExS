@@ -170,7 +170,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
       }
       this.isSubmitting = false;
     } catch (err) {
-      this.snackBar.open('Could not submit the answer!', 'dismiss');
+      this.snackBar.open('Error while submitting the answer!', 'dismiss');
     }
   }
 
