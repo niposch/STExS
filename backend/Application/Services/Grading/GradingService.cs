@@ -2,6 +2,7 @@
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.CodeOutput;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 
@@ -11,9 +12,20 @@ public sealed class GradingService : IGradingService
 {
     private readonly IApplicationRepository applicationRepository;
 
-    public GradingService(IApplicationRepository applicationRepository)
+    private readonly ICodeOutputGradingService codeOutputGradingService;
+
+    public GradingService(IApplicationRepository applicationRepository, ICodeOutputGradingService codeOutputGradingService)
     {
         this.applicationRepository = applicationRepository;
+        this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
+    }
+
+    public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
+    {
+        if(submission is CodeOutputSubmission codeOutputSubmission)
+        {
+            await this.codeOutputGradingService.GradeAsync(codeOutputSubmission);
+        }
     }
 
     public async Task<List<ExerciseReportItem>> GetExerciseReportAsync(Guid exerciseId, CancellationToken cancellationToken = default)
@@ -62,7 +74,7 @@ public sealed class GradingService : IGradingService
             var lastSubmissionGradingState = SubmissionGradingState.NotGraded;
             if(lastSubmission?.GradingResult != null)
             {
-                lastSubmissionGradingState = lastSubmission.GradingResult.IsAutomatic ? SubmissionGradingState.AutomaticGraded : SubmissionGradingState.ManuallyGraded;
+                lastSubmissionGradingState = lastSubmission.GradingResult.IsAutomaticallyGraded ? SubmissionGradingState.AutomaticGraded : SubmissionGradingState.ManuallyGraded;
             }
 
             var item = new ExerciseReportItem
@@ -80,7 +92,7 @@ public sealed class GradingService : IGradingService
                 LastComment = userSubmission?.FinalSubmission?.GradingResult?.Comment,
                 LastPoints = lastSubmission?.GradingResult?.Points,
                 LastGradingTime = lastSubmission?.GradingResult?.CreationDate,
-                LastIsAutomatic = lastSubmission?.GradingResult?.IsAutomatic,
+                LastIsAutomatic = lastSubmission?.GradingResult?.IsAutomaticallyGraded,
                 LastSubmissionId = lastSubmission?.Id,
                 LastSubmissionTime = lastSubmission?.CreationTime,
                 IsFinalSubmission = isFinalSubmission,

@@ -33,6 +33,10 @@ public class ApplicationModule : Module
             .As<IModuleService>()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<CodeOutputGradingService>()
+            .As<ICodeOutputGradingService>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<AccessService>()
             .As<IAccessService>()
             .InstancePerLifetimeScope();

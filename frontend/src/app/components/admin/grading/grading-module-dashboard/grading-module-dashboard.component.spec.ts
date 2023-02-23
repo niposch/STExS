@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GradingModuleDashboardComponent } from './grading-module-dashboard.component';
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('GradingModuleDashboardComponent', () => {
   let component: GradingModuleDashboardComponent;
@@ -8,7 +10,8 @@ describe('GradingModuleDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GradingModuleDashboardComponent ]
+      declarations: [ GradingModuleDashboardComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
 

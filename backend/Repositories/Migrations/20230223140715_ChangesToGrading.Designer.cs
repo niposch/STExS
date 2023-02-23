@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,10 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230223140715_ChangesToGrading")]
+    partial class ChangesToGrading
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,13 +353,22 @@ namespace Repositories.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserSubmissionExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserSubmissionUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GradingResultId")
                         .IsUnique()
                         .HasFilter("[GradingResultId] IS NOT NULL");
 
-                    b.HasIndex("UserId", "ExerciseId");
+                    b.HasIndex("UserId", "ExerciseId")
+                        .IsUnique();
+
+                    b.HasIndex("UserSubmissionUserId", "UserSubmissionExerciseId");
 
                     b.ToTable("Submissions");
 
@@ -450,8 +461,6 @@ namespace Repositories.Migrations
                     b.HasKey("UserId", "ExerciseId");
 
                     b.HasIndex("ExerciseId");
-
-                    b.HasIndex("FinalSubmissionId");
 
                     b.ToTable("UserSubmissions");
                 });
@@ -742,10 +751,15 @@ namespace Repositories.Migrations
                         .HasForeignKey("Common.Models.Grading.BaseSubmission", "GradingResultId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Common.Models.Grading.UserSubmission", null)
+                        .WithOne("FinalSubmission")
+                        .HasForeignKey("Common.Models.Grading.BaseSubmission", "UserId", "ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Common.Models.Grading.UserSubmission", "UserSubmission")
                         .WithMany("Submissions")
-                        .HasForeignKey("UserId", "ExerciseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("UserSubmissionUserId", "UserSubmissionExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("GradingResult");
@@ -787,10 +801,6 @@ namespace Repositories.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Common.Models.Grading.BaseSubmission", "FinalSubmission")
-                        .WithMany()
-                        .HasForeignKey("FinalSubmissionId");
-
                     b.HasOne("Common.Models.Authentication.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -798,8 +808,6 @@ namespace Repositories.Migrations
                         .IsRequired();
 
                     b.Navigation("Exercise");
-
-                    b.Navigation("FinalSubmission");
 
                     b.Navigation("User");
                 });
@@ -900,6 +908,8 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Common.Models.Grading.UserSubmission", b =>
                 {
+                    b.Navigation("FinalSubmission");
+
                     b.Navigation("GradingResults");
 
                     b.Navigation("Submissions");

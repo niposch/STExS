@@ -14,12 +14,10 @@ public sealed class GetAllAsync : Infrastructure
         this.userId = new Guid();
         var gradingResult_1 = this.Fixture.Build<GradingResult>()
             .With(e => e.Comment, "comment 1")
-            .With(e => e.UserSubmission)
             .Without(e => e.GradedSubmission)
             .Create();
         var gradingResult_2 = this.Fixture.Build<GradingResult>()
             .With(e => e.Comment, "comment 2")
-            .With(e => e.UserSubmission)
             .Without(e => e.GradedSubmission)
             .Create();
         this.Context.GradingResults.Add(gradingResult_1);

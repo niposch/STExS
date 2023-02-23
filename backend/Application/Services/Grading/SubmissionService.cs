@@ -11,12 +11,15 @@ public class SubmissionService:ISubmissionService
     
     private readonly ITimeTrackService timeTrackService;
     private readonly IUserSubmissionService userSubmissionService;
+    private readonly IGradingService gradingService;
 
-    public SubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService, IUserSubmissionService userSubmissionService)
+    public SubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService, IUserSubmissionService userSubmissionService,
+        IGradingService gradingService)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         this.timeTrackService = timeTrackService ?? throw new ArgumentNullException(nameof(timeTrackService));
         this.userSubmissionService = userSubmissionService ?? throw new ArgumentNullException(nameof(userSubmissionService));
+        this.gradingService = gradingService ?? throw new ArgumentNullException(nameof(gradingService));
     }
 
     public async Task<List<BaseSubmission>> GetSubmissionsAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
@@ -24,13 +27,9 @@ public class SubmissionService:ISubmissionService
         throw new NotImplementedException();
     }
 
-    public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid timeTrackId, CancellationToken cancellationToken = default)
+    public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid? timeTrackId, CancellationToken cancellationToken = default)
     {
         var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        if (!await this.timeTrackService.IsOpenAsync(timeTrackId, cancellationToken))
-        {
-            throw new TimeTrackClosedException();
-        }
         if(userSubmission == null)
         {
             throw new EntityNotFoundException<UserSubmission>(null);
@@ -39,8 +38,16 @@ public class SubmissionService:ISubmissionService
         {
             return await this.repository.Submissions.TryGetByIdAsync(userSubmission.FinalSubmissionId.Value, cancellationToken);
         }
+        if(timeTrackId == null)
+        {
+            throw new ArgumentNullException(nameof(timeTrackId));
+        }
+        if (!await this.timeTrackService.IsOpenAsync(timeTrackId.Value, cancellationToken))
+        {
+            throw new TimeTrackClosedException();
+        }
         
-        return userSubmission.Submissions.OrderByDescending(s => s.CreationTime).First();
+        return userSubmission.Submissions.OrderByDescending(s => s.CreationTime).FirstOrDefault();
     }
 
     public async Task<BaseSubmission> GetSubmissionDetailsAsync(Guid submissionId, CancellationToken cancellationToken = default)
@@ -76,5 +83,6 @@ public class SubmissionService:ISubmissionService
             await this.repository.UserSubmissions.UpdateAsync(userSubmission, cancellationToken);
         }
         
+        await this.gradingService.RunAutomaticGradingForExerciseAsync(submission);
     }
 }
