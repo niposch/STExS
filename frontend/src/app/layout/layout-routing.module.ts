@@ -20,6 +20,10 @@ import {
 import {
   GradingExerciseDashboardComponent
 } from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
+import {AdministrateUsersComponent} from "../components/admin/administrate-users/administrate-users.component";
+import {RoleType} from "../../services/generated/models";
+import {RoleGuard} from "../guards/role.guard";
+import {NoAccessComponent} from "../components/no-access/no-access.component";
 
 const routes: Routes = [
   {
@@ -65,24 +69,40 @@ const routes: Routes = [
         path: "",
         component: MainLayoutComponent,
         children: [
+          {
+            path: "",
+            canActivate: [RoleGuard],
+            data: {requiredRoles: [RoleType.Admin, RoleType.Teacher]},
+            children: [
+              {path: "modules-admin", component: ModulesAdminComponent},
+              {path: "module/administrate", component: AdministrateModuleComponent},
+              {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
+              {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
+              {path: "grading", component: GradingModuleDashboardComponent},
+              {path: "grading/exercise", component: GradingExerciseDashboardComponent},
+            ]
+          },
+          {
+            path: "",
+            canActivate: [RoleGuard],
+            data: {requiredRoles: [RoleType.Admin]},
+            children: [
+              {path: "users", component: AdministrateUsersComponent}
+            ]
+          },
           {path: "dashboard", component: DashboardComponent},
           {path: "modules-user", component: ModulesUserComponent},
-          {path: "modules-admin", component: ModulesAdminComponent},
           {path: "profile", component: ProfileComponent},
           {path: "module/details", component: ModuleDetailsComponent},
-          {path: "module/administrate", component: AdministrateModuleComponent},
-          {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
-          {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
           {path: "solve", component: SolveExerciseComponent},
-          {path: "grading", component: GradingModuleDashboardComponent},
-          {path: "grading/exercise", component: GradingExerciseDashboardComponent}
         ]
       },
       {
         path: "",
         component: HeaderOnlyLayoutComponent,
         children: [
-          {path: "**", component: NotfoundComponent}
+          {path: "notfound", component: NotfoundComponent},
+          {path: "forbidden", component: NoAccessComponent},
         ]
       }
     ]

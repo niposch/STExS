@@ -61,6 +61,12 @@ import { GradingModuleDashboardComponent } from './components/admin/grading/grad
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
+import {MatSortModule} from "@angular/material/sort";
+import {MatMenuModule} from "@angular/material/menu";
+import { ChangeRoleDialogComponent } from './components/admin/administrate-users/change-role-dialog/change-role-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
+import { NoAccessComponent } from './components/no-access/no-access.component';
 
 @NgModule({
   declarations: [
@@ -94,44 +100,50 @@ import { SubmissionGradingStatePipe } from './pipes/submission/submission-gradin
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
+    AdministrateUsersComponent,
+    ChangeRoleDialogComponent,
+    NoAccessComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        RouterModule.forRoot([]),
-        BrowserAnimationsModule,
-        ApiModule.forRoot({rootUrl: ""}),
-        MatButtonModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatDividerModule,
-        MatProgressSpinnerModule,
-        MatCardModule,
-        LayoutModule,
-        MatInputModule,
-        FormsModule,
-        MatChipsModule,
-        MatProgressBarModule,
-        MatSnackBarModule,
-        MatExpansionModule,
-        MatListModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatGridListModule,
-        MatDialogModule,
-        MatSliderModule,
-        DragDropModule,
-        MatRadioModule,
-        MatTooltipModule,
-        QuillModule.forRoot({
-            modules: {
-                syntax: true,
-                clipboard: true
-            }
-        }),
-        CdkAccordionModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule.forRoot([]),
+    BrowserAnimationsModule,
+    ApiModule.forRoot({rootUrl: ""}),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    LayoutModule,
+    MatInputModule,
+    FormsModule,
+    MatChipsModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatSliderModule,
+    DragDropModule,
+    MatRadioModule,
+    MatTooltipModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: true,
+        clipboard: true
+      }
+    }),
+    CdkAccordionModule,
+    MatSortModule,
+    MatMenuModule,
+    MatSelectModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
