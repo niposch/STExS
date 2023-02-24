@@ -1,5 +1,6 @@
 ﻿using Application.Helper.Roles;
 using Application.Interfaces;
+using Application.Services;
 using Common.Models.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -17,17 +18,20 @@ public class AuthenticateController : ControllerBase
     private readonly RoleManager<ApplicationRole> roleManager;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly IEmailService emailService;
     private readonly IRoleHelper roleHelper;
 
     public AuthenticateController(UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
         SignInManager<ApplicationUser> signInManager,
-        IRoleHelper roleHelper)
+        IRoleHelper roleHelper,
+        IEmailService emailService)
     {
         this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
         this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         this.roleHelper = roleHelper ?? throw new ArgumentNullException(nameof(roleHelper));
+        this.emailService = emailService;
     }
 
     [HttpPost]
@@ -120,7 +124,7 @@ public class AuthenticateController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register([FromBody] AppRegisterModel model)
+    public async Task<IActionResult> Register([FromBody] AppRegisterModel model, CancellationToken cancellationToken = default)
     {
         var userExists = await this.userManager.FindByNameAsync(model.UserName);
         if (userExists != null)
@@ -148,6 +152,8 @@ public class AuthenticateController : ControllerBase
             });
 
         await this.userManager.AddToRoleAsync(user, RoleHelper.User);
+
+        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
         
         return this.Ok(new
         {
