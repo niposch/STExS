@@ -1,13 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { RoleGuard } from './role.guard';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
-import { RoleGuardGuard } from './role.guard';
-
-describe('RoleGuardGuard', () => {
-  let guard: RoleGuardGuard;
+describe('RoleGuard', () => {
+  let guard: RoleGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(RoleGuardGuard);
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+    });
+    guard = TestBed.inject(RoleGuard);
   });
 
   it('should be created', () => {

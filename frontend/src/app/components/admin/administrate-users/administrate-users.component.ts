@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserManagementService} from "../../../../services/generated/services/user-management.service";
 import {UserListModel} from "../../../../services/generated/models/user-list-model";
 import {firstValueFrom, lastValueFrom} from "rxjs";
@@ -17,10 +17,10 @@ import {UserService} from "../../../services/user.service";
   templateUrl: './administrate-users.component.html',
   styleUrls: ['./administrate-users.component.scss']
 })
-export class AdministrateUsersComponent implements OnInit, AfterViewInit {
+export class AdministrateUsersComponent implements OnInit {
 
   public users: UserListModel[] | undefined;
-  public isLoading: boolean = false;
+  public isLoading: boolean | undefined;
   displayedColumns: string[] = ['lastName', 'firstName', 'highestRoleType', 'email', 'matrikelNumber' ,'actions'];
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,9 +36,7 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private userService: UserService) { }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.isLoading = true;
     void this.loadUsers().then(() => {
       this.dataSource = new MatTableDataSource<UserListModel>(this.users);
@@ -78,7 +76,7 @@ export class AdministrateUsersComponent implements OnInit, AfterViewInit {
       data: {user: user},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    await lastValueFrom(dialogRef.afterClosed()).then(result => {
       if (result != null) {
         user.highestRoleType = result;
         this.changeRole(user);

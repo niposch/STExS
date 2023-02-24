@@ -2847,11 +2847,7 @@
             "type": "boolean",
             "readOnly": true
           },
-          "exerciseId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "userId": {
+          "userSubmissionId": {
             "type": "string",
             "format": "uuid"
           },
