@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
 import {RoleType} from "../../../services/generated/models/role-type";
 import {AuthenticateService} from "../../../services/generated/services/authenticate.service";
-import {firstValueFrom, lastValueFrom} from "rxjs";
+import {lastValueFrom} from "rxjs";
+import {ApplicationUser} from "../../../services/generated/models/application-user";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile',
@@ -23,15 +24,18 @@ export class ProfileComponent implements OnInit {
   phoneNumber: string = "";
   savingInProgress: boolean = false;
 
+  public user : ApplicationUser | undefined;
+
   constructor(private readonly userService: UserService,
               private readonly authenticationService:AuthenticateService,
-              private readonly router: Router) {
+              public snackBar: MatSnackBar) {
   }
 
   initUserDataLoading(){
     this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
         console.log(user);
+        this.user = user;
         this.userName = user.userName ?? "";
         this.email = user.email ?? "";
         this.firstName = user.firstName ?? "";
@@ -91,5 +95,15 @@ export class ProfileComponent implements OnInit {
 
       this.savingInProgress = false;
       console.log("SAVED:\t" + this.userName + "\t" + this.firstName + "\t" + this.lastName + "\t" + this.email + "\t" + this.matrikelNummer + "\t" + this.phoneNumber)
+  }
+
+  sendVerificationEmail() {
+    lastValueFrom(this.authenticationService.apiAuthenticateResendConfirmationEmailPost({
+      email: this.user!.email!
+    })).catch(() => {
+      this.snackBar.open("Failed to send email", "OK");
+    }).then(() => {
+      this.snackBar.open("Verification EMail sent!", "OK");
+    });
   }
 }
