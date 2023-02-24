@@ -65,7 +65,8 @@ public class AuthenticateController : ControllerBase
     
     [HttpPost]
     [Route("login")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SignedInResult))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(SignedInResult))]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] AppLoginModel model)
     {
@@ -76,12 +77,22 @@ public class AuthenticateController : ControllerBase
         }
         
         var result = await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
+        if(result.IsNotAllowed && !user.EmailConfirmed)
+        {
+            return this.BadRequest(SignedInResult.EmailNotConfirmed);
+        }
         if (result.Succeeded)
         {
             await this.signInManager.SignInAsync(user, true);
-            return this.Ok();
+            return this.Ok(SignedInResult.Success);
         }
-        return this.Unauthorized();
+        return this.Unauthorized(SignedInResult.Failed);
+    }
+    public enum SignedInResult
+    {
+        Success = 0,
+        EmailNotConfirmed = 1,
+        Failed = 2
     }
 
     [HttpPost]
@@ -116,7 +127,7 @@ public class AuthenticateController : ControllerBase
         }
         if (confirmEmail)
         {
-            // TODO implement email confirmation
+            await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
         }
 
         return this.Ok();
