@@ -3,7 +3,6 @@ import {UserService} from "../../services/user.service";
 import {RoleType} from "../../../services/generated/models/role-type";
 import {AuthenticateService} from "../../../services/generated/services/authenticate.service";
 import {lastValueFrom} from "rxjs";
-import {ApplicationUser} from "../../../services/generated/models/application-user";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -24,7 +23,7 @@ export class ProfileComponent implements OnInit {
   phoneNumber: string = "";
   savingInProgress: boolean = false;
 
-  public user : ApplicationUser | undefined;
+  emailConfirmed : boolean = false;
 
   constructor(private readonly userService: UserService,
               private readonly authenticationService:AuthenticateService,
@@ -35,7 +34,7 @@ export class ProfileComponent implements OnInit {
     this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
         console.log(user);
-        this.user = user;
+        this.emailConfirmed = user.emailConfirmed ?? false;
         this.userName = user.userName ?? "";
         this.email = user.email ?? "";
         this.firstName = user.firstName ?? "";
@@ -99,7 +98,7 @@ export class ProfileComponent implements OnInit {
 
   sendVerificationEmail() {
     lastValueFrom(this.authenticationService.apiAuthenticateResendConfirmationEmailPost({
-      email: this.user!.email!
+      email: this.email
     })).catch(() => {
       this.snackBar.open("Failed to send email", "OK");
     }).then(() => {
