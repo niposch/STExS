@@ -37,14 +37,18 @@ public sealed class ExerciseService: IExerciseService
         
         exercise = await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
 
-        return ToDetailItem(exercise);
+        return ToDetailItem(exercise, null);
     }
 
-    public async Task<List<ExerciseDetailItem>> GetByChapterIdAsync(Guid chapterId, CancellationToken cancellationToken = default)
+    public async Task<List<ExerciseDetailItem>> GetByChapterIdAsync(Guid chapterId, Guid userId, CancellationToken cancellationToken = default)
     {
         var exercises = await this.repository.CommonExercises.GetForChapterAsync(chapterId, cancellationToken);
+        var userSubmissions = await this.repository.UserSubmissions.GetAllByUserIdAndChapterAsync(chapterId, userId, cancellationToken);
 
-        return exercises.Select(e => ToDetailItem(e))
+        return exercises.Select(e => 
+                ToDetailItem(e, 
+                    userSubmissions.Any(s => s.FinalSubmission != null && s.ExerciseId == e.Id)
+                    ))
             .ToList();
     }
 
@@ -57,7 +61,7 @@ public sealed class ExerciseService: IExerciseService
     {
         var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, false, cancellationToken) ?? throw new EntityNotFoundException<BaseExercise>(exerciseId);
 
-        return ToDetailItem(exercise);
+        return ToDetailItem(exercise, null);
     }
 
     public async Task<List<ExerciseDetailItem>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -65,7 +69,7 @@ public sealed class ExerciseService: IExerciseService
         var all = await this.repository.CommonExercises.GetAllAsync(cancellationToken);
 
         return all
-            .Select(e => ToDetailItem(e))
+            .Select(e => ToDetailItem(e, null))
             .ToList();
     }
 
@@ -74,11 +78,11 @@ public sealed class ExerciseService: IExerciseService
         var all = await this.repository.CommonExercises.SearchAsync(search, cancellationToken);
 
         return all
-            .Select(e => ToDetailItem(e))
+            .Select(e => ToDetailItem(e, null))
             .ToList();
     }
 
-    private static ExerciseDetailItem ToDetailItem(BaseExercise entity)
+    private static ExerciseDetailItem ToDetailItem(BaseExercise entity, bool? userHasSolved)
     {
         return new ExerciseDetailItem
         {
@@ -90,7 +94,8 @@ public sealed class ExerciseService: IExerciseService
             ExerciseDescription = entity.Description,
             ExerciseType = entity.ExerciseType,
             ModificationDate = entity.ModificationTime,
-            RunningNumber = entity.RunningNumber
+            RunningNumber = entity.RunningNumber,
+            UserHasSolvedExercise = userHasSolved
         };
     }
 }

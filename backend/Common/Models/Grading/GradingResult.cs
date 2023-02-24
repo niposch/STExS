@@ -8,19 +8,32 @@ public class GradingResult
     
     public string Comment { get; set; }
     public int Points { get; set; }
-    public bool IsFinal { get; set; }
-    public bool IsAutomatic { get; set; }
+    
+    public GradingState GradingState { get; set; }
+    
+    public bool IsAutomaticallyGraded { get; set; }
+    
     public DateTime? AppealDate { get; set; }
+    
+    public DateTime FinalAppealDate { get; set; }
     
     [NotMapped]
     public bool IsAppealed => AppealDate != null;
-    
-    public Guid UserSubmissionId { get; set; }
-    public UserSubmission UserSubmission { get; set; }
     
     public DateTime CreationDate { get; set; }
     
     public Guid? GradedSubmissionId { get; set; }
     public BaseSubmission? GradedSubmission { get; set; }
     
+}
+
+public enum GradingState
+{
+    Unreviewed,
+    InProgress,
+    Graded,
+    Appealed,
+    AppealAccepted,
+    AppealRejected,
+    FinallyGraded
 }

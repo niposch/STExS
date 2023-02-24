@@ -17,7 +17,7 @@
   </mat-card>
 
   <div class="comp-container">
-    <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId"></app-solve-code-output>
+    <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-code-output>
   </div>
 
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>

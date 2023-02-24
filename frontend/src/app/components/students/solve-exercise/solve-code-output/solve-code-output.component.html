@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="this.isSubmitting" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-card class="master-card">
   <div *ngIf="!this.isLoading" class="vertical-container">
     <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
@@ -7,12 +8,23 @@
     <div class="horizontal-flex answer">
       <mat-form-field class="input vertically-centered">
         <mat-label>Output</mat-label>
-        <input [readonly]="exercise?.userHasSolvedExercise ?? false" matInput class="input-field" [(ngModel)]="this.answerString">
+        <input #answerInputField [readonly]="exercise?.userHasSolvedExercise ?? false" matInput class="input-field"
+          [(ngModel)]="this.answerString">
       </mat-form-field>
-      <button [disabled]="exercise?.userHasSolvedExercise ?? false" class="submit" mat-raised-button color="accent" (click)="this.createNewSubmission(this.timeTrackId, true)">submit</button>
+      <div *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
+      <ng-template #submitButton>
+        <button class="submit" mat-raised-button color="accent"
+                (click)="this.createNewSubmission(this.timeTrackId, true, this.answerString)">
+          <mat-label>submit</mat-label>
+        </button>
+      </ng-template>
+      <ng-template #disabledSubmitButton>
+        <button matTooltip="You have already submitted your final answer" class="submit mat-button-disabled" disableRipple mat-raised-button color="accent">
+          submit
+        </button>
+
+      </ng-template>
     </div>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
 </mat-card>
-
-

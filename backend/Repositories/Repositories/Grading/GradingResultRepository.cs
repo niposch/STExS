@@ -58,7 +58,6 @@ public class GradingResultRepository : IGradingResultRepository
     public async Task<List<GradingResult>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var ex = await this.context.GradingResults
-            .Include(e => e.UserSubmission)
             .ToListAsync(cancellationToken);
         return ex;
     }
