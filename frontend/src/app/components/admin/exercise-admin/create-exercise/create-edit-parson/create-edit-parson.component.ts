@@ -4,7 +4,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {CodeOutputService} from "../../../../../../services/generated/services/code-output.service";
 import {catchError, lastValueFrom} from "rxjs";
 import {ExerciseType} from "../../../../../../services/generated/models/exercise-type";
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, CdkDragEnter, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -26,12 +26,13 @@ export class CreateEditParsonComponent implements OnInit {
 
   public loading = true
 
-  public pieces = [
-    "i = i + 1",
-    "while (i < 10):",
-    "i = 0",
-    "print(i)"
-  ]
+  public create_puzzles: string[] = [ "" ];
+  public puzzles: string[] = [];
+  public empty: string[] =  [];
+  public draggingOutsideSourceList: boolean = false;
+  public isEditingPuzzleName: boolean = true;
+  public puzzleName : string = "";
+  public newPuzzleName : string = "";
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -127,9 +128,34 @@ export class CreateEditParsonComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.pieces, event.previousIndex, event.currentIndex);
-    console.log(this.pieces);
-    console.log(event);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      //console.log(event);
+      if ( [ "puzzle_list", "delete_puzzle_list" ].includes( event.container.id ) ) {
+        //moved created puzzle into puzzle list or delete puzzle
+        //allow creation of new puzzle
+        this.isEditingPuzzleName = true;
+      }
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.draggingOutsideSourceList = false;
+    console.log(this.puzzles);
+  }
+
+  onCdkDragEntered(event: CdkDragEnter<string>) {
+    this.draggingOutsideSourceList = event.container.id == "delete_puzzle_list" ? true : false;
+  }
+
+  createPuzzle() {
+    this.puzzleName = this.newPuzzleName;
+    this.create_puzzles[0] = this.puzzleName;
+    this.isEditingPuzzleName = false;
   }
 
 }

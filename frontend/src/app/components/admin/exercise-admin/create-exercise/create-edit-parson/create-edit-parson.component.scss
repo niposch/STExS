@@ -47,7 +47,15 @@
     height: 150px;
   }
 
-  .example-list {
+  .drag-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .drag-list {
     width: 500px;
     max-width: 100%;
     border: solid 1px #ccc;
@@ -60,7 +68,11 @@
     margin-bottom: 20px;
   }
   
-  .example-box {
+  .drag-box {
+    padding: 0;
+  }
+
+  .drag-item {
     padding: 20px 10px;
     border-bottom: solid 1px #ccc;
     display: flex;
@@ -73,6 +85,7 @@
     font-size: 14px;
   }
   
+
   .cdk-drag-preview {
     box-sizing: border-box;
     border-radius: 4px;
@@ -82,17 +95,44 @@
   }
   
   .cdk-drag-placeholder {
-    opacity: 0;
+    opacity: 0.5;
   }
   
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
-  .example-box:last-child {
+  .drag-box:last-child {
     border: none;
   }
   
-  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  .drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .drop-list >  .cdk-drag-placeholder {
+    opacity: 1;
+  }
+
+  .example-custom-placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    min-height: 60px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .custom-dragover-placeholder {
+    padding: 20px 10px;
+    background: lightcoral;
+    border: solid 1px dashed;
+  }
+
+  .center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .min-height-container {
+    min-height: 60px;
   }
