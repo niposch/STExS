@@ -1870,6 +1870,37 @@
         }
       }
     },
+    "/api/ParsonPuzzle/create": {
+      "post": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/TimeTrack/{timeTrackId}": {
       "get": {
         "tags": [
@@ -2533,9 +2564,6 @@
             "type": "string",
             "nullable": true
           },
-          "isMultilineResponse": {
-            "type": "boolean"
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -2544,13 +2572,16 @@
             "type": "string",
             "nullable": true
           },
-          "achieveablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
           "chapterId": {
             "type": "string",
             "format": "uuid"
+          },
+          "isMultilineResponse": {
+            "type": "boolean"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3150,6 +3181,49 @@
           "maxParticipants": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseCreateDto": {
+        "type": "object",
+        "properties": {
+          "expectedAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineCreateItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseLineCreateItem": {
+        "type": "object",
+        "properties": {
+          "indentation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
             "nullable": true
           }
         },

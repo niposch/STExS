@@ -32,7 +32,7 @@ export class CreateEditParsonComponent implements OnInit {
   public draggingOutsideSourceList: boolean = false;
   public isEditingPuzzleName: boolean = true;
   public puzzleName : string = "";
-  public newPuzzleName : string = "";
+  public newLine : string = "";
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -153,9 +153,13 @@ export class CreateEditParsonComponent implements OnInit {
   }
 
   createPuzzle() {
-    this.puzzleName = this.newPuzzleName;
+    this.puzzleName = this.newLine;
     this.create_puzzles[0] = this.puzzleName;
     this.isEditingPuzzleName = false;
   }
 
+  addLine() {
+    this.puzzles.push(this.newLine);
+    this.newLine = "";
+  }
 }

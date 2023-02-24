@@ -18,44 +18,13 @@
           <!--add puzzle-->
           <div class="drag-container">
             <h2>Add Element</h2>
-            <div
-              cdkDropList
-              #create_puzzle_list="cdkDropList"
-              [cdkDropListData]="create_puzzles"
-              id="create_puzzle_list"
-              class="drag-list drop-list"
-              (cdkDropListDropped)="drop($event)" >
-              <div class="drag-box" >
-                <div class="drag-item"  *ngIf="isEditingPuzzleName" >
-                  <!-- editing puzzle -->
-                  <mat-form-field class="input-field" style="margin-bottom: -28px; margin-top: -2px">
-                    <mat-label>Line</mat-label>
-                    <input class="name-input" matInput name="text" required placeholder="{{puzzleName}}" [(ngModel)]="newPuzzleName" type="text">
-                  </mat-form-field>
-
-                  <button mat-mini-fab aria-label="Example icon button with a home icon" class="" (click)="createPuzzle()">
-                    <mat-icon>check</mat-icon>
-                  </button>
-                </div>
-                <!--editing finished-->
-                <!--now draging-->
-                <div class="drag-box"  *ngIf="!isEditingPuzzleName" cdkDrag (cdkDragEntered)="onCdkDragEntered($event)">
-                  <ng-template #itemTpl>
-                    <div class="drag-item">
-                      {{create_puzzles[0]}}
-                      <mat-icon>drag_handle</mat-icon>
-                    </div>
-                  </ng-template>
-                  <div *cdkDragPlaceholder>
-                    <div *ngIf="draggingOutsideSourceList; else itemTpl" class="custom-dragover-placeholder">
-                      <div class="center-container">
-                        <mat-icon>delete_outline</mat-icon>
-                      </div>
-                    </div>
-                  </div>
-                  <ng-container *ngTemplateOutlet="itemTpl"></ng-container>
-                </div>
-              </div>
+            <div>
+              <!-- angular material input -->
+              <mat-form-field class="form-field">
+                <mat-label>Element</mat-label>
+                <input matInput type="text" [(ngModel)]="this.newLine">
+              </mat-form-field>
+              <button mat-stroked-button color="accent" (click)="addLine()">Add</button>
             </div>
           </div>
           <!--parson puzzle-->

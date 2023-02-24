@@ -8,24 +8,24 @@
     height: 40px;
     justify-content: space-between;
   }
-  
+
   .create-button {
     height: fit-content;
     width: fit-content;
   }
-  
+
   .horizontal-container {
     display: flex;
     flex-direction: row;
   }
-  
+
   .form-field {
     width: inherit;
     margin-bottom: -7px;
     margin-top: 5px;
     height: fit-content;
   }
-  
+
   .form-field-container {
     min-height: 55px;
     height: fit-content;
@@ -35,14 +35,14 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-  
+
   .checkbox-container {
     padding-left: 15px;
     padding-right: 15px;
     margin-right: 10px;
     width: fit-content;
   }
-  
+
   textarea {
     height: 150px;
   }
@@ -67,7 +67,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
   }
-  
+
   .drag-box {
     padding: 0;
   }
@@ -83,8 +83,9 @@
     cursor: move;
     background: #222222;
     font-size: 14px;
+    color: #fff;
   }
-  
+
 
   .cdk-drag-preview {
     box-sizing: border-box;
@@ -93,19 +94,19 @@
                 0 8px 10px 1px rgba(0, 0, 0, 0.14),
                 0 3px 14px 2px rgba(0, 0, 0, 0.12);
   }
-  
+
   .cdk-drag-placeholder {
     opacity: 0.5;
   }
-  
+
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
-  
+
   .drag-box:last-child {
     border: none;
   }
-  
+
   .drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
