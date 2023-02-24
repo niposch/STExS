@@ -123,6 +123,25 @@ public class AuthenticateController : ControllerBase
     }
 
     [HttpPost]
+    [Route("resendConfirmationEmail")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> ResendConfirmationEmail([FromQuery] string email, CancellationToken cancellationToken)
+    {
+        var user = await this.userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return this.BadRequest();
+        }
+        if(user.EmailConfirmed)
+        {
+            return this.Ok("Already Confirmed");
+        }
+        
+        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
+        return this.Ok("Email Resent");
+
+    }
+    [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] AppRegisterModel model, CancellationToken cancellationToken = default)
     {
