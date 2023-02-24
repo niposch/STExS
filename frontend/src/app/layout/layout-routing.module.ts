@@ -20,6 +20,7 @@ import {
 import {
   GradingExerciseDashboardComponent
 } from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
+import {ConfirmEmailComponent} from "../components/authentication/confirm-email/confirm-email.component";
 
 const routes: Routes = [
   {
@@ -47,7 +48,8 @@ const routes: Routes = [
       {
         path: 'register',
         loadChildren: () => import('../components/authentication/register/register.module').then(x => x.RegisterModule)
-      }
+      },
+      {path: 'confirm-email', component: ConfirmEmailComponent}
     ]
   },
   {

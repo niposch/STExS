@@ -61,6 +61,7 @@ import { GradingModuleDashboardComponent } from './components/admin/grading/grad
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { ConfirmEmailComponent } from './components/authentication/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { SubmissionGradingStatePipe } from './pipes/submission/submission-gradin
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
+    ConfirmEmailComponent,
   ],
     imports: [
         BrowserModule,
