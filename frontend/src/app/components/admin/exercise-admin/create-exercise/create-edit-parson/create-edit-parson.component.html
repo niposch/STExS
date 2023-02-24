@@ -12,7 +12,7 @@
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
         <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-        
+
         <!--drag drop-->
         <div cdkDropListGroup>
           <!--add puzzle-->
@@ -29,10 +29,10 @@
                 <div class="drag-item"  *ngIf="isEditingPuzzleName" >
                   <!-- editing puzzle -->
                   <mat-form-field class="input-field" style="margin-bottom: -28px; margin-top: -2px">
-                    <mat-label>Puzzle Name</mat-label>
+                    <mat-label>Line</mat-label>
                     <input class="name-input" matInput name="text" required placeholder="{{puzzleName}}" [(ngModel)]="newPuzzleName" type="text">
                   </mat-form-field>
-                  
+
                   <button mat-mini-fab aria-label="Example icon button with a home icon" class="" (click)="createPuzzle()">
                     <mat-icon>check</mat-icon>
                   </button>
@@ -104,9 +104,9 @@
             </div>
           </div>
         </div>
-  
+
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-  
+
         <div class="horizontal-container vertically-centered">
           <div class="vertical-container form-field-container checkbox-container">
             <mat-checkbox class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
@@ -125,4 +125,3 @@
       <mat-spinner mode="indeterminate" style="scale: 0.5"></mat-spinner>
     </ng-template>
   </mat-card>
-  
