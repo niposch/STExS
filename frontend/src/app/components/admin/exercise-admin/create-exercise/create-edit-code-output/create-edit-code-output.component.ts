@@ -20,6 +20,7 @@ export class CreateEditCodeOutputComponent implements OnInit {
   public description : string = "";
   public name : string = "";
   public isEditingExercise = false;
+  public isOnlyInspectingExercise = false;
   private runningNumber: number = 0;
 
   public loading = true
@@ -33,6 +34,7 @@ export class CreateEditCodeOutputComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.exerciseId = params['exerciseId'];
       this.chapterId = params['chapterId'];
+      this.isOnlyInspectingExercise = params['inspecting'];
 
       if (this.exerciseId && !this.chapterId) {
         this.isEditingExercise = true;

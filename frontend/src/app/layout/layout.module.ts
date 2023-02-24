@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {QuillModule} from "ngx-quill";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     MatProgressSpinnerModule,
     CdkAccordionModule,
     MatMenuModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    QuillModule
   ]
 })
 export class LayoutModule {

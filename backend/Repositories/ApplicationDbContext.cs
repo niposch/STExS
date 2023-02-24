@@ -99,12 +99,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.Entity<UserSubmission>()
-            .HasMany(s => s.GradingResults)
-            .WithOne(r => r.UserSubmission)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        builder.Entity<UserSubmission>()
             .HasMany(s => s.Submissions)
             .WithOne(s => s.UserSubmission)
             .IsRequired()
@@ -120,6 +114,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 s.UserId,
                 s.ExerciseId
             });
+        
         
         builder.Entity<BaseExercise>()
             .HasMany(e => e.UserSubmissions)

@@ -10,7 +10,7 @@
         <!-- editing module name -->
         <mat-form-field class="input-field" *ngIf="isEditingName">
           <mat-label>Module Name</mat-label>
-          <input matInput class="text-overflow" name="text" required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
+          <input matInput required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
         </mat-form-field>
       </div>
 
@@ -59,11 +59,15 @@
       <mat-divider class="divider"></mat-divider>
 
       <!-- MODULE DESCRIPTION -->
-      <app-user-info-label attributeType="text" attributeName='Module Description' attributeInfo="Module Description"
-      [(value)]="this.moduleDescription"></app-user-info-label>
+      <mat-card style="margin: 5px 0 5px 0; background-color: #424242">
+        <mat-label style="font-size: 16px">Description</mat-label>
+        <div style="margin-top: 10px">
+          <quill-editor [(ngModel)]="this.moduleDescription" placeholder="write here" ></quill-editor>
+        </div>
+      </mat-card>
 
       <!-- PARTICIPANTS SLIDER -->
-      <div class="slider-div">
+      <div class="slider-div mat-elevation-z2">
         <div class="horizontal-slider-div">
           <p class="vertically-centered margin-15-right">allowed participants:</p>
           <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>

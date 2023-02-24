@@ -5,37 +5,38 @@
         <button mat-icon-button (click)="goBack()" style="margin-right: 10px"><mat-icon>arrow_back</mat-icon></button>
         <mat-card-title class="vertically-centered" style="margin-top: 0; margin-bottom: 0">Create a new Code Output Exercise</mat-card-title>
       </div>
-      <button *ngIf="!isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
-      <button *ngIf="isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
+      <button *ngIf="!isEditingExercise && !this.isOnlyInspectingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
+      <button *ngIf="isEditingExercise && !this.isOnlyInspectingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
     </div>
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-      <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
-      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
-      <div class="form-field-container">
-        <mat-form-field class="form-field">
-          <mat-label>Expected Answer</mat-label>
-          <textarea matInput [(ngModel)]="this.expectedAnswer"></textarea>
+      <app-create-exercise [(description)]="this.description" [(name)]="this.name" [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
+
+      <div style="margin-top: 10px; margin-bottom: 10px" class="elevated">
+        <mat-label style="white-space: nowrap; font-size: 16px">Expected Answer</mat-label>
+        <mat-form-field class="form-field" style="width: 100%">
+          <input *ngIf="!this.isOnlyInspectingExercise" matInput type="text" [(ngModel)]="this.expectedAnswer" placeholder="Expected answer">
+          <input *ngIf="this.isOnlyInspectingExercise" disabled matInput type="text" [(ngModel)]="this.expectedAnswer" placeholder="Expected answer">
         </mat-form-field>
       </div>
 
-      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-
-      <div class="horizontal-container vertically-centered">
-        <div class="vertical-container form-field-container checkbox-container">
-          <mat-checkbox class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
+      <div class="horizontal-container vertically-centered" style="height: fit-content">
+        <div class="vertical-container checkbox-container elevated">
+          <mat-checkbox *ngIf="!this.isOnlyInspectingExercise" class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
+          <mat-checkbox *ngIf="this.isOnlyInspectingExercise" disabled class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
         </div>
-        <div class="form-field-container">
+        <div class="form-field-container elevated">
           <mat-form-field class="form-field">
             <mat-label>Achievable Points</mat-label>
-            <input matInput type="number" [(ngModel)]="this.achievablePoints">
+            <input *ngIf="!this.isOnlyInspectingExercise" matInput type="number" [(ngModel)]="this.achievablePoints">
+            <input *ngIf="this.isOnlyInspectingExercise" disabled matInput type="number" [(ngModel)]="this.achievablePoints">
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
   </div>
   <ng-template #loadingSpinner>
-    <mat-spinner mode="indeterminate" style="scale: 0.5"></mat-spinner>
+    <mat-spinner mode="indeterminate" style="scale: 0.5; margin: auto;"></mat-spinner>
   </ng-template>
 </mat-card>

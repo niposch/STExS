@@ -32,13 +32,13 @@ public class CodeOutputSubmissionController: ControllerBase
     public async Task<IActionResult> SubmitCodeOutputSubmission([FromBody] CodeOutputSubmissionCreateItem createItem, Guid timeTrackId, [FromQuery]bool isFinalSubmission, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
-        try
+        try 
         {
             await this.codeOutputSubmissionService.SubmitAsync(userId, createItem.ExerciseId, isFinalSubmission, createItem.SubmittedAnswer, timeTrackId, cancellationToken);
         }
         catch (AlreadySubmittedException e)
         {
-            return this.Forbid();
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
         return this.Ok();
     }
@@ -48,7 +48,7 @@ public class CodeOutputSubmissionController: ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Route("get/{codeOutputExerciseId:guid}")]
-    public async Task<IActionResult> TryGetLastCodeOutputSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid currentTimeTrackId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> TryGetLastCodeOutputSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid? currentTimeTrackId = null, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         try

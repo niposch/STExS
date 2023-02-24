@@ -15,6 +15,12 @@ import {CreateEditCodeOutputComponent} from "../components/admin/exercise-admin/
 import {CreateEditParsonComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component";
 import {NotfoundComponent} from "../components/notfound/notfound.component";
 import {SolveExerciseComponent} from "../components/students/solve-exercise/solve-exercise.component";
+import {
+  GradingModuleDashboardComponent
+} from "../components/admin/grading/grading-module-dashboard/grading-module-dashboard.component";
+import {
+  GradingExerciseDashboardComponent
+} from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
 
 const routes: Routes = [
   {
@@ -70,6 +76,8 @@ const routes: Routes = [
           {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
           {path: "parson/create", component: CreateEditParsonComponent},
           {path: "solve", component: SolveExerciseComponent},
+          {path: "grading", component: GradingModuleDashboardComponent},
+          {path: "grading/exercise", component: GradingExerciseDashboardComponent}
         ]
       },
       {

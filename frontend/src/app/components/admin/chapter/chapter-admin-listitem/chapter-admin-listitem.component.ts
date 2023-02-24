@@ -21,6 +21,7 @@ export class ChapterAdminListitemComponent implements OnInit {
   @Input() public showDeleteButton: boolean = false;
   @Input() public showSolveButton: boolean = false;
   @Input() public canReorder: boolean = false;
+  @Input() public isSolved : boolean = false;
   private isDeleting: boolean = false;
   private showLoading: boolean = false;
 

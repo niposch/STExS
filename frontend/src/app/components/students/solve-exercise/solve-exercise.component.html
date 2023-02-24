@@ -1,4 +1,13 @@
-<div class="comp-container">
+<div class="grid" style="width: 100%;">
+  <div class="vertical-container task-list" style="" *ngIf="!this.isLoading">
+    <mat-card *ngFor="let exercise of exerciseList"
+              style="margin-bottom: 5px"
+              [ngClass]="{'has-solved' : exercise.userHasSolvedExercise, 'selected-exercise' : exercise.id == this.currentExerciseId }"
+              (click)="this.updateExerciseCompById(exercise.id)">
+      <mat-label>{{exercise.exerciseName}}</mat-label>
+    </mat-card>
+  </div>
+
   <mat-card *ngIf="!this.isLoading" class="exercise-cycler">
     <button *ngIf="this.currentExerciseNr == 0" disabled mat-stroked-button color="primary" (click)="this.updateExerciseComp(-1)" class="vertically-centered">previous</button>
     <button *ngIf="this.currentExerciseNr > 0" mat-stroked-button color="primary" (click)="this.updateExerciseComp(-1)" class="vertically-centered">previous</button>
@@ -7,7 +16,9 @@
     <button *ngIf="this.currentExerciseNr < this.exerciseListLength - 1" mat-stroked-button color="primary" (click)="this.updateExerciseComp(1)" class="vertically-centered">next</button>
   </mat-card>
 
-  <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId"></app-solve-code-output>
+  <div class="comp-container">
+    <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-code-output>
+  </div>
 
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
 </div>

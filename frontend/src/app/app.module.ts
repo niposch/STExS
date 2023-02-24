@@ -56,6 +56,12 @@ import {SolveCodeOutputComponent} from './components/students/solve-exercise/sol
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CreateEditParsonComponent } from './components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component';
+import {QuillModule} from "ngx-quill";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
+import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
+import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
+import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
 
 @NgModule({
   declarations: [
@@ -86,37 +92,48 @@ import { CreateEditParsonComponent } from './components/admin/exercise-admin/cre
     SolveCodeOutputComponent,
     SolveExerciseComponent,
     CreateEditParsonComponent,
+    GradingModuleDashboardComponent,
+    GradingExerciseDashboardComponent,
+    SubmissionStatePipe,
+    SubmissionGradingStatePipe,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot([]),
-    BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: ""}),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    LayoutModule,
-    MatInputModule,
-    FormsModule,
-    MatChipsModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatSliderModule,
-    DragDropModule,
-    MatRadioModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot([]),
+        BrowserAnimationsModule,
+        ApiModule.forRoot({rootUrl: ""}),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        LayoutModule,
+        MatInputModule,
+        FormsModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatSliderModule,
+        DragDropModule,
+        MatRadioModule,
+        MatTooltipModule,
+        QuillModule.forRoot({
+            modules: {
+                syntax: true,
+                clipboard: true
+            }
+        }),
+        CdkAccordionModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

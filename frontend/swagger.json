@@ -316,6 +316,67 @@
         }
       }
     },
+    "/api/Chapter/update": {
+      "put": {
+        "tags": [
+          "Chapter"
+        ],
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Chapter/forModule": {
       "get": {
         "tags": [
@@ -949,8 +1010,7 @@
             "name": "search",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           }
         ],
@@ -979,6 +1039,78 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/ExerciseDetailItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Grading/chapter": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Grading/module": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Grading/exercise": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseReportItem"
                   }
                 }
               }
@@ -1842,6 +1974,133 @@
         }
       }
     },
+    "/api/UserManagement/UserLists": {
+      "get": {
+        "tags": [
+          "UserManagement"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserListModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserListModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserListModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UserManagement/changeRole": {
+      "post": {
+        "tags": [
+          "UserManagement"
+        ],
+        "parameters": [
+          {
+            "name": "newHighestRole",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/RoleType"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -2203,6 +2462,20 @@
         },
         "additionalProperties": false
       },
+      "ChapterUpdateItem": {
+        "type": "object",
+        "properties": {
+          "chapterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CodeOutputDetailItem": {
         "type": "object",
         "properties": {
@@ -2440,6 +2713,88 @@
         },
         "additionalProperties": false
       },
+      "ExerciseReportItem": {
+        "type": "object",
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "userFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "matrikelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastSubmissionTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastGradingTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastPoints": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastComment": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIsFinalSubmission": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastIsAutomatic": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastSubmissionState": {
+            "$ref": "#/components/schemas/SubmissionState"
+          },
+          "lastSubmissionGradingState": {
+            "$ref": "#/components/schemas/SubmissionGradingState"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFinalSubmission": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "ExerciseType": {
         "enum": [
           10,
@@ -2477,10 +2832,10 @@
             "type": "integer",
             "format": "int32"
           },
-          "isFinal": {
-            "type": "boolean"
+          "gradingState": {
+            "$ref": "#/components/schemas/GradingState"
           },
-          "isAutomatic": {
+          "isAutomaticallyGraded": {
             "type": "boolean"
           },
           "appealDate": {
@@ -2488,12 +2843,13 @@
             "format": "date-time",
             "nullable": true
           },
-          "userSubmissionId": {
+          "finalAppealDate": {
             "type": "string",
-            "format": "uuid"
+            "format": "date-time"
           },
-          "userSubmission": {
-            "$ref": "#/components/schemas/UserSubmission"
+          "isAppealed": {
+            "type": "boolean",
+            "readOnly": true
           },
           "creationDate": {
             "type": "string",
@@ -2509,6 +2865,28 @@
           }
         },
         "additionalProperties": false
+      },
+      "GradingState": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Unreviewed",
+          "InProgress",
+          "Graded",
+          "Appealed",
+          "AppealAccepted",
+          "AppealRejected",
+          "FinallyGraded"
+        ]
       },
       "IdentityError": {
         "type": "object",
@@ -2866,6 +3244,36 @@
           "Admin"
         ]
       },
+      "SubmissionGradingState": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotGraded",
+          "AutomaticGraded",
+          "ManuallyGraded"
+        ]
+      },
+      "SubmissionState": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "NotStarted",
+          "StartedButNothingSubmitted",
+          "TemporarySubmitted",
+          "FinalSolutionSubmitted"
+        ]
+      },
       "TimeTrack": {
         "type": "object",
         "properties": {
@@ -2973,6 +3381,38 @@
               "$ref": "#/components/schemas/RoleType"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserListModel": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "highestRoleType": {
+            "$ref": "#/components/schemas/RoleType"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "matrikelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false

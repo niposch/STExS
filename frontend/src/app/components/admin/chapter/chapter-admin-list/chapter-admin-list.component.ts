@@ -7,7 +7,6 @@ import {ModuleService} from "../../../../../services/generated/services/module.s
 import {ChapterCreateItem} from "../../../../../services/generated/models/chapter-create-item";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {ReorderChaptersRequest} from "../../../../../services/generated/models/reorder-chapters-request";
 import {lastValueFrom} from "rxjs";
 
 @Component({
@@ -123,7 +122,7 @@ export class ChapterAdminListComponent implements OnInit {
         moduleId: this.moduleId,
         chapterIds: chapterIdArray
       }
-    })).catch(err => {
+    })).catch(() => {
       this.snackBar.open("Could not reorder chapters!", "dismiss")
     })
   }

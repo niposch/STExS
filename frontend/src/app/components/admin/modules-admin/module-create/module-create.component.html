@@ -1,46 +1,46 @@
 <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
   <div class="margin5px">
-    <form (ngSubmit)="createModule()">
       <div class="horizontal-space margin5px">
         <mat-card-title class="heading-text">Create a new module</mat-card-title>
         <div class="horizontal-align vertically-centered">
-          <button type="submit" mat-raised-button color="accent">
+          <button (click)="createModule()" mat-raised-button color="accent">
             <div class="horizontal-button">
               <p class="vertically-centered">create</p>
             </div>
           </button>
         </div>
       </div>
-      <mat-divider></mat-divider>
+      <mat-divider style="margin-bottom: 5px"></mat-divider>
 
-      <div class="margin5px">
+      <div>
         <!-- FIRST ROW -->
-        <div class="horizontal-container">
+        <div class="horizontal-container" style="margin-bottom: 10px">
           <!-- NAME FIELD -->
-          <div class="name-field-div">
+          <div class="name-field-div elevated" style="margin-right:10px">
             <mat-form-field class="name-field-wrapper">
               <mat-label>Name</mat-label>
               <input [(ngModel)]="this.name" matInput name="name"/>
             </mat-form-field>
           </div>
           <!-- PARTICIPANTS SLIDER -->
-          <div class="slider-div">
+          <div class="slider-div elevated">
             <p class="vertically-centered margin5px-right">allowed participants:</p>
             <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
-            <mat-slider class="vertically-centered" min="0" max="205" step="5" (input)="changePartNr($event)"></mat-slider>
+            <mat-slider class="vertically-centered" style="width: 50%" min="0" max="205" step="5" (input)="changePartNr($event)"></mat-slider>
           </div>
         </div>
 
         <!-- SECOND ROW -->
-        <div class="horizontal-container">
-          <mat-form-field class="description-field-wrapper">
-            <mat-label>Description</mat-label>
-            <input [(ngModel)]="this.description" matInput name="description">
-          </mat-form-field>
+        <div class="vertical-container">
+          <div class="elevated">
+            <mat-label style="font-size: 16px">Description</mat-label>
+            <div style="margin-top: 5px;">
+              <quill-editor [(ngModel)]="this.description" placeholder="write here"></quill-editor>
+            </div>
+          </div>
         </div>
 
       </div>
-    </form>
   </div>
 </mat-card>
