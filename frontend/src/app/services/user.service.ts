@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, first, firstValueFrom, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, firstValueFrom, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {AuthenticateService} from "../../services/generated/services/authenticate.service";
-import jwtDecode from "jwt-decode";
 import {ApplicationUser} from "../../services/generated/models/application-user";
 import {RoleType} from "../../services/generated/models/role-type";
 
@@ -20,17 +19,21 @@ export class UserService {
     this.currentRolesSubject = new BehaviorSubject<Array<RoleType> | null>(null);
     this.currentUser = this.currentUserSubject.asObservable();
     this.currentRoles = this.currentRolesSubject.asObservable();
-    firstValueFrom(this.hasCookie()).then(hasCookie => {
+    firstValueFrom(this.hasCookie()).then(() => {
     })
   }
 
   async login(email: string, password: string):Promise<void> {
-    await firstValueFrom(this.authService.apiAuthenticateLoginPost({
-      body:{
-        email: email,
-        password: password
-      }
-    }));
+    try {
+      await firstValueFrom(this.authService.apiAuthenticateLoginPost$Json({
+        body:{
+          email: email,
+          password: password
+        }
+      }));
+    } catch (e) {
+      console.log(e);
+    }
     await firstValueFrom(this.getUserDetails());
   }
 
@@ -44,7 +47,7 @@ export class UserService {
         this.hasCookieCache = true;
         return true;
       }),
-      catchError(err => of(false)))
+      catchError(() => of(false)))
   }
 
   getUserDetails():Observable<void>{
