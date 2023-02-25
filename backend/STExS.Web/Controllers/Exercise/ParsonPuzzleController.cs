@@ -1,4 +1,5 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.DTOs.ExercisesDTOs.CodeOutput;
+using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem.Parson;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,4 +15,29 @@ public class ParsonPuzzleController: ControllerBase
     {
         this.parsonExerciseService = parsonExerciseService;
     }
+
+    #region Administration
+
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] ParsonExerciseCreateDto parsonExerciseCreateDto)
+    {
+        /*
+        var parsonExercise = await this.parsonExerciseService.CreateAsync(parsonExerciseCreateDto);
+        return this.Ok(parsonExercise);
+    */
+        throw new NotImplementedException();
+    }
+
+    #endregion
+}
+
+public class ParsonExerciseCreateDto: BaseExerciseCreateItem
+{
+    public List<ParsonExerciseLineCreateItem> Lines { get; set; }
+}
+
+public class ParsonExerciseLineCreateItem
+{
+    public int Indentation { get; set; }
+    public string Text { get; set; }
 }
