@@ -19,16 +19,16 @@
             <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
           </button>
           <button *ngIf="isModuleAdmin" matTooltip="Grading Dashboard" mat-button [routerLink]="['/grading']" [queryParams]="{moduleid:this.module.moduleId}">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="trending_up"></mat-icon>
+            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="done_all"></mat-icon>
           </button>
-
-          <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
 
           <button mat-button *ngIf="isModuleAdmin" matTooltip="Data Dashboard" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="equalizer"></mat-icon>
           </button>
 
-
+          <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details
+            <mat-icon>info</mat-icon>
+          </button>
           <!-- FAVORITE BUTTON -->
           <!--
           <button *ngIf="!module.isFavorited" mat-button (click)="favoriteModule()">
