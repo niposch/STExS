@@ -30,7 +30,7 @@ mat-card {
 
 .horizontal-space {
   min-height: 30%;
-  height: inherit;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -47,6 +47,7 @@ mat-card {
   flex-direction: column;
   justify-content: space-between;
   width: fit-content;
+  height: fit-content;
 }
 
 .module-description{
@@ -79,6 +80,7 @@ mat-card {
   border-color: #565656;
   border-style: solid;
   border-width: 1px;
+  height: fit-content;
 }
 
 .archived {
