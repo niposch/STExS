@@ -13,7 +13,9 @@
     class="example-accordion-item-body horizontal-container"
     role="region"
     [style.display]="accordionItem.expanded ? '' : 'none'">
-    <quill-view-html [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
+    <div style="max-height: 150px">
+      <quill-view-html [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
+    </div>
     <mat-label class="example-accordion-item-description vertically-centered text-overflow" *ngIf="this.module.moduleDescription == ''">
       no description
     </mat-label>
