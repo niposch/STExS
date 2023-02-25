@@ -5,4 +5,5 @@ namespace Common.RepositoryInterfaces.Tables;
 
 public interface IParsonExerciseRepository: IGenericCrudRepository<ParsonExercise>
 {
+    Task<ParsonExercise> CreateAsync(ParsonExercise entity, CancellationToken cancellationToken = default);
 }

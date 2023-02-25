@@ -8,11 +8,11 @@ public interface IParsonExerciseService
 {
     public Task<ParsonDetailItem> GetByIdAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
     
-    public Task<ParsonExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid exerciseId, CancellationToken cancellationToken = default);
+    public Task<ParsonExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
     
-    public Task<ParsonExerciseDetailItemWithAnswer> UpdateAsync(ParsonExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default);
+    public Task UpdateAsync(ParsonExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default);
     
-    public Task<ParsonExerciseDetailItemWithAnswer> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default);
+    public Task<Guid> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default);
 }
 
 public class ParsonExerciseDetailItemWithAnswer : ExerciseDetailItem

@@ -9,4 +9,6 @@ public class BaseExerciseCreateItem
     public string ExerciseDescription { get; set; }
     
     public Guid ChapterId { get; set; }
+    
+    public int AchieveablePoints { get; set; }
 }

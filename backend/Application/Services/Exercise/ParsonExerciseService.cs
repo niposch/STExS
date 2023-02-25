@@ -1,11 +1,10 @@
 ﻿using Application.DTOs.ExercisesDTOs.Parson;
 using Application.Services.Interfaces;
 using Common.Exceptions;
+using Common.ExtensionMethods;
 using Common.Models.ExerciseSystem;
-using Common.Models.ExerciseSystem.CodeOutput;
 using Common.Models.ExerciseSystem.Parson;
 using Common.RepositoryInterfaces.Generic;
-using Common.RepositoryInterfaces.Tables;
 
 namespace Application.Services.Exercise;
 
@@ -51,15 +50,18 @@ public class ParsonExerciseService : IParsonExerciseService
                     Id = l.Id,
                     Indentation = 0,
                     Text = l.Code
-                }).ToList()
+                }).Randomize()
+                .ToList()
         };
     }
 
-    public async Task<ParsonExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid exerciseId, CancellationToken cancellationToken = default)
+    public async Task<ParsonExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
     {
         var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(exerciseId, cancellationToken) ?? throw new EntityNotFoundException<ParsonExercise>(exerciseId);
 
-        return this.ToDetailItemWithAnswers(exercise);
+        var hasUserSolvedExercise = await this.submissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
+
+        return this.ToDetailItemWithAnswers(exercise,hasUserSolvedExercise.FinalSubmissionId != null);
     }
 
     private ParsonExerciseDetailItemWithAnswer ToDetailItemWithAnswers(ParsonExercise entity,  bool userHasSolvedExercise)
@@ -81,19 +83,51 @@ public class ParsonExerciseService : IParsonExerciseService
                 .Select(l => new ParsonExerciseLineDetailItem()
                 {
                     Id = l.Id,
-                    Indentation = l.,
+                    Indentation = l.Indentation,
                     Text = l.Code
                 }).ToList()
         };
     }
 
-    public Task<ParsonExerciseDetailItemWithAnswer> UpdateAsync(ParsonExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(ParsonExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(item.Id, cancellationToken) ??
+                       throw new EntityNotFoundException<ParsonExercise>(item.Id);
+        
+        exercise = this.UpdateExercise(exercise, item);
+; }
+
+    private ParsonExercise UpdateExercise(ParsonExercise entity, ParsonExerciseDetailItemWithAnswer detailItem)
+    {
+        entity.ChapterId = detailItem.ChapterId;
+        entity.Description = detailItem.ExerciseDescription;
+        entity.AchievablePoints = detailItem.AchieveablePoints;
+        entity.ExerciseName = detailItem.ExerciseName;
+        // TODO update entity.ExpectedSolution  : overwrite old list with new list transformed from DetailsANsweretc.
+        return entity;
     }
 
-    public Task<ParsonExerciseDetailItemWithAnswer> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default)
+    public async Task<Guid> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var nextAvailableExerciseNumberInChapter = (await this.repository.CommonExercises.GetForChapterAsync(createItem.ChapterId, cancellationToken))
+            .Select(e => e.RunningNumber)
+            .DefaultIfEmpty(0)
+            .Max() + 1;
+
+        var entity = new ParsonExercise()
+        {
+            Id = Guid.NewGuid(),
+            ExerciseName = createItem.ExerciseName,
+            ChapterId = createItem.ChapterId,
+            ExerciseType = ExerciseType.CodeOutput,
+            AchievablePoints = createItem.AchieveablePoints,
+            Description = createItem.ExerciseDescription,
+            ExpectedSolution = new ParsonSolution(),
+            RunningNumber = nextAvailableExerciseNumberInChapter,
+            OwnerId = userId
+        };
+        var createdEntity = await this.repository.ParsonExercises.CreateAsync(entity, cancellationToken);
+
+        return entity.Id;
     }
 }
