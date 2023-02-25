@@ -99,7 +99,7 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
         };
     }
 
-    private CodeOutputExerciseDetailItemWithAnswer ToDetailItemWithoutAnswers(CodeOutputExercise entity, bool userHasSolvedExercise)
+    private CodeOutputDetailItem ToDetailItemWithoutAnswers(CodeOutputExercise entity, bool userHasSolvedExercise)
     {
         return new CodeOutputExerciseDetailItemWithAnswer
         {
