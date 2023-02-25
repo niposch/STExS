@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.ExercisesDTOs.CodeOutput;
+﻿namespace Application.DTOs.ExercisesDTOs;
 
 public class BaseExerciseCreateItem
 {
