@@ -24,7 +24,7 @@
 
           <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details <mat-icon>send</mat-icon></button>
 
-          <button mat-button *ngIf="isModuleAdmin" matTooltip="Data Dashboard">
+          <button mat-button *ngIf="isModuleAdmin" matTooltip="Data Dashboard" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="equalizer"></mat-icon>
           </button>
 

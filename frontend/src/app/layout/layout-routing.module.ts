@@ -24,6 +24,7 @@ import {AdministrateUsersComponent} from "../components/admin/administrate-users
 import {RoleType} from "../../services/generated/models";
 import {RoleGuard} from "../guards/role.guard";
 import {NoAccessComponent} from "../components/no-access/no-access.component";
+import {DataDashboardComponent} from "../components/admin/data-dashboard/data-dashboard.component";
 
 const routes: Routes = [
   {
@@ -80,6 +81,7 @@ const routes: Routes = [
               {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
+              {path: "data", component: DataDashboardComponent}
             ]
           },
           {
