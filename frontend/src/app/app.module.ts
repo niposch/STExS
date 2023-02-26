@@ -68,6 +68,8 @@ import { ChangeRoleDialogComponent } from './components/admin/administrate-users
 import {MatSelectModule} from "@angular/material/select";
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
+import {BarChartModule} from "@swimlane/ngx-charts";
+import {AreaChartModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
@@ -106,46 +108,48 @@ import { DataDashboardComponent } from './components/admin/data-dashboard/data-d
     NoAccessComponent,
     DataDashboardComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot([]),
-    BrowserAnimationsModule,
-    ApiModule.forRoot({rootUrl: ""}),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    LayoutModule,
-    MatInputModule,
-    FormsModule,
-    MatChipsModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatListModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatSliderModule,
-    DragDropModule,
-    MatRadioModule,
-    MatTooltipModule,
-    QuillModule.forRoot({
-      modules: {
-        syntax: true,
-        clipboard: true
-      }
-    }),
-    CdkAccordionModule,
-    MatSortModule,
-    MatMenuModule,
-    MatSelectModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot([]),
+        BrowserAnimationsModule,
+        ApiModule.forRoot({rootUrl: ""}),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        LayoutModule,
+        MatInputModule,
+        FormsModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatSliderModule,
+        DragDropModule,
+        MatRadioModule,
+        MatTooltipModule,
+        QuillModule.forRoot({
+            modules: {
+                syntax: true,
+                clipboard: true
+            }
+        }),
+        CdkAccordionModule,
+        MatSortModule,
+        MatMenuModule,
+        MatSelectModule,
+        BarChartModule,
+        AreaChartModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

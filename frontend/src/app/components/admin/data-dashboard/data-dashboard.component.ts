@@ -3,7 +3,6 @@ import {ModuleService} from "../../../../services/generated/services/module.serv
 import {ActivatedRoute} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
-
 @Component({
   selector: 'app-data-dashboard',
   templateUrl: './data-dashboard.component.html',
@@ -13,6 +12,15 @@ export class DataDashboardComponent implements OnInit {
 
   public moduleInfo: ModuleDetailItem | undefined;
   public isLoading: boolean = false;
+
+
+  public testData = [
+    {name: "Martin", value: 20},
+    {name: "Tom", value: 25},
+    {name: "Lukas", value: 30},
+    {name: "Max", value: 32},
+  ]
+
   constructor(private readonly moduleService : ModuleService,
               private route: ActivatedRoute) { }
 
