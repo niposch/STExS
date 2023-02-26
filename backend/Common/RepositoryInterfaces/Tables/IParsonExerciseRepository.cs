@@ -3,7 +3,6 @@ using Common.RepositoryInterfaces.Generic;
 
 namespace Common.RepositoryInterfaces.Tables;
 
-public interface IParsonExerciseRepository: IGenericCrudRepository<ParsonExercise>
+public interface IParsonExerciseRepository : IGenericCrudRepository<ParsonExercise>
 {
-    Task<ParsonExercise> CreateAsync(ParsonExercise entity, CancellationToken cancellationToken = default);
 }

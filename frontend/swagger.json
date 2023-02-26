@@ -1879,17 +1879,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ParsonExerciseCreateDto"
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
               }
             }
           }
@@ -2560,10 +2560,6 @@
       "CodeOutputExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "expectedAnswer": {
-            "type": "string",
-            "nullable": true
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -2576,12 +2572,16 @@
             "type": "string",
             "format": "uuid"
           },
-          "isMultilineResponse": {
-            "type": "boolean"
-          },
           "achieveablePoints": {
             "type": "integer",
             "format": "int32"
+          },
+          "isMultilineResponse": {
+            "type": "boolean"
+          },
+          "expectedAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3186,13 +3186,9 @@
         },
         "additionalProperties": false
       },
-      "ParsonExerciseCreateDto": {
+      "ParsonExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "expectedAnswer": {
-            "type": "string",
-            "nullable": true
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -3204,6 +3200,10 @@
           "chapterId": {
             "type": "string",
             "format": "uuid"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
           },
           "lines": {
             "type": "array",
@@ -3254,7 +3254,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "ProfileUpdateItem": {
         "type": "object",
