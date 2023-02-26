@@ -494,7 +494,46 @@
         }
       }
     },
-    "/create": {
+    "/api/ClozeTextExercise/withoutAnswers": {
+      "get": {
+        "tags": [
+          "ClozeTextExercise"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClozeTextExercise/create": {
       "post": {
         "tags": [
           "ClozeTextExercise"
@@ -542,7 +581,7 @@
         }
       }
     },
-    "/update": {
+    "/api/ClozeTextExercise/update": {
       "post": {
         "tags": [
           "ClozeTextExercise"
@@ -573,7 +612,7 @@
         }
       }
     },
-    "/withAnswers": {
+    "/api/ClozeTextExercise/withAnswers": {
       "get": {
         "tags": [
           "ClozeTextExercise"
@@ -2597,9 +2636,9 @@
       "ClozeTextExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "id": {
+          "text": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "exerciseName": {
             "type": "string",
@@ -2609,38 +2648,13 @@
             "type": "string",
             "nullable": true
           },
-          "exerciseType": {
-            "$ref": "#/components/schemas/ExerciseType"
-          },
-          "runningNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
           "chapterId": {
             "type": "string",
             "format": "uuid"
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "modificationDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "userHasSolvedExercise": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2667,7 +2681,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -2718,7 +2732,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -2797,7 +2811,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -2883,7 +2897,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },

@@ -6,7 +6,7 @@
     </mat-form-field>
   </div>
   <div style="margin-top: 10px" class="elevated">
-    <mat-label style="white-space: nowrap">Description / Question</mat-label>
+    <mat-label style="white-space: nowrap">Description</mat-label>
     <div style="margin-bottom: 5px"></div>
     <quill-editor *ngIf="!this.isOnlyInspecting" [(ngModel)]="this.description" placeholder="write here" (keyup)="emitValues()"></quill-editor>
     <quill-view-html *ngIf="this.isOnlyInspecting" [content]="this.description" theme="bubble"></quill-view-html>

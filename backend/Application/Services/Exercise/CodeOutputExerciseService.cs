@@ -7,10 +7,10 @@ using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services.Exercise;
 
-public class CodeOutputExerciseService: ICodeOutputExerciseService
+public class CodeOutputExerciseService : ICodeOutputExerciseService
 {
     private readonly IApplicationRepository repository;
-    
+
     private readonly IUserSubmissionService submissionService;
 
     public CodeOutputExerciseService(IApplicationRepository repository, IUserSubmissionService submissionService)
@@ -40,7 +40,7 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
             .Select(e => e.RunningNumber)
             .DefaultIfEmpty(0)
             .Max() + 1;
-        
+
         var entity = new CodeOutputExercise
         {
             Id = Guid.NewGuid(),
@@ -62,9 +62,9 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
     public async Task<CodeOutputExerciseDetailItemWithAnswer> UpdateAsync(CodeOutputExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
     {
         var exercise = await this.repository.CodeOutputExercises.TryGetById(item.Id, cancellationToken) ?? throw new EntityNotFoundException<CodeOutputExercise>(item.Id);
-        
+
         exercise = this.UpdateExercise(exercise, item);
-        
+
         return this.ToDetailItemWithAnswers(await this.repository.CodeOutputExercises.UpdateAsync(exercise, cancellationToken));
     }
 
@@ -73,7 +73,7 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
         entity.Id = detailItem.Id;
         entity.ChapterId = detailItem.ChapterId;
         entity.Description = detailItem.ExerciseDescription;
-        entity.AchievablePoints = detailItem.AchieveablePoints;
+        entity.AchievablePoints = detailItem.AchievablePoints;
         entity.ExerciseName = detailItem.ExerciseName;
         entity.ExpectedAnswer = detailItem.ExpectedAnswer;
         entity.IsMultiLineResponse = detailItem.IsMultiLineResponse;
@@ -90,12 +90,12 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
             IsMultiLineResponse = entity.IsMultiLineResponse,
             ExerciseType = ExerciseType.CodeOutput,
             Id = entity.Id,
-            AchieveablePoints = entity.AchievablePoints,
+            AchievablePoints = entity.AchievablePoints,
             ChapterId = entity.ChapterId,
             ExerciseName = entity.ExerciseName,
             CreationDate = entity.CreationTime,
             ModificationDate = entity.ModificationTime,
-            RunningNumber = entity.RunningNumber,
+            RunningNumber = entity.RunningNumber
         };
     }
 
@@ -108,7 +108,7 @@ public class CodeOutputExerciseService: ICodeOutputExerciseService
             IsMultiLineResponse = entity.IsMultiLineResponse,
             ExerciseType = ExerciseType.CodeOutput,
             Id = entity.Id,
-            AchieveablePoints = entity.AchievablePoints,
+            AchievablePoints = entity.AchievablePoints,
             ChapterId = entity.ChapterId,
             ExerciseName = entity.ExerciseName,
             CreationDate = entity.CreationTime,
