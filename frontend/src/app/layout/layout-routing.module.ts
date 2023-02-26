@@ -24,6 +24,9 @@ import {AdministrateUsersComponent} from "../components/admin/administrate-users
 import {RoleType} from "../../services/generated/models";
 import {RoleGuard} from "../guards/role.guard";
 import {NoAccessComponent} from "../components/no-access/no-access.component";
+import {
+  CreateEditClozeComponent
+} from "../components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component";
 
 const routes: Routes = [
   {
@@ -78,6 +81,7 @@ const routes: Routes = [
               {path: "module/administrate", component: AdministrateModuleComponent},
               {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
               {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
+              {path: "cloze/create", component: CreateEditClozeComponent },
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
             ]
