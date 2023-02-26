@@ -67,6 +67,7 @@ public class ParsonExerciseService : IParsonExerciseService
             OwnerId = userId
         };
 
+        createItem.Lines ??= new List<ParsonExerciseLineCreateItem>();
         entity.ExpectedSolution.CodeElements = createItem.Lines.Select((l, i) => new ParsonElement
         {
             Id = Guid.NewGuid(),

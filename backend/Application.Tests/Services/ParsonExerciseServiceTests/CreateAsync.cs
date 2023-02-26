@@ -53,4 +53,31 @@ public class CreateAsync : Infrastructure
         lines.Select(l => l.OwnerId).Should().OnlyContain(id => id == userId);
         lines.Select(l => l.RelatedSolutionId).Should().OnlyContain(id => id == entity.Id);
     }
+
+    [Fact]
+    public async Task ShouldCreateWithNoLines()
+    {
+        // Arrange
+        var parsonExercise = this.Fixture.Build<ParsonExerciseCreateItem>()
+            .Without(m => m.Lines)
+            .Create();
+
+        var userId = Guid.NewGuid();
+
+        // Act
+        var id = await this.Service.CreateAsync(parsonExercise, userId);
+
+        // Assert
+        this.Context.ParsonExercises.Should().HaveCount(1);
+        this.Context.ParsonSolutions.Should().HaveCount(1);
+        this.Context.ParsonElements.Should().HaveCount(0);
+        var entity = await this.Context.ParsonExercises.FindAsync(id);
+        entity.Should().NotBeNull();
+        entity.RunningNumber.Should().Be(1);
+        entity.ExerciseName.Should().Be(parsonExercise.ExerciseName);
+        entity.ChapterId.Should().Be(parsonExercise.ChapterId);
+        entity.Description.Should().Be(parsonExercise.ExerciseDescription);
+        entity.ExpectedSolution.Should().NotBeNull();
+        entity.ExpectedSolution.CodeElements.Should().BeEmpty();
+    }
 }
