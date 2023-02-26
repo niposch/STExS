@@ -23,6 +23,11 @@ public class ApplicationModule : Module
         builder.RegisterType<ParsonExerciseService>()
                .As<IParsonExerciseService>()
                .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ClozeTextExerciseService>()
+                .As<IClozeTextExerciseService>()
+                .InstancePerLifetimeScope();
+        
         builder.RegisterType<CodeOutputExerciseService>()
             .As<ICodeOutputExerciseService>()
             .InstancePerLifetimeScope();
