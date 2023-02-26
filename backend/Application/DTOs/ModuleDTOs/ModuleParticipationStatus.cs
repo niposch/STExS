@@ -2,8 +2,8 @@
 
 public enum ModuleParticipationStatus
 {
-    NotParticipating,
-    Requested,
-    Accepted,
-    Admin
+    NotParticipating = 0,
+    Requested = 1,
+    Accepted = 2,
+    Admin = 3
 }

@@ -54,6 +54,19 @@ import {MemberListAdminComponent} from './components/admin/modules-admin/member-
 import {CreateEditCodeOutputComponent} from './components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component';
 import {SolveCodeOutputComponent} from './components/students/solve-exercise/solve-code-output/solve-code-output.component';
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {QuillModule} from "ngx-quill";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
+import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
+import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
+import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
+import {MatSortModule} from "@angular/material/sort";
+import {MatMenuModule} from "@angular/material/menu";
+import { ChangeRoleDialogComponent } from './components/admin/administrate-users/change-role-dialog/change-role-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
+import { NoAccessComponent } from './components/no-access/no-access.component';
 import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
 
 @NgModule({
@@ -85,6 +98,13 @@ import { SolveGapTextComponent } from './components/students/solve-exercise/solv
     SolveCodeOutputComponent,
     SolveExerciseComponent,
     SolveGapTextComponent,
+    GradingModuleDashboardComponent,
+    GradingExerciseDashboardComponent,
+    SubmissionStatePipe,
+    SubmissionGradingStatePipe,
+    AdministrateUsersComponent,
+    ChangeRoleDialogComponent,
+    NoAccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,7 +133,18 @@ import { SolveGapTextComponent } from './components/students/solve-exercise/solv
     MatDialogModule,
     MatSliderModule,
     DragDropModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: true,
+        clipboard: true
+      }
+    }),
+    CdkAccordionModule,
+    MatSortModule,
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.Models.ExerciseSystem.CodeOutput;
 using Common.Models.ExerciseSystem.Parson;
+using Common.Models.Grading;
 using Common.Models.HelperInterfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        this.ConfigureGrading(builder);
         base.OnModelCreating(builder);
     }
 
@@ -68,4 +70,73 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Chapter> Chapters { get; set; }
     
     public DbSet<ModuleParticipation> ModuleParticipations { get; set; }
+
+    #region Grading
+
+    public DbSet<GradingResult> GradingResults { get; set; }
+    
+    public DbSet<BaseSubmission> Submissions { get; set; }
+    
+    public DbSet<CodeOutputSubmission> CodeOutputSubmissions { get; set; }
+
+    public DbSet<UserSubmission> UserSubmissions { get; set; }
+    
+    public DbSet<TimeTrack> TimeTracks { get; set; }
+    
+    public void ConfigureGrading(ModelBuilder builder)
+    {
+        builder.Entity<GradingResult>()
+            .HasOne(r => r.GradedSubmission)
+            .WithOne(s => s.GradingResult)
+            .HasForeignKey<BaseSubmission>(s => s.GradingResultId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<UserSubmission>()
+            .HasMany(s => s.TimeTracks)
+            .WithOne(t => t.UserSubmission)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.Entity<UserSubmission>()
+            .HasMany(s => s.Submissions)
+            .WithOne(s => s.UserSubmission)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(s => new
+            {
+                s.UserId,
+                s.ExerciseId
+            });
+        builder.Entity<UserSubmission>()
+            .HasKey(s => new
+            {
+                s.UserId,
+                s.ExerciseId
+            });
+        
+        
+        builder.Entity<BaseExercise>()
+            .HasMany(e => e.UserSubmissions)
+            .WithOne(s => s.Exercise)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<BaseSubmission>()
+            .HasDiscriminator(s => s.SubmissionType)
+            .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput);
+        
+        builder.Entity<TimeTrack>()
+            .HasOne(t => t.UserSubmission)
+            .WithMany(s => s.TimeTracks)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(t => new
+            {
+                t.UserId,
+                t.ExerciseId
+            });
+        
+    }
+    #endregion
 }

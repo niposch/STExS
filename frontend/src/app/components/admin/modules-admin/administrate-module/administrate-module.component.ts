@@ -8,6 +8,7 @@ import {ArchiveDialogComponent} from "../../../module/archive-dialog/archive-dia
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MatSliderChange} from "@angular/material/slider";
+import {ModuleParticipationStatus} from "../../../../../services/generated/models/module-participation-status";
 
 @Component({
   selector: 'app-administrate-module',
@@ -34,6 +35,9 @@ export class AdministrateModuleComponent implements OnInit {
   public nrParticipants: number|null = 0;
   public nrParticipantsText: string = "0";
   public isEditingPart: boolean = false;
+  public participationStatus: ModuleParticipationStatus | undefined;
+  moduleParticipationStatus = ModuleParticipationStatus;
+
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private readonly moduleService: ModuleService,
@@ -50,6 +54,13 @@ export class AdministrateModuleComponent implements OnInit {
   }
 
   loadModule(moduleId:string){
+    if (moduleId == "") return
+
+    this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
+      moduleId: moduleId
+    })
+      .subscribe(data => this.participationStatus = data)
+
     this.moduleService.apiModuleGetByIdGet$Json({
       id: moduleId
     })

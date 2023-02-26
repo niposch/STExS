@@ -64,6 +64,7 @@ export class ModuleDetailsComponent implements OnInit {
     })
       .subscribe(data => {
         this.chapterList = data;
+        this.chapterList.sort( (a,b) => this.compareChapters(a,b) );
         if (this.chapterList.length > 0) {
           this.showChapters = true;
         }
@@ -77,7 +78,7 @@ export class ModuleDetailsComponent implements OnInit {
       .subscribe( async () => {
         await lastValueFrom(this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
           moduleId: moduleId
-        })).catch(err => {
+        })).catch(() => {
           this.snackBar.open('An error occurred', 'ok', {duration: 4000})
         })
           .then(value => {
@@ -99,5 +100,19 @@ export class ModuleDetailsComponent implements OnInit {
       .subscribe(value => {
         this.participationStatus = value;
       })
+  }
+
+  private compareChapters(a : ChapterDetailItem = {}, b : ChapterDetailItem = {}) {
+    // @ts-ignore
+    if (a.runningNumber > b.runningNumber) {
+      return 1
+    } else { // @ts-ignore
+      if (a.runningNumber < b.runningNumber) {
+            return -1
+          } else {
+            return 0
+          }
+    }
+
   }
 }

@@ -13,14 +13,9 @@ export class AppComponent implements OnInit{
 
   public temperatures:Array<number> = [];
   constructor(private readonly http: HttpClient,
-              private weatherForecastService: WeatherForecastService
               ) {
   }
 
   ngOnInit(): void {
-    this.weatherForecastService.getWeatherForecast$Json().subscribe( response => {
-      this.temperatures = response.map(r => r.temperatureC ?? 0);
-      console.table(response);
-    });
   }
 }

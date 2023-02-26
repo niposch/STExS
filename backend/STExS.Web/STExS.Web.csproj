@@ -49,7 +49,7 @@
     <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Condition="'$(DontBuildSwagger)' != 'true'" Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet swagger tofile --output $([System.IO.Directory]::GetParent($(ProjectDir)).Parent.Parent)\frontend\swagger.json $(OutputPath)\$(AssemblyName).dll v1" EnvironmentVariables="isCI=true" />
   </Target>
 

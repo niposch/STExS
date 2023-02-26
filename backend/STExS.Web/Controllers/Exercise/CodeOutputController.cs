@@ -73,7 +73,8 @@ public class CodeOutputController:ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CodeOutputDetailItem))]
     public async Task<IActionResult> GetExercise([FromQuery] Guid id, CancellationToken cancellationToken = default)
     {
-        var res = await this.codeOutputExerciseService.GetByIdAsync(id, cancellationToken);
+        var userId = this.User.GetUserId();
+        var res = await this.codeOutputExerciseService.GetByIdAsync(id, userId, cancellationToken);
         return this.Ok(res);
     }
     #endregion

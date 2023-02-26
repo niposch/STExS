@@ -9,6 +9,7 @@ export class CreateExerciseComponent implements OnInit {
 
   @Input() public description = "";
   @Input() public name = "";
+  @Input() isOnlyInspecting = false;
   @Output() descriptionChange = new EventEmitter<string>();
   @Output() nameChange = new EventEmitter<string>();
   ngOnInit(): void {}

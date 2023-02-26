@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Application.Services.Exercise;
+using Application.Services.Grading;
 using Application.Services.Interfaces;
 using Application.Services.Permissions;
 using Autofac;
@@ -32,8 +33,32 @@ public class ApplicationModule : Module
             .As<IModuleService>()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<CodeOutputGradingService>()
+            .As<ICodeOutputGradingService>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<AccessService>()
             .As<IAccessService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<GradingService>()
+            .As<IGradingService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<UserSubmissionService>()
+            .As<IUserSubmissionService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<TimeTrackService>()
+            .As<ITimeTrackService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<SubmissionService>()
+            .As<ISubmissionService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<CodeOutputSubmissionService>()
+            .As<ICodeOutputSubmissionService>()
             .InstancePerLifetimeScope();
         
         // Helper

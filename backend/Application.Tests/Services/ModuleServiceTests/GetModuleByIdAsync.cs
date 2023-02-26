@@ -1,4 +1,5 @@
-﻿using Common.Exceptions;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Exceptions;
 using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
@@ -6,6 +7,8 @@ namespace Application.Tests.Services.ModuleServiceTests;
 public sealed class GetModuleByIdAsync: Infrastructure
 {
     private Guid id;
+    private Guid userId;
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -26,7 +29,7 @@ public sealed class GetModuleByIdAsync: Infrastructure
         var res = await this.CallAsync();
         
         // Assert
-        res.Should().Be(expectedModule);
+        res.ModuleId.Should().Be(expectedModule.Id);
     }
     
     [Fact]
@@ -42,8 +45,8 @@ public sealed class GetModuleByIdAsync: Infrastructure
         await act.Should().ThrowAsync<EntityNotFoundException<Module>>();
     }
 
-    private Task<Module> CallAsync()
+    private Task<ModuleDetailItem> CallAsync()
     {
-        return this.ModuleService.GetModuleByIdAsync(this.id);
+        return this.ModuleService.GetModuleByIdAsync(this.id, this.userId);
     }
 }

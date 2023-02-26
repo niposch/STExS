@@ -44,6 +44,21 @@ public class ChapterController: ControllerBase
         return Ok(chapterId);
     }
     
+    [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Authorize]
+    public async Task<IActionResult> UpdateChapter([FromBody] ChapterUpdateItem chapter, [FromQuery] Guid chapterId, CancellationToken cancellationToken = default)
+    {
+        var userId = this.User.GetUserId();
+        await this.chapterService.UpdateChapterAsync(chapterId,
+            chapter.ChapterName,
+            chapter.ChapterDescription,
+            userId,
+            cancellationToken);
+        return Ok();
+    }
+    
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

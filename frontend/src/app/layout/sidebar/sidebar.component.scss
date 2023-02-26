@@ -32,3 +32,30 @@ mat-divider {
   transform: scale(0.3);
   margin: auto;
 }
+
+.example-accordion {
+  display: block;
+  max-width: 500px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.example-accordion-item {
+  display: block;
+  border: solid 1px #595959;
+  color: #02c0a2;
+}
+
+.example-accordion-item + .example-accordion-item {
+  border-top: none;
+}
+
+.example-accordion-item:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.example-accordion-item:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

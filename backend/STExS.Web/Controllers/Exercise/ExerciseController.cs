@@ -1,9 +1,11 @@
-﻿using Application.DTOs.ExercisesDTOs;
+﻿using System.Runtime.InteropServices;
+using Application.DTOs.ExercisesDTOs;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using STExS.Helper;
 
 namespace STExS.Controllers.Exercise;
 
@@ -41,7 +43,8 @@ public class ExerciseController: ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ExerciseDetailItem>))]
     public async Task<IActionResult> GetByChapterId([FromQuery] Guid chapterId, CancellationToken cancellationToken = default)
     {
-        var data = await this.exerciseService.GetByChapterIdAsync(chapterId, cancellationToken);
+        var userId = this.User.GetUserId();
+        var data = await this.exerciseService.GetByChapterIdAsync(chapterId, userId, cancellationToken);
         return this.Ok(data);
     }
     
@@ -60,5 +63,14 @@ public class ExerciseController: ControllerBase
     {
         var res = await this.exerciseService.CopyToChapterAsync(exerciseId, toChapter, cancellationToken);
         return this.Ok(res);
+    }
+    
+    [HttpGet("search")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ExerciseDetailItem>))]
+    public async Task<IActionResult> Search([FromQuery] string? search, CancellationToken cancellationToken = default)
+    {
+        search ??= string.Empty;
+        var data = await this.exerciseService.SearchAsync(search, cancellationToken);
+        return this.Ok(data);
     }
 }

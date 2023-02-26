@@ -1,8 +1,11 @@
 ﻿using Application.Helper.Roles;
+using AutoFixture.Kernel;
 using Common.Exceptions;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
+using Common.Models.Grading;
 using Moq;
+using TestHelper.Customizations;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
@@ -17,6 +20,8 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
         // Arrange
         this.id = Guid.NewGuid();
         
+        // UserSubmission should use NoSpecimen to avoid creating a UserSubmission
+        this.Fixture.Customizations.Add(new PropertyTypeExclusion<BaseExercise>());
         this.ApplicationDbContext.Modules.Add(this.Fixture.Build<Module>()
             .With(m => m.Id, this.id)
             .Create());

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from "../../../../../services/generated/services/module.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {lastValueFrom} from "rxjs";
+import {catchError, lastValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../../module/delete-dialog/delete-dialog.component";
@@ -10,6 +10,7 @@ import {ChapterDetailItem} from "../../../../../services/generated/models/chapte
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 import {ExerciseService} from "../../../../../services/generated/services/exercise.service";
 import {ExerciseType} from "../../../../../services/generated/models/exercise-type";
+import {ModuleParticipationStatus} from "../../../../../services/generated/models/module-participation-status";
 
 @Component({
   selector: 'app-chapter-admin-administrate',
@@ -19,8 +20,6 @@ import {ExerciseType} from "../../../../../services/generated/models/exercise-ty
 
 export class ChapterAdminAdministrateComponent implements OnInit {
   public chapter : ChapterDetailItem | null = null;
-  public chapterName : string | null | undefined = "";
-  public chapterDescription : string | null | undefined = "";
   public moduleName: string | null | undefined = "Module";
   public isEditingName: boolean = false;
   public newChapterName: string = "";
@@ -35,6 +34,8 @@ export class ChapterAdminAdministrateComponent implements OnInit {
 
   public ExerciseTypeEnum = ExerciseType
   private moduleId : string = "";
+  public participationStatus: ModuleParticipationStatus | undefined;
+  moduleParticipationStatus = ModuleParticipationStatus;
 
   constructor(private readonly activatedRoute:ActivatedRoute,
               private router: Router, public snackBar: MatSnackBar,
@@ -58,8 +59,6 @@ export class ChapterAdminAdministrateComponent implements OnInit {
     })
       .subscribe(c => {
         this.chapter = c;
-        this.chapterName = c?.chapterName;
-        this.chapterDescription = c?.chapterDescription;
         // @ts-ignore
         this.moduleId = c?.moduleId;
 
@@ -69,7 +68,11 @@ export class ChapterAdminAdministrateComponent implements OnInit {
   }
 
   loadModule (id : string) {
-    console.log("ID: " + id)
+    this.moduleService.apiModuleGetModuleParticipationStatusGet$Json({
+      moduleId: id
+    })
+      .subscribe(data => this.participationStatus = data)
+
     this.moduleService.apiModuleGetByIdGet$Json({
       id: id
     })
@@ -89,21 +92,34 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       })
   }
 
-  nameEditButton() {
-    this.isEditingName = !this.isEditingName;
-
-    if ( (!this.isEditingName) && (this.newChapterName != "") ) {
-      this.chapterName = this.newChapterName;
-    }
-  }
-
-  saveModuleChanges() {
+  saveChapterChanges() {
     if (this.savingInProgress) return;
     this.showLoading = true;
     this.savingInProgress = true;
-    this.snackBar.open("Could not save changes!", "understood", {duration:2000})
-    this.savingInProgress = false;
-    this.showLoading = false;
+    if(this.chapter == null){
+      this.snackBar.open("Could not save changes!", "understood", {duration:2000})
+      this.savingInProgress = false;
+      this.showLoading = false;
+      return;
+    }
+    lastValueFrom(this.chapterService.apiChapterUpdatePut({
+      chapterId: this.chapter?.id,
+      body:{
+        chapterDescription: this.chapter?.chapterDescription,
+        chapterName: this.chapter?.chapterName
+      }
+    })
+      .pipe(catchError(() => {
+        this.snackBar.open("Could not save changes!", "understood", {duration:2000})
+        this.savingInProgress = false;
+        this.showLoading = false;
+        throw new Error();
+      })))
+      .then(() => {
+          this.snackBar.open("Changes saved!", "understood", {duration:2000})
+          this.savingInProgress = false;
+          this.showLoading = false;
+      })
   }
 
   linkToModule() {
@@ -163,5 +179,13 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       this.router.navigate(['**'])
     }
 
+  }
+
+  nameEditButton() {
+    this.isEditingName = !this.isEditingName;
+
+    if ( (!this.isEditingName) && (this.newChapterName != "") ) {
+      this.chapter!.chapterName = this.newChapterName;
+    }
   }
 }

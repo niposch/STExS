@@ -1,11 +1,13 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
 public sealed class GetActiveModulesAsyncTests: Infrastructure
 {
     Guid ownerId = Guid.NewGuid();
-    
+    private Guid userId;
+
     [Fact]
     public async Task GetsUnarchivedModulesOnly()
     {
@@ -38,9 +40,8 @@ public sealed class GetActiveModulesAsyncTests: Infrastructure
             .Without(m => m.ArchivedDate)
             .Create();
     }
-    private Task<IEnumerable<Module>> CallAsync()
+    private Task<IEnumerable<ModuleDetailItem>> CallAsync()
     {
-        return this.ModuleService.GetActiveModulesAsync();
+        return this.ModuleService.GetActiveModulesAsync(this.userId);
     }
-
 }

@@ -330,6 +330,132 @@ namespace Repositories.Migrations
                     b.ToTable("ParsonSolutions");
                 });
 
+            modelBuilder.Entity("Common.Models.Grading.BaseSubmission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GradingResultId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SubmissionType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GradingResultId")
+                        .IsUnique()
+                        .HasFilter("[GradingResultId] IS NOT NULL");
+
+                    b.HasIndex("UserId", "ExerciseId");
+
+                    b.ToTable("Submissions");
+
+                    b.HasDiscriminator<int>("SubmissionType");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.GradingResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("AppealDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FinalAppealDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("GradedSubmissionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("GradingState")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAutomaticallyGraded")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("UserSubmissionExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserSubmissionUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserSubmissionUserId", "UserSubmissionExerciseId");
+
+                    b.ToTable("GradingResults");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.TimeTrack", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CloseDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "ExerciseId");
+
+                    b.ToTable("TimeTracks");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.UserSubmission", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("FinalSubmissionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("FinalSubmissionId");
+
+                    b.ToTable("UserSubmissions");
+                });
+
             modelBuilder.Entity("Common.Models.WeatherForecast", b =>
                 {
                     b.Property<Guid>("Id")
@@ -481,6 +607,17 @@ namespace Repositories.Migrations
                     b.HasDiscriminator().HasValue(60);
                 });
 
+            modelBuilder.Entity("Common.Models.ExerciseSystem.CodeOutput.CodeOutputSubmission", b =>
+                {
+                    b.HasBaseType("Common.Models.Grading.BaseSubmission");
+
+                    b.Property<string>("SubmittedAnswer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue(60);
+                });
+
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonExercise", b =>
                 {
                     b.HasBaseType("Common.Models.ExerciseSystem.BaseExercise");
@@ -598,6 +735,75 @@ namespace Repositories.Migrations
                     b.Navigation("RelatedExercise");
                 });
 
+            modelBuilder.Entity("Common.Models.Grading.BaseSubmission", b =>
+                {
+                    b.HasOne("Common.Models.Grading.GradingResult", "GradingResult")
+                        .WithOne("GradedSubmission")
+                        .HasForeignKey("Common.Models.Grading.BaseSubmission", "GradingResultId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Common.Models.Grading.UserSubmission", "UserSubmission")
+                        .WithMany("Submissions")
+                        .HasForeignKey("UserId", "ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GradingResult");
+
+                    b.Navigation("UserSubmission");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.GradingResult", b =>
+                {
+                    b.HasOne("Common.Models.Grading.UserSubmission", null)
+                        .WithMany("GradingResults")
+                        .HasForeignKey("UserSubmissionUserId", "UserSubmissionExerciseId");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.TimeTrack", b =>
+                {
+                    b.HasOne("Common.Models.Authentication.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Common.Models.Grading.UserSubmission", "UserSubmission")
+                        .WithMany("TimeTracks")
+                        .HasForeignKey("UserId", "ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserSubmission");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.UserSubmission", b =>
+                {
+                    b.HasOne("Common.Models.ExerciseSystem.BaseExercise", "Exercise")
+                        .WithMany("UserSubmissions")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Common.Models.Grading.BaseSubmission", "FinalSubmission")
+                        .WithMany()
+                        .HasForeignKey("FinalSubmissionId");
+
+                    b.HasOne("Common.Models.Authentication.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("FinalSubmission");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Common.Models.WeatherForecast", b =>
                 {
                     b.HasOne("Common.Models.Authentication.ApplicationUser", "Owner")
@@ -665,6 +871,11 @@ namespace Repositories.Migrations
                     b.Navigation("ModuleParticipations");
                 });
 
+            modelBuilder.Entity("Common.Models.ExerciseSystem.BaseExercise", b =>
+                {
+                    b.Navigation("UserSubmissions");
+                });
+
             modelBuilder.Entity("Common.Models.ExerciseSystem.Chapter", b =>
                 {
                     b.Navigation("Exercises");
@@ -680,6 +891,20 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonSolution", b =>
                 {
                     b.Navigation("CodeElements");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.GradingResult", b =>
+                {
+                    b.Navigation("GradedSubmission");
+                });
+
+            modelBuilder.Entity("Common.Models.Grading.UserSubmission", b =>
+                {
+                    b.Navigation("GradingResults");
+
+                    b.Navigation("Submissions");
+
+                    b.Navigation("TimeTracks");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonExercise", b =>

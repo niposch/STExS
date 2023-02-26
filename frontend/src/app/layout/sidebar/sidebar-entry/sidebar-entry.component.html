@@ -1,17 +1,32 @@
-<mat-expansion-panel class="list-item" hideToggle>
-  <mat-expansion-panel-header class="panel">
-    <mat-panel-title class="module-name">{{module.moduleName}}</mat-panel-title>
-  </mat-expansion-panel-header>
-  <div class="expansion-body">
-    <mat-label class="desc-label">{{module.moduleDescription}}</mat-label>
-    <mat-divider class="divider"></mat-divider>
-      <div class="button-container">
-        <button *ngIf="this.isAuthorizedToEdit" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
-          <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
-        </button>
-        <button [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
+<cdk-accordion-item
+  #accordionItem="cdkAccordionItem"
+  class="example-accordion-item"
+  role="button"
+  tabindex="0"
+  [attr.aria-expanded]="accordionItem.expanded">
+  <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+    <mat-label class="text-overflow">
+    {{ module.moduleName }}
+    </mat-label>
   </div>
-</mat-expansion-panel>
+  <div
+    class="example-accordion-item-body horizontal-container"
+    role="region"
+    [style.display]="accordionItem.expanded ? '' : 'none'">
+    <quill-view-html [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
+    <mat-label class="example-accordion-item-description vertically-centered text-overflow" *ngIf="this.module.moduleDescription == ''">
+      no description
+    </mat-label>
+    <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+    <mat-menu #menu="matMenu" class="vertical-container">
+      <button *ngIf="this.isAuthorizedToEdit" class="on-accordion-button" [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}" mat-menu-item>
+        <mat-icon class="icon vertically-centered" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
+        <span class="vertically-centered">edit</span>
+      </button>
+      <button class="vertically-centered" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-menu-item >
+        <mat-icon class="icon vertically-centered">info</mat-icon>
+        <span class="vertically-centered">details</span>
+      </button>
+    </mat-menu>
+  </div>
+</cdk-accordion-item>

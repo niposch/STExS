@@ -1,19 +1,20 @@
 <div *ngIf="module">
+  <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
   <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
   <mat-card class="master-card" [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
     <!-- HEADER -->
     <div class="horizontal-space space-items margin10">
-      <div class="horizontal-flex full-width">
-        <p class="module-name" *ngIf="!isEditingName">{{this.moduleName}}</p>
+      <div class="horizontal-flex text-overflow">
+        <mat-label class="module-name text-overflow" *ngIf="!isEditingName">{{this.moduleName}}</mat-label>
 
         <!-- editing module name -->
         <mat-form-field class="input-field" *ngIf="isEditingName">
           <mat-label>Module Name</mat-label>
-          <input matInput name="text" required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
+          <input matInput required placeholder="{{moduleName}}" [(ngModel)]="newModuleName" type="text">
         </mat-form-field>
       </div>
 
-      <div class="horizontal-flex">
+      <div class="horizontal-flex" style="justify-self: end">
         <app-edit-button class="button" (click)="nameEditButton()" [isEditing]="isEditingName"></app-edit-button>
 
         <!-- SAVE BUTTON -->
@@ -31,7 +32,7 @@
       <div class="horizontal-flex space-items">
 
         <div class="button-container">
-          <button mat-button>
+          <button mat-button *ngIf="false">
             <mat-icon class="icon" aria-hidden="false" aria-label="Favorite Buttonn" fontIcon="favorite" ></mat-icon>
             Favorite
           </button>
@@ -58,11 +59,15 @@
       <mat-divider class="divider"></mat-divider>
 
       <!-- MODULE DESCRIPTION -->
-      <app-user-info-label attributeType="text" attributeName='Module Description' attributeInfo="Module Description"
-      [(value)]="this.moduleDescription"></app-user-info-label>
+      <mat-card style="margin: 5px 0 5px 0; background-color: #424242">
+        <mat-label style="font-size: 16px">Description</mat-label>
+        <div style="margin-top: 10px">
+          <quill-editor [(ngModel)]="this.moduleDescription" placeholder="write here" ></quill-editor>
+        </div>
+      </mat-card>
 
       <!-- PARTICIPANTS SLIDER -->
-      <div class="slider-div">
+      <div class="slider-div mat-elevation-z2">
         <div class="horizontal-slider-div">
           <p class="vertically-centered margin-15-right">allowed participants:</p>
           <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
@@ -76,6 +81,12 @@
       <app-chapter-admin-list [moduleId]="module.moduleId!"></app-chapter-admin-list>
     </mat-card-content>
   </mat-card>
+  </div>
+  <ng-template #unauthorized>
+    <mat-card class="master-card">
+      Unauthorized
+    </mat-card>
+  </ng-template>
 </div>
 
 <mat-spinner class="loading" *ngIf="!module" mode="indeterminate"></mat-spinner>

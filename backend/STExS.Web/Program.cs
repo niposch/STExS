@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using Repositories.Repositories.Grading;
 using STExS.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,7 +61,6 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => option
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.ConfigureApplicationCookie(o =>
 {
-    o.Cookie.SameSite = SameSiteMode.None;
     o.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -92,7 +92,7 @@ app.Use(async (context,
 
 if (!isCI)
 {
-    
+
     if (!isTest)
     {
         using var scope = app.Services.CreateScope();
@@ -109,11 +109,11 @@ if (!isCI)
     };
     foreach (var role in applicationRoles)
     {
-        if(roleManager.FindByNameAsync(role.Name).Result == null)
+        if (roleManager.FindByNameAsync(role.Name).Result == null)
             roleManager.CreateAsync(role).Wait();
     }
 
-// Configure the HTTP request pipeline.
+    // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger(c =>
@@ -166,7 +166,7 @@ if (!isCI)
         }
         userManager.AddToRoleAsync(teacher, RoleHelper.Teacher).Wait();
         userManager.AddToRoleAsync(teacher, RoleHelper.User).Wait();
-        
+
         var user = userManager.FindByNameAsync("dev-user").Result;
         if (user == null)
         {

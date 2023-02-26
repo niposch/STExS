@@ -5,7 +5,7 @@ namespace Application.Services.Interfaces;
 
 public interface ICodeOutputExerciseService
 {
-    public Task<CodeOutputDetailItem> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<CodeOutputDetailItem> GetByIdAsync(Guid id, Guid userId, CancellationToken cancellationToken = default);
     
     public Task<CodeOutputExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid id, CancellationToken cancellationToken = default);
     

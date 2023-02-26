@@ -1,9 +1,12 @@
-﻿using Common.Models.ExerciseSystem;
+﻿using Application.DTOs.ModuleDTOs;
+using Common.Models.ExerciseSystem;
 
 namespace Application.Tests.Services.ModuleServiceTests;
 
 public class GetArchivedModulesAsyncTests : Infrastructure
 {
+    private Guid userId;
+
     [Fact]
     public async Task RetrievesOnlyArchived()
     {
@@ -60,8 +63,8 @@ public class GetArchivedModulesAsyncTests : Infrastructure
         res.Should().BeEmpty();
     }
 
-    private Task<IEnumerable<Module>> CallAsync()
+    private Task<IEnumerable<ModuleDetailItem>> CallAsync()
     {
-        return this.ModuleService.GetArchivedModulesAsync();
+        return this.ModuleService.GetArchivedModulesAsync(this.userId);
     }
 }

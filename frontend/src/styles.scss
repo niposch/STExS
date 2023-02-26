@@ -1,9 +1,12 @@
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
+
+
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
+@import "quill";
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -66,4 +69,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .vertical-container {
   display: flex;
   flex-direction: column;
+}
+
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  width: 5px;
+}
+
+mat-spinner{
+  scale: 0.5;
 }

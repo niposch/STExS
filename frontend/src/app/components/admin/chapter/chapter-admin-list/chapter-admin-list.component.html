@@ -1,52 +1,46 @@
 <div *ngIf="this.chapters != null && this.module != null && this.participationStatus != null">
   <div *ngIf="this.participationStatus == moduleParticipationStatus.Admin else unauthorized">
-    <mat-card>
-      <div>
-        <div class="heading-container">
-          <mat-card-title class="heading-text">Chapters</mat-card-title>
-          <mat-label class="info-text">(drag to reorder the chapters)</mat-label>
-        </div>
-        <mat-divider style="margin-bottom: 10px"></mat-divider>
-        <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
-        <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">
-          <div cdkDrag class="chapter-list-item" *ngFor="let entry of this.chapters">
-            <app-chapter-admin-listitem [showEditButton]="true" [showDeleteButton]="true" [canReorder]="true" [chapter]="entry" (onChapterChange)="reloadChapters()"></app-chapter-admin-listitem>
-          </div>
+    <div>
+      <div class="heading-container">
+        <mat-card-title class="heading-text">Chapters</mat-card-title>
+        <mat-label class="info-text">(drag to reorder the chapters)</mat-label>
+      </div>
+      <mat-spinner class="loading" *ngIf="!this.chapters" mode="indeterminate" color="primary"></mat-spinner>
+      <div cdkDropList class="chapter-list" (cdkDropListDropped)="drop($event)">
+        <div cdkDrag class="chapter-list-item" *ngFor="let entry of this.chapters">
+          <app-chapter-admin-listitem [showEditButton]="true" [showDeleteButton]="true" [canReorder]="true" [chapter]="entry" (onChapterChange)="reloadChapters()"></app-chapter-admin-listitem>
         </div>
       </div>
-    </mat-card>
+    </div>
 
     <div style="height: 10px"></div>
 
     <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
     <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''">
-        <form (ngSubmit)="this.createChapter()" (keydown.enter)="$event.preventDefault()">
-          <div class="horizontal-space">
-            <mat-card-title class="heading-text">Create a new chapter</mat-card-title>
-            <div class="horizontal-align">
-              <button type="submit" mat-raised-button color="accent">
-                <div class="horizontal-button">
-                  <p class="vertically-centered">create</p>
-                </div>
-              </button>
+      <mat-card-content>
+        <div class="horizontal-space" style="margin-bottom: 5px">
+          <mat-card-title class="heading-text">Create a new chapter</mat-card-title>
+          <button type="button" mat-raised-button color="accent" (click)="this.createChapter()">create</button>
+        </div>
+
+        <mat-divider style="margin-bottom: 5px; margin-top: 5px"></mat-divider>
+
+        <div class="vertical-container">
+          <div class="vertical-container">
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input class="name-input" matInput name="text" placeholder="Name" [(ngModel)]="this.chapterCreateItem.chapterName" type="text">
+            </mat-form-field>
+          </div>
+          <mat-divider style="margin-bottom: 5px; margin-top: 5px" ></mat-divider>
+          <div class="vertical-container">
+            <mat-label style="font-size: 17px">Description</mat-label>
+            <div style="margin-top: 10px">
+              <quill-editor [(ngModel)]="this.chapterCreateItem.chapterDescription" placeholder="write here" ></quill-editor>
             </div>
           </div>
-          <mat-divider></mat-divider>
-          <div class="horizontal-container">
-            <div class="margin5px name-field-div">
-              <mat-form-field class="name-field-wrapper">
-                <mat-label>Name</mat-label>
-                <input matInput name="name" [(ngModel)]="this.chapterCreateItem.chapterName">
-              </mat-form-field>
-            </div>
-            <div class="margin5px description-field-div">
-              <mat-form-field class="description-field-wrapper">
-                <mat-label>Description</mat-label>
-                <input matInput name="description" [(ngModel)]="this.chapterCreateItem.chapterDescription">
-              </mat-form-field>
-            </div>
-          </div>
-        </form>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
   <ng-template #unauthorized>

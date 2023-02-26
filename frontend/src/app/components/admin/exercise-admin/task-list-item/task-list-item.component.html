@@ -29,8 +29,8 @@
 
   <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
-  <mat-card-content style="margin: 0">
-    <mat-label>{{exercise.exerciseDescription}}</mat-label>
+  <mat-card-content style="margin: 0; max-height: 150px; overflow-y: auto">
+    <quill-view-html [content]="exercise.exerciseDescription!" theme="bubble"></quill-view-html>
   </mat-card-content>
   </div>
 </mat-card>
