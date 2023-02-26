@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Application.Services;
 using Common.Models.Authentication;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +14,18 @@ namespace STExS.Controllers.Identity;
 [AllowAnonymous]
 public class AuthenticateController : ControllerBase
 {
-    private readonly RoleManager<ApplicationRole> roleManager;
-    private readonly UserManager<ApplicationUser> userManager;
-    private readonly SignInManager<ApplicationUser> signInManager;
+    public enum SignedInResult
+    {
+        Success = 0,
+        EmailNotConfirmed = 1,
+        Failed = 2
+    }
+
     private readonly IEmailService emailService;
     private readonly IRoleHelper roleHelper;
+    private readonly RoleManager<ApplicationRole> roleManager;
+    private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public AuthenticateController(UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
@@ -38,14 +44,14 @@ public class AuthenticateController : ControllerBase
     [Route("logout")]
     public async Task<IActionResult> Logout()
     {
-        await this.signInManager.SignOutAsync(); 
+        await this.signInManager.SignOutAsync();
         return this.Ok();
     }
-    
+
     [HttpGet]
     [Route("userDetails")]
     [Authorize]
-    [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(UserDetailsModel))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDetailsModel))]
     public async Task<IActionResult> UserDetails()
     {
         var user = await this.userManager.GetUserAsync(this.User);
@@ -57,12 +63,12 @@ public class AuthenticateController : ControllerBase
                         .Select(r => this.roleHelper.Parse(r))
                         .Where(r => r != null)
                         .OfType<RoleType>()
-                        .ToList() 
+                        .ToList()
                     ?? new List<RoleType>()
         };
         return this.Ok(res);
     }
-    
+
     [HttpPost]
     [Route("login")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SignedInResult))]
@@ -71,28 +77,17 @@ public class AuthenticateController : ControllerBase
     public async Task<IActionResult> Login([FromBody] AppLoginModel model)
     {
         var user = await this.userManager.FindByEmailAsync(model.Email);
-        if (user == null )
-        {
-            return this.Unauthorized();
-        }
-        
+        if (user == null) return this.Unauthorized();
+
         var result = await this.signInManager.PasswordSignInAsync(user, model.Password, true, false);
-        if(result.IsNotAllowed && !user.EmailConfirmed)
-        {
-            return this.BadRequest(SignedInResult.EmailNotConfirmed);
-        }
+        if (result.IsNotAllowed && !user.EmailConfirmed) return this.BadRequest(SignedInResult.EmailNotConfirmed);
         if (result.Succeeded)
         {
             await this.signInManager.SignInAsync(user, true);
             return this.Ok(SignedInResult.Success);
         }
+
         return this.Unauthorized(SignedInResult.Failed);
-    }
-    public enum SignedInResult
-    {
-        Success = 0,
-        EmailNotConfirmed = 1,
-        Failed = 2
     }
 
     [HttpPost]
@@ -105,10 +100,7 @@ public class AuthenticateController : ControllerBase
     {
         var userId = this.User.GetUserId();
         var user = await this.userManager.FindByIdAsync(userId.ToString());
-        if (user == null)
-        {
-            return this.Unauthorized();
-        }
+        if (user == null) return this.Unauthorized();
         user.FirstName = updateItem.FirstName;
         user.LastName = updateItem.LastName;
         user.PhoneNumber = updateItem.PhoneNumber;
@@ -118,19 +110,28 @@ public class AuthenticateController : ControllerBase
             user.Email = updateItem.Email;
             confirmEmail = true;
         }
+
         user.UserName = updateItem.UserName;
         user.MatrikelNumber = updateItem.MatrikelNumber;
         var result = await this.userManager.UpdateAsync(user);
-        if (!result.Succeeded)
-        {
-            return this.BadRequest(result.Errors);
-        }
-        if (confirmEmail)
-        {
-            await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
-        }
+        if (!result.Succeeded) return this.BadRequest(result.Errors);
+        if (confirmEmail) await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), user.Id, cancellationToken);
 
         return this.Ok();
+    }
+
+    [HttpPost]
+    [Route("confirmEmail")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string userId, CancellationToken cancellationToken)
+    {
+        var user = await this.userManager.FindByIdAsync(userId);
+        if (user == null) return this.BadRequest();
+        if (user.EmailConfirmed) return this.Ok("Already Confirmed");
+        var result = await this.userManager.ConfirmEmailAsync(user, token);
+        if (!result.Succeeded) return this.BadRequest();
+        return this.Ok("Email Confirmed");
     }
 
     [HttpPost]
@@ -139,19 +140,13 @@ public class AuthenticateController : ControllerBase
     public async Task<IActionResult> ResendConfirmationEmail([FromQuery] string email, CancellationToken cancellationToken)
     {
         var user = await this.userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
-            return this.BadRequest();
-        }
-        if(user.EmailConfirmed)
-        {
-            return this.Ok("Already Confirmed");
-        }
-        
-        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
-        return this.Ok("Email Resent");
+        if (user == null) return this.BadRequest();
+        if (user.EmailConfirmed) return this.Ok("Already Confirmed");
 
+        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), user.Id, cancellationToken);
+        return this.Ok("Email Resent");
     }
+
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] AppRegisterModel model, CancellationToken cancellationToken = default)
@@ -183,8 +178,8 @@ public class AuthenticateController : ControllerBase
 
         await this.userManager.AddToRoleAsync(user, RoleHelper.User);
 
-        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), cancellationToken);
-        
+        await this.emailService.SendConfirmationEmailAsync(user.Email, await this.userManager.GenerateEmailConfirmationTokenAsync(user), user.Id, cancellationToken);
+
         return this.Ok(new
         {
             Status = "Success",
