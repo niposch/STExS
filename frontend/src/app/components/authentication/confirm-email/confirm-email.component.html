@@ -1,11 +1,14 @@
 <div class="background">
-<div class="comp-container">
+<div class="comp-container" *ngIf="!isLoading">
   <div class="vertically-centered">
     <div class="mid-container">
-      <mat-label class="heading">E-Mail Confirmed!</mat-label>
-      <mat-divider style="width: 50%; margin: auto; margin-bottom: 5px; margin-top: 5px"></mat-divider>
-      <mat-label style="margin:auto !important">You can now close this window.</mat-label>
+      <mat-label class="heading" *ngIf="hasSucceeded">E-Mail Confirmed!</mat-label>
+      <mat-label class="heading" *ngIf="!hasSucceeded">Error while confirming E-Mail!</mat-label>
+      <mat-divider style="width: 50%; margin: auto; margin-bottom: 10px; margin-top: 10px"></mat-divider>
+      <mat-label style="margin:auto !important" *ngIf="hasSucceeded">You can now close this window.</mat-label>
+      <mat-label style="margin:auto !important" *ngIf="!hasSucceeded">Please try again later.</mat-label>
     </div>
   </div>
 </div>
+  <mat-spinner *ngIf="isLoading" style="margin: auto" diameter="100"></mat-spinner>
 </div>
