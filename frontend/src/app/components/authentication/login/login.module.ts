@@ -11,7 +11,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 
-
 @NgModule({
   declarations: [
     LoginComponent
@@ -19,7 +18,6 @@ import {MatIconModule} from "@angular/material/icon";
     imports: [
         CommonModule,
         LoginRoutingModule,
-
         MatProgressBarModule,
         MatCardModule,
         MatFormFieldModule,

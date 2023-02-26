@@ -1,13 +1,12 @@
+<div *ngIf="!isLoading">
+  <!-- HEADING -->
+  <div class="vertical-container">
+    <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
+    <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+  </div>
 
-<!-- HEADING -->
-<div class="vertical-container">
-  <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
-  <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+  <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
+  <!-- <ngx-charts-bar-vertical [results]="this.testData"></ngx-charts-bar-vertical> -->
 </div>
-
-<mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-
-<!-- <ngx-charts-bar-vertical [results]="this.testData"></ngx-charts-bar-vertical> -->
-
-
 <mat-spinner *ngIf="isLoading" style="transform: scale(0.5); margin:auto;"></mat-spinner>
