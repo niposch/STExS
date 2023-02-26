@@ -1,1 +1,11 @@
-<p>data-dashboard works!</p>
+
+<!-- HEADING -->
+<div class="vertical-container">
+  <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
+  <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+</div>
+
+<mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
+
+<mat-spinner *ngIf="isLoading" style="transform: scale(0.5); margin:auto;"></mat-spinner>
