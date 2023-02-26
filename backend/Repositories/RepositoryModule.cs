@@ -38,11 +38,15 @@ public class RepositoryModule : Module
         builder.RegisterType<CodeOutputExerciseRepository>()
             .As<ICodeOutputExerciseRepository>()
             .InstancePerLifetimeScope();
-        
+
+        builder.RegisterType<ClozeTextExerciseRepository>()
+            .As<IClozeTextExerciseRepository>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<CommonExerciseRepository>()
             .As<ICommonExerciseRepository>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<ModuleRepository>()
             .As<IModuleRepository>()
             .InstancePerLifetimeScope();
@@ -52,19 +56,19 @@ public class RepositoryModule : Module
         builder.RegisterType<ModuleParticipationRepository>()
             .As<IModuleParticipationRepository>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<UserSubmissionRepository>()
             .As<IUSerSubmissionRepository>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<SubmissionRepository>()
             .As<ISubmissionRepository>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<GradingResultRepository>()
             .As<IGradingResultRepository>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<TimeTrackRepository>()
             .As<ITimeTrackRepository>()
             .InstancePerLifetimeScope();
