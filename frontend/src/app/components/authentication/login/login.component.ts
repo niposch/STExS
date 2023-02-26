@@ -2,7 +2,8 @@ import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {of} from "rxjs";
+import {lastValueFrom} from "rxjs";
+import {AuthenticateService} from "../../../../services/generated/services/authenticate.service";
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private readonly snackbarService:MatSnackBar,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly authenticationService:AuthenticateService
   ) {
   }
 
@@ -63,6 +65,20 @@ export class LoginComponent implements OnInit {
         this.showLoading = false;
       })
     await this.router.navigate([this.callbackUrl]);
+
+    // Remind user to confirm email and resend confirmation email
+    if (this.userService.currentUserSubject.value?.emailConfirmed == false) {
+      let snackBarRef = this.snackbarService.open("Please confirm your E-Mail address!", "Resend Verification E-Mail", {duration: 5000});
+      snackBarRef.onAction().subscribe(() => {
+        lastValueFrom(this.authenticationService.apiAuthenticateResendConfirmationEmailPost({
+          email: this.email
+        })).catch(() => {
+          this.snackbarService.open("Failed to send email", "OK");
+        }).then(() => {
+          this.snackbarService.open("Verification EMail sent!", "OK");
+        });
+      })
+    }
   }
 
   validateEmail(event : Event | null = null) {
