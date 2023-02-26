@@ -7,7 +7,7 @@ namespace Repositories.Repositories.GenericImplementations;
 public class GenericCrudRepository<T> : GenericDeletableEntityRepository<T>, IGenericCrudRepository<T>
     where T : DeletableBaseEntity
 {
-    private readonly ApplicationDbContext context;
+    protected readonly ApplicationDbContext context;
 
     public GenericCrudRepository(ApplicationDbContext context) : base(context)
     {

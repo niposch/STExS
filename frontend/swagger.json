@@ -3254,7 +3254,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "ProfileUpdateItem": {
         "type": "object",

@@ -2,5 +2,5 @@
 
 public class ParsonDetailItem : ExerciseDetailItem
 {
-    public List<ParsonExerciseLineDetailItem> ParsonLineList { get; set; }
+    public List<ParsonExerciseLineDetailItem> Lines { get; set; }
 }

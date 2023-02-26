@@ -38,13 +38,52 @@ public class ParsonExerciseService : IParsonExerciseService
         return this.ToDetailItemWithAnswers(exercise, hasUserSolvedExercise.FinalSubmissionId != null);
     }
 
-    public async Task UpdateAsync(ParsonExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(ParsonExerciseDetailItemWithAnswer updateItem, CancellationToken cancellationToken = default)
     {
-        var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(item.Id, cancellationToken) ??
-                       throw new EntityNotFoundException<ParsonExercise>(item.Id);
+        var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(updateItem.Id, cancellationToken) ??
+                       throw new EntityNotFoundException<ParsonExercise>(updateItem.Id);
 
-        exercise = this.UpdateExercise(exercise, item);
-        ;
+        var linesToDelete = exercise.ExpectedSolution.CodeElements.Where(e => !updateItem.Lines.Any(l => l.Id == e.Id)).ToList();
+
+        await this.repository.ParsonElements.RemoveRangeAsync(linesToDelete, cancellationToken);
+        exercise.ExpectedSolution.CodeElements.RemoveAll(e => linesToDelete.Select(l => l.Id).Contains(e.Id));
+
+        // remove lines with id's that are not in the existing entity => only Guid.Empty lines are added
+        var newLines = new List<ParsonElement>();
+        for (var i = 0; i < updateItem.Lines.Count; i++)
+        {
+            var line = updateItem.Lines[i];
+            if (line.Id != Guid.Empty)
+            {
+                var element = exercise.ExpectedSolution.CodeElements.FirstOrDefault(e => e.Id == line.Id);
+                if (element != null)
+                {
+                    element.Code = line.Text;
+                    element.Indentation = line.Indentation;
+                    element.RunningNumber = i + 1;
+                    newLines.Add(element);
+                    await this.repository.ParsonElements.UpdateAsync(element, cancellationToken);
+                }
+            }
+            else
+            {
+                newLines.Add(new ParsonElement
+                {
+                    Id = Guid.NewGuid(),
+                    Code = line.Text,
+                    Indentation = line.Indentation,
+                    RunningNumber = i + 1,
+                    OwnerId = exercise.OwnerId,
+                    RelatedSolutionId = exercise.ExpectedSolution.Id
+                });
+
+                await this.repository.ParsonElements.AddAsync(newLines.Last(), cancellationToken);
+            }
+        }
+
+        exercise = this.UpdateExercise(exercise, updateItem);
+        exercise.ExpectedSolution.CodeElements = newLines;
+        await this.repository.ParsonExercises.UpdateAsync(exercise, cancellationToken);
     }
 
     public async Task<Guid> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default)
@@ -80,7 +119,7 @@ public class ParsonExerciseService : IParsonExerciseService
 
         var createdEntity = await this.repository.ParsonExercises.AddAsync(entity, cancellationToken);
 
-        return entity.Id;
+        return createdEntity.Id;
     }
 
     private ParsonDetailItem ToDetailItemWithoutAnswers(ParsonExercise entity, bool userHasSolvedExercise)
@@ -97,7 +136,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ModificationDate = entity.ModificationTime,
             RunningNumber = entity.RunningNumber,
             UserHasSolvedExercise = userHasSolvedExercise,
-            ParsonLineList = entity.ExpectedSolution
+            Lines = entity.ExpectedSolution
                 .CodeElements
                 .Select(l => new ParsonExerciseLineDetailItem
                 {
@@ -123,7 +162,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ModificationDate = entity.ModificationTime,
             RunningNumber = entity.RunningNumber,
             UserHasSolvedExercise = userHasSolvedExercise,
-            ExpectedAnswer = entity.ExpectedSolution
+            Lines = entity.ExpectedSolution
                 .CodeElements
                 .Select(l => new ParsonExerciseLineDetailItem
                 {
@@ -134,13 +173,13 @@ public class ParsonExerciseService : IParsonExerciseService
         };
     }
 
+    // doesn't update the lines
     private ParsonExercise UpdateExercise(ParsonExercise entity, ParsonExerciseDetailItemWithAnswer detailItem)
     {
         entity.ChapterId = detailItem.ChapterId;
         entity.Description = detailItem.ExerciseDescription;
         entity.AchievablePoints = detailItem.AchieveablePoints;
         entity.ExerciseName = detailItem.ExerciseName;
-        // TODO update entity.ExpectedSolution  : overwrite old list with new list transformed from DetailsANsweretc.
         return entity;
     }
 }
