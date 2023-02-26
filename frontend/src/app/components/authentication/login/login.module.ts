@@ -19,7 +19,6 @@ import {MatIconModule} from "@angular/material/icon";
     imports: [
         CommonModule,
         LoginRoutingModule,
-
         MatProgressBarModule,
         MatCardModule,
         MatFormFieldModule,
