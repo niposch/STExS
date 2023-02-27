@@ -67,6 +67,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import { ChangeRoleDialogComponent } from './components/admin/administrate-users/change-role-dialog/change-role-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
 import { NoAccessComponent } from './components/no-access/no-access.component';
+import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
+import { CreateEditClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component';
 import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
 
 @NgModule({
@@ -97,6 +99,7 @@ import { DataDashboardComponent } from './components/admin/data-dashboard/data-d
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    SolveGapTextComponent,
     GradingModuleDashboardComponent,
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
@@ -105,6 +108,7 @@ import { DataDashboardComponent } from './components/admin/data-dashboard/data-d
     ChangeRoleDialogComponent,
     NoAccessComponent,
     DataDashboardComponent,
+    CreateEditClozeComponent,
   ],
   imports: [
     BrowserModule,

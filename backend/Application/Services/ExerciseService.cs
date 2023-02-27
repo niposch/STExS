@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using Application.DTOs.ExercisesDTOs;
+﻿using Application.DTOs.ExercisesDTOs;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
@@ -7,7 +6,7 @@ using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services;
 
-public sealed class ExerciseService: IExerciseService
+public sealed class ExerciseService : IExerciseService
 {
     private readonly IApplicationRepository repository;
 
@@ -18,23 +17,20 @@ public sealed class ExerciseService: IExerciseService
 
     public async Task<ExerciseDetailItem> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default)
     {
-        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(existingExerciseId,true, cancellationToken);
-        if (exercise is null)
-        {
-            throw new ArgumentException($"Exercise with id {existingExerciseId} does not exist");
-        }
-        
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(existingExerciseId, true, cancellationToken);
+        if (exercise is null) throw new ArgumentException($"Exercise with id {existingExerciseId} does not exist");
+
         var nextAvailableRunningNumber = (await this.repository.CommonExercises.GetForChapterAsync(chapterToCopyTo, cancellationToken))
             .Select(m => m.RunningNumber)
             .DefaultIfEmpty(0)
             .Max() + 1;
 
         exercise.Id = Guid.NewGuid();
-        
+
         exercise.ChapterId = chapterToCopyTo;
         exercise.Chapter = null!;
         exercise.RunningNumber = nextAvailableRunningNumber;
-        
+
         exercise = await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
 
         return ToDetailItem(exercise, null);
@@ -45,10 +41,10 @@ public sealed class ExerciseService: IExerciseService
         var exercises = await this.repository.CommonExercises.GetForChapterAsync(chapterId, cancellationToken);
         var userSubmissions = await this.repository.UserSubmissions.GetAllByUserIdAndChapterAsync(chapterId, userId, cancellationToken);
 
-        return exercises.Select(e => 
-                ToDetailItem(e, 
+        return exercises.Select(e =>
+                ToDetailItem(e,
                     userSubmissions.Any(s => s.FinalSubmission != null && s.ExerciseId == e.Id)
-                    ))
+                ))
             .ToList();
     }
 
@@ -89,7 +85,7 @@ public sealed class ExerciseService: IExerciseService
             Id = entity.Id,
             ExerciseName = entity.ExerciseName,
             ChapterId = entity.ChapterId,
-            AchieveablePoints = entity.AchievablePoints,
+            AchievablePoints = entity.AchievablePoints,
             CreationDate = entity.CreationTime,
             ExerciseDescription = entity.Description,
             ExerciseType = entity.ExerciseType,

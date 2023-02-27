@@ -9,7 +9,7 @@
   <!-- display exercise information -->
   <div style="margin-bottom: 15px">
       <h3>Exercise: {{this.exercise.exerciseName}}</h3>
-      <p>Max Points: {{this.exercise.achieveablePoints}}</p>
+      <p>Max Points: {{this.exercise.achievablePoints}}</p>
       <quill-view-html style="height: unset" [content]="this.exercise.exerciseDescription ?? ''"></quill-view-html>
   </div>
   <mat-table style="border-radius: 5px; padding: 2px; border: 1px solid #5f5f5f" [dataSource]="this.gradingResults" matSort>
