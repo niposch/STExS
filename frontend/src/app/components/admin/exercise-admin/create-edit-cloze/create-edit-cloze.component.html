@@ -3,7 +3,8 @@
     <div class="horizontal-container card-title" style="align-items: center">
       <div class="horizontal-container" style="align-items: center">
         <button mat-icon-button (click)="goBack()" style="margin-right: 10px"><mat-icon>arrow_back</mat-icon></button>
-        <mat-card-title class="vertically-centered" style="margin-top: 0; margin-bottom: 0">Create a new Cloze Text Exercise</mat-card-title>
+        <mat-card-title *ngIf="!this.isEditingExercise" class="vertically-centered" style="margin-top: 0; margin-bottom: 0">Create a new Cloze Text Exercise</mat-card-title>
+        <mat-card-title *ngIf="this.isEditingExercise" class="vertically-centered" style="margin-top: 0; margin-bottom: 0">Edit Cloze Text Exercise</mat-card-title>
       </div>
       <button *ngIf="!isEditingExercise && !this.isOnlyInspectingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
       <button *ngIf="isEditingExercise && !this.isOnlyInspectingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
