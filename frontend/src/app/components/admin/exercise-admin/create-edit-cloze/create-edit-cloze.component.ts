@@ -19,6 +19,8 @@ export class CreateEditClozeComponent implements OnInit {
   public exercise: ClozeTextExerciseDetailItem|null|undefined = undefined; // undefined = loading, null = error
   public isEditingExercise: boolean = false;
   public isOnlyInspectingExercise: boolean = false;
+  public exerciseDescription: string = "";
+  public exerciseName: string = "";
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -34,6 +36,8 @@ export class CreateEditClozeComponent implements OnInit {
         this.loadExercise(this.exerciseId!)
           .then(exercise => {
             this.exercise = exercise;
+            this.exerciseDescription = exercise?.exerciseDescription ?? "";
+            this.exerciseName = exercise?.exerciseName ?? "";
           })
       }
       else if(params["chapterId"] != null) {
@@ -73,6 +77,9 @@ export class CreateEditClozeComponent implements OnInit {
 
   async createExercise() {
     this.isEditingExercise = true;
+    this.exercise!.exerciseDescription = this.exerciseDescription;
+    this.exercise!.exerciseName = this.exerciseName;
+    console.log(this.exercise);
     await lastValueFrom(this.clozeTextExerciseService.apiClozeTextExerciseCreatePost$Json({
       body:{
         chapterId: this.exercise?.chapterId,
@@ -106,5 +113,10 @@ export class CreateEditClozeComponent implements OnInit {
           duration: 2000
         });
       })
+  }
+
+  updateExerciseInfo() {
+    this.exercise!.exerciseDescription = this.exerciseDescription;
+    this.exercise!.exerciseName = this.exerciseName;
   }
 }

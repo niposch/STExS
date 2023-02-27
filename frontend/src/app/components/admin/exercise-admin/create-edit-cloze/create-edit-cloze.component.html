@@ -12,7 +12,9 @@
     <mat-card-content>
       <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
-      <app-create-exercise [(description)]="this.exercise.exerciseDescription!" [(name)]="this.exercise.exerciseName!" [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
+      <app-create-exercise [(description)]="this.exerciseDescription"
+                           [(name)]="this.exerciseName"
+                           [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
 
       <div style="margin-top: 10px; margin-bottom: 10px" class="elevated">
         <div class="horizontal-container">
