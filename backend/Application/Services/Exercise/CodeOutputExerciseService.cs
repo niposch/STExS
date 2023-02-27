@@ -48,7 +48,7 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
             ExerciseName = createItem.ExerciseName,
             ChapterId = createItem.ChapterId,
             ExerciseType = ExerciseType.CodeOutput,
-            AchievablePoints = createItem.AchieveablePoints,
+            AchievablePoints = createItem.AchievablePoints,
             Description = createItem.ExerciseDescription,
             IsMultiLineResponse = createItem.IsMultilineResponse,
             ExpectedAnswer = createItem.ExpectedAnswer,

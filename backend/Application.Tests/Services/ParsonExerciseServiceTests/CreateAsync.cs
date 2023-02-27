@@ -51,7 +51,7 @@ public class CreateAsync : Infrastructure
         lines[1].RunningNumber.Should().Be(2);
         lines[1].Indentation.Should().Be(parsonExercise.Lines[1].Indentation);
         lines.Select(l => l.OwnerId).Should().OnlyContain(id => id == userId);
-        lines.Select(l => l.RelatedSolutionId).Should().OnlyContain(id => id == entity.Id);
+        lines.Select(l => l.RelatedSolutionId).Should().OnlyContain(id => id == entity.ExpectedSolution.Id);
     }
 
     [Fact]

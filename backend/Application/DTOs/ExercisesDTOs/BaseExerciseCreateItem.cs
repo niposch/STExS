@@ -8,5 +8,5 @@ public class BaseExerciseCreateItem
 
     public Guid ChapterId { get; set; }
 
-    public int AchieveablePoints { get; set; }
+    public int AchievablePoints { get; set; }
 }

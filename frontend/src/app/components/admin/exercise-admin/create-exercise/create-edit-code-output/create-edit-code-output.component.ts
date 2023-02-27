@@ -86,7 +86,7 @@ export class CreateEditCodeOutputComponent implements OnInit {
         isMultilineResponse: this.isMultilineResponse,
         exerciseName: this.name,
         exerciseDescription: this.description,
-        achieveablePoints: this.achievablePoints,
+        achievablePoints: this.achievablePoints,
         chapterId: this.chapterId,
       }
     }))

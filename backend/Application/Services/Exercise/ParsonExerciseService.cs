@@ -1,5 +1,4 @@
-﻿using System.Reflection.PortableExecutable;
-using Application.DTOs.ExercisesDTOs.Parson;
+﻿using Application.DTOs.ExercisesDTOs.Parson;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.ExtensionMethods;
@@ -100,7 +99,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ExerciseName = createItem.ExerciseName,
             ChapterId = createItem.ChapterId,
             ExerciseType = ExerciseType.Parson,
-            AchievablePoints = createItem.AchieveablePoints,
+            AchievablePoints = createItem.AchievablePoints,
             Description = createItem.ExerciseDescription,
             ExpectedSolution = new ParsonSolution
             {
@@ -143,7 +142,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ModificationDate = entity.ModificationTime,
             RunningNumber = entity.RunningNumber,
             UserHasSolvedExercise = userHasSolvedExercise,
-            IndentationIsRelevant = entity.IndentationIsRelevant,
+            IndentationIsRelevant = entity.ExpectedSolution.IndentationIsRelevant,
             Lines = entity.ExpectedSolution
                 .CodeElements
                 .Select(l => new ParsonExerciseLineDetailItem
@@ -170,7 +169,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ModificationDate = entity.ModificationTime,
             RunningNumber = entity.RunningNumber,
             UserHasSolvedExercise = userHasSolvedExercise,
-            IndentationIsRelevant = entity.IndentationIsRelevant,
+            IndentationIsRelevant = entity.ExpectedSolution.IndentationIsRelevant,
             Lines = entity.ExpectedSolution
                 .CodeElements
                 .Select(l => new ParsonExerciseLineDetailItem
@@ -189,7 +188,7 @@ public class ParsonExerciseService : IParsonExerciseService
         entity.Description = detailItem.ExerciseDescription;
         entity.AchievablePoints = detailItem.AchievablePoints;
         entity.ExerciseName = detailItem.ExerciseName;
-        entity.IndentationIsRelevant = detailItem.IndentationIsRelevant;
+        entity.ExpectedSolution.IndentationIsRelevant = detailItem.IndentationIsRelevant;
         return entity;
     }
 }

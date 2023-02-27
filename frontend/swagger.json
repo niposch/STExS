@@ -2793,10 +2793,6 @@
       "ClozeTextExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -2805,13 +2801,17 @@
             "type": "string",
             "nullable": true
           },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
-          "chapterId": {
+          "text": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2932,7 +2932,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -3561,7 +3561,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
