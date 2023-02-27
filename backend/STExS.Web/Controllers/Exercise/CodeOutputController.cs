@@ -53,7 +53,7 @@ public class CodeOutputController:ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CodeOutputExerciseDetailItemWithAnswer))]
     public async Task<IActionResult> GetExerciseWithAnswers([FromQuery] Guid id, CancellationToken cancellationToken = default)
     {
-        var res = await this.codeOutputExerciseService.GetByIdWithAnswerAsync(id, cancellationToken);
+        var res = await this.codeOutputExerciseService.GetByIdWithAnswerAsync(id, this.User.GetUserId(), cancellationToken);
         
         if(!await this.accessService.IsChapterAdmin(res.ChapterId, this.User.GetUserId(), cancellationToken))
         {

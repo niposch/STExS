@@ -33,4 +33,10 @@ public sealed class UserSubmissionService:IUserSubmissionService
         return userSubmission;
     }
 
+    public async Task<bool> HasUserSolvedExerciseAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var userSubmission = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        
+        return userSubmission != null && userSubmission.FinalSubmissionId != null;
+    }
 }

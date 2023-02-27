@@ -23,15 +23,16 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
     {
         var exercise = await this.repository.CodeOutputExercises.TryGetById(id, cancellationToken) ?? throw new EntityNotFoundException<CodeOutputExercise>(id);
 
-        var hasUserSolvedExercise = await this.submissionService.GetOrCreateUserSubmissionAsync(userId, id, cancellationToken);
-        return this.ToDetailItemWithoutAnswers(exercise, hasUserSolvedExercise.FinalSubmissionId != null);
+        var hasUserSolvedExercise = await this.submissionService.HasUserSolvedExerciseAsync(userId, id, cancellationToken);
+        return this.ToDetailItemWithoutAnswers(exercise, hasUserSolvedExercise);
     }
 
-    public async Task<CodeOutputExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<CodeOutputExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid id, Guid userId, CancellationToken cancellationToken = default)
     {
         var exercise = await this.repository.CodeOutputExercises.TryGetById(id, cancellationToken) ?? throw new EntityNotFoundException<CodeOutputExercise>(id);
 
-        return this.ToDetailItemWithAnswers(exercise);
+        var hasUserSolvedExercise = await this.submissionService.HasUserSolvedExerciseAsync(userId, id, cancellationToken);
+        return this.ToDetailItemWithAnswers(exercise, hasUserSolvedExercise);
     }
 
     public async Task<CodeOutputExerciseDetailItemWithAnswer> CreateAsync(CodeOutputExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default)
@@ -56,7 +57,7 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
         };
         var createdEntity = await this.repository.CodeOutputExercises.CreateAsync(entity, cancellationToken);
 
-        return this.ToDetailItemWithAnswers(createdEntity);
+        return this.ToDetailItemWithAnswers(createdEntity, null);
     }
 
     public async Task<CodeOutputExerciseDetailItemWithAnswer> UpdateAsync(CodeOutputExerciseDetailItemWithAnswer item, CancellationToken cancellationToken = default)
@@ -65,7 +66,7 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
 
         exercise = this.UpdateExercise(exercise, item);
 
-        return this.ToDetailItemWithAnswers(await this.repository.CodeOutputExercises.UpdateAsync(exercise, cancellationToken));
+        return this.ToDetailItemWithAnswers(await this.repository.CodeOutputExercises.UpdateAsync(exercise, cancellationToken), null);
     }
 
     private CodeOutputExercise UpdateExercise(CodeOutputExercise entity, CodeOutputExerciseDetailItemWithAnswer detailItem)
@@ -81,7 +82,7 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
         return entity;
     }
 
-    private CodeOutputExerciseDetailItemWithAnswer ToDetailItemWithAnswers(CodeOutputExercise entity)
+    private CodeOutputExerciseDetailItemWithAnswer ToDetailItemWithAnswers(CodeOutputExercise entity, bool? userHasSolvedExercise)
     {
         return new CodeOutputExerciseDetailItemWithAnswer
         {
@@ -95,7 +96,8 @@ public class CodeOutputExerciseService : ICodeOutputExerciseService
             ExerciseName = entity.ExerciseName,
             CreationDate = entity.CreationTime,
             ModificationDate = entity.ModificationTime,
-            RunningNumber = entity.RunningNumber
+            RunningNumber = entity.RunningNumber,
+            UserHasSolvedExercise = userHasSolvedExercise
         };
     }
 
