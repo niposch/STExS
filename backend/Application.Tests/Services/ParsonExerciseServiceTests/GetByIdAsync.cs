@@ -63,7 +63,7 @@ public class GetByIdAsync : Infrastructure
         result.Lines.Select(l => l.Indentation).Should().OnlyContain(i => i == 0);
         result.Lines.Should().ContainSingle(l => l.Text == "Line 1");
         result.Lines.Should().ContainSingle(l => l.Text == "Line 2");
-        result.AchieveablePoints.Should().Be(parsonExercise.AchievablePoints);
+        result.AchievablePoints.Should().Be(parsonExercise.AchievablePoints);
         result.ExerciseType.Should().Be(ExerciseType.Parson);
     }
 }

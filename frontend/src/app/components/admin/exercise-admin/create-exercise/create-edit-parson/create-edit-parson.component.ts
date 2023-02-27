@@ -67,7 +67,7 @@ export class CreateEditParsonComponent implements OnInit {
     this.codeOutputService.apiCodeOutputUpdatePost({
       body:{
         expectedAnswer: this.expectedAnswer,
-        achieveablePoints: this.achievablePoints,
+        achievablePoints: this.achievablePoints,
         chapterId: this.chapterId,
         creationDate: null,
         exerciseDescription: this.description,
@@ -118,7 +118,7 @@ export class CreateEditParsonComponent implements OnInit {
     })
       .subscribe(res => {
           this.expectedAnswer = res.expectedAnswer ?? ""
-          this.achievablePoints = res.achieveablePoints ?? 0
+          this.achievablePoints = res.achievablePoints ?? 0
           this.chapterId = res.chapterId ?? ""
           this.description = res.exerciseDescription ?? ""
           this.name = res.exerciseName ?? ""

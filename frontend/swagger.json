@@ -3568,7 +3568,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -3651,7 +3651,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },

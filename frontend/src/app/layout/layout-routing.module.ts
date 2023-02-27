@@ -83,6 +83,7 @@ const routes: Routes = [
               {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
               {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
               {path: "cloze/create", component: CreateEditClozeComponent },
+              {path: "parson/create", component: CreateEditParsonComponent},
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
             ]

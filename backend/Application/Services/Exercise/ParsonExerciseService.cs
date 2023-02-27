@@ -129,7 +129,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ExerciseDescription = entity.Description,
             ExerciseType = ExerciseType.Parson,
             Id = entity.Id,
-            AchieveablePoints = entity.AchievablePoints,
+            AchievablePoints = entity.AchievablePoints,
             ChapterId = entity.ChapterId,
             ExerciseName = entity.ExerciseName,
             CreationDate = entity.CreationTime,
@@ -155,7 +155,7 @@ public class ParsonExerciseService : IParsonExerciseService
             ExerciseDescription = entity.Description,
             ExerciseType = ExerciseType.Parson,
             Id = entity.Id,
-            AchieveablePoints = entity.AchievablePoints,
+            AchievablePoints = entity.AchievablePoints,
             ChapterId = entity.ChapterId,
             ExerciseName = entity.ExerciseName,
             CreationDate = entity.CreationTime,
@@ -178,7 +178,7 @@ public class ParsonExerciseService : IParsonExerciseService
     {
         entity.ChapterId = detailItem.ChapterId;
         entity.Description = detailItem.ExerciseDescription;
-        entity.AchievablePoints = detailItem.AchieveablePoints;
+        entity.AchievablePoints = detailItem.AchievablePoints;
         entity.ExerciseName = detailItem.ExerciseName;
         return entity;
     }

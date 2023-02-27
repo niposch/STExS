@@ -62,7 +62,7 @@ public class GetByIdWithAnswerAsync : Infrastructure
         result.Lines.Should().HaveCount(2);
         result.Lines.Should().ContainSingle(l => l.Text == "Line 1" && l.Indentation == 1);
         result.Lines.Should().ContainSingle(l => l.Text == "Line 2" && l.Indentation == 2);
-        result.AchieveablePoints.Should().Be(parsonExercise.AchievablePoints);
+        result.AchievablePoints.Should().Be(parsonExercise.AchievablePoints);
         result.ExerciseType.Should().Be(ExerciseType.Parson);
     }
 }
