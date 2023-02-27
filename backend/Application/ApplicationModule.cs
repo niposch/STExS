@@ -1,4 +1,5 @@
-﻿using Application.Helper.Roles;
+﻿using Application.Helper;
+using Application.Helper.Roles;
 using Application.Interfaces;
 using Application.Services;
 using Application.Services.Exercise;
@@ -16,13 +17,18 @@ public class ApplicationModule : Module
         builder.RegisterType<WeatherService>()
             .As<IWeatherService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<ExerciseService>()
-               .As<IExerciseService>()
-               .InstancePerLifetimeScope();
+            .As<IExerciseService>()
+            .InstancePerLifetimeScope();
         builder.RegisterType<ParsonExerciseService>()
-               .As<IParsonExerciseService>()
-               .InstancePerLifetimeScope();
+            .As<IParsonExerciseService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ClozeTextExerciseService>()
+            .As<IClozeTextExerciseService>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<CodeOutputExerciseService>()
             .As<ICodeOutputExerciseService>()
             .InstancePerLifetimeScope();
@@ -44,11 +50,11 @@ public class ApplicationModule : Module
         builder.RegisterType<GradingService>()
             .As<IGradingService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<UserSubmissionService>()
             .As<IUserSubmissionService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<TimeTrackService>()
             .As<ITimeTrackService>()
             .InstancePerLifetimeScope();
@@ -56,15 +62,17 @@ public class ApplicationModule : Module
         builder.RegisterType<SubmissionService>()
             .As<ISubmissionService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<CodeOutputSubmissionService>()
             .As<ICodeOutputSubmissionService>()
             .InstancePerLifetimeScope();
-        
+
         // Helper
         builder.RegisterType<RoleHelper>()
             .As<IRoleHelper>()
             .InstancePerLifetimeScope();
-
+        builder.RegisterType<ClozeTextHelper>()
+            .As<IClozeTextHelper>()
+            .InstancePerLifetimeScope();
     }
 }
