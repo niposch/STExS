@@ -5,12 +5,17 @@
       <mat-card-subtitle>Login</mat-card-subtitle>
       <mat-card-title>STExS</mat-card-title>
       <mat-card-content>
-        <form (ngSubmit)="login()">
+        <form>
           <!-- E-MAIL -->
-          <mat-form-field>
+          <mat-form-field style="width: 100%">
             <mat-label>E-Mail</mat-label>
-            <input (change)="validateEmail($event)" (keyup)="validateEmail()" [(ngModel)]="this.email" matInput
-              id="emailInput" name="email" required type="email">
+            <input matInput
+                   [(ngModel)]="this.email"
+                   id="emailInput"
+                   name="email"
+                   required
+                   #emailInput
+                   type="email">
           </mat-form-field>
           <mat-label *ngIf="showEmailError" class="validation-error">Please enter a valid email address!</mat-label>
 
@@ -18,9 +23,13 @@
           <div class="pw-container">
             <mat-form-field class="pw-input">
               <mat-label>Password</mat-label>
-              <input #passwordInput id="passwordInput" (change)="validatePassword($event)" (keyup)="validatePassword()"
-                (keyup.enter)="login()" [(ngModel)]="this.password" matInput name="password" required
-                [type]="this.showPassword ? 'text' : 'password'">
+              <input matInput
+                     #passwordInput
+                     id="passwordInput"
+                     (keyup.enter)="loginProcedure()"
+                     [(ngModel)]="this.password"
+                     name="password" required
+                     [type]="this.showPassword ? 'text' : 'password'">
             </mat-form-field>
             <button class="icon-button" mat-button (click)="togglePassword()" type="button">
               <mat-icon *ngIf="this.showPassword">visibility</mat-icon>
@@ -30,8 +39,7 @@
           <mat-label *ngIf="showPasswordError" class="validation-error">Please enter a password!</mat-label>
 
           <!-- LOGIN BUTTON -->
-          <button (click)="this.loginButtonEnabled && login()" id="loginButton" color="accent"
-            [disabled]="!this.loginButtonEnabled" mat-button mat-raised-button type="submit">Login</button>
+          <button (click)="loginProcedure()" #loginButton id="loginButton" color="accent" mat-button mat-raised-button>Login</button>
 
           <!-- REGISTER BUTTON -->
           <button color="secondary" routerLink="/register" mat-button mat-stroked-button>Register</button>

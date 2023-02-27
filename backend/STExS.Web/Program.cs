@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Application;
 using Application.Helper.Roles;
+using Application.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models.Authentication;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
@@ -34,9 +36,11 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
         b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
             new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
     }
+
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule());
 });
+builder.Services.Configure<EmailConfiguration>(options => builder.Configuration.GetSection("IMAP").Bind(options));
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

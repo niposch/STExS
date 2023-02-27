@@ -37,7 +37,14 @@
           </div>
         </div>
 
-        <mat-divider style="min-width:200px"></mat-divider>
+        <mat-divider style="min-width:200px; "></mat-divider>
+
+        <div class="horizontal-container" style="justify-content: space-between; margin-bottom: 5px; margin-top: 5px">
+          <div></div>
+          <button mat-button style="width: fit-content" *ngIf="!this.emailConfirmed!" (click)="sendVerificationEmail()"> Resend Verification EMail</button>
+        </div>
+
+        <mat-divider *ngIf="!this.emailConfirmed!" style="min-width:200px;"></mat-divider>
 
         <div class="margin10">
           <app-user-info-label attributeType="text" attributeName='first name' attributeInfo="firs name"

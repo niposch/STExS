@@ -61,6 +61,7 @@ import { GradingModuleDashboardComponent } from './components/admin/grading/grad
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { ConfirmEmailComponent } from './components/authentication/confirm-email/confirm-email.component';
 import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatMenuModule} from "@angular/material/menu";
@@ -103,6 +104,7 @@ import { CreateEditClozeComponent } from './components/admin/exercise-admin/crea
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
+    ConfirmEmailComponent,
     AdministrateUsersComponent,
     ChangeRoleDialogComponent,
     NoAccessComponent,
