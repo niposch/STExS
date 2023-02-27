@@ -8,4 +8,5 @@ public sealed class ParsonExercise: BaseExercise
     public ParsonSolution ExpectedSolution { get; set; }
     
     public Chapter Chapter { get; set; }
+    public bool IndentationIsRelevant { get; set; }
 }
