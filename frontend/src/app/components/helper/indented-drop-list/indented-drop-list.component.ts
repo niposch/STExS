@@ -32,12 +32,14 @@ export class IndentedDropListComponent<T=any> implements OnInit {
     if($event.previousContainer === $event.container) {
       let targetElement = $event.container.getSortedItems()[$event.currentIndex].element.nativeElement
       let currElement = $event.item.element.nativeElement;
+      let useWorkaround = targetElement !== currElement && $event.container.data[$event.currentIndex] === $event.container.data[$event.previousIndex];
       // @ts-ignore
       let currIndentations = currElement.currentindentation ?? 0;
       // @ts-ignore
       let targetElementIndentations = targetElement.indentation ?? 0;
       moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
-      if(currElement !== targetElement){
+      // workaround for cdkDragMove not actually moving elements with same text
+      if(useWorkaround){
 
         // @ts-ignore
         targetElement.style.marginLeft = `${currIndentations * 20}px`;
@@ -49,12 +51,20 @@ export class IndentedDropListComponent<T=any> implements OnInit {
         // @ts-ignore
         currElement.indentation = targetElementIndentations;
       }
+      // only indenting
+      else if(currElement === targetElement){
+        // @ts-ignore
+        currElement.style.marginLeft = `${currIndentations * 20}px`;
+        // @ts-ignore
+        currElement.indentation = currIndentations;
+      }
       else{
         // @ts-ignore
         currElement.style.marginLeft = `${currIndentations * 20}px`;
         // @ts-ignore
         currElement.indentation = currIndentations;
       }
+
     }
     else{
       transferArrayItem($event.previousContainer.data,
