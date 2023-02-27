@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
 import {RoleType} from "../../../services/generated/models/role-type";
 import {AuthenticateService} from "../../../services/generated/services/authenticate.service";
-import {firstValueFrom, lastValueFrom} from "rxjs";
+import {lastValueFrom} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile',
@@ -23,15 +23,18 @@ export class ProfileComponent implements OnInit {
   phoneNumber: string = "";
   savingInProgress: boolean = false;
 
+  emailConfirmed : boolean = false;
+
   constructor(private readonly userService: UserService,
               private readonly authenticationService:AuthenticateService,
-              private readonly router: Router) {
+              public snackBar: MatSnackBar) {
   }
 
   initUserDataLoading(){
     this.userService.currentUserSubject.subscribe(user => {
       if (user != null) {
         console.log(user);
+        this.emailConfirmed = user.emailConfirmed ?? false;
         this.userName = user.userName ?? "";
         this.email = user.email ?? "";
         this.firstName = user.firstName ?? "";
@@ -91,5 +94,15 @@ export class ProfileComponent implements OnInit {
 
       this.savingInProgress = false;
       console.log("SAVED:\t" + this.userName + "\t" + this.firstName + "\t" + this.lastName + "\t" + this.email + "\t" + this.matrikelNummer + "\t" + this.phoneNumber)
+  }
+
+  sendVerificationEmail() {
+    lastValueFrom(this.authenticationService.apiAuthenticateResendConfirmationEmailPost({
+      email: this.email
+    })).catch(() => {
+      this.snackBar.open("Failed to send email", "OK");
+    }).then(() => {
+      this.snackBar.open("Verification EMail sent!", "OK");
+    });
   }
 }

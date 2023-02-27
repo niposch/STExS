@@ -38,6 +38,10 @@ public class ApplicationModule : Module
         builder.RegisterType<ModuleService>()
             .As<IModuleService>()
             .InstancePerLifetimeScope();
+        
+        builder.RegisterType<EmailService>()
+            .As<IEmailService>()
+            .InstancePerLifetimeScope();
 
         builder.RegisterType<CodeOutputGradingService>()
             .As<ICodeOutputGradingService>()

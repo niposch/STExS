@@ -1,6 +1,7 @@
 using System.Net;
 using Application;
 using Application.Helper.Roles;
+using Application.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models.Authentication;
@@ -9,6 +10,9 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.Repositories.Grading;
 using STExS.Helper;
@@ -27,9 +31,12 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
     if (!isTest && !isCI) // test environment should provide it's own db options before this point
         b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
             new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
+    }
+
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule());
 });
+builder.Services.Configure<EmailConfiguration>(options => builder.Configuration.GetSection("IMAP").Bind(options));
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

@@ -63,6 +63,7 @@ import { GradingExerciseDashboardComponent } from './components/admin/grading/gr
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
 import { IndentedDropListComponent } from './components/helper/indented-drop-list/indented-drop-list.component';
+import { ConfirmEmailComponent } from './components/authentication/confirm-email/confirm-email.component';
 import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatMenuModule} from "@angular/material/menu";
@@ -107,6 +108,7 @@ import { CreateEditClozeComponent } from './components/admin/exercise-admin/crea
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
     IndentedDropListComponent,
+    ConfirmEmailComponent,
     AdministrateUsersComponent,
     ChangeRoleDialogComponent,
     NoAccessComponent,
