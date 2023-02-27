@@ -28,6 +28,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 250%;
+  display:inline;
 }
 
 .submit {
@@ -45,13 +46,7 @@
   min-width: 100px;
   max-width: 500px;
   width: 50px;
-  height: 0px;
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.input-field {
-  background-color: rgba($color: #c9c9c9, $alpha: 0.1);
+  height: 0;
 }
 
 .master-card {
