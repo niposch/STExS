@@ -380,25 +380,25 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("FinalAppealDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("GradedSubmissionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsAutomatic")
-                        .HasColumnType("bit");
+                    b.Property<int>("GradingState")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsFinal")
+                    b.Property<bool>("IsAutomaticallyGraded")
                         .HasColumnType("bit");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserSubmissionExerciseId")
+                    b.Property<Guid?>("UserSubmissionExerciseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserSubmissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserSubmissionUserId")
+                    b.Property<Guid?>("UserSubmissionUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -593,6 +593,17 @@ namespace Repositories.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Common.Models.ExerciseSystem.Cloze.ClozeTextExercise", b =>
+                {
+                    b.HasBaseType("Common.Models.ExerciseSystem.BaseExercise");
+
+                    b.Property<string>("TextWithAnswers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue(40);
+                });
+
             modelBuilder.Entity("Common.Models.ExerciseSystem.CodeOutput.CodeOutputExercise", b =>
                 {
                     b.HasBaseType("Common.Models.ExerciseSystem.BaseExercise");
@@ -755,13 +766,9 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Common.Models.Grading.GradingResult", b =>
                 {
-                    b.HasOne("Common.Models.Grading.UserSubmission", "UserSubmission")
+                    b.HasOne("Common.Models.Grading.UserSubmission", null)
                         .WithMany("GradingResults")
-                        .HasForeignKey("UserSubmissionUserId", "UserSubmissionExerciseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("UserSubmission");
+                        .HasForeignKey("UserSubmissionUserId", "UserSubmissionExerciseId");
                 });
 
             modelBuilder.Entity("Common.Models.Grading.TimeTrack", b =>

@@ -61,4 +61,16 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
             .ThenInclude(s => s.GradingResult)
             .ToDictionaryAsync(e => e.UserId, cancellationToken);
     }
+
+    public async Task<List<UserSubmission>> GetAllByUserIdAndChapterAsync(Guid chapterId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var userSubmissions = await this.context.UserSubmissions
+            .Include(s => s.FinalSubmission)
+            .ThenInclude(s => s.GradingResult)
+            .Include(s => s.Exercise)
+            .Where(s => s.UserId == userId && s.Exercise.ChapterId == chapterId)
+            .ToListAsync(cancellationToken);
+
+        return userSubmissions;
+    }
 }

@@ -55,5 +55,8 @@ export class TaskListItemComponent implements OnInit {
     if(this.exercise.exerciseType == ExerciseType.CodeOutput){
       this.router.navigate(["/codeoutput/create"], {queryParams:{exerciseId: this.exercise.id}})
     }
+    else if(this.exercise.exerciseType == ExerciseType.ClozeText){
+      this.router.navigate(["/cloze/create"], {queryParams:{exerciseId: this.exercise.id}})
+    }
   }
 }

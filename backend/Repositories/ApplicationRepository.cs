@@ -6,7 +6,7 @@ namespace Repositories;
 
 public class ApplicationRepository : IApplicationRepository
 {
-    #pragma warning disable
+#pragma warning disable
     public ApplicationRepository(IWeatherForecastRepository weatherForecasts,
         IModuleRepository modules,
         IChapterRepository chapters,
@@ -19,8 +19,9 @@ public class ApplicationRepository : IApplicationRepository
         IUSerSubmissionRepository userSubmissions,
         ISubmissionRepository submissions,
         IGradingResultRepository gradingResults,
-        ITimeTrackRepository timeTracks)
-    #pragma warning restore
+        ITimeTrackRepository timeTracks,
+        IClozeTextExerciseRepository clozeTextExercises)
+#pragma warning restore
     {
         this.WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
         this.Modules = modules ?? throw new ArgumentNullException(nameof(modules));
@@ -31,7 +32,8 @@ public class ApplicationRepository : IApplicationRepository
         this.CommonExercises = commonExercises ?? throw new ArgumentNullException(nameof(commonExercises));
         this.ModuleParticipations = moduleParticipations ?? throw new ArgumentNullException(nameof(moduleParticipations));
         this.CodeOutputExercises = codeOutputExercises ?? throw new ArgumentNullException(nameof(codeOutputExercises));
-        
+        this.ClozeTextExercises = clozeTextExercises ?? throw new ArgumentNullException(nameof(clozeTextExercises));
+
         this.UserSubmissions = userSubmissions ?? throw new ArgumentNullException(nameof(userSubmissions));
         this.Submissions = submissions ?? throw new ArgumentNullException(nameof(submissions));
         this.GradingResults = gradingResults ?? throw new ArgumentNullException(nameof(gradingResults));
@@ -39,26 +41,31 @@ public class ApplicationRepository : IApplicationRepository
     }
 
     public IWeatherForecastRepository WeatherForecasts { get; set; } // just for demonstration, will be removed
-    
+
     public IModuleRepository Modules { get; set; }
     public IChapterRepository Chapters { get; set; }
-    
+
     // Exercises
     public ICommonExerciseRepository CommonExercises { get; set; } // helper repository for querying all exercises
+
     // Parson 
     public IParsonElementRepository ParsonElements { get; set; }
     public IParsonExerciseRepository ParsonExercises { get; set; }
     public IParsonSolutionRepository ParsonSolutions { get; set; }
     public ICodeOutputExerciseRepository CodeOutputExercises { get; set; }
+
+    public IClozeTextExerciseRepository ClozeTextExercises { get; set; }
     public IModuleParticipationRepository ModuleParticipations { get; set; }
 
     #region Grading
+
     public IUSerSubmissionRepository UserSubmissions { get; set; }
-    
+
     public ISubmissionRepository Submissions { get; set; }
-    
+
     public IGradingResultRepository GradingResults { get; set; }
-    
+
     public ITimeTrackRepository TimeTracks { get; set; }
+
     #endregion
 }
