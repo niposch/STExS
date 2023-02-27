@@ -8,7 +8,7 @@
 [cdkDropListData]="cdkDropListData"
 [cdkDropListConnectedTo]="[drop_list]">
   <div class="drag-item" cdkDrag *ngFor="let item of cdkDropListData"
-  (cdkDragMoved)="dragMoved($event)" (cdkDragStarted)="dragStarted($event)">
+  (cdkDragMoved)="dragMoved($event)" [style.margin-left]="20 * (item.indentation ?? 0) + 'px'" (cdkDragStarted)="dragStarted($event)">
     {{item.text}}
     <mat-icon>drag_handle</mat-icon>
     <ng-template cdkDragPlaceholder>

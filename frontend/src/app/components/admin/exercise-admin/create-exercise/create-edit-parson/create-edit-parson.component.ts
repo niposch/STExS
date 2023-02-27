@@ -25,6 +25,8 @@ export class CreateEditParsonComponent implements OnInit {
   public exercise: ParsonExerciseDetailItem | null | undefined = undefined; // undefined means loading, null means error
   public newLine: string = "";
 
+  public isOnlyInspecting: boolean = false;
+
   private chapterId: string | null = null;
   emptyList: ParsonExerciseLineDetailItem[] = [];
   constructor(private route: ActivatedRoute,
@@ -36,6 +38,7 @@ export class CreateEditParsonComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       let exerciseId = params['exerciseId'];
       this.chapterId = params['chapterId'];
+      this.isOnlyInspecting = params['inspecting'] == "true";
 
       if (exerciseId && !this.chapterId) {
         this.loadExercise(exerciseId)
@@ -113,8 +116,8 @@ export class CreateEditParsonComponent implements OnInit {
   }
 
   private async loadExercise(exerciseId:string):Promise<ParsonExerciseDetailItem> {
-    return await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleGet$Json({
-      id: exerciseId
+    return await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleWithAnswersGet$Json({
+      exerciseId: exerciseId
     })
       .pipe(map(e => {
         e.lines ??= [];
