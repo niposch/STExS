@@ -183,6 +183,10 @@ export class ChapterAdminAdministrateComponent implements OnInit {
       );
       return;
     }
+    else if(this.exerciseType == ExerciseType.ClozeText){
+      this.router.navigate(["cloze/create"],
+        {queryParams: {chapterId: this.chapterId}})
+    }
     else {
       this.router.navigate(['**'])
     }

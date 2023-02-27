@@ -1,0 +1,24 @@
+.centered-content {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  margin: auto;
+}
+
+.main-heading {
+  font-style: normal;
+  font-variant: small-caps;
+  font-weight: bolder;
+  font-size: 60px;
+  font-family: Arial, sans-serif;
+  line-height: 50px;
+  color: #02C0A2;
+  text-align: center;
+}
+
+.site {
+  background-image: linear-gradient(to bottom right, #303030, #202020);
+}

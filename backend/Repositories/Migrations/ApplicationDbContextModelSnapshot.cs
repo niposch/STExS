@@ -593,6 +593,17 @@ namespace Repositories.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Common.Models.ExerciseSystem.Cloze.ClozeTextExercise", b =>
+                {
+                    b.HasBaseType("Common.Models.ExerciseSystem.BaseExercise");
+
+                    b.Property<string>("TextWithAnswers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue(40);
+                });
+
             modelBuilder.Entity("Common.Models.ExerciseSystem.CodeOutput.CodeOutputExercise", b =>
                 {
                     b.HasBaseType("Common.Models.ExerciseSystem.BaseExercise");

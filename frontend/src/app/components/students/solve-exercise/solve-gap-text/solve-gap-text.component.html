@@ -1,0 +1,25 @@
+<mat-card class="master-card">
+  <div *ngIf="!this.isLoading" class="vertical-container">
+    <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
+    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+    <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
+    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+    <div class="adjust-content">
+      <div *ngFor="let textparts of this.splitted; let i = index" class="text">
+        {{textparts}}
+        <mat-form-field *ngIf="this.splitted && !(i === (this.splitted.length -1))" class="input">
+          <input *ngIf="this.gaps" matInput class="input-field" [(ngModel)]="this.gaps[i]">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="center">
+      <button class="submit" mat-raised-button color="accent" (click)="buttonClick()">submit</button>
+    </div>
+    <div *ngIf="this.showGaps && this.gaps">
+        <div *ngFor="let gap of this.gaps; let i = index">
+          Gap {{i+1}}: {{gap}}
+        </div>
+    </div>
+  </div>
+  <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
+</mat-card>

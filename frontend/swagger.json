@@ -494,6 +494,202 @@
         }
       }
     },
+    "/api/ClozeTextExercise/withoutAnswers": {
+      "get": {
+        "tags": [
+          "ClozeTextExercise"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClozeTextExercise/create": {
+      "post": {
+        "tags": [
+          "ClozeTextExercise"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClozeTextExercise/update": {
+      "post": {
+        "tags": [
+          "ClozeTextExercise"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClozeTextExercise/withAnswers": {
+      "get": {
+        "tags": [
+          "ClozeTextExercise"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClozeTextExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CodeOutput": {
+      "get": {
+        "tags": [
+          "CodeOutput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CodeOutputDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/CodeOutput/create": {
       "post": {
         "tags": [
@@ -605,45 +801,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CodeOutputExerciseDetailItemWithAnswer"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/CodeOutput": {
-      "get": {
-        "tags": [
-          "CodeOutput"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/CodeOutputDetailItem"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CodeOutputDetailItem"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CodeOutputDetailItem"
                 }
               }
             }
@@ -2633,6 +2790,83 @@
         },
         "additionalProperties": false
       },
+      "ClozeTextExerciseCreateItem": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClozeTextExerciseDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userHasSolvedExercise": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CodeOutputDetailItem": {
         "type": "object",
         "properties": {
@@ -2655,7 +2889,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -2734,7 +2968,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
@@ -2820,7 +3054,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "achieveablePoints": {
+          "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
