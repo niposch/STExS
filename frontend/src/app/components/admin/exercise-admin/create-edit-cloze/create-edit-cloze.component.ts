@@ -81,7 +81,10 @@ export class CreateEditClozeComponent implements OnInit {
         exerciseName: this.exercise?.exerciseName,
         achievablePoints: this.exercise?.achievablePoints
       }
-    }))
+    })).catch(() =>{
+      this.toastService.open("Error creating exercise", "OK", {duration:300});
+    });
+    this.goBack();
   }
 
   async updateExercise() {
@@ -95,6 +98,7 @@ export class CreateEditClozeComponent implements OnInit {
         this.toastService.open("Exercise updated", "OK", {
           duration: 2000
         });
+
       })
       .catch(err => {
         console.error(err);

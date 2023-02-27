@@ -53,3 +53,9 @@ textarea {
   background-color: #424242;
 }
 
+::ng-deep .mat-tooltip {
+  font-size: 14px;
+  text-align: center;
+  width: 200px;
+}
+

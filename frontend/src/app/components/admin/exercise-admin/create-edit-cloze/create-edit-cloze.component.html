@@ -15,7 +15,14 @@
       <app-create-exercise [(description)]="this.exercise.exerciseDescription!" [(name)]="this.exercise.exerciseName!" [isOnlyInspecting]="this.isOnlyInspectingExercise"></app-create-exercise>
 
       <div style="margin-top: 10px; margin-bottom: 10px" class="elevated">
-        <mat-label style="white-space: nowrap; font-size: 16px">Cloze Text</mat-label>
+        <div class="horizontal-container">
+          <mat-label style="white-space: nowrap; font-size: 16px; margin-top: auto; margin-bottom: auto">Cloze Text</mat-label>
+          <button mat-icon-button
+                  disabled
+                  matTooltip="Add a gap / cloze by writing: [[text to be hidden]]">
+            <mat-icon>info</mat-icon>
+          </button>
+        </div>
         <mat-form-field class="form-field" style="width: 100%">
           <textarea *ngIf="!this.isOnlyInspectingExercise" matInput type="text" [(ngModel)]="this.exercise.text" placeholder="Cloze Text"></textarea>
           <textarea *ngIf="this.isOnlyInspectingExercise" disabled matInput type="text" [(ngModel)]="this.exercise.text" placeholder="Cloze Text"></textarea>
