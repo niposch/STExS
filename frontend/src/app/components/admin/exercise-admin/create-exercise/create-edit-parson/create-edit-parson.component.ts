@@ -5,6 +5,14 @@ import {CodeOutputService} from "../../../../../../services/generated/services/c
 import {catchError, lastValueFrom} from "rxjs";
 import {ExerciseType} from "../../../../../../services/generated/models/exercise-type";
 import {CdkDragDrop, CdkDragEnter, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {ParsonExerciseDetailItem} from "../../../../../../services/generated/models/parson-exercise-detail-item";
+import {ParsonExerciseCreateItem} from "../../../../../../services/generated/models/parson-exercise-create-item";
+import {environment} from "../../../../../../environments/environment";
+import {map} from "rxjs/operators";
+import {ParsonPuzzleService} from "../../../../../../services/generated/services/parson-puzzle.service";
+import {
+  ParsonExerciseLineDetailItem
+} from "../../../../../../services/generated/models/parson-exercise-line-detail-item";
 
 
 @Component({
@@ -14,89 +22,76 @@ import {CdkDragDrop, CdkDragEnter, moveItemInArray, transferArrayItem} from '@an
 })
 export class CreateEditParsonComponent implements OnInit {
 
-  public expectedAnswer: string = "";
-  public achievablePoints: number = 0;
-  public isMultilineResponse : boolean = false;
-  public exerciseId: string = "";
-  public chapterId : string = "";
-  public description : string = "";
-  public name : string = "";
-  public isEditingExercise = false;
-  private runningNumber: number = 0;
+  public exercise: ParsonExerciseDetailItem | null | undefined = undefined; // undefined means loading, null means error
+  public newLine: string = "";
 
-  public loading = true
-
-  public create_puzzles: string[] = [ "" ];
-  public puzzles: string[] = [];
-  public empty: string[] =  [];
-  public draggingOutsideSourceList: boolean = false;
-  public isEditingPuzzleName: boolean = true;
-  public puzzleName : string = "";
-  public newLine : string = "";
-  puzzles2: string[] = [];
-
+  private chapterId: string | null = null;
+  emptyList: ParsonExerciseLineDetailItem[] = [];
   constructor(private route: ActivatedRoute,
               private router: Router,
               private snackBar: MatSnackBar,
-              private codeOutputService: CodeOutputService) { }
+              private parsonPuzzleService: ParsonPuzzleService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.exerciseId = params['exerciseId'];
+      let exerciseId = params['exerciseId'];
       this.chapterId = params['chapterId'];
 
-      if (this.exerciseId && !this.chapterId) {
-        this.isEditingExercise = true;
-        this.loadExercise(this.exerciseId)
-      } else {
-        this.isEditingExercise = false;
-        this.loading = false
+      if (exerciseId && !this.chapterId) {
+        this.loadExercise(exerciseId)
+          .then(ex => {
+            this.exercise = ex
+          })
+          .catch(err => {
+            this.exercise = null;
+            console.log(err)
+          })
+      } else if(this.chapterId && !exerciseId) {
+        this.exercise = {
+          chapterId: this.chapterId,
+          achieveablePoints: 0,
+          exerciseDescription: "",
+          exerciseName: "",
+          lines: []
+
+        } as ParsonExerciseCreateItem
+      }
+      else{
+        this.exercise = null;
       }
     })
   }
 
-  saveExercise() {
-    if (this.isEditingExercise) {
-      this.updateExercise();
+  async saveExercise() {
+    if(this.exercise == null){
+      return;
+    }
+    if (this.exercise.id == null) {
+      await this.createExercise();
     } else {
-      this.createExercise();
+      await this.updateExercise();
     }
   }
 
-  updateExercise(){
-    this.codeOutputService.apiCodeOutputUpdatePost({
+  async updateExercise(){
+    await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleUpdatePost({
       body:{
-        expectedAnswer: this.expectedAnswer,
-        achievablePoints: this.achievablePoints,
-        chapterId: this.chapterId,
-        creationDate: null,
-        exerciseDescription: this.description,
-        exerciseName: this.name,
-        exerciseType: ExerciseType.CodeOutput,
-        id: this.exerciseId,
-        isMultiLineResponse: this.isMultilineResponse,
-        modificationDate: null,
-        runningNumber: this.runningNumber
+        ...this.exercise
       }
-    })
-      .pipe(catchError(err => {
-        this.snackBar.open("Could not update Exercise!", "Dismiss", {duration: 5000});
-        throw err
-      }))
-      .subscribe(() => {
+    }))
+      .then(() => {
         this.snackBar.open("Successfully updated Exercise!", "Dismiss", {duration:2000});
         this.goBack();
       })
+      .catch(err => {
+        this.snackBar.open("Could not update Exercise!", "Dismiss", {duration: 5000});
+        throw err
+      })
   }
-  createExercise() {
-    lastValueFrom(this.codeOutputService.apiCodeOutputCreatePost$Json({
+  async createExercise() {
+    await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleCreatePost$Json({
       body:{
-        expectedAnswer: this.expectedAnswer,
-        isMultilineResponse: this.isMultilineResponse,
-        exerciseName: this.name,
-        exerciseDescription: this.description,
-        achieveablePoints: this.achievablePoints,
-        chapterId: this.chapterId,
+        ...(this.exercise as ParsonExerciseCreateItem)
       }
     }))
       .catch(err =>{
@@ -109,58 +104,38 @@ export class CreateEditParsonComponent implements OnInit {
   }
 
   public async goBack(){
-    await this.router.navigate(['/module/administrate/chapter'], {queryParams : {chapterId:this.chapterId}})
+    if(this.chapterId == null && this.exercise?.chapterId == null){
+      // navigate back
+      history.back();
+      return;
+    }
+    await this.router.navigate(['/module/administrate/chapter'], {queryParams : {chapterId: this.chapterId ?? this.exercise?.chapterId}})
   }
 
-  private async loadExercise(exerciseId:string) {
-    await this.codeOutputService.apiCodeOutputWithAnswersGet$Json({
+  private async loadExercise(exerciseId:string):Promise<ParsonExerciseDetailItem> {
+    return await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleGet$Json({
       id: exerciseId
     })
-      .subscribe(res => {
-          this.expectedAnswer = res.expectedAnswer ?? ""
-          this.achievablePoints = res.achievablePoints ?? 0
-          this.chapterId = res.chapterId ?? ""
-          this.description = res.exerciseDescription ?? ""
-          this.name = res.exerciseName ?? ""
-          this.isMultilineResponse = res.isMultiLineResponse ?? false
-          this.runningNumber  = res.runningNumber ?? 0
-          this.loading = false
-      })
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      //console.log(event);
-      if ( [ "puzzle_list", "delete_puzzle_list" ].includes( event.container.id ) ) {
-        //moved created puzzle into puzzle list or delete puzzle
-        //allow creation of new puzzle
-        this.isEditingPuzzleName = true;
-      }
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-    this.draggingOutsideSourceList = false;
-    console.log(this.puzzles);
-  }
-
-  onCdkDragEntered(event: CdkDragEnter<string>) {
-    this.draggingOutsideSourceList = event.container.id == "delete_puzzle_list" ? true : false;
-  }
-
-  createPuzzle() {
-    this.puzzleName = this.newLine;
-    this.create_puzzles[0] = this.puzzleName;
-    this.isEditingPuzzleName = false;
+      .pipe(map(e => {
+        e.lines ??= [];
+        e.exerciseDescription ??= "";
+        e.exerciseName ??= "";
+        return e;
+      })))
   }
 
   addLine() {
-    this.puzzles.push(this.newLine);
+    this.exercise?.lines?.push({
+      id: environment.EmptyGuid,
+      text: this.newLine,
+      indentation: 0
+    });
     this.newLine = "";
+    this.exercise!.achievablePoints = this.exercise?.lines?.length ?? 0;
+  }
+
+  public empty: ParsonExerciseLineDetailItem[] = [];
+  drop($event: CdkDragDrop<any[], any>) {
+    this.exercise?.lines?.splice($event.previousIndex, 1);
   }
 }

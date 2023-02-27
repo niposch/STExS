@@ -2027,6 +2027,45 @@
         }
       }
     },
+    "/api/ParsonPuzzle": {
+      "get": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/ParsonPuzzle/create": {
       "post": {
         "tags": [
@@ -2138,45 +2177,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ParsonPuzzle": {
-      "get": {
-        "tags": [
-          "ParsonPuzzle"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ParsonDetailItem"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ParsonDetailItem"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ParsonDetailItem"
                 }
               }
             }
@@ -3546,7 +3546,39 @@
         },
         "additionalProperties": false
       },
-      "ParsonDetailItem": {
+      "ParsonExerciseCreateItem": {
+        "type": "object",
+        "properties": {
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "achieveablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineCreateItem"
+            },
+            "nullable": true
+          },
+          "indentationIsRelevant": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseDetailItem": {
         "type": "object",
         "properties": {
           "id": {
@@ -3596,35 +3628,9 @@
               "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParsonExerciseCreateItem": {
-        "type": "object",
-        "properties": {
-          "exerciseName": {
-            "type": "string",
-            "nullable": true
           },
-          "exerciseDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "achieveablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lines": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ParsonExerciseLineCreateItem"
-            },
-            "nullable": true
+          "indentationIsRelevant": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -3679,6 +3685,9 @@
               "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
             },
             "nullable": true
+          },
+          "indentationIsRelevant": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

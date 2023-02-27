@@ -21,7 +21,7 @@ public class ParsonExerciseService : IParsonExerciseService
         this.submissionService = submissionService ?? throw new ArgumentNullException(nameof(submissionService));
     }
 
-    public async Task<ParsonDetailItem> GetByIdAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
+    public async Task<ParsonExerciseDetailItem> GetByIdAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
     {
         var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(exerciseId, cancellationToken) ?? throw new EntityNotFoundException<ParsonExercise>(exerciseId);
 
@@ -98,14 +98,20 @@ public class ParsonExerciseService : IParsonExerciseService
             Id = Guid.NewGuid(),
             ExerciseName = createItem.ExerciseName,
             ChapterId = createItem.ChapterId,
-            ExerciseType = ExerciseType.CodeOutput,
+            ExerciseType = ExerciseType.Parson,
             AchievablePoints = createItem.AchieveablePoints,
             Description = createItem.ExerciseDescription,
-            ExpectedSolution = new ParsonSolution(),
+            ExpectedSolution = new ParsonSolution
+            {
+                CodeElements = new List<ParsonElement>(),
+                OwnerId = userId,
+                Id = Guid.NewGuid()
+            },
             RunningNumber = nextAvailableExerciseNumberInChapter,
             OwnerId = userId
         };
 
+        entity.ExpectedSolution.RelatedExerciseId = entity.Id;
         createItem.Lines ??= new List<ParsonExerciseLineCreateItem>();
         entity.ExpectedSolution.CodeElements = createItem.Lines.Select((l, i) => new ParsonElement
         {
@@ -114,7 +120,7 @@ public class ParsonExerciseService : IParsonExerciseService
             Indentation = l.Indentation,
             RunningNumber = i + 1,
             OwnerId = userId,
-            RelatedSolutionId = entity.Id
+            RelatedSolutionId = entity.ExpectedSolution.Id
         }).ToList();
 
         var createdEntity = await this.repository.ParsonExercises.AddAsync(entity, cancellationToken);
@@ -122,9 +128,9 @@ public class ParsonExerciseService : IParsonExerciseService
         return createdEntity.Id;
     }
 
-    private ParsonDetailItem ToDetailItemWithoutAnswers(ParsonExercise entity, bool userHasSolvedExercise)
+    private ParsonExerciseDetailItem ToDetailItemWithoutAnswers(ParsonExercise entity, bool userHasSolvedExercise)
     {
-        return new ParsonDetailItem
+        return new ParsonExerciseDetailItem
         {
             ExerciseDescription = entity.Description,
             ExerciseType = ExerciseType.Parson,

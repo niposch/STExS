@@ -9,11 +9,11 @@
 [cdkDropListConnectedTo]="[drop_list]">
   <div class="drag-item" cdkDrag *ngFor="let item of cdkDropListData"
   (cdkDragMoved)="dragMoved($event)" (cdkDragStarted)="dragStarted($event)">
-    {{item}}
+    {{item.text}}
     <mat-icon>drag_handle</mat-icon>
     <ng-template cdkDragPlaceholder>
         <div class="drag-item" style="background-color: #ccc">
-        {{item}}
+        {{item.text}}
       </div>
     </ng-template>
   </div>

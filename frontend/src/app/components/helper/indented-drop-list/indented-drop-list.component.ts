@@ -7,18 +7,19 @@ import {
   moveItemInArray,
   transferArrayItem
 } from "@angular/cdk/drag-drop";
+import {ParsonExerciseLineDetailItem} from "../../../../services/generated/models/parson-exercise-line-detail-item";
 
 @Component({
   selector: 'app-indented-drop-list',
   templateUrl: './indented-drop-list.component.html',
   styleUrls: ['./indented-drop-list.component.scss']
 })
-export class IndentedDropListComponent<T=any> implements OnInit {
+export class IndentedDropListComponent implements OnInit {
   @Output()
   public dropEvent: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   @Input()
-  cdkDropListData: T[] = [];
+  cdkDropListData: ParsonExerciseLineDetailItem[] = [];
   @Input()
   cdkDropListConnectedTo: (CdkDropList | string)[] | CdkDropList | string = [];
   private maxIndentation = 15;
@@ -82,7 +83,7 @@ export class IndentedDropListComponent<T=any> implements OnInit {
     console.log($event);
   }
 
-  dragMoved($event: CdkDragMove<T>) {
+  dragMoved($event: CdkDragMove<ParsonExerciseLineDetailItem>) {
     let indentations = Math.floor($event.distance.x / 20);
     // @ts-ignore
     let currIndentations = $event.source.element.nativeElement.indentation ?? 0;

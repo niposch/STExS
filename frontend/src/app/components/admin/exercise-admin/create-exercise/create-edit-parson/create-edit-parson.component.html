@@ -1,16 +1,16 @@
 <mat-card class="main-mat-card">
-    <div *ngIf="!this.loading else loadingSpinner">
+    <div *ngIf="this.exercise != null else loadingSpinner">
       <div class="horizontal-container card-title" style="align-items: center">
         <div class="horizontal-container" style="align-items: center">
           <button mat-icon-button (click)="goBack()" style="margin-right: 10px"><mat-icon>arrow_back</mat-icon></button>
           <mat-card-title class="vertically-centered" style="margin-top: 0; margin-bottom: 0">Create a new Parson Puzzle Exercise</mat-card-title>
         </div>
-        <button *ngIf="!isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
-        <button *ngIf="isEditingExercise" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
+        <button *ngIf="this.exercise.id == null" mat-raised-button color="accent" class="create-button" (click)="createExercise()">create</button>
+        <button *ngIf="this.exercise.id != null" mat-raised-button color="accent" class="create-button" (click)="updateExercise()">update</button>
       </div>
       <mat-card-content>
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-        <app-create-exercise [(description)]="this.description" [(name)]="this.name" ></app-create-exercise>
+        <app-create-exercise [(description)]="this.exercise.exerciseDescription!" [(name)]="this.exercise.exerciseName!" ></app-create-exercise>
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
         <!--drag drop-->
@@ -31,7 +31,7 @@
           <div class="drag-container">
             <h2>Parson Puzzle</h2>
           <app-indented-drop-list
-            [cdkDropListData]="puzzles"
+            [cdkDropListData]="this.exercise!.lines!"
             style="display: block; width: 100%"></app-indented-drop-list>
           </div>
           <!--delete puzzle-->
@@ -45,7 +45,7 @@
               class="drag-list drop-list"
               (cdkDropListDropped)="drop($event)" >
 
-              <div *ngIf="!draggingOutsideSourceList;"class="center-container min-height-container">
+              <div class="center-container min-height-container">
                 <mat-icon>delete_outline</mat-icon>
               </div>
             </div>
@@ -56,12 +56,12 @@
 
         <div class="horizontal-container vertically-centered">
           <div class="vertical-container form-field-container checkbox-container">
-            <mat-checkbox class="vertically-centered" [(ngModel)]="this.isMultilineResponse">allow multiline response</mat-checkbox>
+            <mat-checkbox class="vertically-centered" [(ngModel)]="this.exercise.indentationIsRelevant">check indentation</mat-checkbox>
           </div>
           <div class="form-field-container">
             <mat-form-field class="form-field">
               <mat-label>Achievable Points</mat-label>
-              <input matInput type="number" [(ngModel)]="this.achievablePoints">
+              <input matInput type="number" [(ngModel)]="this.exercise.achievablePoints">
             </mat-form-field>
           </div>
         </div>

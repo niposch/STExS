@@ -1,6 +1,7 @@
 ﻿namespace Application.DTOs.ExercisesDTOs.Parson;
 
-public class ParsonDetailItem : ExerciseDetailItem
+public class ParsonExerciseDetailItem : ExerciseDetailItem
 {
     public List<ParsonExerciseLineDetailItem> Lines { get; set; }
+    public bool IndentationIsRelevant { get; set; }
 }
