@@ -1,7 +1,9 @@
 <mat-card class="master-card">
   <div *ngIf="!this.isLoading" class="vertical-container">
-    <mat-label class="title">Title</mat-label>
-    <mat-divider></mat-divider>
+    <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
+    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+    <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
+    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
     <div class="adjust-content">
       <i *ngFor="let textparts of this.splitted; let i = index" class="text">
         {{textparts}}

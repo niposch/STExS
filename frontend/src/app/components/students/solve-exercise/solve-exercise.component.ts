@@ -25,6 +25,7 @@ export class SolveExerciseComponent implements OnInit {
   public currentExerciseType: ExerciseType = 0;
 
   public showCodeOutput: boolean = false;
+  public showClozeText: boolean = false;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -94,9 +95,13 @@ export class SolveExerciseComponent implements OnInit {
 
   private updateCompType() {
     this.showCodeOutput = false;
+    this.showClozeText = false;
+
     this.changeDetectorRef.detectChanges();
     if (this.currentExerciseType == ExerciseType.CodeOutput) {
       this.showCodeOutput = true;
+    } else if (this.currentExerciseType == ExerciseType.ClozeText) {
+      this.showClozeText = true;
     }
   }
 
