@@ -4,11 +4,11 @@ namespace Application.Helper;
 
 public sealed class ClozeTextHelper : IClozeTextHelper
 {
-    private const string ClozePattern = @"\[\[[^\]]+\]\]";
+    private const string ClozePattern = @"\[\[[^\[]+\]\]";
 
     public string StripAnswers(string text)
     {
-        return Regex.Replace(text, ClozePattern, "");
+        return Regex.Replace(text, ClozePattern, "[[]]");
     }
 
     public int CountClozes(string text)

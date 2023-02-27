@@ -4,7 +4,7 @@ using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services.Grading;
 
-public sealed class UserSubmissionService:IUserSubmissionService
+public sealed class UserSubmissionService : IUserSubmissionService
 {
     private readonly IApplicationRepository repository;
 
@@ -15,28 +15,25 @@ public sealed class UserSubmissionService:IUserSubmissionService
 
     public async Task<UserSubmission> GetOrCreateUserSubmissionAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        var existingSubmission = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        if (existingSubmission != null)
-        {
-            return existingSubmission;
-        }
-        
+        var existingSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        if (existingSubmission != null) return existingSubmission;
+
         var userSubmission = new UserSubmission
         {
             UserId = userId,
             ExerciseId = exerciseId,
-            FinalSubmissionId = null,
+            FinalSubmissionId = null
         };
-        
-        await repository.UserSubmissions.CreateAsync(userSubmission, cancellationToken);
+
+        await this.repository.UserSubmissions.CreateAsync(userSubmission, cancellationToken);
 
         return userSubmission;
     }
 
     public async Task<bool> HasUserSolvedExerciseAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        var userSubmission = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        
+        var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+
         return userSubmission != null && userSubmission.FinalSubmissionId != null;
     }
 }

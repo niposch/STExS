@@ -31,7 +31,7 @@ public sealed class ClozeTextExerciseService : IClozeTextExerciseService
         var exercise = await this.repository.ClozeTextExercises.TryGetByIdAsync(exerciseId, cancellationToken);
         if (exercise == null) throw new EntityNotFoundException<ClozeTextExercise>(exerciseId);
         var userHasSolvedExercise = await this.submissionService.HasUserSolvedExerciseAsync(userId, exerciseId, cancellationToken);
-            var res = this.ToDetailItem(exercise, withAnswers, userHasSolvedExercise);
+        var res = this.ToDetailItem(exercise, withAnswers, userHasSolvedExercise);
         return res;
     }
 
