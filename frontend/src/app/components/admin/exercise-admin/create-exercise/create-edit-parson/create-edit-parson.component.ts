@@ -33,6 +33,7 @@ export class CreateEditParsonComponent implements OnInit {
   public isEditingPuzzleName: boolean = true;
   public puzzleName : string = "";
   public newLine : string = "";
+  puzzles2: string[] = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,

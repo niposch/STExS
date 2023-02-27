@@ -1,0 +1,20 @@
+<div
+  style="min-height: 35px; width: 100%; padding: 0px 0px;"
+  class="drag-container"
+  cdkDropList (cdkDropListDropped)="drop($event)"
+  #drop_list="cdkDropList"
+  (cdkDropListEntered)="entered($event)"
+  (cdkDropListExited)="exited($event)"
+[cdkDropListData]="cdkDropListData"
+[cdkDropListConnectedTo]="[drop_list]">
+  <div class="drag-item" cdkDrag *ngFor="let item of cdkDropListData"
+  (cdkDragMoved)="dragMoved($event)" (cdkDragStarted)="dragStarted($event)">
+    {{item}}
+    <mat-icon>drag_handle</mat-icon>
+    <ng-template cdkDragPlaceholder>
+        <div class="drag-item" style="background-color: #ccc">
+        {{item}}
+      </div>
+    </ng-template>
+  </div>
+</div>

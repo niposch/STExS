@@ -62,6 +62,7 @@ import { GradingModuleDashboardComponent } from './components/admin/grading/grad
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { IndentedDropListComponent } from './components/helper/indented-drop-list/indented-drop-list.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { SubmissionGradingStatePipe } from './pipes/submission/submission-gradin
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
+    IndentedDropListComponent,
   ],
     imports: [
         BrowserModule,

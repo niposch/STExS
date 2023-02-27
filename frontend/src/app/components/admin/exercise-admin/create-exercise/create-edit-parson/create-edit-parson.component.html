@@ -30,31 +30,9 @@
           <!--parson puzzle-->
           <div class="drag-container">
             <h2>Parson Puzzle</h2>
-            <div
-              cdkDropList
-              #puzzle_list="cdkDropList"
-              [cdkDropListData]="puzzles"
-              [cdkDropListConnectedTo]="[puzzle_list]"
-              id="puzzle_list"
-              class="drag-list"
-              (cdkDropListDropped)="drop($event)">
-                <div class="drag-box" *ngFor="let piece of puzzles" cdkDrag (cdkDragEntered)="onCdkDragEntered($event)">
-                  <ng-template #itemTpl>
-                    <div class="drag-item">
-                      {{piece}}
-                      <mat-icon>drag_handle</mat-icon>
-                    </div>
-                  </ng-template>
-                  <div *cdkDragPlaceholder>
-                    <div *ngIf="draggingOutsideSourceList; else itemTpl" class="custom-dragover-placeholder">
-                      <div class="center-container">
-                        <mat-icon>delete_outline</mat-icon>
-                      </div>
-                    </div>
-                  </div>
-                  <ng-container *ngTemplateOutlet="itemTpl"></ng-container>
-              </div>
-            </div>
+          <app-indented-drop-list
+            [cdkDropListData]="puzzles"
+            style="display: block; width: 100%"></app-indented-drop-list>
           </div>
           <!--delete puzzle-->
           <div class="drag-container">
