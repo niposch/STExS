@@ -10,9 +10,6 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.Repositories.Grading;
 using STExS.Helper;
@@ -31,7 +28,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
     if (!isTest && !isCI) // test environment should provide it's own db options before this point
         b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
             new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
-    }
 
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule());
