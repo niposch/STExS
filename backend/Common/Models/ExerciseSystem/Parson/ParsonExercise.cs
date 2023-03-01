@@ -1,11 +1,10 @@
-﻿using Common.Models.HelperInterfaces;
-using Common.RepositoryInterfaces.Tables;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Common.Models.ExerciseSystem.Parson;
-public sealed class ParsonExercise: BaseExercise
+
+public sealed class ParsonExercise : BaseExercise
 {
     // Relationships
     public ParsonSolution ExpectedSolution { get; set; }
-    
-    public Chapter Chapter { get; set; }
 }

@@ -1,0 +1,27 @@
+.drag-item {
+  padding: 5px 10px;
+  border-bottom: solid 1px #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: #444444;
+  font-size: 14px;
+  color: #fff;
+}
+
+.drag-container{
+  --lineWidth:2px;
+  --lineSpacing:18px;
+
+  background: repeating-linear-gradient(
+      90deg,
+      #222222,
+      #222222 18px,
+      #444444 18px,
+      #444444 20px
+  );
+
+}

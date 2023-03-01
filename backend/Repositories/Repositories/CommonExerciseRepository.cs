@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Text.RegularExpressions;
-using Common.Exceptions;
+﻿using Common.Exceptions;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +17,7 @@ public class CommonExerciseRepository : ICommonExerciseRepository
     public async Task<BaseExercise?> TryGetByIdAsync(Guid exerciseId, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
         var query = this.context.Exercises.AsQueryable();
-        if (asNoTracking)
-        {
-            query = query.AsNoTracking();
-        }
+        if (asNoTracking) query = query.AsNoTracking();
 
         return await query.FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
     }
@@ -42,10 +37,7 @@ public class CommonExerciseRepository : ICommonExerciseRepository
     public async Task DeleteAsync(Guid exerciseId, CancellationToken cancellationToken = default)
     {
         var exercise = await this.TryGetByIdAsync(exerciseId, false, cancellationToken);
-        if (exercise is null)
-        {
-            throw new EntityNotFoundException<BaseExercise>(exerciseId);
-        }
+        if (exercise is null) throw new EntityNotFoundException<BaseExercise>(exerciseId);
 
         this.context.Exercises.Remove(exercise);
         await this.context.SaveChangesAsync(cancellationToken);
@@ -57,13 +49,11 @@ public class CommonExerciseRepository : ICommonExerciseRepository
         var query = this.context.Exercises
             .AsQueryable();
         foreach (var w in searchWords)
-        {
             query = query.Where(e =>
                 e.Description.ToLower().Contains(w) ||
                 e.ExerciseName.ToLower().Contains(w)
             );
-        }
-        
+
         var results = await query.ToListAsync(cancellationToken);
 
         return results
