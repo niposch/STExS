@@ -5,6 +5,7 @@ import {lastValueFrom} from "rxjs";
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
 import {ChapterService} from "../../../../services/generated/services/chapter.service";
 import {ChapterDetailItem} from "../../../../services/generated/models/chapter-detail-item";
+import {ExerciseService} from "../../../../services/generated/services/exercise.service";
 @Component({
   selector: 'app-data-dashboard',
   templateUrl: './data-dashboard.component.html',
@@ -18,6 +19,7 @@ export class DataDashboardComponent implements OnInit {
 
   constructor(private readonly moduleService : ModuleService,
               private readonly chapterService : ChapterService,
+              private readonly exerciseService : ExerciseService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -31,13 +33,16 @@ export class DataDashboardComponent implements OnInit {
     })
   }
 
+  //load Module + Chapters + Exercises
   async loadModuleInfo(moduleId:string) {
     await lastValueFrom(this.moduleService.apiModuleGetByIdGet$Json({
       id: moduleId
     })).then((data) => {
       if (data == null) return;
       this.moduleInfo = data;
-      this.loadChapters();
+      this.loadChapters().then(() => {
+        this.loadExercises();
+      });
     }).catch((error) => {
       console.log(error);
     });
@@ -52,5 +57,18 @@ export class DataDashboardComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  async loadExercises() {
+    for (let i=0; i < this.chapters!.length; i++) {
+      await lastValueFrom(this.exerciseService.apiExerciseByChapterIdGet$Json({
+        chapterId: this.chapters![i].id
+      })).then((data) => {
+        if (data == null) return;
+        this.chapters![i].exercises = data;
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   }
 }

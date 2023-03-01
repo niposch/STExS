@@ -23,6 +23,7 @@
   flex-direction: row;
   width: 100%;
   color: white;
+  margin: 0;
 }
 
 .body {
@@ -36,9 +37,10 @@
 .chapter-title {
   font-style: normal;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 24px;
   font-family: Arial, sans-serif;
   color: #02C0A2;
+  margin-bottom: 5px;
 }
 
 .chapter-heading {
@@ -47,6 +49,46 @@
   font-size: 26px;
   font-family: Arial, sans-serif;
 }
+
+.exercise-card {
+  padding: 10px;
+  width: 100%;
+  background-color: #393939;
+  border: #505050 solid 1px;
+}
+
+.exercise-card + .exercise-card {
+  border-top: none;
+}
+
+.exercise-card:first-child {
+  border-top-left-radius: 4px!important;
+  border-top-right-radius: 4px!important;
+}
+
+.exercise-card:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.exercise-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.exercise-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin-bottom: 5px;
+}
+
 
 
 .example-accordion {
@@ -57,6 +99,7 @@
 .example-accordion-item {
   display: block;
   border: solid 1px #505050;
+  background-color: #424242;
 }
 
 .example-accordion-item + .example-accordion-item {
@@ -77,7 +120,7 @@
 
 .example-accordion-item-header,
 .example-accordion-item-body {
-  padding: 16px;
+  padding: 12px;
 }
 
 .example-accordion-item-header:hover {

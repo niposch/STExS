@@ -47,7 +47,7 @@
     <div style="margin-top: 10px">
       <mat-label class="chapter-heading">Chapters</mat-label>
       <div style="margin-top: 5px">
-        <cdk-accordion class="example-accordion">
+        <cdk-accordion class="example-accordion example-accordion-item-description">
           <cdk-accordion-item
             *ngFor="let element of this.chapters; let index = index;"
             #accordionItem="cdkAccordionItem"
@@ -58,29 +58,27 @@
             [attr.aria-expanded]="accordionItem.expanded"
             [attr.aria-controls]="'accordion-body-' + index">
             <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-              <mat-label class="chapter-title">{{element.chapterName}}</mat-label>
+              <div class="horizontal-container" style="justify-content: space-between">
+                <mat-label class="chapter-title">{{element.chapterName}}</mat-label>
+                <mat-label style="">click to open</mat-label>
+              </div>
               <div class="table">
                 <div class="table-column">
                   <div class="table-row">
                     <mat-label>Average Score</mat-label>
                     <mat-label>not implemented yet</mat-label>
                   </div>
-
                   <div class="table-row">
                     <mat-label>Passing Rate</mat-label>
                     <mat-label>not implemented yet</mat-label>
                   </div>
-
                 </div>
-
                 <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
-
                 <div class="table-column">
                   <div class="table-row">
                     <mat-label>Average time to solve</mat-label>
                     <mat-label>not implemented yet</mat-label>
                   </div>
-
                   <div class="table-row">
                     <mat-label>Average exercises solved correctly</mat-label>
                     <mat-label>not implemented yet</mat-label>
@@ -94,9 +92,33 @@
               [style.display]="accordionItem.expanded ? '' : 'none'"
               [attr.id]="'accordion-body-' + index"
               [attr.aria-labelledby]="'accordion-header-' + index">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-              excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
-              veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+              <mat-label class="exercise-title">Exercises</mat-label>
+              <div class="exercise-card" *ngFor="let exercise of element.exercises">
+                <mat-label class="exercise-title">{{exercise.exerciseName}}</mat-label>
+                <div class="table" style="color: rgba(220,220,220,1)">
+                  <div class="table-column">
+                    <div class="table-row">
+                      <mat-label>Average Score</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                    <div class="table-row">
+                      <mat-label>Passing Rate</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                  </div>
+                  <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+                  <div class="table-column">
+                    <div class="table-row">
+                      <mat-label>Average time to solve</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                    <div class="table-row">
+                      <mat-label>Average exercises solved correctly</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </cdk-accordion-item>
         </cdk-accordion>
