@@ -1,9 +1,7 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
-  tick,
 } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
@@ -46,57 +44,32 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#allRequiredInputsValid() should return true, if password & email are correct', () => {
-    component.passwordIsCorrect = true;
-    component.emailIsCorrect = true;
-    let result = component.allRequiredInputsValid();
-    expect(component.loginButtonEnabled).toBeTrue();
-    expect(result).toEqual(true);
-  });
-
-  it('#allRequiredInputsValid() should return false, if password or email is not correct', () => {
-    component.passwordIsCorrect = false;
-    component.emailIsCorrect = true;
-    let result = component.allRequiredInputsValid();
-    expect(result).toEqual(false);
-
-    component.passwordIsCorrect = false;
-    component.emailIsCorrect = false;
-    result = component.allRequiredInputsValid();
-    expect(result).toEqual(false);
-
-    component.passwordIsCorrect = true;
-    component.emailIsCorrect = false;
-    result = component.allRequiredInputsValid();
-    expect(result).toEqual(false);
-  });
-
   it('#validateEmail() should validate correct email addresses', () => {
     component.email = 'test@testdev.com';
-    expect(component.emailIsCorrect).toBeFalse();
+    expect(component.showEmailError).toBeFalse();
     component.validateEmail();
-    expect(component.emailIsCorrect).toBeTrue();
+    expect(component.showEmailError).toBeFalse();
   });
 
   it('#validateEmail() should not validate incorrect email addresses', () => {
     component.email = 'test@@testdev.com';
-    expect(component.emailIsCorrect).toBeFalse();
+    expect(component.showEmailError).toBeFalse();
     component.validateEmail();
-    expect(component.emailIsCorrect).toBeFalse();
+    expect(component.showEmailError).toBeTrue();
   });
 
   it('#validatePassword() should validate correct passwords', () => {
     component.password = '123123123123';
-    expect(component.passwordIsCorrect).toBeFalse();
-    component.validatePassword();
-    expect(component.passwordIsCorrect).toBeTrue();
+    expect(component.showPasswordError).toBeFalse();
+    component.isInputCorrect();
+    expect(component.showPasswordError).toBeFalse();
   });
 
   it('#validatePassword() should not validate incorrect passwords (e.g. empty strings)', () => {
     component.password = '';
-    expect(component.passwordIsCorrect).toBeFalse();
-    component.validatePassword();
-    expect(component.passwordIsCorrect).toBeFalse();
+    expect(component.showPasswordError).toBeFalse();
+    component.isInputCorrect();
+    expect(component.showPasswordError).toBeTrue();
   });
 
   it('should call the correct route with the correct values when pressing the login button', fakeAsync(() => {
@@ -112,28 +85,27 @@ describe('LoginComponent', () => {
     expect(emailInput).toBeTruthy();
     expect(passwordInput).toBeTruthy();
 
+
     // mock the ActivatedRoute object to provide a return url as query parameter
     const activatedRoute = TestBed.inject(ActivatedRoute);
     activatedRoute.queryParams = of({ returnUrl: '/test' });
 
     const router = TestBed.inject(Router);
     let spy = spyOn(router, 'navigate');
-
     let userService = TestBed.inject(UserService);
     let loginSpy = spyOn(userService, 'login' as never).and.returnValue(
       Promise.resolve() as never
     );
 
     // Act
-    emailInput.value = 'email@test.com';
+    emailInput.value = 'dev@test.com';
     emailInput.dispatchEvent(new Event('input'));
     passwordInput.value = 'Test333!';
     passwordInput.dispatchEvent(new Event('input'));
 
     fixture.detectChanges();
 
-    loginButton.click();
-
+    component.loginProcedure();
     // Assert
     fixture.whenStable().then(() => {
       expect(spy).toHaveBeenCalledWith(['/test']);

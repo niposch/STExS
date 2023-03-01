@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
-import {compareNumbers} from "@angular/compiler-cli/src/version_helpers";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -12,7 +12,7 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [HttpClientTestingModule, RouterTestingModule]
+      imports: [HttpClientTestingModule, RouterTestingModule, MatSnackBarModule]
     })
     .compileComponents();
 
