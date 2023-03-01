@@ -1,12 +1,110 @@
-<div *ngIf="!isLoading">
-  <!-- HEADING -->
-  <div class="vertical-container">
-    <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
-    <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+<div class="body">
+  <div *ngIf="!isLoading">
+    <!-- HEADING -->
+    <div class="vertical-container">
+      <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
+      <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+    </div>
+
+    <div style="height: 10px"></div>
+
+    <mat-card>
+      <mat-card-title>
+        Module Statistics
+      </mat-card-title>
+      <mat-card-content class="horizontal-container">
+        <div class="table">
+          <div class="table-column">
+            <div class="table-row">
+              <mat-label>Average Score</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+
+            <div class="table-row">
+              <mat-label>Passing Rate</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+
+          </div>
+
+          <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+
+          <div class="table-column">
+            <div class="table-row">
+              <mat-label>Average time to solve</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div style="height: 5px"></div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+    <div style="height: 5px"></div>
+
+    <div style="margin-top: 10px">
+      <mat-label class="chapter-heading">Chapters</mat-label>
+      <div style="margin-top: 5px">
+        <cdk-accordion class="example-accordion">
+          <cdk-accordion-item
+            *ngFor="let element of this.chapters; let index = index;"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index">
+            <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+              <mat-label class="chapter-title">{{element.chapterName}}</mat-label>
+              <div class="table">
+                <div class="table-column">
+                  <div class="table-row">
+                    <mat-label>Average Score</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+
+                  <div class="table-row">
+                    <mat-label>Passing Rate</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+
+                </div>
+
+                <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+
+                <div class="table-column">
+                  <div class="table-row">
+                    <mat-label>Average time to solve</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+
+                  <div class="table-row">
+                    <mat-label>Average exercises solved correctly</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+              excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
+              veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+      </div>
+
+    </div>
+
+    <!-- <ngx-charts-bar-vertical [results]="this.testData"></ngx-charts-bar-vertical> -->
   </div>
-
-  <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-
-  <!-- <ngx-charts-bar-vertical [results]="this.testData"></ngx-charts-bar-vertical> -->
+  <mat-spinner *ngIf="isLoading" style="transform: scale(0.5); margin:auto;"></mat-spinner>
 </div>
-<mat-spinner *ngIf="isLoading" style="transform: scale(0.5); margin:auto;"></mat-spinner>

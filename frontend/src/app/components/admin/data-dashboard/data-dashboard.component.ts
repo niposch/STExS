@@ -3,6 +3,8 @@ import {ModuleService} from "../../../../services/generated/services/module.serv
 import {ActivatedRoute} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {ModuleDetailItem} from "../../../../services/generated/models/module-detail-item";
+import {ChapterService} from "../../../../services/generated/services/chapter.service";
+import {ChapterDetailItem} from "../../../../services/generated/models/chapter-detail-item";
 @Component({
   selector: 'app-data-dashboard',
   templateUrl: './data-dashboard.component.html',
@@ -11,17 +13,11 @@ import {ModuleDetailItem} from "../../../../services/generated/models/module-det
 export class DataDashboardComponent implements OnInit {
 
   public moduleInfo: ModuleDetailItem | undefined;
+  public chapters: ChapterDetailItem[] | undefined;
   public isLoading: boolean = false;
 
-
-  public testData = [
-    {name: "Martin", value: 20},
-    {name: "Tom", value: 25},
-    {name: "Lukas", value: 30},
-    {name: "Max", value: 32},
-  ]
-
   constructor(private readonly moduleService : ModuleService,
+              private readonly chapterService : ChapterService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -41,6 +37,18 @@ export class DataDashboardComponent implements OnInit {
     })).then((data) => {
       if (data == null) return;
       this.moduleInfo = data;
+      this.loadChapters();
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  async loadChapters() {
+    await lastValueFrom(this.chapterService.apiChapterForModuleGet$Json({
+      moduleId: this.moduleInfo?.moduleId
+    })).then((data) => {
+      if (data == null) return;
+      this.chapters = data;
     }).catch((error) => {
       console.log(error);
     });
