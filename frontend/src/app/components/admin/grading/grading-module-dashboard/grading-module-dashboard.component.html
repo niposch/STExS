@@ -18,7 +18,7 @@
   </div>
 </ng-template>
 
-<div style="padding: 10px 0px 10px 0px">
+<div style="padding: 10px 0 10px 0">
 
   <mat-divider></mat-divider>
 </div>
@@ -48,7 +48,7 @@
             <div>{{ exercise.exerciseName }}</div>
             <div style="flex: 1 1 auto"></div>
 
-            <button [routerLink]="['/grading/exercise']" [queryParams]="{exerciseId:exercise.id}" style="justify-self: flex-end" mat-stroked-button> <mat-icon matListIcon>trending_up</mat-icon></button>
+            <button [routerLink]="['/grading/exercise']" [queryParams]="{exerciseId:exercise.id}" style="justify-self: flex-end" mat-stroked-button> <mat-icon matListIcon>done_all</mat-icon></button>
           </div>
         </div>
       </div>
