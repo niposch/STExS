@@ -1,4 +1,5 @@
-<mat-card class="main-mat-card">
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+<mat-card class="main-mat-card" [ngClass]="isLoading? 'loading' : ''">
     <div *ngIf="this.exercise != null else loadingSpinner">
       <div class="horizontal-container card-title" style="align-items: center">
         <div class="horizontal-container" style="align-items: center">

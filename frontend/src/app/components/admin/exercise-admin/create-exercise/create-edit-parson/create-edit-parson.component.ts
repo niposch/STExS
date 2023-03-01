@@ -24,6 +24,7 @@ export class CreateEditParsonComponent implements OnInit {
 
   public exercise: ParsonExerciseDetailItem | null | undefined = undefined; // undefined means loading, null means error
   public newLine: string = "";
+  public isLoading: boolean = false;
 
   public isOnlyInspecting: boolean = false;
 
@@ -35,6 +36,7 @@ export class CreateEditParsonComponent implements OnInit {
               private parsonPuzzleService: ParsonPuzzleService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.queryParams.subscribe(params => {
       let exerciseId = params['exerciseId'];
       this.chapterId = params['chapterId'];
@@ -44,6 +46,7 @@ export class CreateEditParsonComponent implements OnInit {
         this.loadExercise(exerciseId)
           .then(ex => {
             this.exercise = ex
+            this.isLoading = false;
           })
           .catch(err => {
             this.exercise = null;
@@ -77,6 +80,7 @@ export class CreateEditParsonComponent implements OnInit {
   }
 
   async updateExercise(){
+    this.isLoading = true;
     await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleUpdatePost({
       body:{
         ...this.exercise
@@ -84,6 +88,7 @@ export class CreateEditParsonComponent implements OnInit {
     }))
       .then(() => {
         this.snackBar.open("Successfully updated Exercise!", "Dismiss", {duration:2000});
+        this.isLoading = false;
         this.goBack();
       })
       .catch(err => {
@@ -92,6 +97,7 @@ export class CreateEditParsonComponent implements OnInit {
       })
   }
   async createExercise() {
+    this.isLoading = true;
     await lastValueFrom(this.parsonPuzzleService.apiParsonPuzzleCreatePost$Json({
       body:{
         ...(this.exercise as ParsonExerciseCreateItem)
@@ -102,6 +108,7 @@ export class CreateEditParsonComponent implements OnInit {
         throw err
       }).then(() => {
       this.snackBar.open("Successfully created Exercise!", "Dismiss", {duration:2000});
+      this.isLoading = false;
       this.goBack();
     });
   }
