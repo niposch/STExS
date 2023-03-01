@@ -1,7 +1,6 @@
 <div class="body">
   <div *ngIf="!isLoading">
-    <!-- HEADING -->
-
+    <!-- HEADER -->
     <div class="horizontal-container" style="justify-content: space-between">
       <div class="vertical-container">
         <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
@@ -14,12 +13,12 @@
         <button mat-button matTooltip="Grade the answers for this Module" [routerLink]="['/grading']" [queryParams]="{moduleid:this.moduleInfo!.moduleId}">
           <mat-icon>done_all</mat-icon>
         </button>
-
       </div>
     </div>
 
     <div style="height: 10px"></div>
 
+    <!-- MODULE STATISTICS -->
     <mat-card>
       <mat-card-title>
         Module Statistics
@@ -31,22 +30,17 @@
               <mat-label>Average Score</mat-label>
               <mat-label>not implemented yet</mat-label>
             </div>
-
             <div class="table-row">
               <mat-label>Passing Rate</mat-label>
               <mat-label>not implemented yet</mat-label>
             </div>
-
           </div>
-
           <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
-
           <div class="table-column">
             <div class="table-row">
               <mat-label>Average time to solve</mat-label>
               <mat-label>not implemented yet</mat-label>
             </div>
-
           </div>
         </div>
       </mat-card-content>
@@ -56,6 +50,7 @@
     <mat-divider style="margin-top: 5px"></mat-divider>
     <div style="height: 5px"></div>
 
+    <!-- CHAPTERS -->
     <div style="margin-top: 10px">
       <mat-label class="chapter-heading">Chapters</mat-label>
       <div style="margin-top: 5px">
@@ -98,6 +93,8 @@
                 </div>
               </div>
             </div>
+
+            <!-- EXERCISES -->
             <div
               class="example-accordion-item-body"
               role="region"
@@ -105,8 +102,15 @@
               [attr.id]="'accordion-body-' + index"
               [attr.aria-labelledby]="'accordion-header-' + index">
               <mat-label class="exercise-title">Exercises</mat-label>
-              <div class="exercise-card" *ngFor="let exercise of element.exercises">
-                <mat-label class="exercise-title">{{exercise.exerciseName}}</mat-label>
+              <div class="exercise-card" *ngFor="let exercise of this.exerciseLists![index]">
+                <div class="horizontal-container" style="justify-content: space-between">
+                  <mat-label class="exercise-title vertically-centered">{{exercise.exerciseName}}</mat-label>
+                  <button
+                          [routerLink]="['/grading/exercise']"
+                          [queryParams]="{exerciseId:exercise.id}"
+                          style="justify-self: flex-end; color: white;"
+                          mat-stroked-button> <mat-icon matListIcon>done_all</mat-icon></button>
+                </div>
                 <div class="table" style="color: rgba(220,220,220,1)">
                   <div class="table-column">
                     <div class="table-row">

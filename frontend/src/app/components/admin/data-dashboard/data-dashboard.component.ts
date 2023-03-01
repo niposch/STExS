@@ -6,6 +6,7 @@ import {ModuleDetailItem} from "../../../../services/generated/models/module-det
 import {ChapterService} from "../../../../services/generated/services/chapter.service";
 import {ChapterDetailItem} from "../../../../services/generated/models/chapter-detail-item";
 import {ExerciseService} from "../../../../services/generated/services/exercise.service";
+import {ExerciseDetailItem} from "../../../../services/generated/models/exercise-detail-item";
 @Component({
   selector: 'app-data-dashboard',
   templateUrl: './data-dashboard.component.html',
@@ -15,6 +16,7 @@ export class DataDashboardComponent implements OnInit {
 
   public moduleInfo: ModuleDetailItem | undefined;
   public chapters: ChapterDetailItem[] | undefined;
+  public exerciseLists: ExerciseDetailItem[][] | undefined = [];
   public isLoading: boolean = false;
 
   constructor(private readonly moduleService : ModuleService,
@@ -61,11 +63,12 @@ export class DataDashboardComponent implements OnInit {
 
   async loadExercises() {
     for (let i=0; i < this.chapters!.length; i++) {
+      this.exerciseLists!.push([]);
       await lastValueFrom(this.exerciseService.apiExerciseByChapterIdGet$Json({
         chapterId: this.chapters![i].id
       })).then((data) => {
         if (data == null) return;
-        this.chapters![i].exercises = data;
+        this.exerciseLists![i] = data;
       }).catch((error) => {
         console.log(error);
       });
