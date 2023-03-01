@@ -175,6 +175,13 @@ export class ChapterAdminAdministrateComponent implements OnInit {
         {queryParams: {chapterId: this.chapterId}}
       );
       return;
+    } 
+    else if (this.exerciseType == ExerciseType.Parson) {
+      this.router.navigate(
+        ['parson/create'],
+        {queryParams: {chapterId: this.chapterId}}
+      );
+      return;
     }
     else if(this.exerciseType == ExerciseType.ClozeText){
       this.router.navigate(["cloze/create"],

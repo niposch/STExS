@@ -279,6 +279,9 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Indentation")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");
 
@@ -290,6 +293,9 @@ namespace Repositories.Migrations
 
                     b.Property<Guid>("RelatedSolutionId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RunningNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -310,6 +316,9 @@ namespace Repositories.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IndentationIsRelevant")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");

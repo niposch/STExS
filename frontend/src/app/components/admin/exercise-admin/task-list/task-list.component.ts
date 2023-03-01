@@ -62,6 +62,13 @@ export class TaskListComponent implements OnInit {
           inspecting: true
         }
       })
+    } else if (exercise.exerciseType == ExerciseType.Parson) {
+      this.router.navigate(['parson/create'], {
+        queryParams: {
+          exerciseId: exercise.id,
+          inspecting: true
+        }
+      })
     }
   }
 }

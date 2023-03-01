@@ -14,4 +14,6 @@ public sealed class ParsonSolution: DeletableBaseEntity, ICreationTimeTracked, I
     
     public ParsonExercise RelatedExercise { get; set; } = null!;
     public Guid RelatedExerciseId { get; set; }
+    
+    public bool IndentationIsRelevant { get; set; } = false;
 }

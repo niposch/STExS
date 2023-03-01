@@ -12,6 +12,7 @@ import {ModuleDetailsComponent} from "../components/module/module-details/module
 import {AdministrateModuleComponent} from "../components/admin/modules-admin/administrate-module/administrate-module.component";
 import {ChapterAdminAdministrateComponent} from '../components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
 import {CreateEditCodeOutputComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
+import {CreateEditParsonComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component";
 import {NotfoundComponent} from "../components/notfound/notfound.component";
 import {SolveExerciseComponent} from "../components/students/solve-exercise/solve-exercise.component";
 import {
@@ -84,6 +85,7 @@ const routes: Routes = [
               {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
               {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
               {path: "cloze/create", component: CreateEditClozeComponent },
+              {path: "parson/create", component: CreateEditParsonComponent},
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
             ]
