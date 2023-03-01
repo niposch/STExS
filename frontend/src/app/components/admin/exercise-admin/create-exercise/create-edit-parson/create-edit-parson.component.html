@@ -11,46 +11,56 @@
       <mat-card-content>
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
         <app-create-exercise [(description)]="this.exercise.exerciseDescription!" [(name)]="this.exercise.exerciseName!" ></app-create-exercise>
-        <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
-        <!--drag drop-->
-        <div cdkDropListGroup>
-          <!--add puzzle-->
-          <div class="drag-container">
-            <h2>Add Element</h2>
-            <div>
-              <!-- angular material input -->
-              <mat-form-field class="form-field">
-                <mat-label>Element</mat-label>
-                <input matInput type="text" [(ngModel)]="this.newLine">
-              </mat-form-field>
-              <button mat-stroked-button color="accent" (click)="addLine()">Add</button>
-            </div>
-          </div>
-          <!--parson puzzle-->
-          <div class="drag-container">
-            <h2>Parson Puzzle</h2>
-          <app-indented-drop-list
-            [cdkDropListData]="this.exercise!.lines!"
-            style="display: block; width: 100%"></app-indented-drop-list>
-          </div>
-          <!--delete puzzle-->
-          <div class="drag-container">
-            <h2>Delete Element</h2>
-            <div
-              cdkDropList
-              #delete_puzzle_list="cdkDropList"
-              [cdkDropListData]="empty"
-              id="delete_puzzle_list"
-              class="drag-list drop-list"
-              (cdkDropListDropped)="drop($event)" >
+        <div style="height: 10px"></div>
 
-              <div class="center-container min-height-container">
-                <mat-icon>delete_outline</mat-icon>
+        <mat-card>
+          <!--drag drop-->
+          <div cdkDropListGroup>
+            <h2>Question / Task</h2>
+            <!--add puzzle-->
+            <div class="drag-container">
+              <div style="border: 1px solid #505050; padding: 10px; border-radius: 5px; margin-bottom: 5px">
+                <h3>Add Element</h3>
+                <!-- angular material input -->
+                <div class="horizontal-container" style="justify-content: space-between">
+                  <mat-form-field class="form-field" style="width: 70%; min-width: 200px">
+                    <mat-label>Element</mat-label>
+                    <input matInput type="text" [(ngModel)]="this.newLine">
+                  </mat-form-field>
+                  <button mat-stroked-button color="accent" (click)="addLine()">Add</button>
+                </div>
+              </div>
+
+              <!--delete puzzle-->
+              <div style="border: 1px solid #505050; padding: 10px; border-radius: 5px;">
+                <div class="drag-container">
+                  <h3>Delete Element</h3>
+                  <div
+                    cdkDropList
+                    #delete_puzzle_list="cdkDropList"
+                    [cdkDropListData]="empty"
+                    id="delete_puzzle_list"
+                    class="drag-list drop-list"
+                    (cdkDropListDropped)="drop($event)" >
+
+                    <div class="center-container min-height-container">
+                      <mat-icon>delete_outline</mat-icon>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <!--parson puzzle-->
+            <div class="drag-container">
+              <h3>Parson Puzzle</h3>
+              <app-indented-drop-list
+                [cdkDropListData]="this.exercise!.lines!"
+                style="display: block; width: 100%"></app-indented-drop-list>
+            </div>
           </div>
-        </div>
+        </mat-card>
 
         <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
 
