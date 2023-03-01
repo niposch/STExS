@@ -1,9 +1,21 @@
 <div class="body">
   <div *ngIf="!isLoading">
     <!-- HEADING -->
-    <div class="vertical-container">
-      <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
-      <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+
+    <div class="horizontal-container" style="justify-content: space-between">
+      <div class="vertical-container">
+        <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
+        <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+      </div>
+      <div class="horizontal-container">
+        <button mat-button matTooltip="Edit this Module" [routerLink]="['/module/administrate']" [queryParams]="{id:this.moduleInfo!.moduleId}">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button matTooltip="Grade the answers for this Module" [routerLink]="['/grading']" [queryParams]="{moduleid:this.moduleInfo!.moduleId}">
+          <mat-icon>done_all</mat-icon>
+        </button>
+
+      </div>
     </div>
 
     <div style="height: 10px"></div>
