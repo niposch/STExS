@@ -55,15 +55,29 @@
           [attr.aria-labelledby]="'accordion-header-' + index">
 
           <div *ngFor="let exercise of listItem.exercises" class="exercise-item horizontal-container">
-              <mat-label class="vertically-centered">{{exercise.exerciseName}}</mat-label>
-              <button [routerLink]="['/grading/exercise']"
-                      [queryParams]="{exerciseId:exercise.id}"
-                      matTooltip="Grade this Exercise"
-                      matTooltipPosition="left"
-                      style="justify-self: flex-end"
-                      mat-stroked-button>
-                <mat-icon matListIcon>done_all</mat-icon>
-              </button>
+            <div class="horizontal-container">
+              <div class="vertical-container" style="width: 150px; overflow: hidden">
+                <mat-label class="vertically-centered">{{exercise.exerciseName}}</mat-label>
+                <mat-label style="color: #999999">achievable Points: {{exercise.achievablePoints}}</mat-label>
+              </div>
+              <mat-chip-list class="vertically-centered" style="margin-left: 15px">
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.SyntaxExercise">syntax exercise</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.NaturalLanguageDescripition">natural language description</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.Parson">parson puzzle</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.FindTheError">find the bug</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.ClozeText">fill in the blanks</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.CodeOutput">code output</mat-chip>
+                <mat-chip disableRipple="true" selected *ngIf="exercise.exerciseType == exerciseType.ProgrammingTask">programming exercise</mat-chip>
+              </mat-chip-list>
+            </div>
+            <button [routerLink]="['/grading/exercise']"
+                    [queryParams]="{exerciseId:exercise.id}"
+                    matTooltip="Grade this Exercise"
+                    matTooltipPosition="left"
+                    style="justify-self: flex-end"
+                    mat-stroked-button>
+              <mat-icon matListIcon>done_all</mat-icon>
+            </button>
           </div>
         </div>
       </cdk-accordion-item>
