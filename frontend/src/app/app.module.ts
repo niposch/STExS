@@ -69,6 +69,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
 import { CreateEditClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component';
+import { ViewClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { CreateEditClozeComponent } from './components/admin/exercise-admin/crea
     ChangeRoleDialogComponent,
     NoAccessComponent,
     CreateEditClozeComponent,
+    ViewClozeComponent,
   ],
   imports: [
     BrowserModule,
