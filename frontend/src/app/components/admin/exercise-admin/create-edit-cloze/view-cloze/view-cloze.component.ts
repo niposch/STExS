@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-view-cloze',
@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 })
 export class ViewClozeComponent implements OnInit {
 
-  @Input() text: string = "";
+  @Input() text: string | null | undefined;
   @Input() enableInputfield: boolean = true;
   public splitted: Array <string> | null=null;
   public gaps: Array <string> | null=null;
@@ -19,9 +19,14 @@ export class ViewClozeComponent implements OnInit {
     this.initGaps();
   }
 
+  ngOnChanges(): void {
+    this.splitText();
+    this.initGaps();
+  }
+
 splitText() {
     const regex = /\[\[[^\[]*\]\]/;
-    this.splitted = this.text.split(regex);
+    if(this.text) this.splitted = this.text.split(regex);
   }
 
   initGaps() {

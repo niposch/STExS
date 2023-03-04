@@ -31,6 +31,13 @@
         </mat-form-field>
       </div>
 
+      <div style="margin-top: 10px; margin-bottom: 10px" class="elevated">
+        <mat-label style="color: lightgray">Cloze Text Preview</mat-label>
+        <div>
+          <app-view-cloze class="adjust-content" [text]="this.exercise.text" [enableInputfield]="false"> </app-view-cloze>
+        </div>
+      </div>
+
       <div class="horizontal-container vertically-centered" style="height: fit-content">
         <div class="form-field-container elevated">
           <mat-form-field class="form-field">
