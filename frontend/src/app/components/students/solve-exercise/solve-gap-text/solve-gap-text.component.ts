@@ -4,6 +4,7 @@ import {ClozeTextExerciseDetailItem} from "../../../../../services/generated/mod
 import {ClozeTextExerciseService} from "../../../../../services/generated/services/cloze-text-exercise.service";
 import {TimeTrackService} from "../../../../../services/generated/services/time-track.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ViewClozeComponent} from 'src/app/components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
 
 @Component({
   selector: 'app-solve-gap-text',
@@ -13,10 +14,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class SolveGapTextComponent implements OnInit {
 
   @Input() id: string = "";
-  private text: string = "";
-  public splitted: Array <string> | null=null;
+  public text: string = "";
+  //public splitted: Array <string> | null=null;
   public gaps: Array <string> | null=null;
   public showGaps: boolean = false;
+  //@ViewChild(ViewClozeComponent) view: ViewClozeComponent;      // -> this.child.gaps
 
   public timeTrackId: string | null | undefined = null;
   public exercise: ClozeTextExerciseDetailItem | null = {};
@@ -32,8 +34,8 @@ export class SolveGapTextComponent implements OnInit {
     this.showGaps = false;
     this.isLoading = true;
     this.loadExercise().then(() => {
-      this.splitText();
-      this.initGaps();
+      /*this.splitText();
+      this.initGaps();*/
     })
   }
 
@@ -142,13 +144,7 @@ export class SolveGapTextComponent implements OnInit {
     }*/
   }
 
-  splitText() {
-    this.splitted = this.text.split("[[]]");
-  }
 
-  initGaps() {
-    if(this.splitted) this.gaps = new Array <string>(this.splitted.length - 1);
-  }
 
   buttonClick() {
     this.showGaps = !this.showGaps;

@@ -4,14 +4,7 @@
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
     <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-    <div class="adjust-content">
-      <div *ngFor="let textparts of this.splitted; let i = index" class="text">
-        {{textparts}}
-        <mat-form-field *ngIf="this.splitted && !(i === (this.splitted.length -1))" class="input">
-          <input *ngIf="this.gaps" matInput class="input-field" [(ngModel)]="this.gaps[i]">
-        </mat-form-field>
-      </div>
-    </div>
+    <app-view-cloze class="adjust-content" [text]="this.text" [enableInputfield]="true"> </app-view-cloze>
     <div class="center">
       <button class="submit" mat-raised-button color="accent" (click)="buttonClick()">submit</button>
     </div>
