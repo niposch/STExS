@@ -35,14 +35,14 @@ public sealed class ModuleDetailItem
         {
             ModuleId = module.Id,
             OwnerId = module.OwnerId,
-            OwnerFirstName = module.Owner.FirstName,
-            OwnerLastName = module.Owner.LastName,
+            OwnerFirstName = module.Owner?.FirstName??string.Empty,
+            OwnerLastName = module.Owner?.LastName ?? string.Empty,
             ModuleName = module.ModuleName,
             ModuleDescription = module.ModuleDescription,
             ArchivedDate = module.ArchivedDate,
-            ChapterIds = module.Chapters?.Select(c => c.Id).ToList() ?? new List<Guid>(),
+            ChapterIds = module.Chapters?.Select(c => c.Id)?.ToList() ?? new List<Guid>(),
             IsFavorited = currentUserParticipation?.IsFavorite ?? false,
-            teacherName = module.Owner.FirstName + " " + module.Owner.LastName,
+            teacherName = module.Owner == null ? string.Empty : module.Owner.FirstName + " " + module.Owner.LastName,
             CreationTime = module.CreationTime,
             MaxParticipants = module.MaxParticipants,
             CurrentUserParticipationStatus = GetParticipationStatus(module, currentUserParticipation, userId)

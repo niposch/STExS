@@ -167,16 +167,25 @@ public sealed class GradingService : IGradingService
 
         Dictionary<Guid, int> userPoints = new Dictionary<Guid, int>();
 
+        // calculate the total points for each user and store them in the dictionary
         foreach (var chapterReport in chapterReports)
         {
-            foreach (var userPointsItem in chapterReport.Distribution.UserPoints)
+            foreach (var userId in allUserIds)
             {
-                if (!userPoints.ContainsKey(userPointsItem.UserId))
-                {
-                    userPoints[userPointsItem.UserId] = 0;
-                }
+                var userReports = chapterReport
+                    .Exercises
+                    .SelectMany(e => e.Distribution.UserPoints)
+                    .Where(u => u.UserId == userId)
+                    .ToList();
 
-                userPoints[userPointsItem.UserId] += userPointsItem.TotalPoints;
+                if (userPoints.ContainsKey(userId))
+                {
+                    userPoints[userId] += userReports.Sum(u => u.TotalPoints);
+                }
+                else
+                {
+                    userPoints[userId] = userReports.Sum(u => u.TotalPoints);
+                }
             }
         }
 
