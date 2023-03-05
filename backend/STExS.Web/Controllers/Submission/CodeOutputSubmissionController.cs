@@ -11,7 +11,8 @@ namespace STExS.Controllers.Submission;
 [ApiController]
 [Authorize]
 [Route("api/[controller]")]
-public class CodeOutputSubmissionController: ControllerBase
+public class CodeOutputSubmissionController: ControllerBase,
+ISubmissionController<CodeOutputSubmissionCreateItem, CodeOutputSubmissionDetailItem>
 {
     private readonly ICodeOutputSubmissionService codeOutputSubmissionService;
     
@@ -29,7 +30,7 @@ public class CodeOutputSubmissionController: ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Route("submit/{timeTrackId:guid}")]
-    public async Task<IActionResult> SubmitCodeOutputSubmission([FromBody] CodeOutputSubmissionCreateItem createItem, Guid timeTrackId, [FromQuery]bool isFinalSubmission, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> SubmitSubmission([FromBody] CodeOutputSubmissionCreateItem createItem, Guid timeTrackId, [FromQuery]bool isFinalSubmission, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         try 
@@ -48,7 +49,7 @@ public class CodeOutputSubmissionController: ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Route("get/{codeOutputExerciseId:guid}")]
-    public async Task<IActionResult> TryGetLastCodeOutputSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid? currentTimeTrackId = null, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> TryGetLastSubmission([FromRoute]Guid codeOutputExerciseId, [FromQuery]Guid? currentTimeTrackId = null, CancellationToken cancellationToken = default)
     {
         var userId = this.User.GetUserId();
         try
