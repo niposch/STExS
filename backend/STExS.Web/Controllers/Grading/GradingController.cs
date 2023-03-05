@@ -1,13 +1,17 @@
 ﻿using Application.DTOs;
+using Application.DTOs.ExercisesDTOs;
+using Application.DTOs.GradingReportDTOs;
+using Application.DTOs.ModuleDTOs;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using STExS.Controllers.Exercise;
 
 namespace STExS.Controllers.Grading;
 
 [ApiController]
 [Route("api/[controller]")]
-public class GradingController: ControllerBase
+public class GradingController : ControllerBase
 {
     private readonly IGradingService gradingService;
 
@@ -21,16 +25,17 @@ public class GradingController: ControllerBase
     {
         throw new NotImplementedException();
     }
-    
+
     [HttpGet("module")]
-    public async Task<IActionResult> GetModuleReport()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleReport))]
+    public async Task<IActionResult> GetModuleReport([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return this.Ok(await this.gradingService.GetModuleReportAsync(moduleId, cancellationToken));
     }
-    
+
     [HttpGet("exercise")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ExerciseReportItem>))]
-    public async Task<IActionResult> GetExerciseReport([FromQuery]Guid exerciseId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetExerciseReport([FromQuery] Guid exerciseId, CancellationToken cancellationToken = default)
     {
         var res = await this.gradingService.GetExerciseReportAsync(exerciseId, cancellationToken);
 

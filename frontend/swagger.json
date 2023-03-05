@@ -1327,9 +1327,36 @@
         "tags": [
           "Grading"
         ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleReport"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleReport"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleReport"
+                }
+              }
+            }
           }
         }
       }
@@ -2882,6 +2909,37 @@
         },
         "additionalProperties": false
       },
+      "ChapterReport": {
+        "type": "object",
+        "properties": {
+          "chapter": {
+            "$ref": "#/components/schemas/ChapterDetailItem"
+          },
+          "exercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExerciseReport"
+            },
+            "nullable": true
+          },
+          "averageScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "medianScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "passingRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "distribution": {
+            "$ref": "#/components/schemas/PointDistribution"
+          }
+        },
+        "additionalProperties": false
+      },
       "ChapterUpdateItem": {
         "type": "object",
         "properties": {
@@ -3206,6 +3264,31 @@
           "achivablePoints": {
             "type": "integer",
             "format": "int32"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExerciseReport": {
+        "type": "object",
+        "properties": {
+          "exercise": {
+            "$ref": "#/components/schemas/ExerciseListItem"
+          },
+          "averageScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "medianScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "distribution": {
+            "$ref": "#/components/schemas/PointDistribution"
           }
         },
         "additionalProperties": false
@@ -3633,6 +3716,37 @@
           "Admin"
         ]
       },
+      "ModuleReport": {
+        "type": "object",
+        "properties": {
+          "module": {
+            "$ref": "#/components/schemas/ModuleDetailItem"
+          },
+          "chapters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChapterReport"
+            },
+            "nullable": true
+          },
+          "averageScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "medianScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "passingRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "distribution": {
+            "$ref": "#/components/schemas/PointDistribution"
+          }
+        },
+        "additionalProperties": false
+      },
       "ModuleUpdateItem": {
         "type": "object",
         "properties": {
@@ -3830,6 +3944,19 @@
         },
         "additionalProperties": false
       },
+      "PointDistribution": {
+        "type": "object",
+        "properties": {
+          "userPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPoints"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -3855,7 +3982,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "ProfileUpdateItem": {
         "type": "object",
@@ -4102,6 +4229,20 @@
           "userId": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserPoints": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalPoints": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

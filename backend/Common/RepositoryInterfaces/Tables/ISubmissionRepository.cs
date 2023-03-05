@@ -8,5 +8,5 @@ public interface ISubmissionRepository
     public Task UpdateAsync(BaseSubmission submission, CancellationToken cancellationToken = default);
     public Task CreateAsync(BaseSubmission submission, CancellationToken cancellationToken = default);
     public Task DeleteAsync(BaseSubmission submission, CancellationToken cancellationToken = default);
-    public Task<List<BaseSubmission>> GetAllBySubmissionIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    public Task<List<BaseSubmission>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 }

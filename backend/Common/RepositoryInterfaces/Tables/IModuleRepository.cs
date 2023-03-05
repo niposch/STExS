@@ -6,4 +6,6 @@ namespace Common.RepositoryInterfaces.Tables;
 public interface IModuleRepository: IGenericCrudAndArchiveableEntityRepository<Module>
 {
     Task<IEnumerable<Module>> GetModulesUserIsOwnerOfAsync(Guid ownerId, CancellationToken cancellationToken = default);
+
+    Task<Module?> TryGetByIdAndIncludeChapterExercisesAndUserSubmissionsAsync(Guid moduleId, CancellationToken cancellationToken);
 }

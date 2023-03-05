@@ -60,4 +60,14 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
             .Include(m => m.Owner)
             .ToListAsync(cancellationToken);
     }
+
+    public Task<Module?> TryGetByIdAndIncludeChapterExercisesAndUserSubmissionsAsync(Guid moduleId, CancellationToken cancellationToken)
+    {
+        return this.context.Modules
+            .Include(m => m.Chapters)
+            .ThenInclude(c => c.Exercises)
+            .ThenInclude(e => e.UserSubmissions)
+            .ThenInclude(m => m.FinalSubmission)
+            .FirstOrDefaultAsync(m => m.Id == moduleId, cancellationToken);
+    }
 }
