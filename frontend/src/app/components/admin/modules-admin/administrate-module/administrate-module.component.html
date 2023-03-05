@@ -30,6 +30,17 @@
 
       <!-- MODULE EDIT BUTTONS -->
       <div class="horizontal-flex space-items">
+        <div>
+          <button matTooltip="Grading Dashboard" mat-button [routerLink]="['/grading']" [queryParams]="{moduleid:this.module.moduleId}">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="done_all"></mat-icon>
+            Grading
+          </button>
+
+          <button mat-button matTooltip="Data Dashboard" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="equalizer"></mat-icon>
+            Data
+          </button>
+        </div>
 
         <div class="button-container">
           <button mat-button *ngIf="false">
@@ -39,17 +50,17 @@
         </div>
         <div class="button-container">
           <!-- ARCHIVE BUTTON -->
-          <button *ngIf="!this.module.isArchived" mat-button color="warn" (click)="handleArchiving()">
+          <button *ngIf="!this.module.isArchived" matTooltip="Archive this Module" mat-button color="warn" (click)="handleArchiving()">
             <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="archive"></mat-icon>
             Archive
           </button>
-          <button *ngIf="this.module.isArchived" mat-button color="primary" (click)="handleArchiving()">
+          <button *ngIf="this.module.isArchived" matTooltip="Unarchive this Module" mat-button color="primary" (click)="handleArchiving()">
             <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="unarchive"></mat-icon>
             Un-Archive
           </button>
 
           <!-- DELETE BUTTON -->
-          <button mat-button color="warn" (click)="openDeleteDialog()">
+          <button mat-button matTooltip="Delete this Module" color="warn" (click)="openDeleteDialog()">
             <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
             DELETE
           </button>

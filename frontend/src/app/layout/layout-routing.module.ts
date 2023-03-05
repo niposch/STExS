@@ -29,6 +29,7 @@ import {NoAccessComponent} from "../components/no-access/no-access.component";
 import {
   CreateEditClozeComponent
 } from "../components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component";
+import {DataDashboardComponent} from "../components/admin/data-dashboard/data-dashboard.component";
 
 const routes: Routes = [
   {
@@ -88,6 +89,7 @@ const routes: Routes = [
               {path: "parson/create", component: CreateEditParsonComponent},
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
+              {path: "data", component: DataDashboardComponent}
             ]
           },
           {

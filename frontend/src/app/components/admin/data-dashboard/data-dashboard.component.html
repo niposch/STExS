@@ -1,0 +1,148 @@
+<div class="body">
+  <div *ngIf="!isLoading">
+    <!-- HEADER -->
+    <div class="horizontal-container" style="justify-content: space-between">
+      <div class="vertical-container">
+        <mat-label style="margin-bottom: 5px">Data Dashboard for module </mat-label>
+        <mat-label class="module-name">{{this.moduleInfo?.moduleName}}</mat-label>
+      </div>
+      <div class="horizontal-container">
+        <button mat-button matTooltip="Edit this Module" [routerLink]="['/module/administrate']" [queryParams]="{id:this.moduleInfo!.moduleId}">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button matTooltip="Grade the answers for this Module" [routerLink]="['/grading']" [queryParams]="{moduleid:this.moduleInfo!.moduleId}">
+          <mat-icon>done_all</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div style="height: 10px"></div>
+
+    <!-- MODULE STATISTICS -->
+    <mat-card>
+      <mat-card-title>
+        Module Statistics
+      </mat-card-title>
+      <mat-card-content class="horizontal-container">
+        <div class="table">
+          <div class="table-column">
+            <div class="table-row">
+              <mat-label>Average Score</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+            <div class="table-row">
+              <mat-label>Passing Rate</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+          </div>
+          <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+          <div class="table-column">
+            <div class="table-row">
+              <mat-label>Average time to solve</mat-label>
+              <mat-label>not implemented yet</mat-label>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div style="height: 5px"></div>
+    <mat-divider style="margin-top: 5px"></mat-divider>
+    <div style="height: 5px"></div>
+
+    <!-- CHAPTERS -->
+    <div style="margin-top: 10px">
+      <mat-label class="chapter-heading">Chapters</mat-label>
+      <div style="margin-top: 5px">
+        <cdk-accordion class="example-accordion example-accordion-item-description">
+          <cdk-accordion-item
+            *ngFor="let element of this.chapters; let index = index;"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index">
+            <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+              <div class="horizontal-container" style="justify-content: space-between">
+                <mat-label class="chapter-title">{{element.chapterName}}</mat-label>
+                <mat-label style="">click to open</mat-label>
+              </div>
+              <div class="table">
+                <div class="table-column">
+                  <div class="table-row">
+                    <mat-label>Average Score</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+                  <div class="table-row">
+                    <mat-label>Passing Rate</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+                </div>
+                <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+                <div class="table-column">
+                  <div class="table-row">
+                    <mat-label>Average time to solve</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+                  <div class="table-row">
+                    <mat-label>Average exercises solved correctly</mat-label>
+                    <mat-label>not implemented yet</mat-label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXERCISES -->
+            <div
+              class="example-accordion-item-body"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index">
+              <mat-label class="exercise-title">Exercises</mat-label>
+              <div class="exercise-card" *ngFor="let exercise of this.exerciseLists![index]">
+                <div class="horizontal-container" style="justify-content: space-between">
+                  <mat-label class="exercise-title vertically-centered">{{exercise.exerciseName}}</mat-label>
+                  <button
+                          [routerLink]="['/grading/exercise']"
+                          [queryParams]="{exerciseId:exercise.id}"
+                          style="justify-self: flex-end; color: white;"
+                          mat-stroked-button> <mat-icon matListIcon>done_all</mat-icon></button>
+                </div>
+                <div class="table" style="color: rgba(220,220,220,1)">
+                  <div class="table-column">
+                    <div class="table-row">
+                      <mat-label>Average Score</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                    <div class="table-row">
+                      <mat-label>Passing Rate</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                  </div>
+                  <mat-divider vertical="true" style="margin-left: 20px; margin-right: 20px"></mat-divider>
+                  <div class="table-column">
+                    <div class="table-row">
+                      <mat-label>Average time to solve</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                    <div class="table-row">
+                      <mat-label>Average exercises solved correctly</mat-label>
+                      <mat-label>not implemented yet</mat-label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+      </div>
+
+    </div>
+
+    <!-- <ngx-charts-bar-vertical [results]="this.testData"></ngx-charts-bar-vertical> -->
+  </div>
+  <mat-spinner *ngIf="isLoading" style="transform: scale(0.5); margin:auto;"></mat-spinner>
+</div>
