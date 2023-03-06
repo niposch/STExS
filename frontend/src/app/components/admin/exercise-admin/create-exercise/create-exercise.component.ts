@@ -15,8 +15,8 @@ export class CreateExerciseComponent implements OnInit {
   ngOnInit(): void {}
 
   emitValues() {
-    this.descriptionChange.emit(this.description)
-    this.nameChange.emit(this.name)
+    this.descriptionChange.emit(this.description ?? "")
+    this.nameChange.emit(this.name ?? "")
   }
 
 }
