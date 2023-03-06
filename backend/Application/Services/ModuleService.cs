@@ -72,6 +72,8 @@ public sealed class ModuleService : IModuleService
             throw new UnauthorizedException();
         if (roles.Result.Contains(RoleHelper.Teacher) && module.OwnerId != userId) 
             throw new UnauthorizedException();
+        if (module.ModuleParticipations.Count > 0) 
+            throw new UnsupportedActionException("Modules with participants can only be archived, not deleted.");
         
         await this.repository.Modules.DeleteAsync(moduleId, cancellationToken);
     }
