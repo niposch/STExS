@@ -9,8 +9,8 @@ export class ViewClozeComponent implements OnInit {
 
   @Input() text: string | null | undefined;
   @Input() enableInputfield: boolean = true;
-  public splitted: Array <string> | null=null;
-  public gaps: Array <string> | null=null;
+  public splitted: Array <string> | undefined | null;
+  public gaps: Array <string> | undefined | null;
 
   constructor() { }
 

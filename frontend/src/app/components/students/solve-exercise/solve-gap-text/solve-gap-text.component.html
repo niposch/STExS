@@ -5,14 +5,19 @@
     <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
     <app-view-cloze class="adjust-content" [text]="this.text" [enableInputfield]="true"> </app-view-cloze>
-    <div class="center">
-      <button class="submit" mat-raised-button color="accent" (click)="buttonClick()">submit</button>
-    </div>
-    <div *ngIf="this.showGaps && this.gaps">
-        <div *ngFor="let gap of this.gaps; let i = index">
-          Gap {{i+1}}: {{gap}}
-        </div>
-    </div>
+    <div class="center" *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
+      <ng-template #submitButton>
+        <button class="submit" mat-raised-button color="accent"
+                (click)="this.createNewSubmission(this.timeTrackId, true, this.child.gaps)">
+          <mat-label>submit</mat-label>
+        </button>
+      </ng-template>
+      <ng-template #disabledSubmitButton>
+        <button matTooltip="You have already submitted your final answer" class="submit mat-button-disabled" disableRipple mat-raised-button color="accent">
+          submit
+        </button>
+
+      </ng-template>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
 </mat-card>

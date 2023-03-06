@@ -1,10 +1,14 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {ClozeTextExerciseDetailItem} from "../../../../../services/generated/models/cloze-text-exercise-detail-item";
 import {ClozeTextExerciseService} from "../../../../../services/generated/services/cloze-text-exercise.service";
 import {TimeTrackService} from "../../../../../services/generated/services/time-track.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ViewClozeComponent} from 'src/app/components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
+import {ClozeTextSubmissionService} from '../../../../../services/generated/services/cloze-text-submission.service';
+import {ClozeTextSubmissionDetailItem} from '../../../../../services/generated/models/cloze-text-submission-detail-item';
+
+
 
 @Component({
   selector: 'app-solve-gap-text',
@@ -15,28 +19,25 @@ export class SolveGapTextComponent implements OnInit {
 
   @Input() id: string = "";
   public text: string = "";
-  //public splitted: Array <string> | null=null;
-  public gaps: Array <string> | null=null;
-  public showGaps: boolean = false;
-  //@ViewChild(ViewClozeComponent) view: ViewClozeComponent;      // -> this.child.gaps
+  @ViewChild(ViewClozeComponent) child!: ViewClozeComponent;      // -> this.child.gaps
 
+  private lastSubmission: ClozeTextSubmissionDetailItem | undefined;
   public timeTrackId: string | null | undefined = null;
   public exercise: ClozeTextExerciseDetailItem | null = {};
   public isLoading : boolean = false;
+  public isSubmitting: boolean = false;
   @Output() solvedChange : EventEmitter<any> = new EventEmitter<any>();
 
-  constructor( private readonly clozeTextService : ClozeTextExerciseService,
-               private readonly timeTrackService: TimeTrackService,
-               public snackBar: MatSnackBar,
-               private readonly changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private readonly clozeTextService : ClozeTextExerciseService,
+    private readonly clozetextSubmissionService: ClozeTextSubmissionService,
+    private readonly timeTrackService: TimeTrackService,
+    public snackBar: MatSnackBar,
+    private readonly changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.showGaps = false;
     this.isLoading = true;
-    this.loadExercise().then(() => {
-      /*this.splitText();
-      this.initGaps();*/
-    })
+    void this.loadExercise();
   }
 
   async loadExercise(): Promise<any> {
@@ -55,14 +56,14 @@ export class SolveGapTextComponent implements OnInit {
         });
         await this.queryLastTempSolution(this.exercise!.id!, this.timeTrackId!);
       } else {
-        /*let lastSubmission = await lastValueFrom(
-          this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json(
+        let lastSubmission = await lastValueFrom(
+          this.clozetextSubmissionService.apiClozeTextSubmissionGetCodeOutputExerciseIdGet$Json(
             {
-              codeOutputExerciseId: this.exercise!.id!,
+              clozeTextExerciseId: this.exercise!.id!,
             }
           )
         );
-        this.answerString = lastSubmission.submittedAnswer ?? '';*/
+        this.child.gaps = lastSubmission.submittedAnswers;
         this.isLoading = false;
         this.changeDetectorRef.detectChanges();
       }
@@ -88,11 +89,11 @@ export class SolveGapTextComponent implements OnInit {
   }
 
   private async queryLastTempSolution(eId: string, ttId: string): Promise<any> {
-/*    let createNewSubmission: boolean = false;
+    let createNewSubmission: boolean = false;
     await lastValueFrom(
-      this.codeoutputSubmissionService.apiCodeOutputSubmissionGetCodeOutputExerciseIdGet$Json(
+      this.clozetextSubmissionService.apiClozeTextSubmissionGetCodeOutputExerciseIdGet$Json(
         {
-          codeOutputExerciseId: eId,
+          clozeTextExerciseId: eId,
           currentTimeTrackId: ttId,
         }
       )
@@ -110,25 +111,25 @@ export class SolveGapTextComponent implements OnInit {
       .then((data) => {
         if (!createNewSubmission) {
           this.lastSubmission = data!;
-          this.answerString = this.lastSubmission!.submittedAnswer!;
+          this.child.gaps = this.lastSubmission!.submittedAnswers!;
         }
-      });*/
+      });
   }
 
   public async createNewSubmission(
     ttId: string | null | undefined,
     isFinal: boolean = false,
-    answer: string | undefined = undefined
+    answer: string[] | undefined | null = null
   ) : Promise<any> {
- /*   try {
+    try {
       this.isSubmitting = true;
       await lastValueFrom(
-        this.codeoutputSubmissionService.apiCodeOutputSubmissionSubmitTimeTrackIdPost(
+        this.clozetextSubmissionService.apiClozeTextSubmissionSubmitTimeTrackIdPost(
           {
             timeTrackId: ttId!,
             isFinalSubmission: isFinal,
             body: {
-              submittedAnswer: answer,
+              submittedAnswers: answer,
               exerciseId: this.exercise!.id!,
             },
           }
@@ -141,18 +142,12 @@ export class SolveGapTextComponent implements OnInit {
       this.isSubmitting = false;
     } catch (err) {
       this.snackBar.open('Error while submitting the answer!', 'dismiss');
-    }*/
-  }
-
-
-
-  buttonClick() {
-    this.showGaps = !this.showGaps;
+    }
   }
 
   ngOnDestroy(): void {
     if (this.exercise?.userHasSolvedExercise) return;
-    this.tempSave(this.gaps!).then(() => {
+    this.tempSave(this.child.gaps!).then(() => {
       if (this.timeTrackId == null) return;
       this.closeTimeTrack(this.timeTrackId);
     })
@@ -166,7 +161,7 @@ export class SolveGapTextComponent implements OnInit {
     );
   }
 
-  async tempSave(answerString: string[]) : Promise<any> {
+  async tempSave(answerString: Array <string>) : Promise<any> {
     if (answerString == undefined) return;
     if (this.exercise?.userHasSolvedExercise) return;
     console.log('tempSave', answerString);
