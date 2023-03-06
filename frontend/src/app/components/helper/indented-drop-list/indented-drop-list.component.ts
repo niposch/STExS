@@ -6,7 +6,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges, ViewChild
 } from '@angular/core';
 import {
   CdkDragDrop,
@@ -24,13 +24,16 @@ import {ParsonExerciseLineDetailItem} from "../../../../services/generated/model
   styleUrls: ['./indented-drop-list.component.scss']
 })
 export class IndentedDropListComponent implements OnInit, OnChanges {
-  @Output()
-  public dropEvent: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
+  @ViewChild("drop_list")
+  public dropList: CdkDropList | undefined;
 
   @Input()
   cdkDropListData: ParsonExerciseLineDetailItem[] = [];
+  @Output()
+  cdkDropListDataChange: EventEmitter<ParsonExerciseLineDetailItem[]> = new EventEmitter<ParsonExerciseLineDetailItem[]>();
   @Input()
-  cdkDropListConnectedTo: (CdkDropList | string)[] | CdkDropList | string = [];
+  cdkDropListConnectedTo: (CdkDropList | string | undefined)[] | CdkDropList | string = [];
   private maxIndentation = 15;
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef
@@ -59,7 +62,7 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
         // @ts-ignore
         targetElement.style.marginLeft = `${currIndentations * 20}px`;
         // @ts-ignore
-        targetElement.indentation = currIndentations;
+        targetElement.currentindentation = currIndentations;
 
         // @ts-ignore
         currElement.style.marginLeft = `${targetElementIndentations * 20}px`;
@@ -70,22 +73,34 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
         // @ts-ignore
         currElement.style.marginLeft = `${currIndentations * 20}px`;
         // @ts-ignore
-        currElement.indentation = currIndentations;
+        currElement.currentindentation = currIndentations;
       }
       currParsonLine.indentation = currIndentations;
-
+      // @ts-ignore
+      $event.item.element.nativeElement.indentation = currParsonLine.indentation;
     }
     else{
+      console.log("transferring")
       transferArrayItem($event.previousContainer.data,
         $event.container.data,
         $event.previousIndex,
         $event.currentIndex);
+      let currElement = $event.item.element.nativeElement;
+      let currParsonLine = $event.container.data[$event.currentIndex];
+      // @ts-ignore
+      currParsonLine.indentation = currElement.currentindentation ?? 0;
+      // @ts-ignore
+      $event.item.element.nativeElement.style.marginLeft = `${currParsonLine.indentation * 20}px`;
+      // @ts-ignore
+      $event.item.element.nativeElement.indentation = currParsonLine.indentation;
     }
+
+    this.cdkDropListDataChange.emit($event.container.data);
   }
 
   entered<T>($event: CdkDragEnter<T>) {
     // @ts-ignore
-    $event.item.element.nativeElement.indentation = $event.container.data[$event.currentIndex].indentation
+    $event.item.element.nativeElement.currentindentation  = $event.item.dropContainer.data[$event.currentIndex].indentation;
   }
 
   exited<T>($event: CdkDragExit<T>) {
@@ -106,7 +121,8 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
     $event.source.element.nativeElement.style.marginLeft = `${indentations * 20}px`;
     // @ts-ignore
     $event.source.element.nativeElement.currentindentation = indentations;
-    let placeholder = $event.source.dropContainer.element.nativeElement.querySelector('.cdk-drag-placeholder');
+    // @ts-ignore
+    let placeholder = $event.event.target.querySelector('.cdk-drag-placeholder');
     if(placeholder != null && placeholder instanceof HTMLElement){
       placeholder.style.marginLeft = `${indentations * 20}px`;
     }
@@ -114,23 +130,29 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
 
   dragStarted($event: CdkDragStart) {
     // @ts-ignore
-    let indentations = $event.source.element.nativeElement.indentation ?? 0;
+    let indentations = $event.source.dropContainer.data.indentation ?? 0;
     let placeholder = $event.source.dropContainer.element.nativeElement.querySelector('.cdk-drag-placeholder');
+    // @ts-ignore
+    $event.source.element.nativeElement.currentindentation = indentations;
     if(placeholder != null && placeholder instanceof HTMLElement){
       placeholder.style.marginLeft = `${indentations * 20}px`;
     }
+    $event.source.dropped.subscribe((value: CdkDragDrop<ParsonExerciseLineDetailItem[], any>) => {
+      console.log("dropped");
+      this.cdkDropListDataChange.emit(this.cdkDropListData);
+    });
   }
 
   ngOnChanges(changes: any): void {
     if(changes.cdkDropListData != null){
-      this.cdkDropListData = changes.cdkDropListData.currentValue;
+      this.cdkDropListData = changes.cdkDropListData.currentValue.filter((value: any) => value != null);
       this.changeDetectorRef.detectChanges();
       let elements = document.querySelectorAll('.cdk-drag');
-      for(let i = 0; i < elements.length; i++){
+      for(let i = 0; i < this.cdkDropListData.length; i++){
         let element = elements[i];
         if(element instanceof HTMLElement){
           // @ts-ignore
-          element.indentation = this.cdkDropListData[i].indentation;
+          element.indentation = this.cdkDropListData[i].indentation != null ?  this.cdkDropListData[i].indentation : 0;
         }
       }
     }

@@ -74,6 +74,7 @@ import { SolveGapTextComponent } from './components/students/solve-exercise/solv
 import { CreateEditClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component';
 import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
 import { ViewClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
+import { SolveParsonPuzzleComponent } from './components/students/solve-exercise/solve-parson-puzzle/solve-parson-puzzle.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { ViewClozeComponent } from './components/admin/exercise-admin/create-edi
     DataDashboardComponent,
     CreateEditClozeComponent,
     ViewClozeComponent,
+    SolveParsonPuzzleComponent,
   ],
   imports: [
     BrowserModule,
