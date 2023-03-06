@@ -91,7 +91,7 @@ export class SolveGapTextComponent implements OnInit {
   private async queryLastTempSolution(eId: string, ttId: string): Promise<any> {
     let createNewSubmission: boolean = false;
     await lastValueFrom(
-      this.clozetextSubmissionService.apiClozeTextSubmissionGetCodeOutputExerciseIdGet$Json(
+      this.clozetextSubmissionService.apiClozeTextSubmissionGetClozeTextExerciseIdGet$Json(
         {
           clozeTextExerciseId: eId,
           currentTimeTrackId: ttId,

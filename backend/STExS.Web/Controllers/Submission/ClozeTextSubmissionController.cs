@@ -29,7 +29,7 @@ ISubmissionController<ClozeTextSubmissionCreateItem, ClozeTextSubmissionDetailIt
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClozeTextSubmissionDetailItem))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [Route("get/{codeOutputExerciseId:guid}")]
+    [Route("get/{clozeTextExerciseId:guid}")]
     public async Task<IActionResult> TryGetLastSubmission([FromRoute]Guid clozeTextExerciseId, [FromQuery]Guid? currentTimeTrackId = null, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

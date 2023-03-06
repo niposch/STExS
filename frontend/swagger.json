@@ -720,7 +720,7 @@
         }
       }
     },
-    "/api/ClozeTextSubmission/get/{codeOutputExerciseId}": {
+    "/api/ClozeTextSubmission/get/{clozeTextExerciseId}": {
       "get": {
         "tags": [
           "ClozeTextSubmission"
@@ -741,14 +741,6 @@
             "schema": {
               "type": "string",
               "format": "uuid"
-            }
-          },
-          {
-            "name": "codeOutputExerciseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
             }
           }
         ],
