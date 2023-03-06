@@ -19,5 +19,5 @@ public class ModuleReport
 
     public PointDistribution Distribution {get; set; } // Punkte die ein Schüler auf das gesammte Modul bekommen hat
 
-    public double AverageTime { get; set; }
+    public double AverageTimeInMilliseconds { get; set; }
 }

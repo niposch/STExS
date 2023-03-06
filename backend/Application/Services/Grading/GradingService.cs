@@ -189,7 +189,7 @@ public sealed class GradingService : IGradingService
                     userPoints[userId] = userReports.Sum(u => u.TotalPoints);
                 }
             }
-            averageTime += chapterReport.AverageTime;
+            averageTime += chapterReport.AverageTimeInMilliseconds;
         }
 
         var pointDistribution = new PointDistribution
@@ -217,7 +217,7 @@ public sealed class GradingService : IGradingService
                 .ToList(),
             Module = ModuleDetailItem.ToDetailItem(module),
             Distribution = pointDistribution,
-            AverageTime = averageTime
+            AverageTimeInMilliseconds = averageTime
         };
     }
 
@@ -250,7 +250,7 @@ public sealed class GradingService : IGradingService
                 userPoints[userPointsItem.UserId] += userPointsItem.TotalPoints;
             }
 
-            averageTime += exerciseReport.AverageTime;
+            averageTime += exerciseReport.AverageTimeInMilliseconds;
         }
 
         var pointDistribution = new PointDistribution
@@ -277,7 +277,7 @@ public sealed class GradingService : IGradingService
                 .OrderBy(e => e.Exercise.RunningNumber)
                 .ToList(),
             Distribution = pointDistribution,
-            AverageTime = averageTime
+            AverageTimeInMilliseconds = averageTime
         };
     }
     
@@ -304,7 +304,7 @@ public sealed class GradingService : IGradingService
             MedianScore = median,
             Exercise = ExerciseListItem.ToListItem(exercise),
             Distribution = distribution,
-            AverageTime = averageTime
+            AverageTimeInMilliseconds = averageTime
         };
     }
 

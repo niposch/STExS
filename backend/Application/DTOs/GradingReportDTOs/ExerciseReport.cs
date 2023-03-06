@@ -15,5 +15,5 @@ public class ExerciseReport
 
     public PointDistribution Distribution {get; set; }
 
-    public double AverageTime { get; set; }
+    public double AverageTimeInMilliseconds { get; set; }
 }
