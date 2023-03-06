@@ -166,6 +166,8 @@ public sealed class GradingService : IGradingService
         }
 
         Dictionary<Guid, int> userPoints = new Dictionary<Guid, int>();
+        
+        double averageTime = 0;
 
         // calculate the total points for each user and store them in the dictionary
         foreach (var chapterReport in chapterReports)
@@ -187,6 +189,7 @@ public sealed class GradingService : IGradingService
                     userPoints[userId] = userReports.Sum(u => u.TotalPoints);
                 }
             }
+            averageTime += chapterReport.AverageTime;
         }
 
         var pointDistribution = new PointDistribution
@@ -213,7 +216,8 @@ public sealed class GradingService : IGradingService
                 .OrderBy(c => c.Chapter.RunningNumber)
                 .ToList(),
             Module = ModuleDetailItem.ToDetailItem(module),
-            Distribution = pointDistribution
+            Distribution = pointDistribution,
+            AverageTime = averageTime
         };
     }
 
@@ -232,6 +236,8 @@ public sealed class GradingService : IGradingService
 
         Dictionary<Guid, int> userPoints = new Dictionary<Guid, int>();
 
+        double averageTime = 0;
+
         foreach (var exerciseReport in exerciseReports.Values)
         {
             foreach (var userPointsItem in exerciseReport.Distribution.UserPoints)
@@ -243,6 +249,8 @@ public sealed class GradingService : IGradingService
 
                 userPoints[userPointsItem.UserId] += userPointsItem.TotalPoints;
             }
+
+            averageTime += exerciseReport.AverageTime;
         }
 
         var pointDistribution = new PointDistribution
@@ -268,13 +276,17 @@ public sealed class GradingService : IGradingService
             Exercises = exerciseReports.Values
                 .OrderBy(e => e.Exercise.RunningNumber)
                 .ToList(),
-            Distribution = pointDistribution
+            Distribution = pointDistribution,
+            AverageTime = averageTime
         };
     }
+    
     private ExerciseReport GenerateExerciseReportItem(BaseExercise exercise, List<Guid> allUserIds, Dictionary<Guid /*userId*/, UserSubmission> submissions)
     {
 
         var distribution = this.GeneratePointDistributionForExercise(submissions, allUserIds);
+
+        var times = this.GenerateProcessingTimeForExercise(submissions, allUserIds);
 
         var median = distribution.UserPoints
             .Select(u => u.TotalPoints)
@@ -282,13 +294,52 @@ public sealed class GradingService : IGradingService
             .Skip(distribution.UserPoints.Count / 2)
             .FirstOrDefault(0);
 
+        var averageTime = times.UserTimes
+            .Where(t => t.TotalTime != TimeSpan.Zero)
+            .Average(t => t.TotalTime.TotalMilliseconds);
+
         return new ExerciseReport
         {
             AverageScore = distribution.UserPoints.Average(u => u.TotalPoints),
             MedianScore = median,
             Exercise = ExerciseListItem.ToListItem(exercise),
-            Distribution = distribution
+            Distribution = distribution,
+            AverageTime = averageTime
         };
+    }
+
+    private ProcessingTimeDistribution GenerateProcessingTimeForExercise(Dictionary<Guid, UserSubmission> submissions, List<Guid> allUserIds)
+    {
+        var times = new ProcessingTimeDistribution
+        {
+            UserTimes = new List<UserTime>()
+        };
+        foreach (var userId in allUserIds)
+        {
+            if (submissions.TryGetValue(userId, out var submission))
+            {
+                TimeSpan totalTime = TimeSpan.Zero;
+                if (submission.FinalSubmission != null)
+                {
+                    submission.TimeTracks.ForEach(t => totalTime.Add(t.CloseDateTime?.Subtract(t.Start) ?? t.LastUpdate?.Subtract(t.Start) ?? TimeSpan.Zero));
+                }
+                times.UserTimes.Add(new UserTime
+                {
+                    UserId = userId,
+                    TotalTime = totalTime
+                });
+            }
+            else
+            {
+                times.UserTimes.Add(new UserTime()
+                {
+                    UserId = userId,
+                    TotalTime = TimeSpan.Zero
+                });
+            }
+        }
+
+        return times;
     }
     private PointDistribution GeneratePointDistributionForExercise(Dictionary<Guid, UserSubmission> submissions, List<Guid> allUserIds)
     {

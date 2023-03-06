@@ -59,6 +59,7 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
             .ThenInclude(s => s.GradingResult)
             .Include(e => e.Submissions)
             .ThenInclude(s => s.GradingResult)
+            .Include(s => s.TimeTracks)
             .ToDictionaryAsync(e => e.UserId, cancellationToken);
     }
 

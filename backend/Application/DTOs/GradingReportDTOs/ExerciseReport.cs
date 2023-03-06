@@ -13,5 +13,7 @@ public class ExerciseReport
 
     public  double MedianScore { get; set; }
 
-    public PointDistribution Distribution {get; set; } 
+    public PointDistribution Distribution {get; set; }
+
+    public double AverageTime { get; set; }
 }

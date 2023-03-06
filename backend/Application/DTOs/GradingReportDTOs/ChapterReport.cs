@@ -17,4 +17,6 @@ public class ChapterReport{
     public double PassingRate { get; set; }
 
     public PointDistribution Distribution {get; set; } // Punkte die ein Schüler auf das gesammte Kapitel bekommen hat
+    
+    public double AverageTime { get; set; }
 }

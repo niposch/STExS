@@ -18,4 +18,6 @@ public class ModuleReport
     public double PassingRate { get; set; }
 
     public PointDistribution Distribution {get; set; } // Punkte die ein Schüler auf das gesammte Modul bekommen hat
+
+    public double AverageTime { get; set; }
 }
