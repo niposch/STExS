@@ -40,8 +40,6 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
     [Route("submit/{timeTrackId:guid}")]
     public async Task<IActionResult> SubmitSubmission([FromBody] ParsonPuzzleSubmissionCreateItem createItem, Guid timeTrackId, [FromQuery]bool isFinalSubmission, CancellationToken cancellationToken = default)
     {
-        if (!await this.accessService.IsChapterAdmin(createItem.ChapterId, this.User.GetUserId())) return this.Unauthorized();
-
         await this.parsonPuzzleSubmissionService.SubmitAsync(
             this.User.GetUserId(),
             createItem.ExerciseId,
@@ -107,7 +105,7 @@ public class ParsonPuzzleSubmissionDetailItem: ParsonPuzzleSubmissionCreateItem
     public DateTime SubmittedAt { get; set; }
 }
 
-public class ParsonPuzzleSubmissionCreateItem: BaseExerciseCreateItem
+public class ParsonPuzzleSubmissionCreateItem
 {
     public List<ParsonExerciseLineDetailItem> SubmittedLines { get; set; } = new();
     public Guid ExerciseId { get; set; }

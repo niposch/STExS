@@ -4193,22 +4193,6 @@
       "ParsonPuzzleSubmissionCreateItem": {
         "type": "object",
         "properties": {
-          "exerciseName": {
-            "type": "string",
-            "nullable": true
-          },
-          "exerciseDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "achievablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
           "submittedLines": {
             "type": "array",
             "items": {
@@ -4226,22 +4210,6 @@
       "ParsonPuzzleSubmissionDetailItem": {
         "type": "object",
         "properties": {
-          "exerciseName": {
-            "type": "string",
-            "nullable": true
-          },
-          "exerciseDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "achievablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
           "submittedLines": {
             "type": "array",
             "items": {

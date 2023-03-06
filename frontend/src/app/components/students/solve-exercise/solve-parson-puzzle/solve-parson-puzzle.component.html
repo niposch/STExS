@@ -1,6 +1,6 @@
 <mat-progress-bar *ngIf="this.isSaving" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-card class="master-card">
-  <div *ngIf="this.exercise != null && this.possibleAnswers != null && this.userSolution != null else unableToDisplay" class="question">
+  <div *ngIf="this.exercise != null && this.possibleAnswers != null && this.userSolution != null && this.timeTrackId != null else unableToDisplay" class="question">
     <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
     <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
@@ -20,7 +20,7 @@
     <div *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
     <ng-template #submitButton>
       <button class="submit" mat-raised-button color="accent"
-              (click)="this.createNewSubmission(this.timeTrackId, true)">
+              (click)="this.createNewSubmission(this.timeTrackId,true,this.userSolution)">
         <mat-label>submit</mat-label>
       </button>
     </ng-template>
@@ -37,9 +37,7 @@
     </mat-spinner>
   </div>
   <ng-template #errorWhileLoading>
-    <div *ngIf="this.exercise == null">
-      <p>Unable to load exercise</p>
-    </div>
+    <p style="padding-bottom: 15px">Unable to load exercise</p>
   </ng-template>
 </ng-template>
 </mat-card>

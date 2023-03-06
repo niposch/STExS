@@ -70,6 +70,10 @@ public class ApplicationModule : Module
         builder.RegisterType<CodeOutputSubmissionService>()
             .As<ICodeOutputSubmissionService>()
             .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ParsonPuzzleSubmissionService>()
+            .As<IParsonPuzzleSubmissionService>()
+            .InstancePerLifetimeScope();
 
         // Helper
         builder.RegisterType<RoleHelper>()

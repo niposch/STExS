@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Services.Interfaces;
+using Common.Models.ExerciseSystem;
 using Common.Models.ExerciseSystem.Parson;
 using Common.RepositoryInterfaces.Generic;
 
@@ -41,7 +42,8 @@ public class ParsonPuzzleSubmissionService: IParsonPuzzleSubmissionService
                 .Select(id => elementsDict[id])
                 .ToList(),
             UserId = userId,
-            ExerciseId = exerciseId
+            ExerciseId = exerciseId,
+            SubmissionType = ExerciseType.Parson
         };
         
         await this.submissionService.SubmitAsync(userId, exerciseId, parsonPuzzleSubmission, isFinal, timeTrackId, cancellationToken);
