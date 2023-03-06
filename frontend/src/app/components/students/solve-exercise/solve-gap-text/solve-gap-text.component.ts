@@ -19,6 +19,7 @@ export class SolveGapTextComponent implements OnInit {
 
   @Input() id: string = "";
   public text: string = "";
+  //public answerStrings: string[] | undefined | null;
   @ViewChild(ViewClozeComponent) child!: ViewClozeComponent;      // -> this.child.gaps
 
   private lastSubmission: ClozeTextSubmissionDetailItem | undefined;
@@ -57,7 +58,7 @@ export class SolveGapTextComponent implements OnInit {
         await this.queryLastTempSolution(this.exercise!.id!, this.timeTrackId!);
       } else {
         let lastSubmission = await lastValueFrom(
-          this.clozetextSubmissionService.apiClozeTextSubmissionGetCodeOutputExerciseIdGet$Json(
+          this.clozetextSubmissionService.apiClozeTextSubmissionGetClozeTextExerciseIdGet$Json(
             {
               clozeTextExerciseId: this.exercise!.id!,
             }
@@ -68,7 +69,7 @@ export class SolveGapTextComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
       }
     } catch (err) {
-      this.snackBar.open('Could not load this Code-Output Exercise', 'ok', {
+      this.snackBar.open('Could not load this Cloze Text Exercise', 'ok', {
         duration: 3000,
       });
     }
@@ -165,7 +166,7 @@ export class SolveGapTextComponent implements OnInit {
     if (answerString == undefined) return;
     if (this.exercise?.userHasSolvedExercise) return;
     console.log('tempSave', answerString);
-    //await this.createNewSubmission(this.timeTrackId, false, answerString);
+    await this.createNewSubmission(this.timeTrackId, false, answerString);
   }
 
 }
