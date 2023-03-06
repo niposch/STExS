@@ -4,7 +4,7 @@
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
     <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
     <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-    <app-view-cloze class="adjust-content" [text]="this.text" [enableInputfield]="true"> </app-view-cloze>
+    <app-view-cloze class="adjust-content" [text]="this.text" [enableInputfield]="true" [userHasSolvedExercise]="exercise?.userHasSolvedExercise"> </app-view-cloze>
     <div class="center" *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
       <ng-template #submitButton>
         <button class="submit" mat-raised-button color="accent"
