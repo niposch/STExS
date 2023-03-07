@@ -1547,6 +1547,83 @@
         }
       }
     },
+    "/api/Grading/manualGrading": {
+      "post": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "newGrade",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Module": {
       "post": {
         "tags": [
@@ -3700,9 +3777,10 @@
             "format": "date-time",
             "nullable": true
           },
-          "finalAppealDate": {
+          "appealableBefore": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "isAppealed": {
             "type": "boolean",
@@ -3719,6 +3797,16 @@
           },
           "gradedSubmission": {
             "$ref": "#/components/schemas/BaseSubmission"
+          },
+          "automaticGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "manualGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3738,11 +3826,11 @@
         "x-enumNames": [
           "Unreviewed",
           "InProgress",
-          "Graded",
+          "AutomaticallyGraded",
           "Appealed",
           "AppealAccepted",
           "AppealRejected",
-          "FinallyGraded"
+          "FinallyManuallyGraded"
         ]
       },
       "IdentityError": {
