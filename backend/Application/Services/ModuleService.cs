@@ -7,6 +7,7 @@ using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.RepositoryInterfaces.Generic;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
 
@@ -72,7 +73,7 @@ public sealed class ModuleService : IModuleService
             throw new UnauthorizedException();
         if (roles.Result.Contains(RoleHelper.Teacher) && module.OwnerId != userId) 
             throw new UnauthorizedException();
-        if (module.ModuleParticipations.Count > 0) 
+        if (!module.ModuleParticipations.IsNullOrEmpty() && module.ModuleParticipations.Count > 0) 
             throw new UnsupportedActionException("Modules with participants can only be archived, not deleted.");
         
         await this.repository.Modules.DeleteAsync(moduleId, cancellationToken);
