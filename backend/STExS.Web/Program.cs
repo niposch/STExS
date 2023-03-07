@@ -1,8 +1,7 @@
 using System.Net;
-using System.Text;
-using System.Text.Json.Serialization;
 using Application;
 using Application.Helper.Roles;
+using Application.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Models.Authentication;
@@ -10,10 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.Repositories.Grading;
 using STExS.Helper;
@@ -30,23 +26,19 @@ builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
     var connectionString = builder.Configuration.GetConnectionString("ApplicationDb");
     if (!isTest && !isCI) // test environment should provide it's own db options before this point
-    {
         b.Register<DbContextOptions<ApplicationDbContext>>(_ =>
             new DbContextOptionsFactory<ApplicationDbContext>(connectionString, isDevelopment).CreateOptions());
-    }
+
     b.RegisterModule<ApplicationModule>();
     b.RegisterModule(new RepositoryModule());
 });
+builder.Services.Configure<EmailConfiguration>(options => builder.Configuration.GetSection("IMAP").Bind(options));
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.All;
-    // Only loopback proxies are allowed by default.
-    // Clear that restriction because forwarders are enabled by explicit 
-    // configuration.
     options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("172.0.0.0"), 8));
     options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("127.0.0.1"), 0));
-    // options.KnownProxies.Add(IPAddress.Parse(""));
 });
 
 builder.Services.AddAuthorization(options =>
@@ -71,10 +63,7 @@ builder.Services.ConfigureApplicationCookie(o =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(o =>
-{
-    o.SchemaFilter<EnumSchemaFilter>();
-});
+builder.Services.AddSwaggerGen(o => { o.SchemaFilter<EnumSchemaFilter>(); });
 
 var app = builder.Build();
 app.UseForwardedHeaders();
@@ -92,7 +81,6 @@ app.Use(async (context,
 
 if (!isCI)
 {
-
     if (!isTest)
     {
         using var scope = app.Services.CreateScope();
@@ -100,26 +88,22 @@ if (!isCI)
         var context = services.GetRequiredService<ApplicationDbContext>();
         context.Database.Migrate();
     }
+
     var roleManager = app.Services.GetRequiredService<RoleManager<ApplicationRole>>();
     var applicationRoles = new List<ApplicationRole>
     {
-        new ApplicationRole {Name = RoleHelper.Admin},
-        new ApplicationRole {Name = RoleHelper.User},
-        new ApplicationRole {Name = RoleHelper.Teacher}
+        new() { Name = RoleHelper.Admin },
+        new() { Name = RoleHelper.User },
+        new() { Name = RoleHelper.Teacher }
     };
     foreach (var role in applicationRoles)
-    {
         if (roleManager.FindByNameAsync(role.Name).Result == null)
             roleManager.CreateAsync(role).Wait();
-    }
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger(c =>
-        {
-            c.RouteTemplate = "api/swagger/{documentName}/swagger.json";
-        });
+        app.UseSwagger(c => { c.RouteTemplate = "api/swagger/{documentName}/swagger.json"; });
         app.UseSwaggerUI(c =>
         {
             c.RoutePrefix = "api/swagger";
@@ -144,6 +128,7 @@ if (!isCI)
             var token = userManager.GenerateEmailConfirmationTokenAsync(admin).Result;
             userManager.ConfirmEmailAsync(admin, token).Wait();
         }
+
         userManager.AddToRoleAsync(admin, RoleHelper.Admin).Wait();
         userManager.AddToRoleAsync(admin, RoleHelper.Teacher).Wait();
         userManager.AddToRoleAsync(admin, RoleHelper.User).Wait();
@@ -157,13 +142,14 @@ if (!isCI)
                 Email = "dev-teacher@test.com",
                 FirstName = "Jeff",
                 LastName = "Doe",
-                MatrikelNumber = "ABC1234",
+                MatrikelNumber = "ABC1234"
             };
             userManager.CreateAsync(teacher, "Test333!").Wait();
             teacher = userManager.FindByNameAsync("dev-teacher").Result;
             var token = userManager.GenerateEmailConfirmationTokenAsync(teacher).Result;
             userManager.ConfirmEmailAsync(teacher, token).Wait();
         }
+
         userManager.AddToRoleAsync(teacher, RoleHelper.Teacher).Wait();
         userManager.AddToRoleAsync(teacher, RoleHelper.User).Wait();
 
@@ -176,13 +162,14 @@ if (!isCI)
                 Email = "dev-user@test.com",
                 FirstName = "Jane",
                 LastName = "Doe",
-                MatrikelNumber = "ABC1235",
+                MatrikelNumber = "ABC1235"
             };
             userManager.CreateAsync(user, "Test333!").Wait();
             user = userManager.FindByNameAsync("dev-user").Result;
             var token = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             userManager.ConfirmEmailAsync(user, token).Wait();
         }
+
         userManager.AddToRoleAsync(user, RoleHelper.User).Wait();
     }
 }

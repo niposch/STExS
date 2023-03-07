@@ -72,7 +72,44 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedInResult"
+                }
+              }
+            }
           }
         }
       }
@@ -153,6 +190,75 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Authenticate/confirmEmail": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Authenticate/resendConfirmationEmail": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -1433,6 +1539,179 @@
         }
       }
     },
+    "/api/Grading/manualGrading": {
+      "post": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "newGrade",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Grading/submissionsForUserAndExercise": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDetailItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDetailItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDetailItem"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Module": {
       "post": {
         "tags": [
@@ -2184,6 +2463,320 @@
         }
       }
     },
+    "/api/ParsonPuzzle": {
+      "get": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzle/create": {
+      "post": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzle/update": {
+      "post": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzle/withAnswers": {
+      "get": {
+        "tags": [
+          "ParsonPuzzle"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonExerciseDetailItemWithAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzleSubmission/submit/{timeTrackId}": {
+      "post": {
+        "tags": [
+          "ParsonPuzzleSubmission"
+        ],
+        "parameters": [
+          {
+            "name": "timeTrackId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "isFinalSubmission",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonPuzzleSubmissionCreateItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonPuzzleSubmissionCreateItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParsonPuzzleSubmissionCreateItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParsonPuzzleSubmission/get/{parsonPuzzleExerciseId}": {
+      "get": {
+        "tags": [
+          "ParsonPuzzleSubmission"
+        ],
+        "parameters": [
+          {
+            "name": "parsonPuzzleExerciseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "currentTimeTrackId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonPuzzleSubmissionDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonPuzzleSubmissionDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsonPuzzleSubmissionDetailItem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TimeTrack/{timeTrackId}": {
       "get": {
         "tags": [
@@ -2284,6 +2877,62 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TimeTrack/timeTracksForExerciseAndUser": {
+      "get": {
+        "tags": [
+          "TimeTrack"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2793,10 +3442,6 @@
       "ClozeTextExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -2805,13 +3450,17 @@
             "type": "string",
             "nullable": true
           },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "achievablePoints": {
             "type": "integer",
             "format": "int32"
           },
-          "chapterId": {
+          "text": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2958,13 +3607,6 @@
       "CodeOutputExerciseCreateItem": {
         "type": "object",
         "properties": {
-          "expectedAnswer": {
-            "type": "string",
-            "nullable": true
-          },
-          "isMultilineResponse": {
-            "type": "boolean"
-          },
           "exerciseName": {
             "type": "string",
             "nullable": true
@@ -2973,13 +3615,20 @@
             "type": "string",
             "nullable": true
           },
-          "achieveablePoints": {
-            "type": "integer",
-            "format": "int32"
-          },
           "chapterId": {
             "type": "string",
             "format": "uuid"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isMultilineResponse": {
+            "type": "boolean"
+          },
+          "expectedAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3272,9 +3921,10 @@
             "format": "date-time",
             "nullable": true
           },
-          "finalAppealDate": {
+          "appealableBefore": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "isAppealed": {
             "type": "boolean",
@@ -3291,6 +3941,16 @@
           },
           "gradedSubmission": {
             "$ref": "#/components/schemas/BaseSubmission"
+          },
+          "automaticGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "manualGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3310,11 +3970,11 @@
         "x-enumNames": [
           "Unreviewed",
           "InProgress",
-          "Graded",
+          "AutomaticallyGraded",
           "Appealed",
           "AppealAccepted",
           "AppealRejected",
-          "FinallyGraded"
+          "FinallyManuallyGraded"
         ]
       },
       "IdentityError": {
@@ -3584,6 +4244,222 @@
         },
         "additionalProperties": false
       },
+      "ParsonExerciseCreateItem": {
+        "type": "object",
+        "properties": {
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineCreateItem"
+            },
+            "nullable": true
+          },
+          "indentationIsRelevant": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userHasSolvedExercise": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
+            },
+            "nullable": true
+          },
+          "indentationIsRelevant": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseDetailItemWithAnswer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "exerciseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "runningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chapterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userHasSolvedExercise": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
+            },
+            "nullable": true
+          },
+          "indentationIsRelevant": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseLineCreateItem": {
+        "type": "object",
+        "properties": {
+          "indentation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonExerciseLineDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "indentation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonPuzzleSubmissionCreateItem": {
+        "type": "object",
+        "properties": {
+          "submittedLines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
+            },
+            "nullable": true
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParsonPuzzleSubmissionDetailItem": {
+        "type": "object",
+        "properties": {
+          "submittedLines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParsonExerciseLineDetailItem"
+            },
+            "nullable": true
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -3672,6 +4548,53 @@
           "Teacher",
           "Admin"
         ]
+      },
+      "SignedInResult": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Success",
+          "EmailNotConfirmed",
+          "Failed"
+        ]
+      },
+      "SubmissionDetailItem": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gradingResultId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "isFinalSubmission": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "SubmissionGradingState": {
         "enum": [
@@ -3762,6 +4685,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
           "state": {
             "$ref": "#/components/schemas/TimeTrackState"
           },
@@ -3783,6 +4710,39 @@
           }
         },
         "additionalProperties": false
+      },
+      "TimeTrackEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/TimeTrackEventType"
+          },
+          "timeTrack": {
+            "$ref": "#/components/schemas/TimeTrackDetailItem"
+          },
+          "submittedSubmission": {
+            "$ref": "#/components/schemas/SubmissionDetailItem"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrackEventType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "TimeTrackStart",
+          "TimeTrackClosed",
+          "TimeTrackLostContact",
+          "FinalSubmission",
+          "TemporarySubmission"
+        ]
       },
       "TimeTrackState": {
         "enum": [

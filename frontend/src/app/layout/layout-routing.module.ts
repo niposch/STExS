@@ -12,6 +12,7 @@ import {ModuleDetailsComponent} from "../components/module/module-details/module
 import {AdministrateModuleComponent} from "../components/admin/modules-admin/administrate-module/administrate-module.component";
 import {ChapterAdminAdministrateComponent} from '../components/admin/chapter/chapter-admin-administrate/chapter-admin-administrate.component';
 import {CreateEditCodeOutputComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-code-output/create-edit-code-output.component";
+import {CreateEditParsonComponent} from "../components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component";
 import {NotfoundComponent} from "../components/notfound/notfound.component";
 import {SolveExerciseComponent} from "../components/students/solve-exercise/solve-exercise.component";
 import {
@@ -20,6 +21,7 @@ import {
 import {
   GradingExerciseDashboardComponent
 } from "../components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component";
+import {ConfirmEmailComponent} from "../components/authentication/confirm-email/confirm-email.component";
 import {AdministrateUsersComponent} from "../components/admin/administrate-users/administrate-users.component";
 import {RoleType} from "../../services/generated/models";
 import {RoleGuard} from "../guards/role.guard";
@@ -27,6 +29,7 @@ import {NoAccessComponent} from "../components/no-access/no-access.component";
 import {
   CreateEditClozeComponent
 } from "../components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component";
+import {DataDashboardComponent} from "../components/admin/data-dashboard/data-dashboard.component";
 
 const routes: Routes = [
   {
@@ -54,7 +57,8 @@ const routes: Routes = [
       {
         path: 'register',
         loadChildren: () => import('../components/authentication/register/register.module').then(x => x.RegisterModule)
-      }
+      },
+      {path: 'confirm-email', component: ConfirmEmailComponent}
     ]
   },
   {
@@ -82,8 +86,10 @@ const routes: Routes = [
               {path: "module/administrate/chapter", component: ChapterAdminAdministrateComponent},
               {path: "codeoutput/create", component: CreateEditCodeOutputComponent},
               {path: "cloze/create", component: CreateEditClozeComponent },
+              {path: "parson/create", component: CreateEditParsonComponent},
               {path: "grading", component: GradingModuleDashboardComponent},
               {path: "grading/exercise", component: GradingExerciseDashboardComponent},
+              {path: "data", component: DataDashboardComponent}
             ]
           },
           {

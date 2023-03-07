@@ -85,4 +85,15 @@ public class SubmissionService:ISubmissionService
         
         await this.gradingService.RunAutomaticGradingForExerciseAsync(submission);
     }
+
+    public async Task<List<SubmissionDetailItem>> GetSubmissionsForUserAndExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var result = await this.repository.Submissions.GetAllByUserIdAndExerciseId(userId, exerciseId, cancellationToken);
+        var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+
+        return result.Select(s => SubmissionDetailItem.ToSubmissionDetailItem(s, userSubmission))
+            .OrderByDescending(s => s.IsFinalSubmission)
+            .ThenByDescending(s => s.CreationTime)
+            .ToList();
+    }
 }

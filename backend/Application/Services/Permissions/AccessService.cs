@@ -62,6 +62,17 @@ public class AccessService : IAccessService
                                    participationsConfirmed.Contains(c.ModuleId));
     }
 
+    public async Task<bool> IsExerciseAdminAsync(Guid exerciseId, Guid getUserId, CancellationToken cancellationToken = default)
+    {
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, false, cancellationToken);
+        if (exercise == null)
+        {
+            return false;
+        }
+
+        return await this.IsChapterAdmin(exercise.ChapterId, getUserId, cancellationToken);
+    }
+
     public async Task<bool> IsModuleAdmin(Guid moduleId, Guid userId, CancellationToken cancellationToken = default)
     {
         if (await this.IsSystemAdmin(userId))

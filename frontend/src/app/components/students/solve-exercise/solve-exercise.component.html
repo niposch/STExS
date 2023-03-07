@@ -17,8 +17,9 @@
   </mat-card>
 
   <div class="comp-container">
-    <app-solve-code-output *ngIf="this.showCodeOutput" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-code-output>
-    <app-solve-gap-text *ngIf="this.showClozeText" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-gap-text>
+    <app-solve-code-output *ngIf="this.currentExerciseType == exerciseType.CodeOutput" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-code-output>
+    <app-solve-gap-text *ngIf="this.currentExerciseType == exerciseType.ClozeText" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-gap-text>
+    <app-solve-parson-puzzle *ngIf="this.currentExerciseType == exerciseType.Parson" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-parson-puzzle>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
 </div>

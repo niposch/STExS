@@ -279,10 +279,16 @@ namespace Repositories.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Indentation")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ParsonPuzzleSubmissionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ParsonSolutionId")
@@ -291,9 +297,14 @@ namespace Repositories.Migrations
                     b.Property<Guid>("RelatedSolutionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("RunningNumber")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("ParsonPuzzleSubmissionId");
 
                     b.HasIndex("ParsonSolutionId");
 
@@ -310,6 +321,9 @@ namespace Repositories.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IndentationIsRelevant")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime2");
@@ -373,14 +387,17 @@ namespace Repositories.Migrations
                     b.Property<DateTime?>("AppealDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("AppealableBefore")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("AutomaticGradingDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FinalAppealDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("GradedSubmissionId")
@@ -391,6 +408,9 @@ namespace Repositories.Migrations
 
                     b.Property<bool>("IsAutomaticallyGraded")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ManualGradingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
@@ -636,6 +656,13 @@ namespace Repositories.Migrations
                     b.HasDiscriminator().HasValue(20);
                 });
 
+            modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonPuzzleSubmission", b =>
+                {
+                    b.HasBaseType("Common.Models.Grading.BaseSubmission");
+
+                    b.HasDiscriminator().HasValue(20);
+                });
+
             modelBuilder.Entity("Common.Models.ExerciseSystem.BaseExercise", b =>
                 {
                     b.HasOne("Common.Models.ExerciseSystem.Chapter", "Chapter")
@@ -711,6 +738,10 @@ namespace Repositories.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Common.Models.ExerciseSystem.Parson.ParsonPuzzleSubmission", null)
+                        .WithMany("ParsonElements")
+                        .HasForeignKey("ParsonPuzzleSubmissionId");
 
                     b.HasOne("Common.Models.ExerciseSystem.Parson.ParsonSolution", null)
                         .WithMany("CodeElements")
@@ -922,6 +953,11 @@ namespace Repositories.Migrations
                 {
                     b.Navigation("ExpectedSolution")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonPuzzleSubmission", b =>
+                {
+                    b.Navigation("ParsonElements");
                 });
 #pragma warning restore 612, 618
         }

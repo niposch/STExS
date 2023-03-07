@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseApiUrl: 'https://localhost:4200/api',
+  EmptyGuid: "00000000-0000-0000-0000-000000000000"
 };
 
 /*

@@ -55,12 +55,15 @@ import {CreateEditCodeOutputComponent} from './components/admin/exercise-admin/c
 import {SolveCodeOutputComponent} from './components/students/solve-exercise/solve-code-output/solve-code-output.component';
 import {SolveExerciseComponent} from './components/students/solve-exercise/solve-exercise.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { CreateEditParsonComponent } from './components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component';
 import {QuillModule} from "ngx-quill";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
+import { IndentedDropListComponent } from './components/helper/indented-drop-list/indented-drop-list.component';
+import { ConfirmEmailComponent } from './components/authentication/confirm-email/confirm-email.component';
 import { AdministrateUsersComponent } from './components/admin/administrate-users/administrate-users.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatMenuModule} from "@angular/material/menu";
@@ -69,7 +72,13 @@ import {MatSelectModule} from "@angular/material/select";
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
 import { CreateEditClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component';
+import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
 import { ViewClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
+import { SolveParsonPuzzleComponent } from './components/students/solve-exercise/solve-parson-puzzle/solve-parson-puzzle.component';
+import { RevisionHistoryComponent } from './components/admin/grading/revision-history/revision-history.component';
+import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.pipe';
+import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
+import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -99,16 +108,25 @@ import { ViewClozeComponent } from './components/admin/exercise-admin/create-edi
     CreateEditCodeOutputComponent,
     SolveCodeOutputComponent,
     SolveExerciseComponent,
+    CreateEditParsonComponent,
     SolveGapTextComponent,
     GradingModuleDashboardComponent,
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
+    IndentedDropListComponent,
+    ConfirmEmailComponent,
     AdministrateUsersComponent,
     ChangeRoleDialogComponent,
     NoAccessComponent,
+    DataDashboardComponent,
     CreateEditClozeComponent,
     ViewClozeComponent,
+    SolveParsonPuzzleComponent,
+    RevisionHistoryComponent,
+    TimeTrackEventTypePipe,
+    RevisionItemComponent,
+    GradingDialogComponent,
   ],
   imports: [
     BrowserModule,

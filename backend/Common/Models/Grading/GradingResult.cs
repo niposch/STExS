@@ -15,7 +15,7 @@ public class GradingResult
     
     public DateTime? AppealDate { get; set; }
     
-    public DateTime FinalAppealDate { get; set; }
+    public DateTime? AppealableBefore { get; set; }
     
     [NotMapped]
     public bool IsAppealed => AppealDate != null;
@@ -25,15 +25,18 @@ public class GradingResult
     public Guid? GradedSubmissionId { get; set; }
     public BaseSubmission? GradedSubmission { get; set; }
     
+    public DateTime? AutomaticGradingDate { get; set; }
+    
+    public DateTime? ManualGradingDate { get; set; }
 }
 
 public enum GradingState
 {
     Unreviewed,
     InProgress,
-    Graded,
+    AutomaticallyGraded,
     Appealed,
     AppealAccepted,
     AppealRejected,
-    FinallyGraded
+    FinallyManuallyGraded
 }

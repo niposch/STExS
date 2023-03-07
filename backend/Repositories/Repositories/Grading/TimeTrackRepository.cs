@@ -49,4 +49,14 @@ public class TimeTrackRepository : ITimeTrackRepository
         this.context.TimeTracks.Remove(timeTrack);
         await this.context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<List<TimeTrack>> GetAllByUserAndExerciseIdAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var timeTracks = await this.context
+            .TimeTracks
+            .Where(t => t.UserId == userId && t.ExerciseId == exerciseId)
+            .ToListAsync(cancellationToken);
+        
+        return timeTracks;
+    }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticateService} from "../../../../services/generated/services/authenticate.service";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,8 @@ export class RegisterComponent implements OnInit {
   public showPassword: boolean = false;
 
   constructor(private readonly authService: AuthenticateService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly snackBar: MatSnackBar){
   }
 
   ngOnInit(): void {
@@ -53,10 +55,10 @@ export class RegisterComponent implements OnInit {
         password: this.password,
         matrikelNumber: this.matrikelNumber
       }
-    }).subscribe(res => {
+    }).subscribe(() => {
       this.showLoading = false;
-      console.log(res);
       this.router.navigate(['/login']);
+      this.snackBar.open("A confirmation E-Mail was sent! Please click the link in the E-Mail to verify your Account!", "Dismiss", {duration: 5000});
     });
   }
 

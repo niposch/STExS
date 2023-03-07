@@ -9,4 +9,6 @@ public interface ITimeTrackRepository
     public Task UpdateAsync(TimeTrack timeTrack, CancellationToken cancellationToken = default);
     public Task CreateAsync(TimeTrack timeTrack, CancellationToken cancellationToken = default);
     public Task DeleteAsync(TimeTrack timeTrack, CancellationToken cancellationToken = default);
+    
+    Task<List<TimeTrack>> GetAllByUserAndExerciseIdAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default);
 }
