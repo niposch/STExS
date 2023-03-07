@@ -78,7 +78,7 @@ public class TimeTrackService : ITimeTrackService
             throw new EntityNotFoundException<UserSubmission>(null);
         }
 
-        return ToTimeTrackDetailItem(timeTrack, userSubmission);
+        return ToTimeTrackDetailItem(timeTrack, userSubmission, null);
     }
 
     public async Task<bool> IsOpenAsync(Guid timeTrackId, CancellationToken cancellationToken = default)
@@ -98,7 +98,7 @@ public class TimeTrackService : ITimeTrackService
         var userSubmissions = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
         if (userSubmissions == null)
         {
-            throw new EntityNotFoundException<UserSubmission>(null);
+            return new List<TimeTrackEvent>();
         }
 
         var timeTracks = await repository.TimeTracks.GetAllByUserAndExerciseIdAsync(userId, exerciseId, cancellationToken);
@@ -117,12 +117,7 @@ public class TimeTrackService : ITimeTrackService
         for(var timeTrackNumber = 0; timeTrackNumber <timeTracks.Count; timeTrackNumber++)
         {
             var timeTrack = timeTracks[timeTrackNumber];
-            timeTrackEvents.Add(new TimeTrackEvent
-            {
-                TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission),
-                Type = TimeTrackEventType.TimeTrackStart,
-                SubmittedSubmission = latestSubmission
-            });
+            var nextTimeTrack = timeTrackNumber < timeTracks.Count - 1 ? timeTracks[timeTrackNumber + 1] : null;
 
             bool closedProperly = false;
             if(timeTrack.CloseDateTime == null)
@@ -150,13 +145,19 @@ public class TimeTrackService : ITimeTrackService
                 .Where(s => s.CreationTime >= timeTrack.Start && s.CreationTime < timeTrack.CloseDateTime).ToList();
 
 
+            timeTrackEvents.Add(new TimeTrackEvent
+            {
+                TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission, nextTimeTrack),
+                Type = closedProperly ? TimeTrackEventType.TimeTrackClosed : TimeTrackEventType.TimeTrackLostContact,
+                SubmittedSubmission = latestSubmission
+            });
             foreach (var submission in submissionsInTimeTrack)
             {
                 
                 latestSubmission = this.ToSubmissionDetailItem(submission);
                 timeTrackEvents.Add(new TimeTrackEvent
                 {
-                    TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission),
+                    TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission, nextTimeTrack),
                     Type = submission.Id == userSubmission.FinalSubmissionId ? TimeTrackEventType.FinalSubmission : TimeTrackEventType.TemporarySubmission,
                     SubmittedSubmission = latestSubmission
                 });
@@ -164,8 +165,8 @@ public class TimeTrackService : ITimeTrackService
             
             timeTrackEvents.Add(new TimeTrackEvent
             {
-                TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission),
-                Type = closedProperly ? TimeTrackEventType.TimeTrackClosed : TimeTrackEventType.TimeTrackLostContact,
+                TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission, nextTimeTrack),
+                Type = TimeTrackEventType.TimeTrackStart,
                 SubmittedSubmission = latestSubmission
             });
         }
@@ -200,30 +201,44 @@ public class TimeTrackService : ITimeTrackService
 
         return TimeTrackState.Open;
     }
-    
-    private int? GetTimeTrackTimeInSec(TimeTrack timeTrack)
-    {
-        if (timeTrack.CloseDateTime == null)
-        {
-            return null;
-        }
 
-        return (int) (timeTrack.CloseDateTime - timeTrack.Start).Value.TotalSeconds;
+    private DateTime GetTimeTrackEndDate(TimeTrack timeTrack, TimeTrack? nextTimeTrack)
+    {
+        if(timeTrack.CloseDateTime != null)
+        {
+            if(nextTimeTrack != null && timeTrack.CloseDateTime.Value < nextTimeTrack.Start)
+            {
+                return timeTrack.CloseDateTime.Value;
+            }
+
+            if (nextTimeTrack != null)
+            {
+                return nextTimeTrack.Start;
+            }
+            return timeTrack.CloseDateTime.Value;
+        }
+        return timeTrack.Start.AddHours(6);
     }
     
-    private TimeTrackDetailItem ToTimeTrackDetailItem(TimeTrack timeTrack, UserSubmission userSubmission)
+    private int? GetTimeTrackTimeInSec(TimeTrack timeTrack, TimeTrack? nextTimeTrack)
+    {
+        return (this.GetTimeTrackEndDate(timeTrack, nextTimeTrack) - timeTrack.Start).Seconds;
+    }
+    
+    private TimeTrackDetailItem ToTimeTrackDetailItem(TimeTrack timeTrack, UserSubmission userSubmission, TimeTrack? nextTimeTrack)
     {
         return new TimeTrackDetailItem
         {
             Id = timeTrack.Id,
             Start = timeTrack.Start,
-            TimeInSec = GetTimeTrackTimeInSec(timeTrack),
+            TimeInSec = GetTimeTrackTimeInSec(timeTrack, nextTimeTrack),
             LastSolutionUpdate = timeTrack.LastUpdate,
             State = GetTimeTrackState(timeTrack),
             ExerciseId = timeTrack.ExerciseId,
             UserId = timeTrack.UserId,
             User = timeTrack.User,
-            FinalSubmissionId = userSubmission.FinalSubmissionId
+            FinalSubmissionId = userSubmission.FinalSubmissionId,
+            End = GetTimeTrackEndDate(timeTrack, nextTimeTrack)
         };
     }
 }
@@ -234,6 +249,8 @@ public class TimeTrackDetailItem
     public DateTime Start { get; set; }
     public int? TimeInSec { get; set; }
     public DateTime? LastSolutionUpdate { get; set; }
+
+    public DateTime End { get; set; } 
     public TimeTrackState State { get; set; }
     public Guid ExerciseId { get; set; }
     public Guid UserId { get; set; }
