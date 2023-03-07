@@ -72,11 +72,7 @@ public class TimeTrackService : ITimeTrackService
             throw new EntityNotFoundException<TimeTrack>(timeTrackId);
         }
 
-        var userSubmission = await repository.UserSubmissions.TryGetByIdAsync(timeTrack.UserId, timeTrack.ExerciseId, cancellationToken);
-        if (userSubmission == null)
-        {
-            throw new EntityNotFoundException<UserSubmission>(null);
-        }
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(timeTrack.UserId, timeTrack.ExerciseId, cancellationToken);
 
         return ToTimeTrackDetailItem(timeTrack, userSubmission, null);
     }
@@ -95,11 +91,7 @@ public class TimeTrackService : ITimeTrackService
 
     public async Task<List<TimeTrackEvent>> GetTimeTracksForExerciseAndUserAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
     {
-        var userSubmissions = await repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
-        if (userSubmissions == null)
-        {
-            return new List<TimeTrackEvent>();
-        }
+        var userSubmissions = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
 
         var timeTracks = await repository.TimeTracks.GetAllByUserAndExerciseIdAsync(userId, exerciseId, cancellationToken);
         var submissions = await this.repository.Submissions.GetAllByUserIdAndExerciseId(userId, exerciseId, cancellationToken);

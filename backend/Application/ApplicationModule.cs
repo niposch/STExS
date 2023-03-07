@@ -38,7 +38,7 @@ public class ApplicationModule : Module
         builder.RegisterType<ModuleService>()
             .As<IModuleService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<EmailService>()
             .As<IEmailService>()
             .InstancePerLifetimeScope();
@@ -70,9 +70,13 @@ public class ApplicationModule : Module
         builder.RegisterType<CodeOutputSubmissionService>()
             .As<ICodeOutputSubmissionService>()
             .InstancePerLifetimeScope();
-        
+
         builder.RegisterType<ParsonPuzzleSubmissionService>()
             .As<IParsonPuzzleSubmissionService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ClozeTextSubmissionService>()
+            .As<IClozeTextSubmissionService>()
             .InstancePerLifetimeScope();
 
         // Helper
