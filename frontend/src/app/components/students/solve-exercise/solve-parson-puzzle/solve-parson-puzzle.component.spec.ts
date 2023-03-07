@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SolveParsonPuzzleComponent } from './solve-parson-puzzle.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 describe('SolveParsonPuzzleComponent', () => {
   let component: SolveParsonPuzzleComponent;
@@ -8,7 +10,8 @@ describe('SolveParsonPuzzleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SolveParsonPuzzleComponent ]
+      declarations: [ SolveParsonPuzzleComponent ],
+      imports: [HttpClientTestingModule, MatSnackBarModule]
     })
     .compileComponents();
 
