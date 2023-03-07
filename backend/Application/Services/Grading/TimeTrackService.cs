@@ -151,7 +151,7 @@ public class TimeTrackService : ITimeTrackService
                 Type = closedProperly ? TimeTrackEventType.TimeTrackClosed : TimeTrackEventType.TimeTrackLostContact,
                 SubmittedSubmission = latestSubmission
             });
-            foreach (var submission in submissionsInTimeTrack)
+            foreach (var submission in submissionsInTimeTrack.OrderByDescending(s => s.CreationTime))
             {
                 
                 latestSubmission = this.ToSubmissionDetailItem(submission);

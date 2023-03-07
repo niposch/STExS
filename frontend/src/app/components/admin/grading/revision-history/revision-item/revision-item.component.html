@@ -25,7 +25,7 @@
         <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
       </mat-chip-list>
       <span class="date-text">
-        {{event.timeTrack.start | date:'short'}}
+        {{event.timeTrack.end | date:'short'}}
       </span>
     </span>
     <ng-template #noTimeTrack>
@@ -38,7 +38,7 @@
         <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
       </mat-chip-list>
       <span class="date-text">
-        {{event.timeTrack.start | date:'short'}}
+        {{event.timeTrack.end | date:'short'}}
       </span>
     </span>
     <ng-template #noTimeTrack>
@@ -52,7 +52,7 @@
         <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
       </mat-chip-list>
       <span class="date-text">
-        {{event.timeTrack.start | date:'short'}}
+        {{event.submittedSubmission?.creationTime ?? null | date:'short'}}
       </span>
     </span>
     <ng-template #noTimeTrack>
