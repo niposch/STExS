@@ -75,6 +75,10 @@ import { CreateEditClozeComponent } from './components/admin/exercise-admin/crea
 import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
 import { ViewClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
 import { SolveParsonPuzzleComponent } from './components/students/solve-exercise/solve-parson-puzzle/solve-parson-puzzle.component';
+import { RevisionHistoryComponent } from './components/admin/grading/revision-history/revision-history.component';
+import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.pipe';
+import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
+import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +123,10 @@ import { SolveParsonPuzzleComponent } from './components/students/solve-exercise
     CreateEditClozeComponent,
     ViewClozeComponent,
     SolveParsonPuzzleComponent,
+    RevisionHistoryComponent,
+    TimeTrackEventTypePipe,
+    RevisionItemComponent,
+    GradingDialogComponent,
   ],
   imports: [
     BrowserModule,

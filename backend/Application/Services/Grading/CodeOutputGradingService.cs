@@ -26,7 +26,7 @@ public class CodeOutputGradingService : ICodeOutputGradingService
         {
             Id = Guid.NewGuid(),
             Comment = "Graded automatically",
-            FinalAppealDate = DateTime.Now.AddDays(14),
+            AppealableBefore = DateTime.Now.AddDays(14),
             IsAutomaticallyGraded = true,
             CreationDate = DateTime.Now,
             GradedSubmissionId = submission.Id,
@@ -43,7 +43,7 @@ public class CodeOutputGradingService : ICodeOutputGradingService
             gradingResult.Points =  exercise.AchievablePoints;
         }
         
-        gradingResult.GradingState = GradingState.Graded;
+        gradingResult.GradingState = GradingState.AutomaticallyGraded;
         
         await this.repository.GradingResults.UpdateAsync(gradingResult);
     }

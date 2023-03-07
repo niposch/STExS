@@ -13,11 +13,16 @@ public sealed class GradingService : IGradingService
     private readonly IApplicationRepository applicationRepository;
 
     private readonly ICodeOutputGradingService codeOutputGradingService;
+    
+    private readonly IAccessService accessService;
 
-    public GradingService(IApplicationRepository applicationRepository, ICodeOutputGradingService codeOutputGradingService)
+    public GradingService(IApplicationRepository applicationRepository,
+        ICodeOutputGradingService codeOutputGradingService,
+        IAccessService accessService)
     {
         this.applicationRepository = applicationRepository;
         this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
+        this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
     }
 
     public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
@@ -26,6 +31,42 @@ public sealed class GradingService : IGradingService
         {
             await this.codeOutputGradingService.GradeAsync(codeOutputSubmission);
         }
+    }
+
+    public async Task ManuallyGradeExerciseAsync(Guid submissionId,
+        int newGrade,
+        string comment,
+        Guid changedByUserId,
+        CancellationToken cancellationToken = default)
+    {
+        var submission = await this.applicationRepository.Submissions.TryGetByIdAsync(submissionId, cancellationToken);
+        if (submission == null)
+        {
+            throw new EntityNotFoundException<BaseSubmission>(submissionId);
+        }
+
+        if (!await this.accessService.IsModuleAdmin(submission.UserSubmission.Exercise.Chapter.Module.Id, changedByUserId, cancellationToken))
+        {
+            throw new UnauthorizedAccessException();
+        }
+        
+        if(submission.GradingResult == null)
+        {
+            submission.GradingResult = new GradingResult
+            {
+                Id = Guid.NewGuid(),
+                AppealDate = null,
+                GradedSubmissionId = submission.Id,
+            };
+        }
+        
+        submission.GradingResult.Points = newGrade;
+        submission.GradingResult.Comment = comment;
+        submission.GradingResult.ManualGradingDate = DateTime.Now;
+        submission.GradingResult.GradingState = GradingState.FinallyManuallyGraded;
+        submission.GradingResult.IsAutomaticallyGraded = false;
+        submission.GradingResult.AppealableBefore = null;
+        await this.applicationRepository.GradingResults.UpdateAsync(submission.GradingResult, cancellationToken);
     }
 
     public async Task<List<ExerciseReportItem>> GetExerciseReportAsync(Guid exerciseId, CancellationToken cancellationToken = default)

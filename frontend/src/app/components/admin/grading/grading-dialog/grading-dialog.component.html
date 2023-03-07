@@ -1,0 +1,16 @@
+<div *ngIf="submissions != null else noData">
+  <div *ngFor="let submission of submissions">
+    {{submission.isFinalSubmission ? 'final' : 'temporary'}}
+    {{submission.creationTime}}
+    {{submis
+  </div>
+</div>
+
+<ng-template #noData>
+  <div *ngIf="this.submissions === null else errorLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #errorLoading>
+    error loading data
+  </ng-template>
+</ng-template>
