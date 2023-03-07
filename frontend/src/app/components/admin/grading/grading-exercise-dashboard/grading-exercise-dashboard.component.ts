@@ -9,6 +9,7 @@ import {ExerciseDetailItem} from "../../../../../services/generated/models/exerc
 import {MatDialog} from "@angular/material/dialog";
 import {RevisionHistoryComponent, RevisionHistoryData} from "../revision-history/revision-history.component";
 import { ComponentType } from '@angular/cdk/overlay';
+import {GradingDialogComponent, GradingDialogData} from "../grading-dialog/grading-dialog.component";
 
 @Component({
   selector: 'app-grading-exercise-dashboard',
@@ -49,7 +50,12 @@ export class GradingExerciseDashboardComponent implements OnInit {
   }
 
   openGradingDialog(element:ExerciseReportItem) {
-
+    this.dialog.open<GradingDialogComponent, GradingDialogData>(GradingDialogComponent, {
+      data:{
+        exerciseId: element!.exerciseId!,
+        userId: element.userId!
+      }
+    });
   }
 
   openSubmissionListDialog(element: ExerciseReportItem) {

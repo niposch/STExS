@@ -78,6 +78,7 @@ import { SolveParsonPuzzleComponent } from './components/students/solve-exercise
 import { RevisionHistoryComponent } from './components/admin/grading/revision-history/revision-history.component';
 import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.pipe';
 import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
+import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { RevisionItemComponent } from './components/admin/grading/revision-histo
     RevisionHistoryComponent,
     TimeTrackEventTypePipe,
     RevisionItemComponent,
+    GradingDialogComponent,
   ],
   imports: [
     BrowserModule,
