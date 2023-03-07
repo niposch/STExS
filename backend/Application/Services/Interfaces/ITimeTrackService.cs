@@ -9,4 +9,5 @@ public interface ITimeTrackService
     public Task CloseTimeTrackAsync(Guid timeTrackId, CancellationToken cancellationToken = default);
     public Task<TimeTrackDetailItem> GetTimeTrackAsync(Guid userId, Guid timeTrackId, CancellationToken cancellationToken = default);
     Task<bool> IsOpenAsync(Guid timeTrackId, CancellationToken cancellationToken = default);
+    Task<List<TimeTrackEvent>> GetTimeTracksForExerciseAndUserAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
 }

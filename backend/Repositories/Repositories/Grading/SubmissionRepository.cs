@@ -46,4 +46,14 @@ public class SubmissionRepository : ISubmissionRepository
         var ex = await this.context.Submissions.Where(e => e.UserId == userId).ToListAsync(cancellationToken);
         return ex;
     }
+
+    public async Task<List<BaseSubmission>> GetAllByUserIdAndExerciseId(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var submissions = await this.context
+            .Submissions
+            .Where(s => s.UserId == userId && s.ExerciseId == exerciseId)
+            .ToListAsync(cancellationToken);
+
+        return submissions;
+    }
 }

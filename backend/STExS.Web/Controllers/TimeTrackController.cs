@@ -14,9 +14,12 @@ public sealed class TimeTrackController: ControllerBase
 {
     private readonly ITimeTrackService timeTrackService;
     
-    public TimeTrackController(ITimeTrackService timeTrackService)
+    private readonly IAccessService accessService;
+    
+    public TimeTrackController(ITimeTrackService timeTrackService, IAccessService accessService)
     {
         this.timeTrackService = timeTrackService ?? throw new ArgumentNullException(nameof(timeTrackService));
+        this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
     }
     
     [HttpGet("{timeTrackId}")]
@@ -50,4 +53,17 @@ public sealed class TimeTrackController: ControllerBase
         return this.Ok();
     }
     
+    [HttpGet("timeTracksForExerciseAndUser")]
+    [ProducesResponseType(typeof(List<TimeTrackEvent>), 200)]
+    [Authorize(Roles = $"{RoleHelper.Teacher},{RoleHelper.Admin}")]
+    public async Task<IActionResult> GetTimeTracksForExerciseAndUserAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        if (!await this.accessService.IsExerciseAdminAsync(exerciseId, this.User.GetUserId(), cancellationToken))
+        {
+            return this.StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        var res = await timeTrackService.GetTimeTracksForExerciseAndUserAsync(exerciseId, userId, cancellationToken);
+        
+        return this.Ok(res);
+    }
 }

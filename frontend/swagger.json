@@ -2793,6 +2793,62 @@
         }
       }
     },
+    "/api/TimeTrack/timeTracksForExerciseAndUser": {
+      "get": {
+        "tags": [
+          "TimeTrack"
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/UserManagement/UserLists": {
       "get": {
         "tags": [
@@ -4419,6 +4475,36 @@
           "Failed"
         ]
       },
+      "SubmissionDetailItem": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gradingResultId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "exerciseType": {
+            "$ref": "#/components/schemas/ExerciseType"
+          }
+        },
+        "additionalProperties": false
+      },
       "SubmissionGradingState": {
         "enum": [
           0,
@@ -4529,6 +4615,39 @@
           }
         },
         "additionalProperties": false
+      },
+      "TimeTrackEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/TimeTrackEventType"
+          },
+          "timeTrack": {
+            "$ref": "#/components/schemas/TimeTrackDetailItem"
+          },
+          "submittedSubmission": {
+            "$ref": "#/components/schemas/SubmissionDetailItem"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrackEventType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "TimeTrackStart",
+          "TimeTrackClosed",
+          "TimeTrackLostContact",
+          "FinalSubmission",
+          "TemporarySubmission"
+        ]
       },
       "TimeTrackState": {
         "enum": [
