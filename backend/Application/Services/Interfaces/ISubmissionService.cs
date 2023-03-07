@@ -1,4 +1,5 @@
-﻿using Common.Models.Grading;
+﻿using Application.Services.Grading;
+using Common.Models.Grading;
 
 namespace Application.Services.Interfaces;
 
@@ -16,4 +17,6 @@ public interface ISubmissionService
         bool isFinal,
         Guid timeTrackId,
         CancellationToken cancellationToken = default);
+
+    Task<List<SubmissionDetailItem>> GetSubmissionsForUserAndExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
 }

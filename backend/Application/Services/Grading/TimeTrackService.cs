@@ -154,7 +154,7 @@ public class TimeTrackService : ITimeTrackService
             foreach (var submission in submissionsInTimeTrack.OrderByDescending(s => s.CreationTime))
             {
                 
-                latestSubmission = this.ToSubmissionDetailItem(submission);
+                latestSubmission = SubmissionDetailItem.ToSubmissionDetailItem(submission, userSubmission);
                 timeTrackEvents.Add(new TimeTrackEvent
                 {
                     TimeTrack = this.ToTimeTrackDetailItem(timeTrack, userSubmission, nextTimeTrack),
@@ -174,19 +174,6 @@ public class TimeTrackService : ITimeTrackService
         return timeTrackEvents;
     }
 
-
-    private SubmissionDetailItem ToSubmissionDetailItem(BaseSubmission baseSubmission)
-    {
-        return new SubmissionDetailItem
-        {
-            GradingResultId = baseSubmission.GradingResultId,
-            ExerciseId = baseSubmission.ExerciseId,
-            CreationTime = baseSubmission.CreationTime,
-            ExerciseType = baseSubmission.SubmissionType,
-            UserId = baseSubmission.UserId,
-            SubmissionId = baseSubmission.Id
-        };
-    }
     private TimeTrackState GetTimeTrackState(TimeTrack timeTrack)
     {
         if (timeTrack.CloseDateTime != null)
@@ -275,6 +262,22 @@ public class SubmissionDetailItem
     public Guid UserId { get; set; }
     public Guid? GradingResultId { get; set; }
     public ExerciseType ExerciseType { get; set; }
+    
+    public bool IsFinalSubmission { get; set; }
+
+    public static SubmissionDetailItem ToSubmissionDetailItem(BaseSubmission baseSubmission, UserSubmission userSubmission)
+    {
+        return new SubmissionDetailItem
+        {
+            GradingResultId = baseSubmission.GradingResultId,
+            ExerciseId = baseSubmission.ExerciseId,
+            CreationTime = baseSubmission.CreationTime,
+            ExerciseType = baseSubmission.SubmissionType,
+            UserId = baseSubmission.UserId,
+            SubmissionId = baseSubmission.Id,
+            IsFinalSubmission = userSubmission.FinalSubmissionId == baseSubmission.Id
+        };
+    }
 }
 
 public enum TimeTrackEventType
