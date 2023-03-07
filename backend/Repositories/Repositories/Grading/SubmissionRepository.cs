@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.Grading;
 
-// TODO AUFGABE LEI Methoden implementieren + Unit Tests in Repositories.Tests/Repositories/SubmissionRepositoryTests/*
+// TODO AUFGABE LEI Unit Tests in Repositories.Tests/Repositories/SubmissionRepositoryTests/*
 public class SubmissionRepository : ISubmissionRepository
 {
     private readonly ApplicationDbContext context;
