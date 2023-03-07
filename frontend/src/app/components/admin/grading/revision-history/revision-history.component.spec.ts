@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RevisionHistoryComponent } from './revision-history.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {MAT_DIALOG_DATA, MatDialogModule} from "@angular/material/dialog";
 
 describe('RevisionHistoryComponent', () => {
   let component: RevisionHistoryComponent;
@@ -8,7 +10,11 @@ describe('RevisionHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RevisionHistoryComponent ]
+      declarations: [ RevisionHistoryComponent ],
+      imports: [HttpClientTestingModule, MatDialogModule],
+      providers: [
+        {provide: MAT_DIALOG_DATA, useValue: {exerciseId: '1', userId: '1'}}
+      ]
     })
     .compileComponents();
 

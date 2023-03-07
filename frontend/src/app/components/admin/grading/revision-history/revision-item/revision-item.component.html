@@ -1,5 +1,5 @@
 
-<div [class]="getClass(event.type)" style="display: flex">
+<div *ngIf="event != null" [class]="getClass(event?.type)" style="display: flex">
   <div [class]="['gutter',  this.getClass(event.type)]">
     <div class="line continue-line"></div>
     <div class="circle"></div>
