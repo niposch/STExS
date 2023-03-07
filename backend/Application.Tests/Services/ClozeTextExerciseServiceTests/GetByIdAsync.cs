@@ -65,7 +65,17 @@ public sealed class GetByIdAsync : Infrastructure
             .With(m => m.ExerciseId, exerciseId)
             .With(m => m.FinalSubmissionId, Guid.NewGuid())
             .Without(m => m.Exercise)
+            .Without(m => m.User)
+            .With(m => m.FinalSubmission, this.Fixture
+                .Build<ClozeTextSubmission>()
+                .Without(m => m.UserSubmission)
+                .Without(m => m.GradingResult)
+                .With(m => m.UserId, userId)
+                .With(m => m.ExerciseId, exerciseId)
+                .Create())
             .Create();
+        
+        userSubmission.FinalSubmissionId = userSubmission.FinalSubmission!.Id;
 
         await this.Context.ClozeExercises.AddAsync(exercise);
         await this.Context.UserSubmissions.AddAsync(userSubmission);
