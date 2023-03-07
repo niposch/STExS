@@ -2,6 +2,7 @@
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using STExS.Helper;
 
 namespace STExS.Controllers.Grading;
 
@@ -36,4 +37,15 @@ public class GradingController: ControllerBase
 
         return this.Ok(res);
     }
+    
+    [HttpPost("manualGrading")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GradeExercise(Guid submissionId, int newGrade, string comment, CancellationToken cancellationToken = default)
+    {
+        await this.gradingService.ManuallyGradeExerciseAsync(submissionId, newGrade, comment, this.User.GetUserId(), cancellationToken);
+        return this.Ok();
+    }
+    
 }
