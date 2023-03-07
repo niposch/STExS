@@ -6,6 +6,9 @@ import {ActivatedRoute} from "@angular/router";
 import {GradingService} from "../../../../../services/generated/services/grading.service";
 import {lastValueFrom} from "rxjs";
 import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
+import {MatDialog} from "@angular/material/dialog";
+import {RevisionHistoryComponent, RevisionHistoryData} from "../revision-history/revision-history.component";
+import { ComponentType } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-grading-exercise-dashboard',
@@ -19,7 +22,8 @@ export class GradingExerciseDashboardComponent implements OnInit {
   constructor(
     private readonly exerciseService: ExerciseService,
     private route: ActivatedRoute,
-    private readonly gradingService: GradingService
+    private readonly gradingService: GradingService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +53,13 @@ export class GradingExerciseDashboardComponent implements OnInit {
   }
 
   openSubmissionListDialog(element: ExerciseReportItem) {
+    this.dialog.open<RevisionHistoryComponent, RevisionHistoryData>(RevisionHistoryComponent, {
+      data:{
+        exerciseId: this.exercise!.id!,
+        userId: element.userId!
+      },
+      maxHeight: '90vh',
+    })
 
   }
 }

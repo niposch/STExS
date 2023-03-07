@@ -4594,6 +4594,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
           "state": {
             "$ref": "#/components/schemas/TimeTrackState"
           },

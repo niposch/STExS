@@ -1,0 +1,57 @@
+
+.circle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.gutter.start > .incoming-line {
+  visibility: hidden;
+}
+.gutter.closed > .continue-line {
+  visibility: hidden;
+}
+.gutter.lost-contact > .continue-line {
+  visibility: hidden;
+}
+.gutter {
+  display: grid;
+  grid-template-columns: [first] 10px;
+  grid-template-rows: [first] auto  [second] 10px  [third] auto;
+}
+.start > mat-card{
+  margin-top: 2px !important;
+}
+.closed > mat-card{
+  margin-bottom: 2px !important;
+}
+.lost-contact > mat-card{
+  margin-bottom: 2px !important;
+}
+.date-text{
+}
+.line{
+  margin:auto;
+  width: 2px;
+  height: 100%;
+  background-color: white;
+  align-self: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.event-span{
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+.line-start{
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #000;
+  margin-right: 10px;
+}

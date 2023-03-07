@@ -1,0 +1,78 @@
+
+<div [class]="getClass(event.type)" style="display: flex">
+  <div [class]="['gutter',  this.getClass(event.type)]">
+    <div class="line continue-line"></div>
+    <div class="circle"></div>
+    <div class="line incoming-line"></div>
+  </div>
+<mat-card style="margin-bottom: 10px; margin-top: 10px; width: 100%">
+  <div *ngIf="event.type == eventType.TimeTrackStart">
+    <span *ngIf="event.timeTrack != null else noTimeTrack" class="event-span">
+      <mat-chip-list style="margin-right: 10px">
+        <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
+      </mat-chip-list>
+      <span class="date-text">
+        {{event.timeTrack.start | date:'short'}}
+      </span>
+    </span>
+    <ng-template #noTimeTrack>
+      no time track for this event
+    </ng-template>
+  </div>
+  <div *ngIf="event.type == eventType.TimeTrackClosed">
+    <span *ngIf="event.timeTrack != null else noTimeTrack" class="event-span">
+      <mat-chip-list style="margin-right: 10px">
+        <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
+      </mat-chip-list>
+      <span class="date-text">
+        {{event.timeTrack.start | date:'short'}}
+      </span>
+    </span>
+    <ng-template #noTimeTrack>
+      no time track for this event
+    </ng-template>
+  </div>
+  <div *ngIf="event.type == eventType.TimeTrackLostContact">
+    <span *ngIf="event.timeTrack != null else noTimeTrack" class="event-span">
+      <mat-chip-list style="margin-right: 10px">
+        <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
+      </mat-chip-list>
+      <span class="date-text">
+        {{event.timeTrack.start | date:'short'}}
+      </span>
+    </span>
+    <ng-template #noTimeTrack>
+      no time track for this event
+    </ng-template>
+  </div>
+
+  <div *ngIf="event.type == eventType.TemporarySubmission">
+    <span *ngIf="event.timeTrack != null else noTimeTrack" class="event-span">
+      <mat-chip-list style="margin-right: 10px">
+        <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
+      </mat-chip-list>
+      <span class="date-text">
+        {{event.timeTrack.start | date:'short'}}
+      </span>
+    </span>
+    <ng-template #noTimeTrack>
+      no time track for this event
+    </ng-template>
+
+  </div>
+  <div *ngIf="event.type == eventType.FinalSubmission">
+    <span *ngIf="event.timeTrack != null else noTimeTrack" class="event-span">
+      <mat-chip-list style="margin-right: 10px">
+        <mat-chip selected disableRipple="true">{{event.type | timeTrackEventType}}</mat-chip>
+      </mat-chip-list>
+      <span class="date-text">
+        {{event.timeTrack.start | date:'short'}}
+      </span>
+    </span>
+    <ng-template #noTimeTrack>
+      no time track for this event
+    </ng-template>
+  </div>
+</mat-card>
+
+</div>
