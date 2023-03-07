@@ -1,0 +1,49 @@
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: justify;
+  text-justify: auto;
+  height: 100%;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.answer {
+  height: fit-content;
+  width: fit-content;
+  padding: 5px 10px;
+  margin: auto;
+}
+
+.submit {
+  height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.input {
+  min-width: 100px;
+  max-width: 500px;
+  width: 350px;
+  margin-right: 10px;
+  padding-top: 10px;
+}
+
+.master-card {
+  padding-bottom: 0;
+}

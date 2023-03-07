@@ -73,6 +73,8 @@ import { NoAccessComponent } from './components/no-access/no-access.component';
 import { SolveGapTextComponent } from './components/students/solve-exercise/solve-gap-text/solve-gap-text.component';
 import { CreateEditClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/create-edit-cloze.component';
 import { DataDashboardComponent } from './components/admin/data-dashboard/data-dashboard.component';
+import { ViewClozeComponent } from './components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
+import { SolveParsonPuzzleComponent } from './components/students/solve-exercise/solve-parson-puzzle/solve-parson-puzzle.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,8 @@ import { DataDashboardComponent } from './components/admin/data-dashboard/data-d
     NoAccessComponent,
     DataDashboardComponent,
     CreateEditClozeComponent,
+    ViewClozeComponent,
+    SolveParsonPuzzleComponent,
   ],
   imports: [
     BrowserModule,

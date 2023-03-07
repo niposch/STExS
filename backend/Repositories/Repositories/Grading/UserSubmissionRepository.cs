@@ -20,7 +20,7 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
     {
         var ex = await this.context.UserSubmissions
             .Include(s => s.Submissions)
-            .FirstOrDefaultAsync(e => e.ExerciseId == exerciseId,
+            .FirstOrDefaultAsync(e => e.ExerciseId == exerciseId && e.UserId == userId,
             cancellationToken);
         return ex;
     }

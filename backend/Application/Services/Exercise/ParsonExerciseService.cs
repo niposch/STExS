@@ -35,6 +35,8 @@ public class ParsonExerciseService : IParsonExerciseService
 
         var hasUserSolvedExercise = await this.submissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
 
+        exercise.ExpectedSolution.CodeElements = exercise.ExpectedSolution.CodeElements.OrderBy(e => e.RunningNumber).ToList();
+
         return this.ToDetailItemWithAnswers(exercise, hasUserSolvedExercise.FinalSubmissionId != null);
     }
 
