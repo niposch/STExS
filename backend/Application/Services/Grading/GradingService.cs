@@ -18,7 +18,7 @@ public sealed class GradingService : IGradingService
     private readonly IApplicationRepository applicationRepository;
 
     private readonly ICodeOutputGradingService codeOutputGradingService;
-    
+
     private readonly IAccessService accessService;
 
     public GradingService(IApplicationRepository applicationRepository,
@@ -54,8 +54,8 @@ public sealed class GradingService : IGradingService
         {
             throw new UnauthorizedAccessException();
         }
-        
-        if(submission.GradingResult == null)
+
+        if (submission.GradingResult == null)
         {
             submission.GradingResult = new GradingResult
             {
@@ -64,7 +64,7 @@ public sealed class GradingService : IGradingService
                 GradedSubmissionId = submission.Id,
             };
         }
-        
+
         submission.GradingResult.Points = newGrade;
         submission.GradingResult.Comment = comment;
         submission.GradingResult.ManualGradingDate = DateTime.Now;
@@ -165,12 +165,13 @@ public sealed class GradingService : IGradingService
             .Select(p => p.UserId)
             .ToList();
         var dictionary = await GetModuleAndRelatedDataDictionary(module, cancellationToken);
-        var moduleReportItem = this.GenerateModuleReportItem(module, allUserIds,dictionary);
+        var moduleReportItem = this.GenerateModuleReportItem(module, allUserIds, dictionary);
 
         return moduleReportItem;
     }
 
-    private async Task<Dictionary<Guid/*ChapterId*/, Dictionary<Guid /*exerciseId*/, Dictionary<Guid/*UserId*/, UserSubmission>>>> GetModuleAndRelatedDataDictionary(Module module, CancellationToken cancellationToken = default){
+    private async Task<Dictionary<Guid/*ChapterId*/, Dictionary<Guid /*exerciseId*/, Dictionary<Guid/*UserId*/, UserSubmission>>>> GetModuleAndRelatedDataDictionary(Module module, CancellationToken cancellationToken = default)
+    {
         var dict = new Dictionary<Guid, Dictionary<Guid, Dictionary<Guid, UserSubmission>>>();
         foreach (var chapter in module.Chapters)
         {
@@ -207,7 +208,7 @@ public sealed class GradingService : IGradingService
         }
 
         Dictionary<Guid, int> userPoints = new Dictionary<Guid, int>();
-        
+
         double averageTime = 0;
 
         // calculate the total points for each user and store them in the dictionary
@@ -251,7 +252,9 @@ public sealed class GradingService : IGradingService
 
         return new ModuleReport
         {
-            AverageScore = pointDistribution.UserPoints.Average(u => u.TotalPoints),
+            AverageScore = pointDistribution.UserPoints
+                .DefaultIfEmpty(new UserPoints { TotalPoints = 0 })
+                .Average(u => u.TotalPoints),
             MedianScore = median,
             Chapters = chapterReports
                 .OrderBy(c => c.Chapter.RunningNumber)
@@ -268,10 +271,11 @@ public sealed class GradingService : IGradingService
         Dictionary<Guid /*exerciseId*/, Dictionary<Guid /*userId*/, UserSubmission>> submissions)
     {
         var exerciseReports = c.Exercises
-            .Select(e => 
+            .Select(e =>
                 this.GenerateExerciseReportItem(e, allUserIds, submissions.GetValueOrDefault(e.Id, new Dictionary<Guid, UserSubmission>())))
             .ToDictionary(e => e.Exercise.ExerciseId);
-        if(exerciseReports == null){
+        if (exerciseReports == null)
+        {
             throw new Exception("exerciseReports is null");
         }
 
@@ -311,7 +315,9 @@ public sealed class GradingService : IGradingService
 
         return new ChapterReport
         {
-            AverageScore = pointDistribution.UserPoints.Average(u => u.TotalPoints),
+            AverageScore = pointDistribution.UserPoints
+                .DefaultIfEmpty(new UserPoints { TotalPoints = 0 })
+                .Average(u => u.TotalPoints),
             MedianScore = median,
             Chapter = ChapterDetailItem.ToDetailItem(c),
             Exercises = exerciseReports.Values
@@ -321,7 +327,7 @@ public sealed class GradingService : IGradingService
             AverageTimeInMilliseconds = averageTime
         };
     }
-    
+
     private ExerciseReport GenerateExerciseReportItem(BaseExercise exercise, List<Guid> allUserIds, Dictionary<Guid /*userId*/, UserSubmission> submissions)
     {
 
@@ -337,11 +343,14 @@ public sealed class GradingService : IGradingService
 
         var averageTime = times.UserTimes
             .Where(t => t.TotalTime != TimeSpan.Zero)
+            .DefaultIfEmpty(new UserTime { TotalTime = TimeSpan.Zero })
             .Average(t => t.TotalTime.TotalMilliseconds);
 
         return new ExerciseReport
         {
-            AverageScore = distribution.UserPoints.Average(u => u.TotalPoints),
+            AverageScore = distribution.UserPoints
+                .DefaultIfEmpty(new UserPoints { TotalPoints = 0 })
+                .Average(u => u.TotalPoints),
             MedianScore = median,
             Exercise = ExerciseListItem.ToListItem(exercise),
             Distribution = distribution,

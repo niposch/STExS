@@ -134,7 +134,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.Entity<BaseSubmission>()
             .HasDiscriminator(s => s.SubmissionType)
             .HasValue<ParsonPuzzleSubmission>(ExerciseType.Parson)
-            .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput);
+            .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput)
+            .HasValue<ClozeTextSubmission>(ExerciseType.ClozeText);
 
         builder.Entity<TimeTrack>()
             .HasOne(t => t.UserSubmission)

@@ -31,12 +31,6 @@ public class GradingController : ControllerBase
         this.submissionService = submissionService ?? throw new ArgumentNullException(nameof(submissionService));
     }
 
-    [HttpGet("chapter")]
-    public async Task<IActionResult> GetChapterReport()
-    {
-        throw new NotImplementedException();
-    }
-
     [HttpGet("module")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleReport))]
     public async Task<IActionResult> GetModuleReport([FromQuery] Guid moduleId, CancellationToken cancellationToken = default)
