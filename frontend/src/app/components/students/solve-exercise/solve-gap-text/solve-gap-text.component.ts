@@ -1,4 +1,9 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  OnInit, AfterViewInit,ChangeDetectorRef,
+  Component, EventEmitter,
+  Input, OnDestroy, Output,
+  ViewChild,
+} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {ClozeTextExerciseDetailItem} from "../../../../../services/generated/models/cloze-text-exercise-detail-item";
 import {ClozeTextExerciseService} from "../../../../../services/generated/services/cloze-text-exercise.service";
@@ -15,12 +20,11 @@ import {ClozeTextSubmissionDetailItem} from '../../../../../services/generated/m
   templateUrl: './solve-gap-text.component.html',
   styleUrls: ['./solve-gap-text.component.scss']
 })
-export class SolveGapTextComponent implements OnInit {
+export class SolveGapTextComponent implements OnInit, OnDestroy {
 
   @Input() id: string = "";
   public text: string = "";
-  //public answerStrings: string[] | undefined | null;
-  @ViewChild(ViewClozeComponent) child!: ViewClozeComponent;      // -> this.child.gaps
+  public answerStrings: string[] | undefined | null;
 
   private lastSubmission: ClozeTextSubmissionDetailItem | undefined;
   public timeTrackId: string | null | undefined = null;
@@ -36,8 +40,12 @@ export class SolveGapTextComponent implements OnInit {
     public snackBar: MatSnackBar,
     private readonly changeDetectorRef: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
+
+  //@ViewChild(ViewClozeComponent) child!: ViewClozeComponent;
+
+  ngOnInit():void {
     this.isLoading = true;
+    this.changeDetectorRef.detectChanges();
     void this.loadExercise();
   }
 
@@ -64,7 +72,7 @@ export class SolveGapTextComponent implements OnInit {
             }
           )
         );
-        this.child.gaps = lastSubmission.submittedAnswers;
+        this.answerStrings = lastSubmission.submittedAnswers;
         this.isLoading = false;
         this.changeDetectorRef.detectChanges();
       }
@@ -112,7 +120,7 @@ export class SolveGapTextComponent implements OnInit {
       .then((data) => {
         if (!createNewSubmission) {
           this.lastSubmission = data!;
-          this.child.gaps = this.lastSubmission!.submittedAnswers!;
+          this.answerStrings = this.lastSubmission!.submittedAnswers!;
         }
       });
   }
@@ -148,7 +156,7 @@ export class SolveGapTextComponent implements OnInit {
 
   ngOnDestroy(): void {
     if (this.exercise?.userHasSolvedExercise) return;
-    this.tempSave(this.child.gaps!).then(() => {
+    this.tempSave(this.answerStrings!).then(() => {
       if (this.timeTrackId == null) return;
       this.closeTimeTrack(this.timeTrackId);
     })
