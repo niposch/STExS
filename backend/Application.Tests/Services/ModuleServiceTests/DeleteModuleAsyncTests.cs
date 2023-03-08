@@ -24,6 +24,7 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
         this.Fixture.Customizations.Add(new PropertyTypeExclusion<BaseExercise>());
         this.ApplicationDbContext.Modules.Add(this.Fixture.Build<Module>()
             .With(m => m.Id, this.id)
+            .With(m => m.ModuleParticipations, new List<ModuleParticipation>())
             .Create());
         this.ApplicationDbContext.SaveChanges();
         this.userId = Guid.NewGuid();
@@ -43,6 +44,37 @@ public sealed class DeleteModuleAsyncTests: Infrastructure
         // Assert
         var module = this.ApplicationDbContext.Modules.FirstOrDefault(m => m.Id == this.id);
         module.Should().BeNull();
+    }
+    
+    [Fact]
+    public async Task ThrowsUnsupportedActionException()
+    {
+        // Arrange
+        this.id = Guid.NewGuid();
+        
+        // UserSubmission should use NoSpecimen to avoid creating a UserSubmission
+        this.Fixture.Customizations.Add(new PropertyTypeExclusion<BaseExercise>());
+        this.ApplicationDbContext.Modules.Add(this.Fixture.Build<Module>()
+            .With(m => m.Id, this.id)
+            .Create());
+        this.ApplicationDbContext.SaveChanges();
+        this.userId = Guid.NewGuid();
+        var user = this.Fixture.Build<ApplicationUser>()
+            .With(m => m.Id, this.userId)
+            .Create();
+
+        this.UserManagerMock.Setup(m => m.FindByIdAsync(this.userId.ToString()))
+            .ReturnsAsync(user);
+        
+        this.UserManagerMock.Setup(m => m.GetRolesAsync(user))
+            .ReturnsAsync(new List<string>{RoleHelper.Admin});
+
+        // Act
+        Func<Task> act = async () => await this.CallAsync();
+
+        // Assert
+        await act.Should().ThrowAsync<UnsupportedActionException>();
+
     }
 
     [Fact]

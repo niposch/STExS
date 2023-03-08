@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.Grading;
 
-// TODO AUFGABE LEI Methoden implementieren + Unit Tests in Repositories.Tests/Repositories/GradingResultRepositoryTests/*
 public class GradingResultRepository : IGradingResultRepository
 {
     private readonly ApplicationDbContext context;
