@@ -86,6 +86,7 @@ public class ParsonExerciseService : IParsonExerciseService
         exercise = this.UpdateExercise(exercise, updateItem);
         exercise.ExpectedSolution.CodeElements = newLines;
         await this.repository.ParsonExercises.UpdateAsync(exercise, cancellationToken);
+        await this.repository.ParsonSolutions.UpdateAsync(exercise.ExpectedSolution, cancellationToken);
     }
 
     public async Task<Guid> CreateAsync(ParsonExerciseCreateItem createItem, Guid userId, CancellationToken cancellationToken = default)
