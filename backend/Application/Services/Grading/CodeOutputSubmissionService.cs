@@ -10,13 +10,11 @@ public class CodeOutputSubmissionService: ICodeOutputSubmissionService
 {
     private readonly IApplicationRepository repository;
     
-    private readonly ITimeTrackService timeTrackService;
     private readonly ISubmissionService submissionService;
 
-    public CodeOutputSubmissionService(IApplicationRepository repository, ITimeTrackService timeTrackService, ISubmissionService submissionService)
+    public CodeOutputSubmissionService(IApplicationRepository repository, ISubmissionService submissionService)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        this.timeTrackService = timeTrackService ?? throw new ArgumentNullException(nameof(timeTrackService));
         this.submissionService = submissionService;
     }
 

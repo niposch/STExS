@@ -29,7 +29,7 @@ public class SubmissionService:ISubmissionService
 
     public async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, Guid? timeTrackId, CancellationToken cancellationToken = default)
     {
-        var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
         if(userSubmission == null)
         {
             throw new EntityNotFoundException<UserSubmission>(null);
@@ -89,7 +89,7 @@ public class SubmissionService:ISubmissionService
     public async Task<List<SubmissionDetailItem>> GetSubmissionsForUserAndExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
     {
         var result = await this.repository.Submissions.GetAllByUserIdAndExerciseId(userId, exerciseId, cancellationToken);
-        var userSubmission = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
 
         return result.Select(s => SubmissionDetailItem.ToSubmissionDetailItem(s, userSubmission))
             .OrderByDescending(s => s.IsFinalSubmission)

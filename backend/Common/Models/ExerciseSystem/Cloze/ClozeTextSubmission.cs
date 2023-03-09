@@ -2,6 +2,7 @@
 
 namespace Common.Models.ExerciseSystem.Cloze;
 
-public sealed class ClozeTextSubmission: BaseSubmission
+public sealed class ClozeTextSubmission : BaseSubmission
 {
+    public List<ClozeTextAnswerItem> SubmittedAnswers { get; set; } = new();
 }

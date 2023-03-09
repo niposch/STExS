@@ -1,6 +1,9 @@
-<div *ngFor="let textparts of this.splitted; let i = index" class="text">
-  {{textparts}}
-  <mat-form-field *ngIf="this.splitted && !(i === (this.splitted.length -1))" class="input">
-    <input *ngIf="this.gaps" matInput class="input-field" [(ngModel)]="this.gaps[i]" [disabled]="!this.enableInputfield">
-  </mat-form-field>
+<div *ngIf="this.textParts != null">
+  <div *ngFor="let part of this.textParts; let i = index" class="text">
+    {{part}}
+    <mat-form-field class="input" *ngIf="this.answers != null && i < this.answers.length">
+      <input  #inputfield matInput class="input-field"
+        [(ngModel)]="this.answers[i]" [disabled]="!this.enableInputfield">
+    </mat-form-field>
+  </div>
 </div>

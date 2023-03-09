@@ -31,6 +31,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<ClozeTextExercise> ClozeExercises { get; set; }
 
+    public DbSet<ClozeTextAnswerItem> ClozeTextAnswerItems { get; set; }
+
     public DbSet<Module> Modules { get; set; }
 
     public DbSet<Chapter> Chapters { get; set; }
@@ -147,6 +149,20 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 t.UserId,
                 t.ExerciseId
             });
+
+        builder.Entity<ClozeTextAnswerItem>()
+            .HasKey(a => new
+            {
+                a.ClozeTextSubmissionId,
+                a.Index
+            });
+
+        builder.Entity<ClozeTextSubmission>()
+            .HasMany(s => s.SubmittedAnswers)
+            .WithOne(a => a.ClozeTextSubmission)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(a => a.ClozeTextSubmissionId);
     }
 
     #endregion

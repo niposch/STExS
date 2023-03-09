@@ -1,4 +1,6 @@
-﻿using Common.Models.Grading;
+﻿using Common.Models.ExerciseSystem.Cloze;
+using Common.Models.ExerciseSystem.Parson;
+using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,10 @@ public class SubmissionRepository : ISubmissionRepository
 
     public async Task<BaseSubmission?> TryGetByIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
     {
-        var ex = await this.context.Submissions.FirstOrDefaultAsync(e => e.Id == submissionId,
+        var ex = await this.context.Submissions
+            .Include(e => ((e as ClozeTextSubmission)!).SubmittedAnswers)
+            .Include(e => ((e as ParsonPuzzleSubmission)!).ParsonElements)
+            .FirstOrDefaultAsync(e => e.Id == submissionId,
             cancellationToken);
         return ex;
     }

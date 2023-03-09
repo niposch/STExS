@@ -4,7 +4,13 @@
               style="margin-bottom: 5px"
               [ngClass]="{'has-solved' : exercise.userHasSolvedExercise, 'selected-exercise' : exercise.id == this.currentExerciseId }"
               (click)="this.updateExerciseCompById(exercise.id)">
-      <mat-label>{{exercise.exerciseName}}</mat-label>
+      <mat-label style="display: flex; align-items: center">
+        <span>{{exercise.exerciseName}}</span>
+        <span style="margin-left: auto">
+          <mat-chip-list>
+                <mat-chip disableRipple="true" selected>{{exercise.exerciseType | exerciseType}}</mat-chip>
+              </mat-chip-list>
+        </span></mat-label>
     </mat-card>
   </div>
 
@@ -16,7 +22,7 @@
     <button *ngIf="this.currentExerciseNr < this.exerciseListLength - 1" mat-stroked-button color="primary" (click)="this.updateExerciseComp(1)" class="vertically-centered">next</button>
   </mat-card>
 
-  <div class="comp-container">
+  <div class="comp-container" *ngIf="this.showSubmissionWindow">
     <app-solve-code-output *ngIf="this.currentExerciseType == exerciseType.CodeOutput" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-code-output>
     <app-solve-gap-text *ngIf="this.currentExerciseType == exerciseType.ClozeText" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-gap-text>
     <app-solve-parson-puzzle *ngIf="this.currentExerciseType == exerciseType.Parson" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-parson-puzzle>

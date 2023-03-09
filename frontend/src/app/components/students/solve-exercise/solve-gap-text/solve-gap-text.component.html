@@ -1,18 +1,29 @@
-<mat-card class="master-card">
-  <div *ngIf="!this.isLoading" class="vertical-container">
-    <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
-    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-    <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
-    <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
-    <app-view-cloze class="adjust-content" [text]="this.text" [enableInputfield]="true"> </app-view-cloze>
-    <div class="center">
-      <button class="submit" mat-raised-button color="accent" (click)="buttonClick()">submit</button>
+<div *ngIf="this.exercise != null else noData">
+  <mat-card class="master-card">
+    <div class="vertical-container">
+      <mat-label class="title">{{this.exercise?.exerciseName}}</mat-label>
+      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+      <quill-view-html [content]="exercise!.exerciseDescription!" theme="bubble"></quill-view-html>
+      <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+      <app-view-cloze class="adjust-content" [text]="this.exercise?.text ?? ''" [(answers)]="this.answerStrings"
+        [enableInputfield]="!(exercise?.userHasSolvedExercise ?? false)"> </app-view-cloze>
+      <div class="center" *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton">
+      </div>
+      <ng-template #submitButton>
+        <button class="submit" mat-raised-button color="accent"
+          (click)="this.createNewSubmission(this.timeTrackId, true, this.answerStrings)">
+          <mat-label>submit</mat-label>
+        </button>
+      </ng-template>
+      <ng-template #disabledSubmitButton>
+        <button matTooltip="You have already submitted your final answer" class="submit mat-button-disabled"
+          disableRipple mat-raised-button color="accent">
+          submit
+        </button>
+      </ng-template>
     </div>
-    <div *ngIf="this.showGaps && this.gaps">
-        <div *ngFor="let gap of this.gaps; let i = index">
-          Gap {{i+1}}: {{gap}}
-        </div>
-    </div>
-  </div>
-  <mat-spinner *ngIf="this.isLoading" style="margin: 0 auto; scale: 0.5;"></mat-spinner>
-</mat-card>
+  </mat-card>
+</div>
+<ng-template #noData>
+  <mat-spinner style="margin: 0 auto; scale: 0.5;"></mat-spinner>
+</ng-template>

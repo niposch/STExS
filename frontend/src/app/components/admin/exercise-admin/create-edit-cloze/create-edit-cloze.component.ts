@@ -109,4 +109,9 @@ export class CreateEditClozeComponent implements OnInit {
         });
       })
   }
+
+  updateAchieveablePoint($event: Array<string>) {
+    if(this.exercise == null) return;
+    this.exercise.achievablePoints = $event.length;
+  }
 }
