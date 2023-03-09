@@ -33,7 +33,10 @@ public class ParsonPuzzleSubmissionService: IParsonPuzzleSubmissionService
 
         this.ValidateSubmittedAnswer(linesInSubmittedOrder, parsonElements);
 
-        var elementsDict = parsonElements.ToDictionary(e => e.Id);
+        var elementsDict = linesInSubmittedOrder.ToDictionary(
+            lineId => lineId, 
+            lineId => parsonElements.Find(e => lineId.Equals(e.Id))
+            );
         
         var parsonPuzzleSubmission = new ParsonPuzzleSubmission
         {
