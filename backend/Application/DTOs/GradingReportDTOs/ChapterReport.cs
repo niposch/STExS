@@ -13,6 +13,8 @@ public class ChapterReport{
     public double AverageScore { get; set; }
     
     public double MedianScore { get; set; }
+    
+    public int maximalAchievablePoints { get; set; }
 
     public double PassingRate { get; set; }
 

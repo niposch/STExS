@@ -3461,6 +3461,10 @@
             "type": "number",
             "format": "double"
           },
+          "maximalAchievablePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
           "passingRate": {
             "type": "number",
             "format": "double"
@@ -4328,6 +4332,10 @@
           "passingRate": {
             "type": "number",
             "format": "double"
+          },
+          "maximalAchievablePoints": {
+            "type": "integer",
+            "format": "int32"
           },
           "distribution": {
             "$ref": "#/components/schemas/PointDistribution"

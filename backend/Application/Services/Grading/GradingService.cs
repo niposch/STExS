@@ -261,7 +261,8 @@ public sealed class GradingService : IGradingService
                 .ToList(),
             Module = ModuleDetailItem.ToDetailItem(module),
             Distribution = pointDistribution,
-            AverageTimeInMilliseconds = averageTime
+            AverageTimeInMilliseconds = averageTime,
+            maximalAchievablePoints = chapterReports.Sum(c => c.maximalAchievablePoints)
         };
     }
 
@@ -324,7 +325,8 @@ public sealed class GradingService : IGradingService
                 .OrderBy(e => e.Exercise.RunningNumber)
                 .ToList(),
             Distribution = pointDistribution,
-            AverageTimeInMilliseconds = averageTime
+            AverageTimeInMilliseconds = averageTime,
+            maximalAchievablePoints = exerciseReports.Values.Sum(e => e.Exercise?.AchivablePoints ?? 0)
         };
     }
 

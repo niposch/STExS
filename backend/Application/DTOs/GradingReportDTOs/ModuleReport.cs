@@ -16,6 +16,8 @@ public class ModuleReport
     public double MedianScore { get; set; }
 
     public double PassingRate { get; set; }
+    
+    public int maximalAchievablePoints { get; set; }
 
     public PointDistribution Distribution {get; set; } // Punkte die ein Schüler auf das gesammte Modul bekommen hat
 

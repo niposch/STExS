@@ -17,8 +17,9 @@
 
     <!-- MODULE STATISTICS -->
     <mat-card>
-      <mat-card-title>
-        Module Statistics
+      <mat-card-title style="display: flex">
+        <span>Module Statistics</span>
+        <span style="margin-left: auto; font-size: 14px">max points: {{this.moduleReport.maximalAchievablePoints}}</span>
       </mat-card-title>
       <mat-card-content class="horizontal-container">
         <div class="table">
@@ -62,9 +63,12 @@
             [attr.aria-expanded]="accordionItem.expanded"
             [attr.aria-controls]="'accordion-body-' + index">
             <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-              <div class="horizontal-container" style="justify-content: space-between">
-                <mat-label class="chapter-title">{{chapter?.chapter?.chapterName ?? ""}}</mat-label>
-                <mat-label style="">click to open</mat-label>
+              <div class="horizontal-container">
+                <mat-label class="chapter-title">
+                  {{chapter?.chapter?.chapterName ?? ""}}
+                </mat-label>
+                <span style="margin-left: auto; font-size: 12px; margin-right: 15px">max points: {{chapter.maximalAchievablePoints}}</span>
+                <mat-label style="flex-grow: 0; flex-shrink: 0">click to open</mat-label>
               </div>
               <div class="table">
                 <div class="table-column">
@@ -100,8 +104,9 @@
               [attr.aria-labelledby]="'accordion-header-' + index">
               <mat-label class="exercise-title">Exercises</mat-label>
               <div class="exercise-card" *ngFor="let exercise of chapter.exercises">
-                <div class="horizontal-container" style="justify-content: space-between">
+                <div class="horizontal-container" style="align-items: baseline">
                   <mat-label class="exercise-title vertically-centered">{{exercise!.exercise!.exerciseName!}}</mat-label>
+                  <span style="margin-left: auto; margin-right: 15px">max points: {{exercise.exercise?.achivablePoints ?? 0}}</span>
                   <button
                           [routerLink]="['/grading/exercise']"
                           [queryParams]="{exerciseId:exercise!.exercise!.exerciseId!}"
