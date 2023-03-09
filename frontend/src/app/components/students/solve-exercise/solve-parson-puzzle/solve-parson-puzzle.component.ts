@@ -36,6 +36,7 @@ export class SolveParsonPuzzleComponent
   public exercise: ParsonExerciseDetailItem | null | undefined;
   @Output()
   public solveChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
   timeTrackId: string | null = null;
   isSaving: boolean = false;
   private tempSaving: number = null!;
@@ -184,6 +185,7 @@ export class SolveParsonPuzzleComponent
       .then((data) => {
         if (isFinal && this.exercise) {
           this.exercise.userHasSolvedExercise = true;
+          this.solvedChange.emit(this.exercise);
         }
       });
   }
