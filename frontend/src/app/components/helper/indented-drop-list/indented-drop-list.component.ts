@@ -29,6 +29,8 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
   public dropList: CdkDropList | undefined;
 
   @Input()
+  public readonly: boolean = false;
+  @Input()
   cdkDropListData: ParsonExerciseLineDetailItem[] = [];
   @Output()
   cdkDropListDataChange: EventEmitter<ParsonExerciseLineDetailItem[]> = new EventEmitter<ParsonExerciseLineDetailItem[]>();
@@ -44,6 +46,7 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
 
 
   drop($event: CdkDragDrop<ParsonExerciseLineDetailItem[], any>) {
+    if(this.readonly) return;
     console.log($event);
     let currParsonLine = $event.container.data[$event.previousIndex];
     if($event.previousContainer === $event.container) {
@@ -99,15 +102,18 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
   }
 
   entered<T>($event: CdkDragEnter<T>) {
+    if(this.readonly) return;
     // @ts-ignore
     $event.item.element.nativeElement.currentindentation  = $event.item.dropContainer.data[$event.currentIndex].indentation;
   }
 
   exited<T>($event: CdkDragExit<T>) {
+    if(this.readonly) return;
     console.log($event);
   }
 
   dragMoved($event: CdkDragMove<ParsonExerciseLineDetailItem>) {
+    if(this.readonly) return;
     let indentations = Math.floor($event.distance.x / 20);
     // @ts-ignore
     let currIndentations = $event.source.element.nativeElement.indentation ?? 0;
@@ -129,6 +135,7 @@ export class IndentedDropListComponent implements OnInit, OnChanges {
   }
 
   dragStarted($event: CdkDragStart) {
+    if(this.readonly) return;
     // @ts-ignore
     let indentations = $event.source.dropContainer.data.indentation ?? 0;
     let placeholder = $event.source.dropContainer.element.nativeElement.querySelector('.cdk-drag-placeholder');
