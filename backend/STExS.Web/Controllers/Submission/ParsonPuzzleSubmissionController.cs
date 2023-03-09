@@ -44,9 +44,7 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
             this.User.GetUserId(),
             createItem.ExerciseId,
             isFinalSubmission,
-            createItem.SubmittedLines
-                .Select(i => i.Id)
-                .ToList(),
+            createItem.SubmittedLines,
             timeTrackId, 
             cancellationToken);
         return this.Ok("Submission Done");
@@ -70,12 +68,12 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
             
             var submissionDetailItem = new ParsonPuzzleSubmissionDetailItem
             {
-                SubmittedLines = parsonPuzzleSubmission.ParsonElements
+                SubmittedLines = parsonPuzzleSubmission.AnswerItems
                     .Select(line => new ParsonExerciseLineDetailItem
                     {
-                        Id = line.Id,
+                        Id = line.ParsonElement.Id,
                         Indentation = line.Indentation,
-                        Text = line.Code,
+                        Text = line.ParsonElement.Code,
                     }).ToList(),
                 SubmittedAt = parsonPuzzleSubmission.CreationTime,
                 ExerciseId = parsonPuzzleExerciseId
