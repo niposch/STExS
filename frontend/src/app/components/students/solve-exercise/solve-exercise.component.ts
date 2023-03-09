@@ -24,6 +24,7 @@ export class SolveExerciseComponent implements OnInit {
   public currentExerciseId: string = '';
   public currentExerciseType: ExerciseType = 0;
   public exerciseType = ExerciseType;
+  public showSubmissionWindow: boolean = true;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -92,6 +93,9 @@ export class SolveExerciseComponent implements OnInit {
   }
 
   private updateCompType() {
+    this.showSubmissionWindow = false;
+    this.changeDetectorRef.detectChanges();
+    this.showSubmissionWindow = true;
     this.changeDetectorRef.detectChanges();
   }
 
