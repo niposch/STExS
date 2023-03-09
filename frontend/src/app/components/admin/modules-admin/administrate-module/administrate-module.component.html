@@ -31,11 +31,6 @@
       <!-- MODULE EDIT BUTTONS -->
       <div class="horizontal-flex space-items">
         <div>
-          <button matTooltip="Grading Dashboard" mat-button [routerLink]="['/grading']" [queryParams]="{moduleid:this.module.moduleId}">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="done_all"></mat-icon>
-            Grading
-          </button>
-
           <button mat-button matTooltip="Data Dashboard" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="equalizer"></mat-icon>
             Data

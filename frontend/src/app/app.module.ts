@@ -58,7 +58,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { CreateEditParsonComponent } from './components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component';
 import {QuillModule} from "ngx-quill";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
-import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
@@ -111,7 +110,6 @@ import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
     SolveExerciseComponent,
     CreateEditParsonComponent,
     SolveGapTextComponent,
-    GradingModuleDashboardComponent,
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
