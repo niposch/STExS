@@ -4,7 +4,13 @@
               style="margin-bottom: 5px"
               [ngClass]="{'has-solved' : exercise.userHasSolvedExercise, 'selected-exercise' : exercise.id == this.currentExerciseId }"
               (click)="this.updateExerciseCompById(exercise.id)">
-      <mat-label>{{exercise.exerciseName}}</mat-label>
+      <mat-label style="display: flex; align-items: center">
+        <span>{{exercise.exerciseName}}</span>
+        <span style="margin-left: auto">
+          <mat-chip-list>
+                <mat-chip disableRipple="true" selected>{{exercise.exerciseType | exerciseType}}</mat-chip>
+              </mat-chip-list>
+        </span></mat-label>
     </mat-card>
   </div>
 

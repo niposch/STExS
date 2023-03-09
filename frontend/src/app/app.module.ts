@@ -79,6 +79,7 @@ import { RevisionHistoryComponent } from './components/admin/grading/revision-hi
 import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.pipe';
 import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
 import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
+import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { GradingDialogComponent } from './components/admin/grading/grading-dialo
     TimeTrackEventTypePipe,
     RevisionItemComponent,
     GradingDialogComponent,
+    ExerciseTypePipe,
   ],
   imports: [
     BrowserModule,
