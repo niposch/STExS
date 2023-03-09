@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Repositories.Grading;
 
-// TODO AUFGABE LEI Methoden implementieren + Unit Tests in Repositories.Tests/Repositories/UserSubmissionRepositoryTests/*
+// TODO AUFGABE LEI Unit Tests in Repositories.Tests/Repositories/UserSubmissionRepositoryTests/*
 public class UserSubmissionRepository : IUSerSubmissionRepository
 {
     private readonly ApplicationDbContext context;
@@ -59,6 +59,7 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
             .ThenInclude(s => s.GradingResult)
             .Include(e => e.Submissions)
             .ThenInclude(s => s.GradingResult)
+            .Include(s => s.TimeTracks)
             .ToDictionaryAsync(e => e.UserId, cancellationToken);
     }
 

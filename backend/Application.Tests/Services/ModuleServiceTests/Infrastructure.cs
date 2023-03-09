@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using AutoFixture.Kernel;
 using Common.Models.Authentication;
 using Common.Models.ExerciseSystem;
 using Common.Models.ExerciseSystem.CodeOutput;
@@ -26,6 +27,7 @@ public abstract class Infrastructure
         this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         
         this.UserManagerMock = this.Fixture.FreezeInject<UserManager<ApplicationUser>>();
+        this.Fixture.Customizations.Add(new TypeRelay(typeof(BaseExercise), typeof(CodeOutputExercise)));
         
         this.Fixture.Register<IModuleRepository>(this.Fixture.Create<ModuleRepository>);
         this.Fixture.Register<IModuleParticipationRepository>(this.Fixture.Create<ModuleParticipationRepository>);

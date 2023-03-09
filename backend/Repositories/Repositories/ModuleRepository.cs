@@ -21,13 +21,14 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
         {
             throw new EntityNotFoundException<Module>(id);
         }
-        
-        // TODO exercises need to be deleted as well, once they are implemented
-        // this.context.RemoveRange(entity.Chapters.Select(c => c.ParsonExercises));
-        
         //modules without any contents should be deletable
         if (entity.Chapters != null)
         {
+            var exercises = entity.Chapters.SelectMany(c => c.Exercises).ToList();
+            if (exercises.Count > 0)
+            {
+                this.context.Exercises.RemoveRange(exercises);
+            }
             this.context.RemoveRange(entity.Chapters);
         }
 
@@ -59,5 +60,15 @@ public class ModuleRepository: GenericCrudAndArchiveRepository<Module>, IModuleR
         return this.context.Modules
             .Include(m => m.Owner)
             .ToListAsync(cancellationToken);
+    }
+
+    public Task<Module?> TryGetByIdAndIncludeChapterExercisesAndUserSubmissionsAsync(Guid moduleId, CancellationToken cancellationToken)
+    {
+        return this.context.Modules
+            .Include(m => m.Chapters)
+            .ThenInclude(c => c.Exercises)
+            .ThenInclude(e => e.UserSubmissions)
+            .ThenInclude(m => m.FinalSubmission)
+            .FirstOrDefaultAsync(m => m.Id == moduleId, cancellationToken);
     }
 }

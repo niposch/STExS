@@ -1,4 +1,5 @@
-﻿using Application.DTOs.ExercisesDTOs;
+﻿using Application.DTOs.ChapterDTOs;
+using Application.DTOs.ExercisesDTOs;
 using Application.Helper.Roles;
 using Application.Services.Interfaces;
 using Common.Models.ExerciseSystem;
@@ -27,7 +28,7 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapter = await this.chapterService.GetChapterAsync(chapterId, userId, cancellationToken);
-        return Ok(ChapterMapper.ToDetailItem(chapter));
+        return Ok(ChapterDetailItem.ToDetailItem(chapter));
     }
     
     [HttpPost]
@@ -77,7 +78,7 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapters = await this.chapterService.GetChaptersByModuleIdAsync(moduleId, userId, cancellationToken);
-        return Ok(chapters.Select(ChapterMapper.ToDetailItem).ToList());
+        return Ok(chapters.Select(c => ChapterDetailItem.ToDetailItem(c)).ToList());
     }
     
     [HttpGet("all")]
@@ -87,7 +88,7 @@ public class ChapterController: ControllerBase
     {
         var userId = this.User.GetUserId();
         var chapters = await this.chapterService.GetAllChaptersAsync(userId, cancellationToken);
-        return Ok(chapters.Select(ChapterMapper.ToDetailItem).ToList());
+        return Ok(chapters.Select(c => ChapterDetailItem.ToDetailItem(c)).ToList());
     }
     
     public class ReorderChaptersRequest
@@ -103,67 +104,5 @@ public class ChapterController: ControllerBase
         var userId = this.User.GetUserId();
         await this.chapterService.ReorderModuleChaptersAsync(request.ChapterIds, request.ModuleId, userId, cancellationToken);
         return Ok();
-    }
-}
-
-public class ChapterDetailItem
-{
-    public Guid Id { get; set; }
-    
-    public int RunningNumber { get; set; }
-    
-    public string ChapterName { get; set; } = string.Empty;
-    
-    public string ChapterDescription { get; set; } = string.Empty;
-    
-    public Guid ModuleId { get; set; }
-    
-    public List<ExerciseListItem> Exercises { get; set; } = new();
-}
-
-public class ChapterUpdateItem
-{
-    public string ChapterName { get; set; } = string.Empty;
-    public string ChapterDescription { get; set; } = string.Empty;
-}
-
-public class ChapterCreateItem
-{
-    public Guid ModuleId { get; set; }
-    public string ChapterName { get; set; } = string.Empty;
-    public string ChapterDescription { get; set; } = string.Empty;
-}
-
-public static class ChapterMapper
-{
-    public static ChapterDetailItem ToDetailItem(Chapter chapter)
-    {
-        return new ChapterDetailItem
-        {
-            Id = chapter.Id,
-            ChapterDescription = chapter.ChapterDescription,
-            ChapterName = chapter.ChapterName,
-            ModuleId = chapter.ModuleId,
-            RunningNumber = chapter.RunningNumber,
-            Exercises = chapter.Exercises?
-                .Select(e => e.ToListItem())
-                .OrderBy(e => e.Order)
-                .ToList() ?? new List<ExerciseListItem>()
-        };
-    }
-}
-
-public static class ExerciseMapper
-{
-    public static ExerciseListItem ToListItem(this BaseExercise exercise)
-    {
-        return new ExerciseListItem
-        {
-            Order = exercise.RunningNumber,
-            ExerciseType = exercise.ExerciseType,
-            ExerciseName = exercise.ExerciseName,
-            AchivablePoints = exercise.AchievablePoints,
-            ExerciseId = exercise.Id
-        };
     }
 }
