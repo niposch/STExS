@@ -32,7 +32,8 @@ public class ParsonPuzzleSubmissionService: IParsonPuzzleSubmissionService
     {
         var parsonElements = await this.repository.ParsonElements.GetForExerciseAsync(exerciseId, cancellationToken);
 
-        this.ValidateSubmittedAnswer(linesInSubmittedOrder, parsonElements);
+        if (isFinal)
+            this.ValidateSubmittedAnswer(linesInSubmittedOrder, parsonElements);
 
         var elementsDict = linesInSubmittedOrder.ToDictionary(
             element => element.Id, 
