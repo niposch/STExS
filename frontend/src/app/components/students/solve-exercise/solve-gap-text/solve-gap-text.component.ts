@@ -8,6 +8,8 @@ import {
   OnDestroy,
   Output,
   ViewChild,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ClozeTextExerciseDetailItem } from '../../../../../services/generated/models/cloze-text-exercise-detail-item';
@@ -25,15 +27,13 @@ import { ClozeTextSubmissionDetailItem } from '../../../../../services/generated
 })
 export class SolveGapTextComponent implements OnInit, OnDestroy {
   @Input() id: string = '';
-  public text: string = '';
-  public answerStrings: string[] | undefined | null;
-
-  private lastSubmission: ClozeTextSubmissionDetailItem | undefined;
-  public timeTrackId: string | null | undefined = null;
-  public exercise: ClozeTextExerciseDetailItem | null = {};
-  public isLoading: boolean = false;
-  public isSubmitting: boolean = false;
   @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
+
+  public timeTrackId: string | null | undefined;
+
+  public exercise?: ClozeTextExerciseDetailItem | null | undefined;
+
+  public answerStrings: Array<string> | null = null;
 
   constructor(
     private readonly clozeTextService: ClozeTextExerciseService,
@@ -46,46 +46,35 @@ export class SolveGapTextComponent implements OnInit, OnDestroy {
   //@ViewChild(ViewClozeComponent) child!: ViewClozeComponent;
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.changeDetectorRef.detectChanges();
-    void this.loadExercise();
+    void this.initialLoad(this.id);
   }
 
-  async loadExercise(): Promise<any> {
-    try {
-      this.exercise = await lastValueFrom(
-        this.clozeTextService.apiClozeTextExerciseWithoutAnswersGet$Json({
-          id: this.id,
-        })
-      );
-      //console.log(this.exercise)
-      this.text = this.exercise.text!;
-      if (!this.exercise!.userHasSolvedExercise) {
-        await this.getTimeTrack(this.exercise!.id!).then(() => {
-          this.isLoading = false;
-          this.changeDetectorRef.detectChanges();
-        });
-        await this.queryLastTempSolution(this.exercise!.id!, this.timeTrackId!);
-      } else {
-        let lastSubmission = await lastValueFrom(
-          this.clozetextSubmissionService.apiClozeTextSubmissionGetClozeTextExerciseIdGet$Json(
-            {
-              clozeTextExerciseId: this.exercise!.id!,
-            }
-          )
-        );
-        this.answerStrings = lastSubmission.submittedAnswers;
-        this.isLoading = false;
-        this.changeDetectorRef.detectChanges();
-      }
-    } catch (err) {
-      this.snackBar.open('Could not load this Cloze Text Exercise', 'ok', {
-        duration: 3000,
-      });
+  async initialLoad(exerciseId: string): Promise<any> {
+    await this.loadExercise(exerciseId);
+    if (this.exercise == null) return;
+    if (this.exercise.userHasSolvedExercise) {
+      await this.queryLastTempSolution(exerciseId, null);
+      return;
     }
+
+    await this.getTimeTrack(exerciseId);
+    if (this.timeTrackId == null) return;
+    await this.queryLastTempSolution(exerciseId, this.timeTrackId);
   }
 
-  private async getTimeTrack(eId: string): Promise<any> {
+  async loadExercise(id: string): Promise<any> {
+    this.exercise = await lastValueFrom(
+      this.clozeTextService.apiClozeTextExerciseWithoutAnswersGet$Json({
+        id: id,
+      })
+    ).catch(() => {
+      this.snackBar.open('Error: Could not load the exercise!', 'dismiss');
+      return null;
+    });
+    this.changeDetectorRef.detectChanges();
+  }
+
+  private async getTimeTrack(eId: string): Promise<string | null> {
     this.timeTrackId = await lastValueFrom(
       this.timeTrackService.apiTimeTrackPost$Json({
         exerciseId: eId,
@@ -97,34 +86,27 @@ export class SolveGapTextComponent implements OnInit, OnDestroy {
       );
       return null;
     });
+
+    return this.timeTrackId;
   }
 
-  private async queryLastTempSolution(eId: string, ttId: string): Promise<any> {
-    let createNewSubmission: boolean = false;
-    await lastValueFrom(
+  private async queryLastTempSolution(
+    exerciseId: string,
+    timetrackId: string | null
+  ): Promise<any> {
+    const lastTempSolution = await lastValueFrom(
       this.clozetextSubmissionService.apiClozeTextSubmissionGetClozeTextExerciseIdGet$Json(
         {
-          clozeTextExerciseId: eId,
-          currentTimeTrackId: ttId,
+          clozeTextExerciseId: exerciseId,
+          currentTimeTrackId: timetrackId ?? undefined,
         }
       )
-    )
-      .catch((err) => {
-        if (err.status != 404) {
-          this.snackBar.open(
-            'Error: Something went wrong while getting the last Submission!',
-            'dismiss'
-          );
-        } else {
-          createNewSubmission = true;
-        }
-      })
-      .then((data) => {
-        if (!createNewSubmission) {
-          this.lastSubmission = data!;
-          this.answerStrings = this.lastSubmission!.submittedAnswers!;
-        }
-      });
+    ).catch(() => {
+      return null;
+    });
+
+    if (lastTempSolution == null) return;
+    this.answerStrings = lastTempSolution.submittedAnswers ?? null;
   }
 
   public async createNewSubmission(
@@ -132,31 +114,28 @@ export class SolveGapTextComponent implements OnInit, OnDestroy {
     isFinal: boolean = false,
     answer: string[] | undefined | null = null
   ): Promise<any> {
-    try {
-      this.isSubmitting = true;
-      await lastValueFrom(
-        this.clozetextSubmissionService.apiClozeTextSubmissionSubmitTimeTrackIdPost(
-          {
-            timeTrackId: ttId!,
-            isFinalSubmission: isFinal,
-            body: {
-              submittedAnswers: answer,
-              exerciseId: this.exercise!.id!,
-            },
-          }
-        )
-      );
-      if (isFinal) {
-        this.solvedChange.emit({
-          solved: true,
-          exerciseId: this.exercise!.id!,
-        });
-        this.exercise!.userHasSolvedExercise = true;
+    if (this.exercise == null) return;
+    const submission: ClozeTextSubmissionDetailItem = {
+      exerciseId: this.exercise.id,
+      submittedAnswers: answer,
+    };
+
+    let previousFinalState = this.exercise.userHasSolvedExercise;
+    this.exercise.userHasSolvedExercise = isFinal;
+    await lastValueFrom(
+      this.clozetextSubmissionService.apiClozeTextSubmissionSubmitTimeTrackIdPost(
+        {
+          timeTrackId: ttId!,
+          body: submission,
+          isFinalSubmission: isFinal,
+        }
+      )
+    ).catch(() => {
+      this.snackBar.open('Error: Could not save the submission!', 'dismiss');
+      if (this.exercise != null) {
+        this.exercise.userHasSolvedExercise = previousFinalState;
       }
-      this.isSubmitting = false;
-    } catch (err) {
-      this.snackBar.open('Error while submitting the answer!', 'dismiss');
-    }
+    });
   }
 
   ngOnDestroy(): void {
