@@ -19,6 +19,8 @@ export class ViewClozeComponent implements OnInit, OnChanges {
   @Input() text: string | undefined | null = null;
   @Input() enableInputfield: boolean = true;
 
+  @Input() showSolutionsFromText: boolean = false;
+
   @Input() answers: Array<string> | undefined | null = null;
   @Output() answersChange: EventEmitter<Array<string>> = new EventEmitter<
     Array<string>
@@ -59,7 +61,12 @@ export class ViewClozeComponent implements OnInit, OnChanges {
 
     this.adjustLengthOfAnswers(clozeText);
 
-    this.answersChange.emit(this.answers!);
+    if(this.showSolutionsFromText){
+      this.answers = clozeText.match(regex)?.map((x) => x.replace(/\[|\]/g, '')) ?? [];
+    }
+    else{
+      this.answersChange.emit(this.answers!);
+    }
     this.changeDetectorRef.detectChanges();
   }
 

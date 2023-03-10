@@ -22,6 +22,7 @@ public class SubmissionRepository : ISubmissionRepository
         var ex = await this.context.Submissions
             .Include(e => ((e as ClozeTextSubmission)!).SubmittedAnswers)
             .Include(e => ((e as ParsonPuzzleSubmission)!).AnswerItems)
+            .ThenInclude(s => s.ParsonElement)
             .FirstOrDefaultAsync(e => e.Id == submissionId,
             cancellationToken);
         return ex;
