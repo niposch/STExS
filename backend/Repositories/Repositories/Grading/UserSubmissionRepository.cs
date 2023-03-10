@@ -56,7 +56,7 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
         var ex = await this.context.UserSubmissions.Where(e => e.UserId == userId).ToListAsync(cancellationToken);
         return ex;
     }
-
+    
     public async Task<Dictionary<Guid, UserSubmission>> GetAllByExerciseIdGroupedByUserIdAsync(Guid exerciseId,
         CancellationToken cancellationToken = default)
     {
@@ -68,6 +68,12 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
             .ThenInclude(s => s.GradingResult)
             .Include(s => s.TimeTracks)
             .ToDictionaryAsync(e => e.UserId, cancellationToken);
+    }
+
+    public int ExistsByExerciseIdAsync(Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        return this.context.UserSubmissions
+            .Count(s => s.ExerciseId == exerciseId);
     }
 
     public async Task<List<UserSubmission>> GetAllByUserIdAndChapterAsync(Guid chapterId, Guid userId, CancellationToken cancellationToken = default)

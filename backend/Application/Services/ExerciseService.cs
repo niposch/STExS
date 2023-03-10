@@ -120,6 +120,9 @@ public sealed class ExerciseService : IExerciseService
 
     private async Task DeleteParsonExerciseAsync(Guid exerciseId, CancellationToken cancellationToken = default)
     {
+        var submissionCount = this.repository.UserSubmissions.ExistsByExerciseIdAsync(exerciseId, cancellationToken);
+        if (0 != submissionCount)
+            throw new UnsupportedActionException("Fehler im Löschprozess"); 
         var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(exerciseId, cancellationToken);
         try
         {
