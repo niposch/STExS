@@ -14,10 +14,6 @@ public class ApplicationModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<WeatherService>()
-            .As<IWeatherService>()
-            .InstancePerLifetimeScope();
-
         builder.RegisterType<ExerciseService>()
             .As<IExerciseService>()
             .InstancePerLifetimeScope();

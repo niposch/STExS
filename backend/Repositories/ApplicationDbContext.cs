@@ -17,8 +17,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
     }
 
-    public DbSet<WeatherForecast> WeatherForecasts { get; set; }
-
     public DbSet<BaseExercise> Exercises { get; set; }
 
     public DbSet<CodeOutputExercise> CodeOutputExercises { get; set; }
