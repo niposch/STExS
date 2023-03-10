@@ -15,11 +15,19 @@
   </div>
 </ng-container>
 
-<div *ngIf="this.exercise != null && this.grading != null else noData">
+<mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
+
+<div *ngIf="this.exercise != null && this.grading != null else noData" class="vertical-container">
   <span>{{this.grading.automaticGradingDate}}</span>
-  <mat-form-field>
-    <input matInput min="0" [max]="this.exercise.achievablePoints" (keyup)="gradeChange($event)" placeholder="Manually grade" type="number"/>
-  </mat-form-field>
+  <div class="horizontal-container" style="justify-content: space-between; width: 100%">
+    <mat-form-field class="vertically-centered">
+      <input matInput min="0" [max]="this.exercise!.achievablePoints!" (keyup)="gradeChange()" [(ngModel)]="this.grading!.points" type="number">
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="setGrade()">grade</button>
+  </div>
+
+  <mat-label style="margin-top: 10px">Add a comment</mat-label>
+  <textarea matInput [(ngModel)]="this.grading!.comment" placeholder="Comment" style="margin-bottom: 5px; border: 1px solid #595959; padding: 2px"></textarea>
 </div>
 
 <ng-template #noData>

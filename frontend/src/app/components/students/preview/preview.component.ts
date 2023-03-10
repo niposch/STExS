@@ -3,9 +3,9 @@ import {ExerciseType} from "../../../../services/generated/models/exercise-type"
 import {ExerciseDetailItem} from "../../../../services/generated/models/exercise-detail-item";
 import {lastValueFrom} from "rxjs";
 import {ExerciseService} from "../../../../services/generated/services/exercise.service";
-import * as events from "events";
 import {GradingResultDetailItem} from "../../../../services/generated/models/grading-result-detail-item";
 import {GradingService} from "../../../../services/generated/services/grading.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-preview',
@@ -25,6 +25,7 @@ export class PreviewComponent implements OnInit, OnChanges {
   constructor(
     private readonly exerciseService: ExerciseService,
     private readonly gradingService: GradingService,
+    public snackBar : MatSnackBar,
 
   ){}
 
@@ -52,12 +53,24 @@ export class PreviewComponent implements OnInit, OnChanges {
     }
   }
 
-  gradeChange($event: any) {
-    if(parseInt($event.target.value) > (this.exercise?.achievablePoints ?? 0)){
-      $event.target.value = this.exercise?.achievablePoints;
+  gradeChange() {
+    if(this.grading!.points! > this.exercise!.achievablePoints! ?? 0){
+      this.grading!.points! = this.exercise?.achievablePoints!;
     }
-    if(parseInt($event.target.value) < 0){
-      $event.target.value = 0;
+    if(this.grading!.points! < 0){
+      this.grading!.points! = 0;
     }
+  }
+
+  setGrade() {
+    lastValueFrom(this.gradingService.apiGradingManualGradingPost({
+      submissionId: this.submissionId!,
+      newGrade: this.grading!.points!,
+      comment: this.grading!.comment!,
+    })).then(() => {
+      this.snackBar.open("Grading successful!", "Close", {duration: 5000});
+    }).catch((err) => {
+      this.snackBar.open("Error while grading!\n" + err, "Close", {duration: 5000});
+    })
   }
 }
