@@ -15,3 +15,14 @@
   </div>
 </ng-container>
 
+<div *ngIf="this.exercise != null && this.grading != null else noData">
+  <span>{{this.grading.automaticGradingDate}}</span>
+  <mat-form-field>
+    <input matInput min="0" [max]="this.exercise.achievablePoints" (keyup)="gradeChange($event)" placeholder="Manually grade" type="number"/>
+  </mat-form-field>
+</div>
+
+<ng-template #noData>
+  <mat-spinner *ngIf="this.exercise === undefined || this.grading === undefined else error"></mat-spinner>
+  <ng-template #error>Error loading data</ng-template>
+</ng-template>

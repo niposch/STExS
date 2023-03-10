@@ -23,6 +23,7 @@ public class SubmissionRepository : ISubmissionRepository
             .Include(e => ((e as ClozeTextSubmission)!).SubmittedAnswers)
             .Include(e => ((e as ParsonPuzzleSubmission)!).AnswerItems)
             .ThenInclude(s => s.ParsonElement)
+            .Include(e => e.GradingResult)
             .FirstOrDefaultAsync(e => e.Id == submissionId,
             cancellationToken);
         return ex;
