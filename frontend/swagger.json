@@ -1712,6 +1712,45 @@
         }
       }
     },
+    "/api/Grading/gradingForSubmission": {
+      "get": {
+        "tags": [
+          "Grading"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradingResultDetailItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradingResultDetailItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradingResultDetailItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Grading/manualGrading": {
       "post": {
         "tags": [
@@ -4261,6 +4300,63 @@
           },
           "gradedSubmission": {
             "$ref": "#/components/schemas/BaseSubmission"
+          },
+          "automaticGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "manualGradingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GradingResultDetailItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gradingState": {
+            "$ref": "#/components/schemas/GradingState"
+          },
+          "isAutomaticallyGraded": {
+            "type": "boolean"
+          },
+          "appealDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "appealableBefore": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isAppealed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gradedSubmissionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           },
           "automaticGradingDate": {
             "type": "string",
