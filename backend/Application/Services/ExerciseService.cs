@@ -48,7 +48,7 @@ public sealed class ExerciseService : IExerciseService
             catch (Exception e)
             {
                 await this.repository.CommonExercises.DeleteAsync(exercise.Id, cancellationToken);
-                throw new Exception();
+                throw new Exception("Kopieren der Exercise misslungen!");
             }
 
         return ToDetailItem(exercise, null);
@@ -64,19 +64,31 @@ public sealed class ExerciseService : IExerciseService
             throw new NullReferenceException("Original konnte nicht gefunden werden!");
         }
 
-        var solution = originalExercise.ExpectedSolution;
-        var elements = solution.CodeElements;
-
-        solution.Id = new Guid();
-        solution.RelatedExerciseId = exercise.Id;
-        solution.RelatedExercise = exercise;
-        solution.OwnerId = exercise.OwnerId;
-
-        foreach (var codeElement in elements)
+        var originalSolution = originalExercise.ExpectedSolution;
+        var solution = new ParsonSolution
         {
-            codeElement.RelatedSolutionId = solution.Id;
-            codeElement.CreationTime = DateTime.Now;
-            codeElement.ModificationTime = codeElement.CreationTime;
+            Id = Guid.NewGuid(),
+            RelatedExerciseId = exercise.Id,
+            RelatedExercise = exercise,
+            OwnerId = exercise.OwnerId,
+            IndentationIsRelevant = originalSolution.IndentationIsRelevant
+        };
+        
+        var originalElements = originalSolution.CodeElements;
+        var elements = new List<ParsonElement>();
+
+        foreach (var codeElement in originalElements)
+        {
+            elements.Add(new ParsonElement()
+            {
+                Id = Guid.NewGuid(),
+                OwnerId = codeElement.OwnerId,
+                RelatedSolutionId = solution.Id,
+                RelatedSolution = solution,
+                Code = codeElement.Code,
+                Indentation = codeElement.Indentation,
+                RunningNumber = codeElement.RunningNumber
+            });
         }
 
         solution.CodeElements = elements;
