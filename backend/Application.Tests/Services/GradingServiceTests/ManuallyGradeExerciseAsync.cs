@@ -62,8 +62,8 @@ public sealed class ManuallyGradeExerciseAsync: Infrastructure
         var changedByUserId = Guid.NewGuid();
         this.Context.Submissions.Add(submission);
         await this.Context.SaveChangesAsync();
-        this.AccessServiceMock.Setup(s => s.IsModuleAdmin(
-            It.Is<Guid>(c => c == submission.UserSubmission.Exercise.Chapter.Module.Id),
+        this.AccessServiceMock.Setup(s => s.IsExerciseAdminAsync(
+            It.Is<Guid>(c => c == submission.UserSubmission.Exercise.Id),
             It.Is<Guid>(c => c == changedByUserId),
             It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
@@ -94,8 +94,8 @@ public sealed class ManuallyGradeExerciseAsync: Infrastructure
         var changedByUserId = Guid.NewGuid();
         this.Context.Submissions.Add(submission);
         await this.Context.SaveChangesAsync();
-        this.AccessServiceMock.Setup(s => s.IsModuleAdmin(
-            It.Is<Guid>(c => c == submission.UserSubmission.Exercise.Chapter.Module.Id),
+        this.AccessServiceMock.Setup(s => s.IsExerciseAdminAsync(
+            It.Is<Guid>(c => c == submission.UserSubmission.Exercise.Id),
             It.Is<Guid>(c => c == changedByUserId),
             It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
