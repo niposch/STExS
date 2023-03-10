@@ -110,7 +110,27 @@ public sealed class ExerciseService : IExerciseService
 
     public async Task DeleteExerciseAsync(Guid exerciseId, CancellationToken cancellationToken = default)
     {
-        await this.repository.CommonExercises.DeleteAsync(exerciseId, cancellationToken);
+        var exercise = await this.repository.CommonExercises.TryGetByIdAsync(exerciseId, true, cancellationToken);
+
+        if (exercise is ParsonExercise)
+            await this.DeleteParsonExerciseAsync(exerciseId, cancellationToken);
+        else
+            await this.repository.CommonExercises.DeleteAsync(exerciseId, cancellationToken);
+    }
+
+    private async Task DeleteParsonExerciseAsync(Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(exerciseId, cancellationToken);
+        try
+        {
+            await this.repository.ParsonElements.RemoveRangeAsync(exercise.ExpectedSolution.CodeElements, cancellationToken);
+            await this.repository.ParsonSolutions.DeleteAsync(exercise.ExpectedSolution.Id, cancellationToken);
+            await this.repository.CommonExercises.DeleteAsync(exerciseId, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Fehler im Löschprozess");
+        }
     }
 
     public async Task<ExerciseDetailItem> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken = default)
