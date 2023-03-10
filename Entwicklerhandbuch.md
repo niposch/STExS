@@ -142,3 +142,6 @@ services:
 - Hinweis bei Cloze Text Erstellung erscheint nicht
 - beim Kopieren von Übungen, können alle Übungen von allen Lehrern kopiert werden
   - => es wird nicht nach Besitzer / Ersteller der Übung gefiltert
+
+
+- SMTP Server Entwicklungsconfig wurde nicht mit Docker Containern getestet!
