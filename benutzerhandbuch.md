@@ -4,9 +4,16 @@
 
 ---
 
+- Testnutzeraccounts:
+
+| email             | passwort | rolle |
+| ----------------- | -------- | ----- |
+| dev@test.com      | Test333! | Admin |
+| dev-teacher@test.com | Test333! | Lehrer      |
+| dev-user@test.com | Test333! | Student      |
 ## Nutzertypen
 - Nutzer sind unterteilt in 3 Rollen: _Student_, _Lehrer_ und _Admin_
-- Beim Anmelden wird dem Nutzer automatisch die Rolle _Student_ zugewiesen
+- Beim Registrieren wird dem Nutzer automatisch die Rolle _Student_ zugewiesen
 - Alle Rollen haben Zugriff auf die Profilseite und können Module (die Sie nicht selber verwalten) mit den darin enthaltenen Übungen bearbeiten.
 
 
@@ -23,7 +30,7 @@
 - können von Admins und Lehrern erstellt werden (und bearbeitet werden, sofern Nutzer der Eigentümer des Moduls ist).
 - haben zusätzlich eine maximale Teilnehmeranzahl, die der Eigentümer festlegen kann.
 - ein Modul enthält beliebig viele Kapitel (können im Modul erstellt werden)
-- Wenn ein Student Übungen lösen möchte, muss er / sie in das jeweilige Modul beigetreten sein.
+- Wenn ein Student Übungen lösen möchte, muss er / sie in dem jeweilige Modul beigetreten sein.
 - das Beitreten muss vom Modul-Eigentümer genehmigt werden.
 - ein Modul kann Archiviert sein, dann können Nutzer nicht mehr beitreten.
 
@@ -33,14 +40,13 @@
 - beinhalten beliebig viele Übungen von beliebigen Typen (können im Kapitel erstellt werden)
 
 ### Übungen
-- eine Übung kann einem / mehreren Kapiteln zugeordnet sein (Übung wird für jedes Kapitel kopiert)
-- können auf der Kapitel-Bearbeiten-Seite erstellt werden
-- eine Übung ist "öffentlich" zugänglich und kann von jedem Lehrer / Admin in seinen Modulen (bzw. Kapiteln) verwendet werden.
+- eine Übung kann einem / mehreren Kapiteln zugeordnet sein
+- können auf der Kapitel-Bearbeiten-Seite erstellt werden oder aus bereits existierenden Übungen kopiert werden (siehe Kapitel Bearbeiten Seite)
 - jede Übung hat einen Titel, eine Beschreibung und eine maximal erreichbare Punktzahl.
 - eine Übung ist von genau einem Typ (muss beim Erstellen festgelegt werden)
   - Code Output: Beschreibung für die Frage, Expected Answer für erwartete (korrekte) Antwort
   - Parson Puzzle: Beschreibung für die Frage, Codezeilen und deren korrekte Reihenfolge (per Drag & Drop)
-  - Cloze Text: Beschreibung für die Frage, Lückentext mit korrekten Wörtern (Lücken mittels [[]] gekennzeichnet)
+  - Cloze Text: Beschreibung für die Frage, Lückentext mit korrekten Wörtern (Lücken mittels \[\[\]\] gekennzeichnet)
 
 ---
 
@@ -62,8 +68,9 @@
 - Login (mittels E-Mail und Passwort) auf der _Login_ Seite
 - ![img.png](images/login.png)
 - Registrieren auf der _Registrieren_ Seite (E-Mail, Passwort, Vorname, Nachname, Matrikelnummer, Nutzername, Geschlecht (optional))
+  - Email muss bestätigt werden, dafür ist in der appsettings.json ein SMTP Server konfiguriert (standardkonfig versendet die Bestätigungsemails nicht, sondern legt sie in ein Testpostfach ab => [Entwicklerhandbuch](Entwicklerhandbuch.md#konfiguration))
 - ![img.png](images/registration.png)
-- Profilseite mit sämtlichen Nutzerdaten (hier auch Nutzerdaten änderbar)
+- Profilseite mit sämtlichen Nutzerdaten (hier auch änderbar)
 - ![img.png](images/profile.png)
 - Sidebar: Übersicht über alle beigetretenen Module (und Admins / Lehrer auch Module, die ihnen gehören)
 - ![img.png](images/sidebar.png)
@@ -75,7 +82,9 @@
   - mit automatischen Zwischenspeichern und manueller finaler Abgabe
   - nach finaler Abgabe wird die erreichte Punktzahl angezeigt (zunächst die automatisch vergebene Punktzahl, nach manuellem Grading auch die manuell vergebene Punktzahl)
 - ![img.png](images/loesen-kapitel.png)
-- E-Mail verifizieren: Nach dem Login sollte der Nutzer eine E-Mail erhalten (ist implementiert, allerdings nicht einfach ohne Mailserver umsetzbar, daher deaktiviert), die ihn auffordert seine E-Mail zu verifizieren.
+- E-Mail verifizieren: Nach der Registrierung sollte der Nutzer eine E-Mail erhalten (ist implementiert, allerdings nicht einfach ohne Mailserver umsetzbar, daher ein Testsmpt Server angebunden, Emails können abgerufen => [Entwicklerhandbuch](Entwicklerhandbuch.md#konfiguration)), die ihn auffordert seine E-Mail zu verifizieren.
+
+
 
 ### Funktionen explizit für Lehrer und Admins
 - Erstellen und Verwalten von Modulen, Kapiteln und Übungen
