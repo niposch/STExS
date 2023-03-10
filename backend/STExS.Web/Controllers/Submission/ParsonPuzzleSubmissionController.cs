@@ -107,12 +107,12 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
 
         var submissionDetailItem = new ParsonPuzzleSubmissionDetailItem
         {
-            SubmittedLines = parsonPuzzleSubmission.ParsonElements
+            SubmittedLines = parsonPuzzleSubmission.AnswerItems
                 .Select(line => new ParsonExerciseLineDetailItem
                 {
                     Id = line.Id,
                     Indentation = line.Indentation,
-                    Text = line.Code,
+                    Text = line.ParsonElement.Code,
                 }).ToList(),
             SubmittedAt = parsonPuzzleSubmission.CreationTime,
             ExerciseId = submission.ExerciseId
