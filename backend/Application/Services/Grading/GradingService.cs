@@ -7,7 +7,9 @@ using Application.DTOs.ModuleDTOs;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.Cloze;
 using Common.Models.ExerciseSystem.CodeOutput;
+using Common.Models.ExerciseSystem.Parson;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 
@@ -20,14 +22,22 @@ public sealed class GradingService : IGradingService
     private readonly ICodeOutputGradingService codeOutputGradingService;
 
     private readonly IAccessService accessService;
+    
+    private readonly IParsonGradingService parsonGradingService;
+    
+    private readonly IClozeTextGradingService clozeTextGradingService;
 
     public GradingService(IApplicationRepository applicationRepository,
         ICodeOutputGradingService codeOutputGradingService,
-        IAccessService accessService)
+        IAccessService accessService,
+        IParsonGradingService parsonGradingService,
+        IClozeTextGradingService clozeTextGradingService)
     {
         this.applicationRepository = applicationRepository;
         this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
         this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
+        this.parsonGradingService = parsonGradingService ?? throw new ArgumentNullException(nameof(parsonGradingService));
+        this.clozeTextGradingService = clozeTextGradingService ?? throw new ArgumentNullException(nameof(clozeTextGradingService));
     }
 
     public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
@@ -35,6 +45,16 @@ public sealed class GradingService : IGradingService
         if (submission is CodeOutputSubmission codeOutputSubmission)
         {
             await this.codeOutputGradingService.GradeAsync(codeOutputSubmission);
+        }
+
+        else if (submission is ParsonPuzzleSubmission parson)
+        {
+            await this.parsonGradingService.GradeAsync(parson);
+        }
+        
+        else if (submission is ClozeTextSubmission cloze)
+        {
+            await this.clozeTextGradingService.GradeAsync(cloze);
         }
     }
 

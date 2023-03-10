@@ -43,6 +43,14 @@ public class ApplicationModule : Module
             .As<ICodeOutputGradingService>()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<ClozeTextGradingService>()
+            .As<IClozeTextGradingService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ParsonGradingService>()
+            .As<IParsonGradingService>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<AccessService>()
             .As<IAccessService>()
             .InstancePerLifetimeScope();

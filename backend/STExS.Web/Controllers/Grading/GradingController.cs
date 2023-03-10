@@ -82,8 +82,9 @@ public class GradingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GradeExercise(Guid submissionId, int newGrade, string comment, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GradeExercise(Guid submissionId, int newGrade, string? comment = null, CancellationToken cancellationToken = default)
     {
+        comment ??= string.Empty;
         await this.gradingService.ManuallyGradeExerciseAsync(submissionId, newGrade, comment, this.User.GetUserId(), cancellationToken);
         return this.Ok();
     }
