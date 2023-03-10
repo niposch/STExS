@@ -3,14 +3,16 @@
   <div *ngFor="let submission of submissions" >
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <div style="display: flex; align-items: center">
+        <div style="display: flex; align-items: center; width: 100%">
           <mat-chip-list style="padding-right: 10px">
 
             <mat-chip disableRipple [selected]="submission.isFinalSubmission">
               {{submission.isFinalSubmission ? 'final' : 'temporary'}}
             </mat-chip>
           </mat-chip-list>
-          {{submission.creationTime | date : 'medium'}}
+          <span style="margin-left: auto">
+            {{submission.creationTime | date : 'medium'}}
+          </span>
         </div>
       </mat-expansion-panel-header>
       <app-preview [exerciseId]="submission.exerciseId!" [submissionId]="submission.submissionId ?? null" [exerciseType]="submission.exerciseType!"></app-preview>

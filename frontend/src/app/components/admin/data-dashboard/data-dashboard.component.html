@@ -105,6 +105,11 @@
               <mat-label class="exercise-title">Exercises</mat-label>
               <div class="exercise-card" *ngFor="let exercise of chapter.exercises">
                 <div class="horizontal-container" style="align-items: baseline">
+                  <span style="margin-right: 15px">
+                    <mat-chip-list>
+                      <mat-chip selected disableRipple *ngIf="exercise?.exercise?.exerciseType != null">{{exercise?.exercise?.exerciseType | exerciseType}}</mat-chip>
+                    </mat-chip-list>
+                  </span>
                   <mat-label class="exercise-title vertically-centered">{{exercise!.exercise!.exerciseName!}}</mat-label>
                   <span style="margin-left: auto; margin-right: 15px">max points: {{exercise.exercise?.achivablePoints ?? 0}}</span>
                   <button

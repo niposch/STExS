@@ -1,1 +1,15 @@
-<p>parson-preview works!</p>
+<div *ngIf="this.exercise != null && this.submission != null" style="margin-top: 10px">
+  <!-- submitted solution -->
+  <div>
+    <mat-label class="heading">Submitted Answer</mat-label>
+    <app-indented-drop-list [readonly]="true" [cdkDropListData]="this.submission.submittedLines!"></app-indented-drop-list>
+  </div>
+
+  <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
+  <!-- correct solution -->
+  <div>
+    <mat-label class="heading">Expected Answer</mat-label>
+    <app-indented-drop-list [readonly]="true" [cdkDropListData]="this.exercise.lines!"></app-indented-drop-list>
+  </div>
+</div>
