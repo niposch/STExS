@@ -11,7 +11,7 @@
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "test-coverage": "ng test --no-watch --code-coverage",
     "swagger": "ng-openapi-gen",
-    "docu": "compodoc -p .\\tsconfig.doc.json -s"
+    "docs": "compodoc -p .\\tsconfig.doc.json -s"
   },
   "private": true,
   "dependencies": {

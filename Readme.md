@@ -240,3 +240,12 @@ deactivate user
 - when the user submits a (temp) solution on a time track that is already closed a 403 is returned
 - a time track is closed when the user submits a final solution
 - time tracks can only be active for 48 hours
+
+# Frontend
+
+- start the backend
+- after the backend started successfully run (from the frontend directory): `yarn quickstart`
+
+- for Frontend documentation: `yarn docs`
+- for Frontend tests: `yarn test` (chrome will open)
+- for Frontend test-coverage: `yarn test-coverage` (see the generated .html file in /coverage/stex-s/)
