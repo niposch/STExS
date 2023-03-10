@@ -34,7 +34,7 @@ services:
       - stexs-backend
 ```
 - nachdem alles gestartet ist sollte die Anwendung unter: `http://localhost` erreichbar sein
-- in der Readme.md ist beschrieben, was getan werden muss um das Projekt auszuführen
+- in der [Readme.md](Readme.md) ist beschrieben, was getan werden muss um das Projekt auszuführen
 # Struktur des Projekts
 - um mit diesem Projekt zu arbeiten ist Wissen über die verwendeten Technologien unerlässlich.
 - Frontend Entwickler sollten sich mit Angular und Typescript, Angular HTML und SCSS auseinandersetzen
@@ -54,7 +54,7 @@ services:
 	- Komponenten werden in der app.module.ts importiert (geschieht i.d.R. automatisch durch Angular cli)
 - Komponente, Pipes und Guards können durch die Angular CLI generiert werden `ng generate component [component-name]`
 - Weitere Informationen über die Bestandteile des Frontends sind der Frontend Dokumentation zu entnehmen => `yarn docu` (dazu muss `yarn quickstart` mindestens 1 mal ausgeführt wurden sein)
-- für Entwicklungszwecke wird das Projekt durch `yarn quickstart` gestartet
+- für Entwicklungszwecke wird das Projekt durch `yarn quickstart` gestartet (dazu muss das Backend gestartet sein, siehe [Readme.md](Readme.md))
 - Services werden durch Code Generation anhand der `swagger.json` Datei erstellt wenn `yarn quickstart` ausgeführt wird.
 	- damit die `swagger.json` Datei generiert, muss das Backend gebaut/ausgeführt werden
 	- Die generierten Services erleichtern die Kommunikation mit dem Backend, da alle im Backend verfügbaren Routen zu Services generiert werden (1 Service pro Backend Controller)
@@ -99,7 +99,7 @@ services:
 
 ### Repository Projekt
 - Migrations Ordner enthält alle vom Entity Framework erstellten Migrationen
-	- Siehe Readme wie Migrationen erstellt werden.
+	- Siehe [Readme.md](Readme.md) wie Migrationen erstellt werden.
 	- dies ist notwendig, wenn eine der Datenklassen in Common oder die Konfiguration in ApplicationDbContext verändert wird
 	- Beziehungen können konfiguriert werden durch: 
 		- EF Core Konventionen 
@@ -130,13 +130,15 @@ services:
 
 
 # Bekannte Fehler
-- Kapitel mit Teilnehmern können nicht gelöscht werden
+- Module mit Teilnehmern können nicht gelöscht werden
 	- => es wird keine Fehlermeldung dem Nutzer gegeben
 - Punktzahlen werden den Studenten nicht auf der Chapter Liste angezeigt
-- Fehlermeldungen des Backends werden in der Regeln nicht dem Nutzer angezeigt
+- Fehlermeldungen des Backends werden in der Regel nicht dem Nutzer angezeigt
 - einige der Descriptions sind Required und können daher nicht leer gelassen werden
     - es kann unter Umständen zu Fehlern kommen, welche das Speichern verhindern
 - Löschen Funktionen (von Module, Kapiteln und Aufgaben) Funktionieren unter Umständen nicht
 - UI unterstützt keine Mobilgeräte
 - Einige der Metriken auf dem Data Dashboard sind nicht implementiert
 - Hinweis bei Cloze Text Erstellung erscheint nicht
+- beim Kopieren von Übungen, können alle Übungen von allen Lehrern kopiert werden
+  - => es wird nicht nach Besitzer / Ersteller der Übung gefiltert
