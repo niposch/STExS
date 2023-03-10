@@ -1,9 +1,15 @@
 <div *ngIf="this.gradingResults != null && this.exercise != null else loadingGradings" style="max-width: 1500px; margin:auto;">
 
   <!-- HEADER -->
-  <div class="vertical-container">
-    <mat-label style="margin-bottom: 5px">Grading Dashboard for Exercise</mat-label>
-    <mat-label class="exercise-title">{{this.exercise!.exerciseName}}</mat-label>
+  <div class="horizontal-container" style="justify-content: space-between">
+    <div class="vertical-container">
+      <mat-label style="margin-bottom: 5px">Grading Dashboard for Exercise</mat-label>
+      <mat-label class="exercise-title">{{this.exercise!.exerciseName}}</mat-label>
+    </div>
+
+    <mat-chip-list>
+      <mat-chip class="vertically-centered" selected disableRipple>{{this.exercise.exerciseType | exerciseType}}</mat-chip>
+    </mat-chip-list>
   </div>
 
   <div style="padding: 10px 0 10px 0">

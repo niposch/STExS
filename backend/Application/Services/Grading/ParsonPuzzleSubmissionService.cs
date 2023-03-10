@@ -57,7 +57,8 @@ public class ParsonPuzzleSubmissionService: IParsonPuzzleSubmissionService
                     ParsonElementId = el.ParsonElement!.Id,
                     SubmissionId = submissionId,
                     Indentation = el.DetailItem.Indentation,
-                    RunningNumber = i
+                    RunningNumber = i,
+                    Id = Guid.NewGuid()
                 })
                 .ToList(),
             UserId = userId,

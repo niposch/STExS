@@ -20,9 +20,6 @@ public class RepositoryModule : Module
 
     private void RegisterRepositories(ContainerBuilder builder)
     {
-        builder.RegisterType<WeatherForecastRepository>()
-            .As<IWeatherForecastRepository>()
-            .InstancePerLifetimeScope();
         builder.RegisterType<ParsonExerciseRepository>()
             .As<IParsonExerciseRepository>()
             .InstancePerLifetimeScope();

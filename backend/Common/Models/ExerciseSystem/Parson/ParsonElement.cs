@@ -15,4 +15,6 @@ public sealed class ParsonElement : DeletableBaseEntity, ICreationTimeTracked, I
 
     public DateTime CreationTime { get; set; }
     public DateTime? ModificationTime { get; set; }
+
+    public List<ParsonPuzzleAnswerItem> ReferencedInAnswerItems { get; set; } = new();
 }

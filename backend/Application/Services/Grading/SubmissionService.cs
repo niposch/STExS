@@ -81,6 +81,7 @@ public class SubmissionService:ISubmissionService
         {
             userSubmission.FinalSubmissionId = submission.Id;
             await this.repository.UserSubmissions.UpdateAsync(userSubmission, cancellationToken);
+            await this.timeTrackService.CloseTimeTrackAsync(timeTrackId, cancellationToken);
         }
         
         await this.gradingService.RunAutomaticGradingForExerciseAsync(submission);
@@ -95,5 +96,16 @@ public class SubmissionService:ISubmissionService
             .OrderByDescending(s => s.IsFinalSubmission)
             .ThenByDescending(s => s.CreationTime)
             .ToList();
+    }
+
+    public async Task<BaseSubmission> GetBySubmissionIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
+    {
+        var res = await this.repository.Submissions.TryGetByIdAsync(submissionId, cancellationToken);
+        if (res == null)
+        {
+            throw new EntityNotFoundException<BaseSubmission>(submissionId);
+        }
+        
+        return res;
     }
 }

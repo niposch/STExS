@@ -18,4 +18,8 @@ public interface IGradingService
         CancellationToken cancellationToken = default);
         
     public Task<ModuleReport> GetModuleReportAsync(Guid moduleId, CancellationToken cancellationToken = default);
+    
+    public Task<GradingResult?> GetGradingResultForSubmissionAsync(Guid submissionId, CancellationToken cancellationToken);
+    
+    public Task<GradingResult?> GetLatestGradingForExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
 }

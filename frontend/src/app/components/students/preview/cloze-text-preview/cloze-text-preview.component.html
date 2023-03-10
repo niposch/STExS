@@ -1,0 +1,15 @@
+<div *ngIf="this.exercise != null && this.submission != null" style="margin-top: 10px">
+  <!-- submitted solution -->
+  <div>
+    <mat-label class="heading">Submitted Answer</mat-label>
+    <app-view-cloze  [text]="this.exercise.text" [enableInputfield]="false" [answers]="this.submission.submittedAnswers"></app-view-cloze>
+  </div>
+
+  <mat-divider style="margin-top: 5px; margin-bottom: 5px"></mat-divider>
+
+  <!-- correct solution -->
+  <div>
+    <mat-label class="heading">Expected Answer</mat-label>
+    <app-view-cloze  [showSolutionsFromText]="true" [text]="this.exercise.text" [enableInputfield]="false"></app-view-cloze>
+  </div>
+</div>

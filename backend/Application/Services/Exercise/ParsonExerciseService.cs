@@ -25,8 +25,8 @@ public class ParsonExerciseService : IParsonExerciseService
     {
         var exercise = await this.repository.ParsonExercises.TryGetByIdAsync(exerciseId, cancellationToken) ?? throw new EntityNotFoundException<ParsonExercise>(exerciseId);
 
-        var hasUserSolvedExercise = await this.submissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
-        return this.ToDetailItemWithoutAnswers(exercise, hasUserSolvedExercise.FinalSubmissionId != null);
+        var hasUserSolvedExercise = await this.repository.UserSubmissions.TryGetByIdAsync(userId, exerciseId, cancellationToken);
+        return this.ToDetailItemWithoutAnswers(exercise, hasUserSolvedExercise?.FinalSubmissionId != null);
     }
 
     public async Task<ParsonExerciseDetailItemWithAnswer> GetByIdWithAnswerAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
@@ -108,7 +108,8 @@ public class ParsonExerciseService : IParsonExerciseService
             {
                 CodeElements = new List<ParsonElement>(),
                 OwnerId = userId,
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                IndentationIsRelevant = createItem.IndentationIsRelevant
             },
             RunningNumber = nextAvailableExerciseNumberInChapter,
             OwnerId = userId

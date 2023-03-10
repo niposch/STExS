@@ -54,7 +54,9 @@ export class GradingExerciseDashboardComponent implements OnInit {
       data:{
         exerciseId: element!.exerciseId!,
         userId: element.userId!
-      }
+      },
+      maxHeight: '90vh',
+      panelClass: 'grading-dialog'
     });
   }
 
@@ -65,6 +67,7 @@ export class GradingExerciseDashboardComponent implements OnInit {
         userId: element.userId!
       },
       maxHeight: '90vh',
+      panelClass: 'revision-history-dialog'
     })
 
   }

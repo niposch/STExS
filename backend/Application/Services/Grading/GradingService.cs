@@ -7,7 +7,9 @@ using Application.DTOs.ModuleDTOs;
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.Cloze;
 using Common.Models.ExerciseSystem.CodeOutput;
+using Common.Models.ExerciseSystem.Parson;
 using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 
@@ -20,14 +22,28 @@ public sealed class GradingService : IGradingService
     private readonly ICodeOutputGradingService codeOutputGradingService;
 
     private readonly IAccessService accessService;
+    
+    private readonly IParsonGradingService parsonGradingService;
+    
+    private readonly IClozeTextGradingService clozeTextGradingService;
+    private readonly IUserSubmissionService userSubmissionService;
+    private IApplicationRepository repository;
 
     public GradingService(IApplicationRepository applicationRepository,
         ICodeOutputGradingService codeOutputGradingService,
-        IAccessService accessService)
+        IAccessService accessService,
+        IParsonGradingService parsonGradingService,
+        IClozeTextGradingService clozeTextGradingService,
+        IUserSubmissionService userSubmissionService,
+        IApplicationRepository repository)
     {
         this.applicationRepository = applicationRepository;
         this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
         this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
+        this.parsonGradingService = parsonGradingService ?? throw new ArgumentNullException(nameof(parsonGradingService));
+        this.clozeTextGradingService = clozeTextGradingService ?? throw new ArgumentNullException(nameof(clozeTextGradingService));
+        this.userSubmissionService = userSubmissionService;
+        this.repository = repository;
     }
 
     public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
@@ -35,6 +51,32 @@ public sealed class GradingService : IGradingService
         if (submission is CodeOutputSubmission codeOutputSubmission)
         {
             await this.codeOutputGradingService.GradeAsync(codeOutputSubmission);
+        }
+
+        else if (submission is ParsonPuzzleSubmission parson)
+        {
+            await this.parsonGradingService.GradeAsync(parson);
+        }
+        
+        else if (submission is ClozeTextSubmission cloze)
+        {
+            await this.clozeTextGradingService.GradeAsync(cloze);
+        }
+        else
+        {
+            var grading = new GradingResult
+            {
+                Id = Guid.NewGuid(),
+                Comment = "Unable to grade automatically",
+                AppealableBefore = DateTime.Now.AddDays(14),
+                IsAutomaticallyGraded = true,
+                CreationDate = DateTime.Now,
+                GradedSubmissionId = submission.Id,
+                Points = 0,
+                GradingState = GradingState.NotGraded
+            };
+            
+            await this.applicationRepository.GradingResults.CreateAsync(grading);
         }
     }
 
@@ -50,11 +92,12 @@ public sealed class GradingService : IGradingService
             throw new EntityNotFoundException<BaseSubmission>(submissionId);
         }
 
-        if (!await this.accessService.IsModuleAdmin(submission.UserSubmission.Exercise.Chapter.Module.Id, changedByUserId, cancellationToken))
+        if (!await this.accessService.IsExerciseAdminAsync(submission.UserSubmission.ExerciseId, changedByUserId, cancellationToken))
         {
             throw new UnauthorizedAccessException();
         }
 
+        bool createNew = false;
         if (submission.GradingResult == null)
         {
             submission.GradingResult = new GradingResult
@@ -63,6 +106,7 @@ public sealed class GradingService : IGradingService
                 AppealDate = null,
                 GradedSubmissionId = submission.Id,
             };
+            createNew = true;
         }
 
         submission.GradingResult.Points = newGrade;
@@ -71,7 +115,15 @@ public sealed class GradingService : IGradingService
         submission.GradingResult.GradingState = GradingState.FinallyManuallyGraded;
         submission.GradingResult.IsAutomaticallyGraded = false;
         submission.GradingResult.AppealableBefore = null;
-        await this.applicationRepository.GradingResults.UpdateAsync(submission.GradingResult, cancellationToken);
+
+        if (createNew)
+        {
+            await this.applicationRepository.GradingResults.CreateAsync(submission.GradingResult, cancellationToken);
+        }
+        else
+        {
+            await this.applicationRepository.GradingResults.UpdateAsync(submission.GradingResult, cancellationToken);
+        }
     }
 
     public async Task<List<ExerciseReportItem>> GetExerciseReportAsync(Guid exerciseId, CancellationToken cancellationToken = default)
@@ -170,6 +222,45 @@ public sealed class GradingService : IGradingService
         return moduleReportItem;
     }
 
+    public async Task<GradingResult?> GetGradingResultForSubmissionAsync(Guid submissionId, CancellationToken cancellationToken)
+    {
+        var submission = await this.applicationRepository.Submissions.TryGetByIdAsync(submissionId, cancellationToken);
+        if (submission == null)
+        {
+            throw new EntityNotFoundException<BaseSubmission>(submissionId);
+        }
+
+        if (submission.GradingResult == null)
+        {
+            return null;
+        }
+
+        return submission.GradingResult;
+    }
+
+    public async Task<GradingResult?> GetLatestGradingForExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var latestSubmission = await this.GetLastSubmissionForAnsweringAsync(userId, exerciseId, cancellationToken);
+        var gradingResult = latestSubmission?.GradingResult;
+        
+        return gradingResult;
+    }
+
+    private async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
+        if(userSubmission == null)
+        {
+            return null;
+        }
+        if (userSubmission.FinalSubmissionId != null)
+        {
+            return await this.repository.Submissions.TryGetByIdAsync(userSubmission.FinalSubmissionId.Value, cancellationToken);
+        }
+
+        return null;
+    }
+
     private async Task<Dictionary<Guid/*ChapterId*/, Dictionary<Guid /*exerciseId*/, Dictionary<Guid/*UserId*/, UserSubmission>>>> GetModuleAndRelatedDataDictionary(Module module, CancellationToken cancellationToken = default)
     {
         var dict = new Dictionary<Guid, Dictionary<Guid, Dictionary<Guid, UserSubmission>>>();
@@ -261,7 +352,8 @@ public sealed class GradingService : IGradingService
                 .ToList(),
             Module = ModuleDetailItem.ToDetailItem(module),
             Distribution = pointDistribution,
-            AverageTimeInMilliseconds = averageTime
+            AverageTimeInMilliseconds = averageTime,
+            maximalAchievablePoints = chapterReports.Sum(c => c.maximalAchievablePoints)
         };
     }
 
@@ -324,7 +416,8 @@ public sealed class GradingService : IGradingService
                 .OrderBy(e => e.Exercise.RunningNumber)
                 .ToList(),
             Distribution = pointDistribution,
-            AverageTimeInMilliseconds = averageTime
+            AverageTimeInMilliseconds = averageTime,
+            maximalAchievablePoints = exerciseReports.Values.Sum(e => e.Exercise?.AchivablePoints ?? 0)
         };
     }
 

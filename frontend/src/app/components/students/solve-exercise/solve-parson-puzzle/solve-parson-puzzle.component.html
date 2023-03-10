@@ -20,20 +20,21 @@
 
       </app-indented-drop-list>
     </div>
-    <div *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton"></div>
-    <ng-template #submitButton>
-      <button class="submit" mat-raised-button color="accent"
-        (click)="this.createNewSubmission(this.timeTrackId,true,this.userSolution)">
-        <mat-label>submit</mat-label>
-      </button>
-    </ng-template>
-    <ng-template #disabledSubmitButton>
-      <button matTooltip="You have already submitted your final answer" class="submit mat-button-disabled" disableRipple
-        mat-raised-button color="accent">
-        submit
-      </button>
-
-    </ng-template>
+    <div style="margin: auto; display:flex; margin-top: 10px;">
+      <div *ngIf="exercise?.userHasSolvedExercise ?? false then disabledSubmitButton else submitButton" style="margin: auto; width: 100%"></div>
+      <ng-template #submitButton>
+        <button class="submit" mat-raised-button color="accent" style="width: 100%;  margin-bottom: 10px"
+          (click)="this.createNewSubmission(this.timeTrackId,true,this.userSolution)">
+          <mat-label>submit</mat-label>
+        </button>
+      </ng-template>
+      <ng-template #disabledSubmitButton>
+        <button matTooltip="You have already submitted your final answer" class="submit mat-button-disabled" disableRipple style="width: 100%;  margin-bottom: 10px"
+          mat-raised-button color="accent">
+          submit
+        </button>
+      </ng-template>
+    </div>
   </div>
   <ng-template #unableToDisplay>
     <div *ngIf="this.exercise == undefined else errorWhileLoading">

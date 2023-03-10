@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using System.Text.Encodings.Web;
 using Microsoft.Extensions.Options;
 
 namespace Application.Services;
@@ -19,7 +20,8 @@ public class EmailService : IEmailService
         CancellationToken cancellationToken = default)
     {
         var subject = "Confirm your email";
-        var message = $"Please confirm your email by clicking this link: {this.emailConfiguration.Value.FrontendUrl}/confirm-email?token={token}&userId={userId}";
+        var urlEncodedToken = WebUtility.UrlEncode(token);
+        var message = $"Please confirm your email by clicking this link: {this.emailConfiguration.Value.FrontendUrl}/confirm-email?token={urlEncodedToken}&userId={userId}";
 
         await this.SendEmailAsync(emailAddress, subject, message, cancellationToken);
     }

@@ -345,8 +345,7 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParsonElementId")
-                        .IsUnique();
+                    b.HasIndex("ParsonElementId");
 
                     b.HasIndex("SubmissionId");
 
@@ -514,40 +513,6 @@ namespace Repositories.Migrations
                     b.HasIndex("FinalSubmissionId");
 
                     b.ToTable("UserSubmissions");
-                });
-
-            modelBuilder.Entity("Common.Models.WeatherForecast", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ArchivedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TemperatureC")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("WeatherForecasts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -815,8 +780,8 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonPuzzleAnswerItem", b =>
                 {
                     b.HasOne("Common.Models.ExerciseSystem.Parson.ParsonElement", "ParsonElement")
-                        .WithOne()
-                        .HasForeignKey("Common.Models.ExerciseSystem.Parson.ParsonPuzzleAnswerItem", "ParsonElementId")
+                        .WithMany("ReferencedInAnswerItems")
+                        .HasForeignKey("ParsonElementId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -919,17 +884,6 @@ namespace Repositories.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Common.Models.WeatherForecast", b =>
-                {
-                    b.HasOne("Common.Models.Authentication.ApplicationUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Common.Models.Authentication.ApplicationRole", null)
@@ -1001,6 +955,11 @@ namespace Repositories.Migrations
                     b.Navigation("Chapters");
 
                     b.Navigation("ModuleParticipations");
+                });
+
+            modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonElement", b =>
+                {
+                    b.Navigation("ReferencedInAnswerItems");
                 });
 
             modelBuilder.Entity("Common.Models.ExerciseSystem.Parson.ParsonSolution", b =>

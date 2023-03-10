@@ -81,6 +81,25 @@ ISubmissionController<CodeOutputSubmissionCreateItem, CodeOutputSubmissionDetail
 
     #region Admin Routes
 
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CodeOutputSubmissionDetailItem))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [Route("getById")]
+    public async Task<IActionResult> GetSubmissionById([FromQuery] Guid submissionId, CancellationToken cancellationToken = default)
+    {
+        var submission = await this.submissionService.GetBySubmissionIdAsync(submissionId, cancellationToken);
+        if (submission is not CodeOutputSubmission codeOutputSubmission)
+            return this.NotFound();
+
+        var submissionDetailItem = new CodeOutputSubmissionDetailItem
+        {
+            SubmittedAnswer = codeOutputSubmission.SubmittedAnswer,
+            SubmittedAt = codeOutputSubmission.CreationTime
+        };
+
+        return this.Ok(submissionDetailItem);
+    }
 
     #endregion
 }

@@ -69,12 +69,9 @@ export class ChapterAdminListComponent implements OnInit {
 
   createChapter() {
     if ((this.chapterCreateItem.chapterName?.length ?? 0) == 0) {
-
       return;
     }
-    if ((this.chapterCreateItem.chapterDescription?.length ?? 0) == 0) {
-      return;
-    }
+    this.chapterCreateItem.chapterDescription ??= "";
 
     this.showLoading = true;
 

@@ -26,7 +26,7 @@ import { ExerciseService } from '../../../../../services/generated/services/exer
   styleUrls: ['./solve-parson-puzzle.component.scss'],
 })
 export class SolveParsonPuzzleComponent
-  implements OnInit, OnChanges, OnDestroy
+  implements OnInit, OnDestroy
 {
   @Input()
   public id: string | undefined;
@@ -34,9 +34,7 @@ export class SolveParsonPuzzleComponent
   public userSolution: ParsonExerciseLineDetailItem[] | null = null;
 
   public exercise: ParsonExerciseDetailItem | null | undefined;
-  @Output()
-  public solveChange: EventEmitter<any> = new EventEmitter<any>();
-  @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() solvedChange: EventEmitter<ExerciseDetailItem> = new EventEmitter<ExerciseDetailItem>();
   timeTrackId: string | null = null;
   isSaving: boolean = false;
   private tempSaving: number = null!;
@@ -55,7 +53,10 @@ export class SolveParsonPuzzleComponent
     }
 
     if (this.isUserIsWorkingOnExercise()) {
-      void this.saveTemporarily();
+      void this.saveTemporarily()
+        .then(() => {
+          void this.closeTimeTrack(this.timeTrackId!);
+        })
     }
   }
 
@@ -110,7 +111,7 @@ export class SolveParsonPuzzleComponent
       this.userSolution = tempSolution.submittedLines;
       this.possibleAnswers =
         this.possibleAnswers?.filter((x) => {
-          this.userSolution?.find((y) => y.id == x.id) == null;
+          return this.userSolution?.find((y) => y.id == x.id) == null;
         }) ?? [];
     }
     this.changeDetectorRef.detectChanges();
@@ -134,12 +135,6 @@ export class SolveParsonPuzzleComponent
     }
     await this.initialLoad(newExerciseId);
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] != null) {
-      // new exercise to work on
-      void this.handleExerciseChange(changes['id'].currentValue);
-    }
-  }
 
   private async saveTemporarily() {
     if (this.isUserIsWorkingOnExercise()) {
@@ -152,7 +147,7 @@ export class SolveParsonPuzzleComponent
     }
   }
 
-  createNewSubmission(
+  async createNewSubmission(
     timeTrackId: string | null,
     isFinal: boolean,
     userSolution: ParsonExerciseLineDetailItem[]
@@ -164,7 +159,7 @@ export class SolveParsonPuzzleComponent
       );
       return;
     }
-    void lastValueFrom(
+    await lastValueFrom(
       this.parsonSubmissionService.apiParsonPuzzleSubmissionSubmitTimeTrackIdPost(
         {
           body: {

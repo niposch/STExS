@@ -38,5 +38,6 @@ public enum GradingState
     Appealed,
     AppealAccepted,
     AppealRejected,
-    FinallyManuallyGraded
+    FinallyManuallyGraded,
+    NotGraded
 }

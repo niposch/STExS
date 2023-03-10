@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {WeatherForecastService} from "../services/generated/services/weather-forecast.service";
 
 @Component({
   selector: 'app-root',

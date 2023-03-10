@@ -7,7 +7,7 @@ namespace Repositories;
 public class ApplicationRepository : IApplicationRepository
 {
 #pragma warning disable
-    public ApplicationRepository(IWeatherForecastRepository weatherForecasts,
+    public ApplicationRepository(
         IModuleRepository modules,
         IChapterRepository chapters,
         IParsonElementRepository parsonElements,
@@ -23,7 +23,6 @@ public class ApplicationRepository : IApplicationRepository
         IClozeTextExerciseRepository clozeTextExercises)
 #pragma warning restore
     {
-        this.WeatherForecasts = weatherForecasts ?? throw new ArgumentNullException(nameof(weatherForecasts));
         this.Modules = modules ?? throw new ArgumentNullException(nameof(modules));
         this.Chapters = chapters ?? throw new ArgumentNullException(nameof(chapters));
         this.ParsonElements = parsonElements ?? throw new ArgumentNullException(nameof(parsonElements));
@@ -39,8 +38,6 @@ public class ApplicationRepository : IApplicationRepository
         this.GradingResults = gradingResults ?? throw new ArgumentNullException(nameof(gradingResults));
         this.TimeTracks = timeTracks ?? throw new ArgumentNullException(nameof(timeTracks));
     }
-
-    public IWeatherForecastRepository WeatherForecasts { get; set; } // just for demonstration, will be removed
 
     public IModuleRepository Modules { get; set; }
     public IChapterRepository Chapters { get; set; }

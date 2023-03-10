@@ -90,6 +90,30 @@ ISubmissionController<ClozeTextSubmissionCreateItem, ClozeTextSubmissionDetailIt
 
     #region Admin Routes
 
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClozeTextSubmissionDetailItem))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [Route("getById")]
+    public async Task<IActionResult> GetSubmissionById([FromQuery] Guid submissionId, CancellationToken cancellationToken = default)
+    {
+        var submission = await this.submissionService.GetBySubmissionIdAsync(submissionId, cancellationToken);
+        if (submission is not ClozeTextSubmission clozeTextSubmission)
+            return this.NotFound();
+
+        var submissionDetailItem = new ClozeTextSubmissionDetailItem
+        {
+            SubmittedAnswers = clozeTextSubmission
+                .SubmittedAnswers
+                .OrderBy(answer => answer.Index)
+                .Select(answer => answer.SubmittedAnswer)
+                .ToList(),
+            SubmittedAt = clozeTextSubmission.CreationTime,
+            ExerciseId = clozeTextSubmission.ExerciseId
+        };
+
+        return this.Ok(submissionDetailItem);
+    }
 
     #endregion
 }

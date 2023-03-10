@@ -14,10 +14,6 @@ public class ApplicationModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<WeatherService>()
-            .As<IWeatherService>()
-            .InstancePerLifetimeScope();
-
         builder.RegisterType<ExerciseService>()
             .As<IExerciseService>()
             .InstancePerLifetimeScope();
@@ -45,6 +41,14 @@ public class ApplicationModule : Module
 
         builder.RegisterType<CodeOutputGradingService>()
             .As<ICodeOutputGradingService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ClozeTextGradingService>()
+            .As<IClozeTextGradingService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ParsonGradingService>()
+            .As<IParsonGradingService>()
             .InstancePerLifetimeScope();
 
         builder.RegisterType<AccessService>()

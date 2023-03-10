@@ -31,6 +31,7 @@ public class CommonExerciseRepository : ICommonExerciseRepository
     {
         return await this.context.Exercises
             .Where(e => e.ChapterId == chapterId)
+            .OrderBy(e => e.RunningNumber)
             .ToListAsync(cancellationToken);
     }
 

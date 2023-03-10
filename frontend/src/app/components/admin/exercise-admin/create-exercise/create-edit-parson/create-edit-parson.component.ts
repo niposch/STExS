@@ -64,8 +64,10 @@ export class CreateEditParsonComponent implements OnInit {
           exerciseName: '',
           lines: [],
         } as ParsonExerciseCreateItem;
+        this.isLoading = false;
       } else {
         this.exercise = null;
+        this.isLoading = false;
       }
     });
   }

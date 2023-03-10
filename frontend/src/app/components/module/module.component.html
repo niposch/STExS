@@ -1,7 +1,7 @@
 <div *ngIf="module">
   <mat-progress-bar *ngIf="this.showLoading" color="accent" mode="indeterminate"></mat-progress-bar>
   <mat-card [ngClass]="this.showLoading ? 'hide-top-round-corners' : ''" style="height: fit-content">
-    <div  class="horizontal-space">
+    <div class="horizontal-space">
       <div class="vertical-container">
         <div class="module-name-container">
           <p *ngIf="!this.module.isArchived" class="module-name">{{module.moduleName}}</p>
@@ -9,24 +9,25 @@
           <mat-divider class="divider"></mat-divider>
         </div>
         <div class="card-content">
-          <quill-view-html *ngIf="!this.module.isArchived" [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
-          <quill-view-html *ngIf="this.module.isArchived" [content]="module.moduleDescription!" theme="bubble"></quill-view-html>
+          <quill-view-html *ngIf="!this.module.isArchived" [content]="module.moduleDescription!" theme="bubble">
+          </quill-view-html>
+          <quill-view-html *ngIf="this.module.isArchived" [content]="module.moduleDescription!" theme="bubble">
+          </quill-view-html>
         </div>
       </div>
       <div class="button-container option-panel">
         <div class="button-container">
-          <button *ngIf="isModuleAdmin" matTooltip="Edit this Module" matTooltipPosition="left" mat-button [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
+          <button *ngIf="isModuleAdmin" matTooltip="Edit this Module" matTooltipPosition="left" mat-button
+            [routerLink]="['/module/administrate']" [queryParams]="{id:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Edit Button" fontIcon="edit"></mat-icon>
           </button>
-          <button *ngIf="isModuleAdmin" matTooltip="Grading Dashboard" matTooltipPosition="left" mat-button [routerLink]="['/grading']" [queryParams]="{moduleid:this.module.moduleId}">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="done_all"></mat-icon>
-          </button>
-
-          <button mat-button *ngIf="isModuleAdmin" matTooltip="Data Dashboard" matTooltipPosition="left" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
+          <button mat-button *ngIf="isModuleAdmin" matTooltip="Data Dashboard" matTooltipPosition="left"
+            [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Data Dashboard" fontIcon="equalizer"></mat-icon>
           </button>
 
-          <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}" mat-button >Details
+          <button *ngIf="!isModuleAdmin" [routerLink]="['/module/details']" [queryParams]="{id:module.moduleId}"
+            mat-button>Details
             <mat-icon>info</mat-icon>
           </button>
           <!-- FAVORITE BUTTON -->
@@ -43,16 +44,20 @@
         <div class="button-container">
 
           <!-- ARCHIVE BUTTON -->
-          <button *ngIf="this.isModuleAdmin && !this.module.isArchived" mat-button matTooltip="Archive this Module" matTooltipPosition="left" color="warn" (click)="handleArchiving()">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="archive" ></mat-icon>
+          <button *ngIf="this.isModuleAdmin && !this.module.isArchived" mat-button matTooltip="Archive this Module"
+            matTooltipPosition="left" color="warn" (click)="handleArchiving()">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="archive"></mat-icon>
           </button>
-          <button *ngIf="this.isModuleAdmin && this.module.isArchived" matTooltip="Unarchive this Module" mat-button matTooltipPosition="left" color="primary" (click)="handleArchiving()">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="unarchive" ></mat-icon>
+          <button *ngIf="this.isModuleAdmin && this.module.isArchived" matTooltip="Unarchive this Module" mat-button
+            matTooltipPosition="left" color="primary" (click)="handleArchiving()">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="unarchive"></mat-icon>
           </button>
 
           <!-- DELETE BUTTON -->
-          <button *ngIf="this.isModuleAdmin" mat-button color="warn" matTooltip="Delete this Module" matTooltipPosition="left" (click)="openDeleteDialog()">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever" ></mat-icon>
+          <button *ngIf="this.isModuleAdmin" mat-button color="warn" matTooltip="Delete this Module"
+            matTooltipPosition="left" (click)="openDeleteDialog()">
+            <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever">
+            </mat-icon>
           </button>
         </div>
       </div>

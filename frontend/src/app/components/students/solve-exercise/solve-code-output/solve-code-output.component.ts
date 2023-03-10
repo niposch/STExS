@@ -21,6 +21,7 @@ import {CodeOutputSubmissionService} from '../../../../../services/generated/ser
 import {
   CodeOutputSubmissionDetailItem
 } from '../../../../../services/generated/models/code-output-submission-detail-item';
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 
 @Component({
   selector: 'app-solve-code-output',
@@ -35,7 +36,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
   public timeTrackId: string | null | undefined = null;
   public isLoading: boolean = false;
   public isSubmitting: boolean = false;
-  @Output() solvedChange : EventEmitter<any> = new EventEmitter<any>();
+  @Output() solvedChange : EventEmitter<ExerciseDetailItem> = new EventEmitter<ExerciseDetailItem>();
 
   constructor(
     private readonly codeoutputService: CodeOutputService,
@@ -60,6 +61,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
         )
         .subscribe((value) => {
           console.log('value', value);
+          if(this.timeTrackId == null) return;
           this.tempSave(value);
         });
     }
@@ -165,9 +167,12 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
         )
       )
       if (isFinal) {
-        this.solvedChange.emit({solved: true, exerciseId: this.exercise!.id!});
+        this.solvedChange.emit({userHasSolvedExercise: true, id: this.exercise!.id!});
         this.exercise!.userHasSolvedExercise = true;
       }
+      this.snackBar.open('Submission saved!', 'dismiss', {
+        duration: 2000,
+      })
       this.isSubmitting = false;
     } catch (err) {
       this.snackBar.open('Error while submitting the answer!', 'dismiss');

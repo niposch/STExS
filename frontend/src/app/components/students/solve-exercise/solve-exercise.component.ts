@@ -25,6 +25,7 @@ export class SolveExerciseComponent implements OnInit {
   public currentExerciseType: ExerciseType = 0;
   public exerciseType = ExerciseType;
   public showSubmissionWindow: boolean = true;
+  public showGrading: boolean = true;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -109,12 +110,15 @@ export class SolveExerciseComponent implements OnInit {
     this.updateCompType();
   }
 
-  changeSolvedStatus($event: any) {
+  changeSolvedStatus($event: ExerciseDetailItem) {
     console.log($event);
     let index = this.exerciseList.findIndex((e) => {
-      return e.id == $event.exerciseId;
+      return e.id == $event.id;
     })
-    this.exerciseList[index].userHasSolvedExercise = $event.solved;
+    this.exerciseList[index].userHasSolvedExercise = $event.userHasSolvedExercise;
     console.log(this.exerciseList)
+    this.showGrading = false;
+    this.changeDetectorRef.detectChanges();
+    this.showGrading = true;
   }
 }

@@ -5,7 +5,6 @@ namespace Common.RepositoryInterfaces.Generic;
 
 public interface IApplicationRepository
 {
-    public IWeatherForecastRepository WeatherForecasts { get; }
     IModuleRepository Modules { get; set; }
     IChapterRepository Chapters { get; set; }
     ICommonExerciseRepository CommonExercises { get; set; } // helper repository for querying all exercises

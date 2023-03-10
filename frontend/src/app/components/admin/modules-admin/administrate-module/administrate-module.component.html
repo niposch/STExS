@@ -31,11 +31,6 @@
       <!-- MODULE EDIT BUTTONS -->
       <div class="horizontal-flex space-items">
         <div>
-          <button matTooltip="Grading Dashboard" mat-button [routerLink]="['/grading']" [queryParams]="{moduleid:this.module.moduleId}">
-            <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="done_all"></mat-icon>
-            Grading
-          </button>
-
           <button mat-button matTooltip="Data Dashboard" [routerLink]="['/data']" [queryParams]="{moduleId:this.module.moduleId}">
             <mat-icon class="icon" aria-hidden="false" aria-label="Grading Results" fontIcon="equalizer"></mat-icon>
             Data
@@ -82,8 +77,8 @@
         <div class="horizontal-slider-div">
           <p class="vertically-centered margin-15-right">allowed participants:</p>
           <p class="vertically-centered slider-value-label">{{nrParticipantsText}}</p>
-          <mat-slider *ngIf="!this.isEditingPart" disabled class="vertically-centered" min="0" max="200" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
-          <mat-slider *ngIf="this.isEditingPart" class="vertically-centered" min="0" max="200" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+          <mat-slider *ngIf="!this.isEditingPart" disabled class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
+          <mat-slider *ngIf="this.isEditingPart" class="vertically-centered" min="0" max="205" step="5" [value]="nrParticipants" (input)="changePartNr($event)"></mat-slider>
         </div>
         <app-edit-button class="vertically-centered" [isEditing]="isEditingPart" (click)="partEditButton()"></app-edit-button>
       </div>

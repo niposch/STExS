@@ -58,7 +58,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { CreateEditParsonComponent } from './components/admin/exercise-admin/create-exercise/create-edit-parson/create-edit-parson.component';
 import {QuillModule} from "ngx-quill";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
-import { GradingModuleDashboardComponent } from './components/admin/grading/grading-module-dashboard/grading-module-dashboard.component';
 import { GradingExerciseDashboardComponent } from './components/admin/grading/grading-exercise-dashboard/grading-exercise-dashboard.component';
 import { SubmissionStatePipe } from './pipes/submission/submission-state.pipe';
 import { SubmissionGradingStatePipe } from './pipes/submission/submission-grading-state.pipe';
@@ -80,6 +79,12 @@ import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.
 import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
 import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
 import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
+import { ClozeTextPreviewComponent } from './components/students/preview/cloze-text-preview/cloze-text-preview.component';
+import { CodeOutputPreviewComponent } from './components/students/preview/code-output-preview/code-output-preview.component';
+import { ParsonPreviewComponent } from './components/students/preview/parson-preview/parson-preview.component';
+import { PreviewComponent } from './components/students/preview/preview.component';
+import { PointsPanelComponent } from './components/students/solve-exercise/points-panel/points-panel.component';
+import { GradingStatePipe } from './grading-state.pipe';
 
 @NgModule({
   declarations: [
@@ -111,7 +116,6 @@ import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
     SolveExerciseComponent,
     CreateEditParsonComponent,
     SolveGapTextComponent,
-    GradingModuleDashboardComponent,
     GradingExerciseDashboardComponent,
     SubmissionStatePipe,
     SubmissionGradingStatePipe,
@@ -129,6 +133,12 @@ import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
     RevisionItemComponent,
     GradingDialogComponent,
     ExerciseTypePipe,
+    ClozeTextPreviewComponent,
+    CodeOutputPreviewComponent,
+    ParsonPreviewComponent,
+    PreviewComponent,
+    PointsPanelComponent,
+    GradingStatePipe,
   ],
   imports: [
     BrowserModule,
