@@ -38,7 +38,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Chapter> Chapters { get; set; }
 
     public DbSet<ModuleParticipation> ModuleParticipations { get; set; }
-
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
@@ -87,6 +87,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<UserSubmission> UserSubmissions { get; set; }
 
     public DbSet<TimeTrack> TimeTracks { get; set; }
+
+    public DbSet<ParsonPuzzleAnswerItem> ParsonPuzzleAnswerItems { get; set; }
 
     public void ConfigureGrading(ModelBuilder builder)
     {
@@ -138,6 +140,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             .HasValue<ParsonPuzzleSubmission>(ExerciseType.Parson)
             .HasValue<CodeOutputSubmission>(ExerciseType.CodeOutput)
             .HasValue<ClozeTextSubmission>(ExerciseType.ClozeText);
+        
+        builder.Entity<ParsonPuzzleSubmission>()
+            .HasMany<ParsonPuzzleAnswerItem>(s => s.AnswerItems)
+            .WithOne(p => p.Submission)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.Entity<ParsonPuzzleAnswerItem>()
+            .HasOne(ppa => ppa.ParsonElement)
+            .WithOne()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<TimeTrack>()
             .HasOne(t => t.UserSubmission)

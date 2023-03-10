@@ -1,4 +1,6 @@
-﻿using Common.Models.Grading;
+﻿using Common.Models.ExerciseSystem.Cloze;
+using Common.Models.ExerciseSystem.Parson;
+using Common.Models.Grading;
 using Common.RepositoryInterfaces.Generic;
 using Common.RepositoryInterfaces.Tables;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +20,13 @@ public class UserSubmissionRepository : IUSerSubmissionRepository
     public async Task<UserSubmission?> TryGetByIdAsync(Guid userId, Guid exerciseId,
         CancellationToken cancellationToken = default)
     {
+        //Include submissions twice so both AnsweItem types will be fetched; EF should consolidate joins according to docs.
         var ex = await this.context.UserSubmissions
             .Include(s => s.Submissions)
+            .ThenInclude(s => (s as ParsonPuzzleSubmission).AnswerItems)
+            .ThenInclude(a => a.ParsonElement)
+            .Include(s => s.Submissions)
+            .ThenInclude(s => (s as ClozeTextSubmission).SubmittedAnswers)
             .FirstOrDefaultAsync(e => e.ExerciseId == exerciseId && e.UserId == userId,
             cancellationToken);
         return ex;
