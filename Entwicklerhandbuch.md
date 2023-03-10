@@ -137,4 +137,6 @@ services:
 - einige der Descriptions sind Required und können daher nicht leer gelassen werden
     - es kann unter Umständen zu Fehlern kommen, welche das Speichern verhindern
 - Löschen Funktionen (von Module, Kapiteln und Aufgaben) Funktionieren unter Umständen nicht
-- UI Unterstützt keine Mobilgeräte
+- UI unterstützt keine Mobilgeräte
+- Einige der Metriken auf dem Data Dashboard sind nicht implementiert
+- Hinweis bei Cloze Text Erstellung erscheint nicht
