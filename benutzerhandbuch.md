@@ -55,16 +55,24 @@
 - Dashboard: Übersicht über beigetretene Module + Liste aller Module
 - Modul-Detailseite: Übersicht über ein Modul (Titel, Beschreibung, Kapitel, Teilnehmeranzahl, Eigentümer, Erstellungsdatum)
 - Kapitel-Lösen: Liste aller Übungen im Kapitel, Anzeigen der aktuellen Übung mit Lösungsmöglichkeit (je nach Übungstyp)
+  - mit automatischen Zwischenspeichern und manueller finaler Abgabe
+  - nach finaler Abgabe wird die erreichte Punktzahl angezeigt (zunächst die automatisch vergebene Punktzahl, nach manuellem Grading auch die manuell vergebene Punktzahl)
 - E-Mail verifizieren: Nach dem Login sollte der Nutzer eine E-Mail erhalten (ist implementiert, allerdings nicht einfach ohne Mailserver umsetzbar, daher deaktiviert), die ihn auffordert seine E-Mail zu verifizieren.
 
 ### Funktionen explizit für Lehrer und Admins
 - Erstellen und Verwalten von Modulen, Kapiteln und Übungen
 - Erstellen, Bearbeiten, Archivieren, Löschen von Modulen über die Modul-Seite
 - Einsehen von Daten für ein Modul, manuelle Bewertung von Abgaben über die Data-Dashboard / Grading-Seite (erreichbar über Modul-Seite / Modul-Bearbeiten-Seite)
-- Einsehen von Abgaben, Bearbeitungszeiten von einer Aufgabe und vergabe von Punkten (Grading-Seite)
 - Akzeptieren / Ablehnen von Beitrittsanfragen von Studenten über die Modul-Seite
 - Erstellen, Bearbeiten, Löschen neuer Kapitel über die Modul-Bearbeiten-Seite
 - Erstellen, Bearbeiten, Löschen und Hinzufügen von bereits existierenden Übungen zu einem Kapitel über die Kapitel-Bearbeiten-Seite
+- Einsehen von Abgaben, Bearbeitungszeiten von einer Aufgabe und vergabe von Punkten (Grading-Seite)
+  - Historie von Abgaben mit Zeitstempel und temporären / finaler Lösung für eine Aufgabe
+  - Möglichkeit zur Bearbeitung der (automatisch vergebenen) Punktzahl für eine Aufgabe
+  - Automatisch vergebene Punktzahlen werden für die verschiedenen Übungenstypen unterschiedlich berechnet
+    - Code Output vergleicht die erwartete Antwort mit der tatsächlichen Antwort (volle Punktzahl oder nicht)
+    - Parson Puzzle vergleicht die korrekte Reihenfolge und Einrückung mit der tatsächlichen Reihenfolge und Einrückung (allerdings kann eine Verschiebung einer Zeile 0 Punkte zur Folge haben, da alle darauf folgenden Zeilen in der falschen Zeile stehen)
+    - Cloze Text vergleicht die korrekten Antworten mit den eingegebenen Antworten (pro korrekter Lücke einen Punkt)
 
 ### Funktionen explizit für Admins
 - User-Verwaltung: Liste aller Nutzer mit Rollen und Möglichkeit diese zu ändern, Anzeige ob E-Mail verifiziert
