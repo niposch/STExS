@@ -2,6 +2,7 @@
 using Application.Services.Interfaces;
 using Common.Exceptions;
 using Common.Models.ExerciseSystem;
+using Common.Models.ExerciseSystem.Parson;
 using Common.RepositoryInterfaces.Generic;
 
 namespace Application.Services;
@@ -9,10 +10,14 @@ namespace Application.Services;
 public sealed class ExerciseService : IExerciseService
 {
     private readonly IApplicationRepository repository;
+    private readonly IParsonExerciseService parsonExerciseService;
 
-    public ExerciseService(IApplicationRepository repository)
+
+    public ExerciseService(IApplicationRepository repository, IParsonExerciseService parsonExerciseService)
     {
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        this.parsonExerciseService =
+            parsonExerciseService ?? throw new ArgumentException(nameof(parsonExerciseService));
     }
 
     public async Task<ExerciseDetailItem> CopyToChapterAsync(Guid existingExerciseId, Guid chapterToCopyTo, CancellationToken cancellationToken = default)
@@ -25,17 +30,60 @@ public sealed class ExerciseService : IExerciseService
             .DefaultIfEmpty(0)
             .Max() + 1;
 
+        Guid originalId = exercise.Id;
+        
         exercise.Id = Guid.NewGuid();
 
         exercise.ChapterId = chapterToCopyTo;
         exercise.Chapter = null!;
         exercise.RunningNumber = nextAvailableRunningNumber;
-
+        
         exercise = await this.repository.CommonExercises.AddAsync(exercise, cancellationToken);
+
+        if (exercise is ParsonExercise parsonExercise)
+            try
+            {
+                await this.CopySolutionAndElementsAsync(parsonExercise, originalId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                await this.repository.CommonExercises.DeleteAsync(exercise.Id, cancellationToken);
+                throw new Exception();
+            }
 
         return ToDetailItem(exercise, null);
     }
 
+    private async Task CopySolutionAndElementsAsync(ParsonExercise exercise, Guid originalId,
+        CancellationToken cancellationToken = default)
+    {
+        var originalExercise = await this.repository.ParsonExercises.TryGetByIdAsync(originalId, cancellationToken);
+
+        if (originalExercise == null)
+        {
+            throw new NullReferenceException("Original konnte nicht gefunden werden!");
+        }
+
+        var solution = originalExercise.ExpectedSolution;
+        var elements = solution.CodeElements;
+
+        solution.Id = new Guid();
+        solution.RelatedExerciseId = exercise.Id;
+        solution.RelatedExercise = exercise;
+        solution.OwnerId = exercise.OwnerId;
+
+        foreach (var codeElement in elements)
+        {
+            codeElement.RelatedSolutionId = solution.Id;
+            codeElement.CreationTime = DateTime.Now;
+            codeElement.ModificationTime = codeElement.CreationTime;
+        }
+
+        solution.CodeElements = elements;
+        
+        await this.repository.ParsonSolutions.AddAsync(solution, cancellationToken);
+    }
+    
     public async Task<List<ExerciseDetailItem>> GetByChapterIdAsync(Guid chapterId, Guid userId, CancellationToken cancellationToken = default)
     {
         var exercises = await this.repository.CommonExercises.GetForChapterAsync(chapterId, cancellationToken);
