@@ -96,4 +96,15 @@ public class SubmissionService:ISubmissionService
             .ThenByDescending(s => s.CreationTime)
             .ToList();
     }
+
+    public async Task<BaseSubmission> GetBySubmissionIdAsync(Guid submissionId, CancellationToken cancellationToken = default)
+    {
+        var res = await this.repository.Submissions.TryGetByIdAsync(submissionId, cancellationToken);
+        if (res == null)
+        {
+            throw new EntityNotFoundException<BaseSubmission>(submissionId);
+        }
+        
+        return res;
+    }
 }

@@ -1,0 +1,17 @@
+<ng-container [ngSwitch]="exerciseType">
+  <app-code-output-preview *ngSwitchCase="ExerciseType.CodeOutput" [exerciseId]="exerciseId" [submissionId]="submissionId" >
+
+  </app-code-output-preview>
+
+  <app-cloze-text-preview *ngSwitchCase="ExerciseType.ClozeText" [exerciseId]="exerciseId" [submissionId]="submissionId">
+  </app-cloze-text-preview>
+
+  <app-parson-preview *ngSwitchCase="ExerciseType.Parson" [exerciseId]="exerciseId" [submissionId]="submissionId">
+
+  </app-parson-preview>
+
+  <div *ngSwitchDefault>
+    <p>Exercise type not supported</p>
+  </div>
+</ng-container>
+

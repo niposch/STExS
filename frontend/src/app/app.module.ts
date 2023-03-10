@@ -79,6 +79,10 @@ import { TimeTrackEventTypePipe } from './pipes/timeTrack/time-track-event-type.
 import { RevisionItemComponent } from './components/admin/grading/revision-history/revision-item/revision-item.component';
 import { GradingDialogComponent } from './components/admin/grading/grading-dialog/grading-dialog.component';
 import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
+import { ClozeTextPreviewComponent } from './components/students/preview/cloze-text-preview/cloze-text-preview.component';
+import { CodeOutputPreviewComponent } from './components/students/preview/code-output-preview/code-output-preview.component';
+import { ParsonPreviewComponent } from './components/students/preview/parson-preview/parson-preview.component';
+import { PreviewComponent } from './components/students/preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +131,10 @@ import { ExerciseTypePipe } from './pipes/exercise-type/exercise-type.pipe';
     RevisionItemComponent,
     GradingDialogComponent,
     ExerciseTypePipe,
+    ClozeTextPreviewComponent,
+    CodeOutputPreviewComponent,
+    ParsonPreviewComponent,
+    PreviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,4 +19,6 @@ public interface ISubmissionService
         CancellationToken cancellationToken = default);
 
     Task<List<SubmissionDetailItem>> GetSubmissionsForUserAndExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default);
+    
+    Task<BaseSubmission> GetBySubmissionIdAsync(Guid submissionId, CancellationToken cancellationToken = default);
 }

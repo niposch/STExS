@@ -1,8 +1,23 @@
 <div *ngIf="submissions != null else noData">
-  <div *ngFor="let submission of submissions">
-    {{submission.isFinalSubmission ? 'final' : 'temporary'}}
-    {{submission.creationTime}}
-    {{submis
+
+  <div *ngFor="let submission of submissions" >
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <div style="display: flex; align-items: center">
+          <mat-chip-list style="padding-right: 10px">
+
+            <mat-chip disableRipple [selected]="submission.isFinalSubmission">
+              {{submission.isFinalSubmission ? 'final' : 'temporary'}}
+            </mat-chip>
+          </mat-chip-list>
+          {{submission.creationTime | date : 'medium'}}
+        </div>
+      </mat-expansion-panel-header>
+      <app-preview [exerciseId]="submission.exerciseId!" [submissionId]="submission.submissionId ?? null" [exerciseType]="submission.exerciseType!"></app-preview>
+    </mat-expansion-panel>
+  </div>
+  <div *ngIf="submissions.length == 0">
+    no submissions found
   </div>
 </div>
 
