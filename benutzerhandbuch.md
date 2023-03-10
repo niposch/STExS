@@ -1,5 +1,7 @@
 # Benutzerhandbuch für STExS
 
+"Ist das ein Bug? Ist das ein Feature? Nein, das ist STExS" ~ Nick, Software Architekt
+
 ---
 
 ## Nutzertypen
@@ -39,6 +41,8 @@
   - Code Output: Beschreibung für die Frage, Expected Answer für erwartete (korrekte) Antwort
   - Parson Puzzle: Beschreibung für die Frage, Codezeilen und deren korrekte Reihenfolge (per Drag & Drop)
   - Cloze Text: Beschreibung für die Frage, Lückentext mit korrekten Wörtern (Lücken mittels [[]] gekennzeichnet)
+
+---
 
 ## Funktionen
 - Admins und Lehrer können alles, was Studenten auch können (aber können nicht ihre eigenen Module lösen)
