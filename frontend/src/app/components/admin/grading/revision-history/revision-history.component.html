@@ -1,5 +1,5 @@
 
-<div *ngIf="this.events != null else noData" style="padding-right: 15px;">
+<div *ngIf="this.events != null else noData" style="padding-right: 15px; min-width: 450px">
   <div *ngFor="let event of this.events">
     <app-revision-item [event]="event"></app-revision-item>
   </div>

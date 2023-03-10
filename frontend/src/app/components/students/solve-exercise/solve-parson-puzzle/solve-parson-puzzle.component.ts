@@ -26,7 +26,7 @@ import { ExerciseService } from '../../../../../services/generated/services/exer
   styleUrls: ['./solve-parson-puzzle.component.scss'],
 })
 export class SolveParsonPuzzleComponent
-  implements OnInit, OnChanges, OnDestroy
+  implements OnInit, OnDestroy
 {
   @Input()
   public id: string | undefined;
@@ -53,7 +53,10 @@ export class SolveParsonPuzzleComponent
     }
 
     if (this.isUserIsWorkingOnExercise()) {
-      void this.saveTemporarily();
+      void this.saveTemporarily()
+        .then(() => {
+          void this.closeTimeTrack(this.timeTrackId!);
+        })
     }
   }
 
@@ -132,12 +135,6 @@ export class SolveParsonPuzzleComponent
     }
     await this.initialLoad(newExerciseId);
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] != null) {
-      // new exercise to work on
-      void this.handleExerciseChange(changes['id'].currentValue);
-    }
-  }
 
   private async saveTemporarily() {
     if (this.isUserIsWorkingOnExercise()) {
@@ -150,7 +147,7 @@ export class SolveParsonPuzzleComponent
     }
   }
 
-  createNewSubmission(
+  async createNewSubmission(
     timeTrackId: string | null,
     isFinal: boolean,
     userSolution: ParsonExerciseLineDetailItem[]
@@ -162,7 +159,7 @@ export class SolveParsonPuzzleComponent
       );
       return;
     }
-    void lastValueFrom(
+    await lastValueFrom(
       this.parsonSubmissionService.apiParsonPuzzleSubmissionSubmitTimeTrackIdPost(
         {
           body: {
