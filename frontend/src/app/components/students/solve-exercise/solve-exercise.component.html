@@ -27,7 +27,7 @@
     <app-solve-gap-text *ngIf="this.currentExerciseType == exerciseType.ClozeText" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-gap-text>
     <app-solve-parson-puzzle *ngIf="this.currentExerciseType == exerciseType.Parson" [id]="this.currentExerciseId" (solvedChange)="changeSolvedStatus($event)"></app-solve-parson-puzzle>
     <div style="margin-top: 10px">
-      <app-points-panel [exerciseId]="this.currentExerciseId"></app-points-panel>
+      <app-points-panel *ngIf="this.showGrading" [exerciseId]="this.currentExerciseId" ></app-points-panel>
     </div>
   </div>
   <mat-spinner *ngIf="this.isLoading" style="margin: auto; scale: 0.5;"></mat-spinner>

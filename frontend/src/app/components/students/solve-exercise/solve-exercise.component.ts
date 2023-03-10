@@ -25,6 +25,7 @@ export class SolveExerciseComponent implements OnInit {
   public currentExerciseType: ExerciseType = 0;
   public exerciseType = ExerciseType;
   public showSubmissionWindow: boolean = true;
+  public showGrading: boolean = true;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -116,5 +117,8 @@ export class SolveExerciseComponent implements OnInit {
     })
     this.exerciseList[index].userHasSolvedExercise = $event.userHasSolvedExercise;
     console.log(this.exerciseList)
+    this.showGrading = false;
+    this.changeDetectorRef.detectChanges();
+    this.showGrading = true;
   }
 }
