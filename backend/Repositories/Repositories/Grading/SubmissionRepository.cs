@@ -24,6 +24,7 @@ public class SubmissionRepository : ISubmissionRepository
             .Include(e => ((e as ParsonPuzzleSubmission)!).AnswerItems)
             .ThenInclude(s => s.ParsonElement)
             .Include(e => e.GradingResult)
+            .Include(s => s.UserSubmission)
             .FirstOrDefaultAsync(e => e.Id == submissionId,
             cancellationToken);
         return ex;

@@ -54,6 +54,10 @@ public sealed class ClozeTextGradingService: IClozeTextGradingService
     private int CalculateScore(ClozeTextSubmission submission, ClozeTextExercise exercise)
     {
         var answers = this.clozeTextHelper.GetAnswers(exercise.TextWithAnswers);
+        if (answers.Count != exercise.AchievablePoints)
+        {
+            return 0;
+        }
         var submittedAnswers = submission.SubmittedAnswers
             .OrderBy(s => s.Index)
             .Select(s => s.SubmittedAnswer)

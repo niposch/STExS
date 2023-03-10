@@ -54,25 +54,25 @@ public class GradingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetGradingReport([FromQuery] Guid submissionId, CancellationToken cancellationToken = default)
     {
-        var res = await this.submissionService.GetBySubmissionIdAsync(submissionId, cancellationToken);
-        if (res?.GradingResult == null)
+        var res = await this.gradingService.GetGradingResultForSubmissionAsync(submissionId, cancellationToken);
+        if (res == null)
         {
-            return this.StatusCode(StatusCodes.Status404NotFound);
+            return this.NotFound();
         }
 
         var detailItem = new GradingResultDetailItem
         {
-            Points = res.GradingResult.Points,
-            Id = res.GradingResult.Id,
-            Comment = res.GradingResult.Comment,
-            AppealableBefore = res.GradingResult.AppealableBefore,
-            GradingState = res.GradingResult.GradingState,
-            AppealDate = res.GradingResult.AppealDate,
-            CreationDate = res.GradingResult.CreationDate,
-            AutomaticGradingDate = res.GradingResult.AutomaticGradingDate,
-            GradedSubmissionId = res.GradingResult.GradedSubmissionId,
-            IsAutomaticallyGraded = res.GradingResult.IsAutomaticallyGraded,
-            ManualGradingDate = res.GradingResult.ManualGradingDate
+            Points = res.Points,
+            Id = res.Id,
+            Comment = res.Comment,
+            AppealableBefore = res.AppealableBefore,
+            GradingState = res.GradingState,
+            AppealDate = res.AppealDate,
+            CreationDate = res.CreationDate,
+            AutomaticGradingDate = res.AutomaticGradingDate,
+            GradedSubmissionId = res.GradedSubmissionId,
+            IsAutomaticallyGraded = res.IsAutomaticallyGraded,
+            ManualGradingDate = res.ManualGradingDate
         };
         
         return this.Ok(detailItem);

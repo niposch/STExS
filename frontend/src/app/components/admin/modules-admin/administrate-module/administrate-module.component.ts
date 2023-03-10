@@ -226,9 +226,9 @@ export class AdministrateModuleComponent implements OnInit {
     let value = $event.value;
     this.nrParticipants = Number(value);
 
-    if (value == null || value >= 200) {
+    if (value == null || value > 200) {
       this.nrParticipantsText = "not limited"
-      this.nrParticipants = 200;
+      this.nrParticipants = null;
     } else {
       // @ts-ignore
       this.nrParticipantsText = this.nrParticipants.toString();

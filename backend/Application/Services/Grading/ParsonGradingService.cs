@@ -50,12 +50,18 @@ public sealed class ParsonGradingService: IParsonGradingService
 
     private int CalculateScore(ParsonPuzzleSubmission submission, ParsonSolution solution)
     {
+        if(solution.CodeElements.Count != solution.RelatedExercise.AchievablePoints)
+        {
+            return 0;
+        }
+        submission.AnswerItems = submission.AnswerItems.OrderBy(a => a.RunningNumber).ToList();
+        solution.CodeElements = solution.CodeElements.OrderBy(c => c.RunningNumber).ToList();
         int score = 0;
         for(var i = 0; i< submission.AnswerItems.Count; i++)
         {
             var submittedAnswer = submission.AnswerItems[i];
             var correctAnswer = solution.CodeElements[i];
-            if (submittedAnswer.Indentation == correctAnswer.Indentation && submittedAnswer.ParsonElement.Code == correctAnswer.Code)
+            if ((!solution.IndentationIsRelevant || submittedAnswer.Indentation == correctAnswer.Indentation) && submittedAnswer.ParsonElement.Code == correctAnswer.Code)
             {
                 score += 1;
             }

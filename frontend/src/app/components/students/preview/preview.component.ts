@@ -1,11 +1,12 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ExerciseType} from "../../../../services/generated/models/exercise-type";
 import {ExerciseDetailItem} from "../../../../services/generated/models/exercise-detail-item";
-import {lastValueFrom} from "rxjs";
+import {catchError, lastValueFrom, map, of} from "rxjs";
 import {ExerciseService} from "../../../../services/generated/services/exercise.service";
 import {GradingResultDetailItem} from "../../../../services/generated/models/grading-result-detail-item";
 import {GradingService} from "../../../../services/generated/services/grading.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {GradingState} from "../../../../services/generated/models/grading-state";
 
 @Component({
   selector: 'app-preview',
@@ -34,9 +35,29 @@ export class PreviewComponent implements OnInit, OnChanges {
       exerciseId: this.exerciseId
     }))
     if(this.submissionId != null){
-      this.grading = await lastValueFrom(this.gradingService.apiGradingGradingForSubmissionGet$Json({
+      this.grading = await lastValueFrom(this.gradingService.apiGradingGradingForSubmissionGet$Json$Response({
         submissionId: this.submissionId
-      }))
+      }).pipe(map(resp =>{
+
+        if(resp.status == 200) {
+          return resp.body;
+        }
+        return null;
+      }),
+        catchError(resp => {
+          if(resp.status != 404){
+            return of(null);
+          }
+
+          console.log("Handeling 404")
+          return of({
+            comment: "",
+            points: 0,
+            gradingState:GradingState.NotGraded,
+            gradedSubmissionId: this.submissionId
+          } as GradingResultDetailItem)
+        })))
+
     }
   }
 

@@ -34,8 +34,6 @@ export class SolveParsonPuzzleComponent
   public userSolution: ParsonExerciseLineDetailItem[] | null = null;
 
   public exercise: ParsonExerciseDetailItem | null | undefined;
-  @Output()
-  public solveChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
   timeTrackId: string | null = null;
   isSaving: boolean = false;
@@ -110,7 +108,7 @@ export class SolveParsonPuzzleComponent
       this.userSolution = tempSolution.submittedLines;
       this.possibleAnswers =
         this.possibleAnswers?.filter((x) => {
-          this.userSolution?.find((y) => y.id == x.id) == null;
+          return this.userSolution?.find((y) => y.id == x.id) == null;
         }) ?? [];
     }
     this.changeDetectorRef.detectChanges();
@@ -140,7 +138,7 @@ export class SolveParsonPuzzleComponent
       void this.handleExerciseChange(changes['id'].currentValue);
     }
   }
-
+  
   private async saveTemporarily() {
     if (this.isUserIsWorkingOnExercise()) {
       await this.createNewSubmission(

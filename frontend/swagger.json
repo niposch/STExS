@@ -4360,7 +4360,8 @@
           3,
           4,
           5,
-          6
+          6,
+          7
         ],
         "type": "integer",
         "format": "int32",
@@ -4371,7 +4372,8 @@
           "Appealed",
           "AppealAccepted",
           "AppealRejected",
-          "FinallyManuallyGraded"
+          "FinallyManuallyGraded",
+          "NotGraded"
         ]
       },
       "IdentityError": {
