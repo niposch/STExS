@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewClozeComponent } from 'src/app/components/admin/exercise-admin/create-edit-cloze/view-cloze/view-cloze.component';
 import { ClozeTextSubmissionService } from '../../../../../services/generated/services/cloze-text-submission.service';
 import { ClozeTextSubmissionDetailItem } from '../../../../../services/generated/models/cloze-text-submission-detail-item';
+import {ExerciseDetailItem} from "../../../../../services/generated/models/exercise-detail-item";
 
 @Component({
   selector: 'app-solve-gap-text',
@@ -27,7 +28,7 @@ import { ClozeTextSubmissionDetailItem } from '../../../../../services/generated
 })
 export class SolveGapTextComponent implements OnInit, OnDestroy {
   @Input() id: string = '';
-  @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() solvedChange: EventEmitter<ExerciseDetailItem> = new EventEmitter<ExerciseDetailItem>();
 
   public timeTrackId: string | null | undefined;
 
@@ -130,7 +131,14 @@ export class SolveGapTextComponent implements OnInit, OnDestroy {
           isFinalSubmission: isFinal,
         }
       )
-    ).catch(() => {
+    ).then(() => {
+      if (isFinal) this.solvedChange.emit(this.exercise!);
+
+      this.snackBar.open('Submission saved!', 'dismiss', {
+        duration: 2000,
+      })
+    })
+      .catch(() => {
       this.snackBar.open('Error: Could not save the submission!', 'dismiss');
       if (this.exercise != null) {
         this.exercise.userHasSolvedExercise = previousFinalState;

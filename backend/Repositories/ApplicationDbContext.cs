@@ -147,7 +147,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         
         builder.Entity<ParsonPuzzleAnswerItem>()
             .HasOne(ppa => ppa.ParsonElement)
-            .WithOne()
+            .WithMany(pe => pe.ReferencedInAnswerItems)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -69,6 +69,7 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
             var submissionDetailItem = new ParsonPuzzleSubmissionDetailItem
             {
                 SubmittedLines = parsonPuzzleSubmission.AnswerItems
+                    .OrderBy(item => item.RunningNumber)
                     .Select(line => new ParsonExerciseLineDetailItem
                     {
                         Id = line.ParsonElement.Id,
@@ -108,6 +109,7 @@ ISubmissionController<ParsonPuzzleSubmissionCreateItem, ParsonPuzzleSubmissionDe
         var submissionDetailItem = new ParsonPuzzleSubmissionDetailItem
         {
             SubmittedLines = parsonPuzzleSubmission.AnswerItems
+                .OrderBy(item => item.RunningNumber)
                 .Select(line => new ParsonExerciseLineDetailItem
                 {
                     Id = line.Id,

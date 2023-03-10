@@ -34,7 +34,7 @@ export class SolveParsonPuzzleComponent
   public userSolution: ParsonExerciseLineDetailItem[] | null = null;
 
   public exercise: ParsonExerciseDetailItem | null | undefined;
-  @Output() solvedChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() solvedChange: EventEmitter<ExerciseDetailItem> = new EventEmitter<ExerciseDetailItem>();
   timeTrackId: string | null = null;
   isSaving: boolean = false;
   private tempSaving: number = null!;
@@ -138,7 +138,7 @@ export class SolveParsonPuzzleComponent
       void this.handleExerciseChange(changes['id'].currentValue);
     }
   }
-  
+
   private async saveTemporarily() {
     if (this.isUserIsWorkingOnExercise()) {
       await this.createNewSubmission(

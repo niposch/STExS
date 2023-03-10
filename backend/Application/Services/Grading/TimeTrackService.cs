@@ -109,28 +109,28 @@ public class TimeTrackService : ITimeTrackService
         for(var timeTrackNumber = 0; timeTrackNumber <timeTracks.Count; timeTrackNumber++)
         {
             var timeTrack = timeTracks[timeTrackNumber];
-            var nextTimeTrack = timeTrackNumber < timeTracks.Count - 1 ? timeTracks[timeTrackNumber + 1] : null;
+            var nextTimeTrack = timeTrackNumber > 0 ? timeTracks[timeTrackNumber - 1] : null;
 
             bool closedProperly = false;
-            if(timeTrack.CloseDateTime == null)
+            
+            if (timeTrack.CloseDateTime != null)
             {
-                if(timeTrackNumber < timeTracks.Count - 1)
+                closedProperly = true;
+            }
+            else if (nextTimeTrack != null)
+            {
+                if (timeTrack.Start.AddHours(6) >= nextTimeTrack.Start)
                 {
-                    if (timeTrack.Start.AddHours(6) < timeTracks[timeTrackNumber + 1].Start)
-                    {
-                        timeTrack.CloseDateTime = timeTracks[timeTrackNumber + 1].Start;
-                    }
+                    timeTrack.CloseDateTime = nextTimeTrack.Start;
                 }
                 else
                 {
                     timeTrack.CloseDateTime = timeTrack.Start.AddHours(6);
                 }
-                closedProperly = true;
             }
-
-            if (timeTrackNumber < timeTracks.Count - 1 && timeTrack.CloseDateTime > timeTracks[timeTrackNumber + 1].Start)
+            else
             {
-                timeTrack.CloseDateTime = timeTracks[timeTrackNumber + 1].Start;
+                timeTrack.CloseDateTime = timeTrack.Start.AddHours(6);
             }
             
             var submissionsInTimeTrack = submissions

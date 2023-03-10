@@ -108,7 +108,8 @@ public class ParsonExerciseService : IParsonExerciseService
             {
                 CodeElements = new List<ParsonElement>(),
                 OwnerId = userId,
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                IndentationIsRelevant = createItem.IndentationIsRelevant
             },
             RunningNumber = nextAvailableExerciseNumberInChapter,
             OwnerId = userId

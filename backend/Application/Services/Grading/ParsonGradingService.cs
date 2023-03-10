@@ -61,8 +61,13 @@ public sealed class ParsonGradingService: IParsonGradingService
         {
             var submittedAnswer = submission.AnswerItems[i];
             var correctAnswer = solution.CodeElements[i];
-            if ((!solution.IndentationIsRelevant || submittedAnswer.Indentation == correctAnswer.Indentation) && submittedAnswer.ParsonElement.Code == correctAnswer.Code)
+            if (submittedAnswer.ParsonElement.Code == correctAnswer.Code)
             {
+                if (submittedAnswer.Indentation != correctAnswer.Indentation && solution.IndentationIsRelevant)
+                {
+                    continue;
+                }
+                
                 score += 1;
             }
         }

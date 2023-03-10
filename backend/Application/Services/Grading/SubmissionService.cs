@@ -81,6 +81,7 @@ public class SubmissionService:ISubmissionService
         {
             userSubmission.FinalSubmissionId = submission.Id;
             await this.repository.UserSubmissions.UpdateAsync(userSubmission, cancellationToken);
+            this.timeTrackService.CloseTimeTrackAsync(timeTrackId, cancellationToken);
         }
         
         await this.gradingService.RunAutomaticGradingForExerciseAsync(submission);

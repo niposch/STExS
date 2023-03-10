@@ -1,7 +1,7 @@
 <div *ngIf="submissions != null else noData">
 
   <div *ngFor="let submission of submissions" >
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel style="margin-top: 10px; margin-bottom: 10px; width: 400px">
       <mat-expansion-panel-header>
         <div style="display: flex; align-items: center; width: 100%">
           <mat-chip-list style="padding-right: 10px">
@@ -15,7 +15,9 @@
           </span>
         </div>
       </mat-expansion-panel-header>
-      <app-preview [exerciseId]="submission.exerciseId!" [submissionId]="submission.submissionId ?? null" [exerciseType]="submission.exerciseType!"></app-preview>
+      <ng-template matExpansionPanelContent>
+        <app-preview [exerciseId]="submission.exerciseId!" [submissionId]="submission.submissionId ?? null" [exerciseType]="submission.exerciseType!"></app-preview>
+      </ng-template>
     </mat-expansion-panel>
   </div>
   <div *ngIf="submissions.length == 0">
