@@ -1,0 +1,37 @@
+
+
+<mat-card class="vertical-container">
+  <mat-card-content >
+    <div *ngIf="gradingResult != null else noData">
+
+      <div class="horizontal-container" style="justify-content: space-between">
+        <mat-label style="font-size: 20px; font-weight: bold">Grading results</mat-label>
+        <mat-chip-list>
+          <mat-chip selected disableRipple>{{ gradingResult.gradingState | gradingState}}</mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div class="horizontal-container" style="width: 50%; justify-content: space-between">
+      <mat-label>Points</mat-label>
+      <mat-label>{{gradingResult.points}} / {{exercise?.achievablePoints ?? 0}}</mat-label>
+      </div>
+
+      <mat-divider style="margin-top: 10px; margin-bottom: 10px"></mat-divider>
+
+      <div class="vertical-container">
+        <mat-label>Comment</mat-label>
+        <mat-form-field>
+          <textarea matInput readonly>{{gradingResult.comment}}</textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <ng-template #noData>
+      <div *ngIf="gradingResult === undefined else errorLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <ng-template #errorLoading>
+        <mat-label>Can't load grading result</mat-label>
+      </ng-template>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

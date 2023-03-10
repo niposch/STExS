@@ -61,6 +61,7 @@ export class SolveCodeOutputComponent implements AfterViewInit, OnDestroy {
         )
         .subscribe((value) => {
           console.log('value', value);
+          if(this.timeTrackId == null) return;
           this.tempSave(value);
         });
     }

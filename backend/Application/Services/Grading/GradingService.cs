@@ -26,18 +26,24 @@ public sealed class GradingService : IGradingService
     private readonly IParsonGradingService parsonGradingService;
     
     private readonly IClozeTextGradingService clozeTextGradingService;
+    private readonly IUserSubmissionService userSubmissionService;
+    private IApplicationRepository repository;
 
     public GradingService(IApplicationRepository applicationRepository,
         ICodeOutputGradingService codeOutputGradingService,
         IAccessService accessService,
         IParsonGradingService parsonGradingService,
-        IClozeTextGradingService clozeTextGradingService)
+        IClozeTextGradingService clozeTextGradingService,
+        IUserSubmissionService userSubmissionService,
+        IApplicationRepository repository)
     {
         this.applicationRepository = applicationRepository;
         this.codeOutputGradingService = codeOutputGradingService ?? throw new ArgumentNullException(nameof(codeOutputGradingService));
         this.accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
         this.parsonGradingService = parsonGradingService ?? throw new ArgumentNullException(nameof(parsonGradingService));
         this.clozeTextGradingService = clozeTextGradingService ?? throw new ArgumentNullException(nameof(clozeTextGradingService));
+        this.userSubmissionService = userSubmissionService;
+        this.repository = repository;
     }
 
     public async Task RunAutomaticGradingForExerciseAsync(BaseSubmission submission)
@@ -230,6 +236,29 @@ public sealed class GradingService : IGradingService
         }
 
         return submission.GradingResult;
+    }
+
+    public async Task<GradingResult?> GetLatestGradingForExerciseAsync(Guid exerciseId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        var latestSubmission = await this.GetLastSubmissionForAnsweringAsync(userId, exerciseId, cancellationToken);
+        var gradingResult = latestSubmission?.GradingResult;
+        
+        return gradingResult;
+    }
+
+    private async Task<BaseSubmission?> GetLastSubmissionForAnsweringAsync(Guid userId, Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var userSubmission = await this.userSubmissionService.GetOrCreateUserSubmissionAsync(userId, exerciseId, cancellationToken);
+        if(userSubmission == null)
+        {
+            return null;
+        }
+        if (userSubmission.FinalSubmissionId != null)
+        {
+            return await this.repository.Submissions.TryGetByIdAsync(userSubmission.FinalSubmissionId.Value, cancellationToken);
+        }
+
+        return null;
     }
 
     private async Task<Dictionary<Guid/*ChapterId*/, Dictionary<Guid /*exerciseId*/, Dictionary<Guid/*UserId*/, UserSubmission>>>> GetModuleAndRelatedDataDictionary(Module module, CancellationToken cancellationToken = default)

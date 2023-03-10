@@ -48,6 +48,34 @@ public class GradingController : ControllerBase
 
         return this.Ok(res);
     }
+
+    [HttpGet("getLatestGradingForExercise")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradingResultDetailItem))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetLatestGradingForExercise(Guid exerciseId, CancellationToken cancellationToken = default)
+    {
+        var res = await this.gradingService.GetLatestGradingForExerciseAsync(exerciseId, this.User.GetUserId(), cancellationToken);
+        if (res == null)
+        {
+            return this.StatusCode(StatusCodes.Status404NotFound);
+        }
+
+        return this.Ok(new GradingResultDetailItem
+        {
+            Points = res.Points,
+            Id = res.Id,
+            Comment = res.Comment,
+            AppealableBefore = res.AppealableBefore,
+            GradingState = res.GradingState,
+            CreationDate = res.CreationDate,
+            AutomaticGradingDate = res.AutomaticGradingDate,
+            GradedSubmissionId = res.GradedSubmissionId,
+            IsAutomaticallyGraded = res.IsAutomaticallyGraded,
+            AppealDate = res.AppealDate,
+            ManualGradingDate = res.ManualGradingDate
+        });
+    }
+    
     
     [HttpGet("gradingForSubmission")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradingResultDetailItem))]

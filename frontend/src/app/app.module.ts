@@ -83,6 +83,8 @@ import { ClozeTextPreviewComponent } from './components/students/preview/cloze-t
 import { CodeOutputPreviewComponent } from './components/students/preview/code-output-preview/code-output-preview.component';
 import { ParsonPreviewComponent } from './components/students/preview/parson-preview/parson-preview.component';
 import { PreviewComponent } from './components/students/preview/preview.component';
+import { PointsPanelComponent } from './components/students/solve-exercise/points-panel/points-panel.component';
+import { GradingStatePipe } from './grading-state.pipe';
 
 @NgModule({
   declarations: [
@@ -135,6 +137,8 @@ import { PreviewComponent } from './components/students/preview/preview.componen
     CodeOutputPreviewComponent,
     ParsonPreviewComponent,
     PreviewComponent,
+    PointsPanelComponent,
+    GradingStatePipe,
   ],
   imports: [
     BrowserModule,
